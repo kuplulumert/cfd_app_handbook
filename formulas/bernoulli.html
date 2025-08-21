@@ -23,375 +23,298 @@
     <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body class="antialiased bg-gray-50 text-gray-900">
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div class="flex items-center justify-between px-4 py-3">
-            <div class="flex items-center space-x-4">
-                <a href="../index.html" class="flex items-center space-x-3 group">
-                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
-                        <i data-lucide="book-open" class="w-5 h-5 text-white"></i>
+    <!-- Simple Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="droplets" class="w-6 h-6 text-white"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-gray-900 group-hover:text-blue-500 transition-colors">
-                            Everyday Fluids
-                        </h1>
-                        <p class="text-xs text-gray-500 -mt-1">Explained</p>
+                        <h1 class="text-2xl font-bold text-gray-900">Everyday Fluids</h1>
+                        <p class="text-sm text-gray-600">Simple. Clear. Explained.</p>
                     </div>
-                </a>
-            </div>
-
-            <nav class="hidden md:flex items-center space-x-6">
-                <a href="../index.html" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">Home</a>
-                <a href="../index.html#formulas" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">Browse All</a>
-                <a href="../index.html#about" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">About</a>
-            </nav>
-
-            <div class="flex items-center space-x-3">
-                <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="p-2 text-gray-400 hover:text-gray-600 rounded-md hover:bg-gray-100 transition-colors">
-                    <i data-lucide="github" class="w-5 h-5"></i>
+                </div>
+                
+                <a href="../index.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline text-sm">Back to Home</span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto p-6">
-        <!-- Header -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-            <div class="flex items-start justify-between mb-4">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Bernoulli Equation</h1>
-                    <p class="text-lg text-gray-600 mb-4">Energy per unit weight is conserved along a streamline in ideal fluid flow</p>
-                </div>
-                
-                <div class="flex items-center space-x-2">
-                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">fundamental</span>
+    <main class="max-w-4xl mx-auto p-6">
+        <!-- Header Card -->
+        <div class="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-8 mb-8 text-center">
+            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-white font-bold text-2xl">B</span>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Bernoulli Equation</h1>
+            <p class="text-xl text-gray-600 mb-6">Energy per unit weight is conserved along a streamline in ideal fluid flow</p>
+            
+            <!-- Main Equation -->
+            <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-6">
+                <div class="katex-display text-center text-2xl">
+                    \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
                 </div>
             </div>
 
-            <!-- Assumptions chips -->
-            <div class="flex flex-wrap gap-2 mb-4">
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">steady flow</span>
-                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">incompressible fluid</span>
-                <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">inviscid flow</span>
-                <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">along a streamline</span>
+            <!-- Trust Level & Assumptions -->
+            <div class="flex flex-wrap justify-center gap-2 mb-4">
+                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Fundamental</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Steady Flow</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Incompressible</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Inviscid</span>
             </div>
 
-            <!-- Validity Range -->
-            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h3 class="text-sm font-medium text-blue-900 mb-2">Validity Range</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div>
-                        <span class="text-blue-700 font-medium">Re min:</span>
-                        <span class="ml-1 font-mono">1,000</span>
-                    </div>
-                    <div>
-                        <span class="text-blue-700 font-medium">Ma max:</span>
-                        <span class="ml-1 font-mono">0.3</span>
-                    </div>
-                </div>
-                <p class="mt-2 text-sm text-blue-800">
-                    Valid for flows where viscous effects are negligible. Breaks down in boundary layers and highly viscous flows.
+            <div class="bg-blue-50 rounded-lg p-4">
+                <p class="text-sm text-blue-800">
+                    <strong>Valid when:</strong> Re > 1,000, Ma < 0.3, viscous effects negligible
                 </p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Main Equation -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="calculator" class="w-5 h-5 text-blue-600"></i>
-                            <h2 class="text-lg font-semibold text-gray-900">Equation</h2>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4">
-                            <div class="katex-display text-center">
-                                \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
-                            </div>
-                        </div>
-
-                        <h4 class="text-sm font-medium text-gray-700 mb-2">Alternative forms:</h4>
-                        <div class="space-y-2">
-                            <div class="bg-gray-50 border border-gray-200 p-4 rounded">
-                                <div class="katex-display text-center">
-                                    p + \frac{1}{2}\rho v^2 + \rho g z = \text{constant}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Content Sections -->
+        <div class="space-y-8">
+            <!-- What Each Symbol Means -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                <div class="flex items-center space-x-3 mb-6">
+                    <i data-lucide="book-open" class="w-6 h-6 text-green-600"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">What Each Symbol Means</h2>
                 </div>
-
-                <!-- Symbol Definitions -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="book-open" class="w-5 h-5 text-green-600"></i>
-                            <h2 class="text-lg font-semibold text-gray-900">Symbol Definitions</h2>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-start space-x-3">
-                                    <span class="font-mono text-lg font-semibold text-blue-600">p</span>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-900">pressure</p>
-                                        <p class="text-sm text-gray-600">Units: <span class="font-mono">Pa</span></p>
-                                        <p class="text-xs text-gray-500 mt-1 italic">Static pressure in the fluid</p>
-                                        <p class="text-xs text-green-700 mt-1">Typical: 101,325 Pa (atmospheric)</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-start space-x-3">
-                                    <span class="font-mono text-lg font-semibold text-blue-600">ρ</span>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-900">density</p>
-                                        <p class="text-sm text-gray-600">Units: <span class="font-mono">kg/m³</span></p>
-                                        <p class="text-xs text-gray-500 mt-1 italic">Fluid density, assumed constant</p>
-                                        <p class="text-xs text-green-700 mt-1">Typical: 998 kg/m³ (water)</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-start space-x-3">
-                                    <span class="font-mono text-lg font-semibold text-blue-600">v</span>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-900">velocity</p>
-                                        <p class="text-sm text-gray-600">Units: <span class="font-mono">m/s</span></p>
-                                        <p class="text-xs text-gray-500 mt-1 italic">Fluid velocity magnitude</p>
-                                        <p class="text-xs text-green-700 mt-1">Typical: 0.1-10 m/s</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-start space-x-3">
-                                    <span class="font-mono text-lg font-semibold text-blue-600">z</span>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-900">elevation</p>
-                                        <p class="text-sm text-gray-600">Units: <span class="font-mono">m</span></p>
-                                        <p class="text-xs text-gray-500 mt-1 italic">Height above reference datum</p>
-                                        <p class="text-xs text-green-700 mt-1">Typical: 0-100 m</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Analogy -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-600"></i>
-                            <h2 class="text-lg font-semibold text-gray-900">Analogy</h2>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
-                            <div class="flex items-start space-x-3">
-                                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-sm font-bold text-yellow-700">💰</span>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-yellow-900 mb-2">
-                                        Bank Account for Energy per Unit Weight
-                                    </h3>
-                                    <p class="text-yellow-800 leading-relaxed">
-                                        Think of each term as a different form of "energy currency" in your bank account. 
-                                        Pressure head (p/ρg) is like cash in your checking account - readily available energy. 
-                                        Velocity head (v²/2g) is like an investment that yields kinetic energy - the faster you go, 
-                                        the more you have invested in motion. Elevation head (z) is like a savings account at altitude - 
-                                        potential energy stored for later use.
-                                    </p>
-                                    <div class="mt-3 space-y-1">
-                                        <p class="text-sm text-yellow-700">
-                                            <span class="font-mono font-semibold">p/ρg</span> → pressure energy (checking account)
-                                        </p>
-                                        <p class="text-sm text-yellow-700">
-                                            <span class="font-mono font-semibold">v²/2g</span> → kinetic energy (investment account)
-                                        </p>
-                                        <p class="text-sm text-yellow-700">
-                                            <span class="font-mono font-semibold">z</span> → potential energy (savings account)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- When It Lies -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600"></i>
-                            <h2 class="text-lg font-semibold text-gray-900">When It Lies</h2>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="space-y-3">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="flex items-start space-x-3">
-                                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"></i>
-                                    <p class="text-red-800">Strong viscosity effects (boundary layers, pipe friction, flow separation)</p>
-                                </div>
-                            </div>
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="flex items-start space-x-3">
-                                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"></i>
-                                    <p class="text-red-800">Compressible flow at high Mach numbers (Ma > 0.3)</p>
-                                </div>
-                            </div>
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="flex items-start space-x-3">
-                                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"></i>
-                                    <p class="text-red-800">Across pumps, turbines, or other work-adding/removing devices</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Worked Example -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <div class="p-6 border-b border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="calculator" class="w-5 h-5 text-green-600"></i>
-                            <h2 class="text-lg font-semibold text-gray-900">Worked Example</h2>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="p-6 bg-green-50 rounded-lg border border-green-200">
-                            <h3 class="text-lg font-semibold text-green-900 mb-2">
-                                Water Tank to Jet (Torricelli's Law)
-                            </h3>
-                            <p class="text-green-800 mb-4">
-                                Water flows from a large tank through a small opening at the bottom. Calculate exit velocity.
-                            </p>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <h4 class="text-sm font-medium text-green-700 mb-2">Given:</h4>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-green-800"><span class="font-mono">h</span> = 5 m (height difference)</p>
-                                        <p class="text-sm text-green-800"><span class="font-mono">p₁ = p₂</span> = atmospheric</p>
-                                        <p class="text-sm text-green-800"><span class="font-mono">v₁</span> ≈ 0 m/s (large tank)</p>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h4 class="text-sm font-medium text-green-700 mb-2">Result:</h4>
-                                    <p class="text-sm text-green-800">
-                                        <span class="font-mono font-semibold">v₂ = 9.9 m/s</span>
-                                    </p>
-                                    <p class="text-xs text-green-700 mt-1">
-                                        Exit velocity depends only on height, like free fall!
-                                    </p>
-                                </div>
-                            </div>
-                            
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="font-mono text-2xl font-bold text-blue-600">p</span>
                             <div>
-                                <h4 class="text-sm font-medium text-green-700 mb-2">Key Steps:</h4>
-                                <ol class="text-sm text-green-800 space-y-1 list-decimal list-inside">
-                                    <li>Apply Bernoulli between tank surface and exit</li>
-                                    <li>Since p₁ = p₂ and v₁ ≈ 0, equation simplifies to: h = v₂²/2g</li>
-                                    <li>Solve: v₂ = √(2gh) = √(2 × 9.81 × 5) = 9.9 m/s</li>
-                                </ol>
+                                <p class="font-semibold text-gray-900">Pressure</p>
+                                <p class="text-sm text-gray-600">Pa (Pascals)</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700">The force per unit area that the fluid exerts</p>
+                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 101,325 Pa (atmospheric pressure)</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="font-mono text-2xl font-bold text-blue-600">ρ</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Density</p>
+                                <p class="text-sm text-gray-600">kg/m³</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700">How much mass is packed into a given volume</p>
+                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 998 kg/m³ (water at 20°C)</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="font-mono text-2xl font-bold text-blue-600">v</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Velocity</p>
+                                <p class="text-sm text-gray-600">m/s</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700">How fast the fluid is moving</p>
+                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 5 m/s (typical pipe flow)</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="font-mono text-2xl font-bold text-blue-600">z</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Elevation</p>
+                                <p class="text-sm text-gray-600">m</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700">Height above your chosen reference point</p>
+                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 10 m above ground level</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Analogy -->
+            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl p-8">
+                <div class="flex items-center space-x-3 mb-6">
+                    <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-600"></i>
+                    <h2 class="text-2xl font-bold text-yellow-900">The Bank Account Analogy</h2>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 mb-6">
+                    <p class="text-lg text-gray-800 leading-relaxed">
+                        Think of Bernoulli's equation like a <strong>bank account for energy</strong>. 
+                        Your total balance must always stay the same (conservation), but you can move money between different accounts:
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-lg p-4 text-center">
+                        <div class="text-3xl mb-2">🏦</div>
+                        <h3 class="font-bold text-yellow-900 mb-2">Pressure Head (p/ρg)</h3>
+                        <p class="text-sm text-yellow-800">Your <strong>checking account</strong> - readily available energy you can spend immediately</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-4 text-center">
+                        <div class="text-3xl mb-2">🚗</div>
+                        <h3 class="font-bold text-yellow-900 mb-2">Velocity Head (v²/2g)</h3>
+                        <p class="text-sm text-yellow-800">Your <strong>investment account</strong> - energy tied up in motion, earning kinetic returns</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-4 text-center">
+                        <div class="text-3xl mb-2">⛰️</div>
+                        <h3 class="font-bold text-yellow-900 mb-2">Elevation Head (z)</h3>
+                        <p class="text-sm text-yellow-800">Your <strong>savings account</strong> - potential energy stored at altitude for later use</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 mt-4">
+                    <p class="text-center text-yellow-800">
+                        <strong>💡 Key Insight:</strong> You can transfer money between accounts, but your total balance stays constant 
+                        (unless you add energy with a pump or lose it to friction)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Real Example -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                <div class="flex items-center space-x-3 mb-6">
+                    <i data-lucide="calculator" class="w-6 h-6 text-green-600"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Real Example: Water Tank</h2>
+                </div>
+                
+                <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-green-900 mb-4">
+                        🚰 Water Tank to Jet (Torricelli's Law)
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-green-800 mb-3">📝 Given:</h4>
+                            <ul class="space-y-2 text-green-800">
+                                <li><span class="font-mono">h</span> = 5 m (height difference)</li>
+                                <li><span class="font-mono">p₁ = p₂</span> = atmospheric pressure</li>
+                                <li><span class="font-mono">v₁</span> ≈ 0 (large tank, slow surface)</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-green-800 mb-3">✅ Answer:</h4>
+                            <div class="bg-white rounded p-4">
+                                <p class="text-2xl font-bold text-green-900">v₂ = 9.9 m/s</p>
+                                <p class="text-sm text-green-700">Exit velocity depends only on height!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h4 class="font-semibold text-green-800 mb-3">🧮 How we solved it:</h4>
+                        <div class="bg-white rounded-lg p-4">
+                            <ol class="list-decimal list-inside space-y-2 text-green-800">
+                                <li>Since pressures are equal and v₁ ≈ 0, Bernoulli simplifies to: <span class="font-mono">h = v₂²/2g</span></li>
+                                <li>Solve for v₂: <span class="font-mono">v₂ = √(2gh) = √(2 × 9.81 × 5)</span></li>
+                                <li>Calculate: <span class="font-mono">v₂ = √98.1 = 9.9 m/s</span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- When It Fails -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                <div class="flex items-center space-x-3 mb-6">
+                    <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">When Bernoulli Lies to You</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-red-900">Viscous Effects</h3>
+                                <p class="text-sm text-red-800">Boundary layers, pipe friction, flow separation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-red-900">High-Speed Flow</h3>
+                                <p class="text-sm text-red-800">Compressible flow when Ma > 0.3</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-red-900">Pumps & Turbines</h3>
+                                <p class="text-sm text-red-800">Devices that add or remove energy</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-red-900">Unsteady Flow</h3>
+                                <p class="text-sm text-red-800">Rapidly changing conditions</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sidebar -->
-            <div class="space-y-6">
-                <!-- Quick Info -->
-                <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Info</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Category</span>
-                            <span class="text-sm font-medium text-gray-900">Conservation</span>
+            <!-- Navigation -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">What's Next?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <a href="../index.html" class="block bg-blue-50 border-2 border-blue-200 rounded-lg p-6 hover:border-blue-300 hover:shadow-md transition-all duration-200 group">
+                        <div class="text-center">
+                            <i data-lucide="home" class="w-8 h-8 text-blue-600 mx-auto mb-3"></i>
+                            <h3 class="font-bold text-blue-900 group-hover:text-blue-700">Explore More Categories</h3>
+                            <p class="text-sm text-blue-800 mt-2">Conservation Laws, Internal Flow, External Flow, and more</p>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Symbols</span>
-                            <span class="text-sm font-medium text-gray-900">5</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Trust Level</span>
-                            <span class="text-sm font-medium text-green-600">Fundamental</span>
-                        </div>
-                    </div>
-                </div>
+                    </a>
 
-                <!-- Related Formulas -->
-                <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Related Formulas</h3>
-                    <div class="space-y-2">
-                        <a href="../index.html" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-gray-900 group-hover:text-blue-600">Energy Equation</span>
-                                <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-blue-600"></i>
-                            </div>
-                        </a>
-                        <a href="../index.html" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-gray-900 group-hover:text-blue-600">Continuity Equation</span>
-                                <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-blue-600"></i>
-                            </div>
-                        </a>
-                        <a href="../index.html" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-gray-900 group-hover:text-blue-600">Venturi Effect</span>
-                                <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-blue-600"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Navigation -->
-                <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Navigate</h3>
-                    <div class="space-y-2">
-                        <a href="../index.html" class="block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                            <div class="flex items-center space-x-2">
-                                <i data-lucide="home" class="w-4 h-4 text-blue-600"></i>
-                                <span class="text-sm font-medium text-blue-900">Back to Home</span>
-                            </div>
-                        </a>
-                        <a href="../index.html#formulas" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                            <div class="flex items-center space-x-2">
-                                <i data-lucide="list" class="w-4 h-4 text-gray-600"></i>
-                                <span class="text-sm font-medium text-gray-900">All Formulas</span>
-                            </div>
-                        </a>
+                    <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-6 opacity-75">
+                        <div class="text-center">
+                            <i data-lucide="clock" class="w-8 h-8 text-gray-500 mx-auto mb-3"></i>
+                            <h3 class="font-bold text-gray-700">More Formulas Coming</h3>
+                            <p class="text-sm text-gray-600 mt-2">Continuity, Navier-Stokes, Reynolds Number, and 20+ more</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Simple Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-8 mt-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <p class="mb-4">Making fluid dynamics accessible, one formula at a time.</p>
+            <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                <i data-lucide="github" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </footer>
+
     <!-- Scripts -->
-    <script src="../js/main.js"></script>
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
         
-        // Initialize the app
+        // Initialize math rendering
         document.addEventListener('DOMContentLoaded', function() {
-            // Render math equations
             if (typeof katex !== 'undefined') {
                 document.querySelectorAll('.katex-display').forEach(el => {
                     const latex = el.textContent.trim();
