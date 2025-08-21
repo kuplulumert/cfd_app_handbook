@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everyday Fluids, Explained</title>
+    <meta name="description" content="A living encyclopedia of fluid dynamics formulas with interactive explanations, analogies, and real-world applications.">
+    <meta name="keywords" content="fluid dynamics, engineering, formulas, CFD, education, physics">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body class="antialiased bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="book-open" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900 group-hover:text-blue-500 transition-colors">
+                            Everyday Fluids
+                        </h1>
+                        <p class="text-xs text-gray-500 -mt-1">Explained</p>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#formulas" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+                    Browse Formulas
+                </a>
+                <a href="#about" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+                    About
+                </a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://github.com/kuplulumert/fdapp" target="_blank" rel="noopener noreferrer" class="p-2 text-gray-400 hover:text-gray-600 rounded-md hover:bg-gray-100 transition-colors" aria-label="View source on GitHub">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+
+                <div class="hidden sm:flex items-center space-x-2 px-3 py-1 bg-gray-100 rounded-full">
+                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span class="text-xs font-medium text-gray-700">Live</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-6">
+                    Everyday Fluids, <span class="text-blue-200">Explained</span>
+                </h1>
+                <p class="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+                    A living encyclopedia where every fluid dynamics formula is a story. 
+                    Symbols have personalities, logic unfolds step-by-step, and analogies make complex concepts stick.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                    <a href="formulas/bernoulli.html" class="bg-white text-blue-700 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center space-x-2">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                        <span>Explore Formulas</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    
+                    <a href="#about" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-700 transition-colors">
+                        Learn More
+                    </a>
+                </div>
+                
+                <!-- Key Features -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="zap" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Interactive Learning</h3>
+                        <p class="text-blue-100">
+                            Hover over symbols, toggle assumptions, and watch equations transform in real-time.
+                        </p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="target" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Practical Focus</h3>
+                        <p class="text-blue-100">
+                            Every formula includes CFD mapping, failure modes, and real-world applications.
+                        </p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="users" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">For Everyone</h3>
+                        <p class="text-blue-100">
+                            From students learning basics to CFD practitioners validating results.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Formulas -->
+    <section id="formulas" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                    Start with the Fundamentals
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Master these core equations and you'll understand the foundation of fluid mechanics.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="formulas/bernoulli.html" class="formula-card group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-blue-300 transition-all duration-200">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                                Conservation Laws
+                            </span>
+                            <h3 class="text-xl font-semibold text-gray-900 mt-2 group-hover:text-blue-600 transition-colors">
+                                Bernoulli Equation
+                            </h3>
+                        </div>
+                        
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                            <span class="text-xs text-gray-500">Fundamental</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">
+                        Energy conservation along streamlines - the bank account analogy for fluid energy
+                    </p>
+                    
+                    <div class="bg-gray-50 p-3 rounded border font-mono text-sm text-center equation-preview">
+                        p/ρg + v²/2g + z = constant
+                    </div>
+                    
+                    <div class="mt-4 flex items-center text-blue-600 group-hover:text-blue-700">
+                        <span class="text-sm font-medium">Explore formula</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <div class="formula-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 opacity-75">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded">
+                                Internal Flow
+                            </span>
+                            <h3 class="text-xl font-semibold text-gray-900 mt-2">
+                                Darcy-Weisbach
+                            </h3>
+                        </div>
+                        
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="clock" class="w-4 h-4 text-orange-400"></i>
+                            <span class="text-xs text-gray-500">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">
+                        Pressure drop in pipe flow - the rug-dragging analogy for friction losses
+                    </p>
+                    
+                    <div class="bg-gray-50 p-3 rounded border font-mono text-sm text-center equation-preview">
+                        Δp = f(L/D)(ρv²/2)
+                    </div>
+                    
+                    <div class="mt-4 flex items-center text-gray-400">
+                        <span class="text-sm font-medium">In Development</span>
+                        <i data-lucide="clock" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </div>
+
+                <div class="formula-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 opacity-75">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded">
+                                Dimensionless
+                            </span>
+                            <h3 class="text-xl font-semibold text-gray-900 mt-2">
+                                Reynolds Number
+                            </h3>
+                        </div>
+                        
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="clock" class="w-4 h-4 text-orange-400"></i>
+                            <span class="text-xs text-gray-500">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">
+                        Inertial vs viscous forces - the traffic flow analogy for flow regimes
+                    </p>
+                    
+                    <div class="bg-gray-50 p-3 rounded border font-mono text-sm text-center equation-preview">
+                        Re = ρvL/μ
+                    </div>
+                    
+                    <div class="mt-4 flex items-center text-gray-400">
+                        <span class="text-sm font-medium">In Development</span>
+                        <i data-lucide="clock" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Architecture Preview -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                    Organized by How You Think
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Find formulas the way that makes sense to you - by first principles, 
+                    physical phenomena, or practical application.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <i data-lucide="book-open" class="w-8 h-8 text-blue-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">First Principles</h3>
+                    <p class="text-gray-600 text-sm">
+                        Conservation of Mass, Momentum, Energy → everything else inherits.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <i data-lucide="target" class="w-8 h-8 text-green-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">By Phenomena</h3>
+                    <p class="text-gray-600 text-sm">
+                        Internal flow, external flow, compressible, heat transfer, multiphase.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <i data-lucide="zap" class="w-8 h-8 text-purple-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">By Tool Use</h3>
+                    <p class="text-gray-600 text-sm">
+                        Hand calcs, experiments, CFD setup/validation, scaling laws.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <i data-lucide="users" class="w-8 h-8 text-orange-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">By Role</h3>
+                    <p class="text-gray-600 text-sm">
+                        Student quick refs, practitioner checklists, CFD mapping guides.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                Making Fluid Dynamics Accessible
+            </h2>
+            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                Every formula tells a story. Every symbol has personality. Every equation comes alive with 
+                interactive explanations, memorable analogies, and practical applications. This is fluid 
+                dynamics education reimagined for the modern learner.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">🎯 Our Mission</h3>
+                    <p class="text-gray-600">
+                        Bridge the gap between textbook equations and practical understanding. 
+                        No more hand-waving, no more confusion - just clear, interactive explanations 
+                        that make complex concepts stick.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">🔬 Our Approach</h3>
+                    <p class="text-gray-600">
+                        Every formula includes step-by-step derivations, memorable analogies, 
+                        failure modes, and CFD mapping. Learn not just what the equation is, 
+                        but when to use it and when it breaks down.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">
+                Ready to Make Fluid Dynamics Stick?
+            </h2>
+            <p class="text-xl mb-8">
+                Start with Bernoulli's equation and discover how energy flows through every system around you.
+            </p>
+            
+            <a href="formulas/bernoulli.html" class="inline-flex items-center space-x-2 bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors">
+                <i data-lucide="book-open" class="w-6 h-6"></i>
+                <span>Start Learning</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="book-open" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Everyday Fluids, Explained</span>
+                </div>
+                
+                <p class="text-gray-400 mb-6">
+                    Making fluid dynamics accessible, one formula at a time.
+                </p>
+                
+                <div class="flex justify-center space-x-6">
+                    <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-gray-800 text-sm text-gray-500">
+                    <p>&copy; 2024 Everyday Fluids Team. Open source and available on GitHub.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Simple smooth scrolling for anchor links
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a[href^="#"]');
+            if (target) {
+                e.preventDefault();
+                const targetId = target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
