@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inviscid Flow Model - Compact Guide v1.0</title>
+    <meta name="description" content="Inviscid flow model explained compactly with Euler equations and guidance.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.4;
+            color: #1e293b;
+            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Compact Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59,130,246,0.15);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+        }
+
+        .logo h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .back-button {
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.15);
+            background: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            background: rgba(59,130,246,0.05);
+        }
+
+        /* Compact Main Content */
+        .main-content {
+            padding: 1rem 0;
+        }
+
+        /* Compact Model Hero */
+        .model-hero {
+            text-align: center;
+            padding: 1.5rem 0 1rem 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+        }
+
+        .model-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .model-hero p {
+            font-size: 1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Compact Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-column {
+            min-width: 0;
+        }
+
+        .sidebar {
+            background: rgba(255,255,255,0.8);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 5rem;
+        }
+
+        /* Compact Sections */
+        .content-section {
+            background: rgba(255,255,255,0.8);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .content-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .content-section p {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Compact Equations */
+        .main-equations {
+            background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05));
+            border: 1px solid rgba(16,185,129,0.15);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .equation-large {
+            font-size: 1rem !important;
+            margin: 0.75rem 0 !important;
+        }
+
+        /* Compact Variables */
+        .variables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .variable-item {
+            background: rgba(248,250,252,0.8);
+            border: 1px solid rgba(59,130,246,0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+
+        .variable-symbol {
+            font-family: 'KaTeX_Math', 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 0.25rem;
+        }
+
+        .variable-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.125rem;
+        }
+
+        .variable-description {
+            font-size: 0.625rem;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        /* Compact Sidebar */
+        .sidebar h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.375rem;
+        }
+
+        .sidebar a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0;
+        }
+
+        .sidebar a:hover {
+            color: #3b82f6;
+        }
+
+        /* Compact Lists */
+        .content-section ul {
+            margin: 0.75rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .content-section li {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        /* Assumptions Table */
+        .assumptions-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .assumptions-table th,
+        .assumptions-table td {
+            padding: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            text-align: left;
+        }
+
+        .assumptions-table th {
+            background: rgba(16,185,129,0.1);
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .sidebar {
+                position: static;
+                order: -1;
+            }
+            
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .model-hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .model-hero p {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Compact Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">
+                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">∅</span>
+                    </div>
+                    <div>
+                        <h1>Inviscid Flow Model</h1>
+                        <p>Fundamental Model</p>
+                    </div>
+                </a>
+                
+                <a href="../index.html" class="back-button">
+                    <span>←</span>
+                    <span>Back to Models</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Compact Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- NEW COMPACT DESIGN INDICATOR -->
+            <div style="background: linear-gradient(135deg, #10b981, #34d399); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
+                ✅ NEW: Inviscid Flow Model Available - Compact Design!
+            </div>
+
+            <!-- Compact Model Hero -->
+            <div class="model-hero">
+                <div class="model-badge">
+                    <span>∅</span>
+                    <span>Fundamental Flow Model</span>
+                </div>
+                
+                <h1>Inviscid Flow Model</h1>
+                <p>Fundamental flow model based on Euler equations assuming perfect fluid with zero viscosity</p>
+            </div>
+
+            <!-- Compact Content Grid -->
+            <div class="content-grid">
+                <div class="main-column">
+                    
+                    <!-- Compact Equations -->
+                    <div class="content-section">
+                        <h2>
+                            <span>📐</span>
+                            Euler Equations
+                        </h2>
+                        
+                        <div class="main-equations">
+                            <div class="equation-large katex-display">
+                                \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0
+                            </div>
+                            <div class="equation-large katex-display">
+                                \frac{\partial (\rho \mathbf{u})}{\partial t} + \nabla \cdot (\rho \mathbf{u} \otimes \mathbf{u}) + \nabla p = \rho \mathbf{f}
+                            </div>
+                            <div class="equation-large katex-display">
+                                \frac{\partial E}{\partial t} + \nabla \cdot ((E + p) \mathbf{u}) = \rho \mathbf{f} \cdot \mathbf{u}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compact Variables -->
+                    <div class="content-section">
+                        <h2>
+                            <span>🔤</span>
+                            Variables
+                        </h2>
+                        
+                        <div class="variables-grid">
+                            <div class="variable-item">
+                                <div class="variable-symbol">ρ</div>
+                                <div class="variable-name">Density</div>
+                                <div class="variable-description">Fluid density (kg/m³)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">u</div>
+                                <div class="variable-name">Velocity Vector</div>
+                                <div class="variable-description">Fluid velocity field (m/s)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">p</div>
+                                <div class="variable-name">Pressure</div>
+                                <div class="variable-description">Static pressure (Pa)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">E</div>
+                                <div class="variable-name">Total Energy</div>
+                                <div class="variable-description">E = ρ(e + u²/2)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compact Analogy -->
+                    <div class="content-section">
+                        <h2>
+                            <span>💡</span>
+                            Perfect Fluid Analogy
+                        </h2>
+                        <p>Think of inviscid flow as a <strong>perfect, frictionless fluid</strong> - like an idealized water flowing through a pipe with absolutely no friction. There's no viscosity, no boundary layers, and no energy loss due to internal friction.</p>
+                        
+                        <p><strong>Mass conservation:</strong> What flows in must flow out - like water through a pipe system.</p>
+                        
+                        <p><strong>Momentum conservation:</strong> Forces only come from pressure gradients and external forces - no viscous stress.</p>
+                        
+                        <p><strong>Energy conservation:</strong> Total energy is conserved in the absence of viscous dissipation.</p>
+                    </div>
+
+                    <!-- Compact Guidance -->
+                    <div class="content-section">
+                        <h2>
+                            <span>🎯</span>
+                            CFD Guidance
+                        </h2>
+                        
+                        <h3>When to Use</h3>
+                        <ul>
+                            <li>High Reynolds number external flows (Re > 10⁶)</li>
+                            <li>Far-field flow analysis around objects</li>
+                            <li>Supersonic and hypersonic flow analysis</li>
+                            <li>Initial design studies and conceptual analysis</li>
+                            <li>When viscous effects are negligible</li>
+                            <li>Computational efficiency is critical</li>
+                        </ul>
+
+                        <h3>When to Avoid</h3>
+                        <ul>
+                            <li>Any flow with significant viscous effects</li>
+                            <li>Boundary layer analysis</li>
+                            <li>Internal flows (pipes, ducts)</li>
+                            <li>Low Reynolds number flows (Re < 10⁴)</li>
+                            <li>Heat transfer calculations</li>
+                            <li>Flows with separation or recirculation</li>
+                        </ul>
+
+                        <h3>Setup Tips</h3>
+                        <ul>
+                            <li>Use slip boundary conditions at walls</li>
+                            <li>Focus on pressure and velocity distributions</li>
+                            <li>Monitor mass conservation carefully</li>
+                            <li>Check for shock wave formation in compressible flow</li>
+                            <li>Validate against potential flow theory when possible</li>
+                        </ul>
+                    </div>
+
+                    <!-- Compact Assumptions -->
+                    <div class="content-section">
+                        <h2>
+                            <span>📋</span>
+                            Key Assumptions
+                        </h2>
+                        
+                        <table class="assumptions-table">
+                            <tr>
+                                <th>Assumption</th>
+                                <th>Implication</th>
+                                <th>Validity</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Zero Viscosity</strong></td>
+                                <td>No viscous stresses</td>
+                                <td>High Re flows only</td>
+                            </tr>
+                            <tr>
+                                <td><strong>No Heat Conduction</strong></td>
+                                <td>No thermal diffusion</td>
+                                <td>Adiabatic processes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Slip Walls</strong></td>
+                                <td>No boundary layers</td>
+                                <td>External flow regions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Inviscid Stress</strong></td>
+                                <td>Only pressure forces</td>
+                                <td>Away from solid boundaries</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+                <!-- Compact Sidebar -->
+                <div class="sidebar">
+                    <h3>
+                        <span>🧭</span>
+                        Quick Navigation
+                    </h3>
+                    <ul>
+                        <li><a href="#equations">📐 Equations</a></li>
+                        <li><a href="#variables">🔤 Variables</a></li>
+                        <li><a href="#analogy">💡 Analogy</a></li>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
+                        <li><a href="#assumptions">📋 Assumptions</a></li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🔗</span>
+                        Related Models
+                    </h3>
+                    <ul>
+                        <li><a href="laminar.html">Laminar Flow</a></li>
+                        <li><a href="k-epsilon.html">k-ε Standard</a></li>
+                        <li><a href="k-omega.html">k-ω Standard</a></li>
+                        <li><a href="../index.html">← All Models</a></li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>📚</span>
+                        Model Info
+                    </h3>
+                    <ul>
+                        <li><span style="color: #10b981;">Type:</span> Fundamental</li>
+                        <li><span style="color: #10b981;">Equations:</span> 3 (Euler)</li>
+                        <li><span style="color: #10b981;">Variables:</span> ρ, u, p</li>
+                        <li><span style="color: #10b981;">Cost:</span> Low</li>
+                        <li><span style="color: #10b981; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Compact Footer -->
+    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
+        <div class="container">
+            <p style="color: #64748b; font-size: 0.75rem;">
+                © 2024 CFD Reference | 
+                <a href="https://github.com/kuplulumert/fdapp" style="color: #3b82f6; text-decoration: none;">GitHub</a> |
+                <a href="../index.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize KaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            const equations = document.querySelectorAll('.katex-display');
+            equations.forEach(eq => {
+                katex.render(eq.textContent, eq, {
+                    displayMode: true,
+                    throwOnError: false
+                });
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        console.log('Inviscid Flow Model page loaded - Compact design active');
+    </script>
+</body>
+</html>
