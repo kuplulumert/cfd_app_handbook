@@ -396,22 +396,74 @@
             <div class="content-grid">
                 <div class="main-column">
                     
-                    <!-- Compact Equations -->
+                    <!-- Enhanced Equations with Detailed Explanations -->
                     <div class="content-section">
                         <h2>
                             <span>📐</span>
-                            Euler Equations
+                            Euler Equations - Detailed Analysis
                         </h2>
                         
-                        <div class="main-equations">
+                        <!-- Continuity Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Continuity Equation (Mass Conservation)</h3>
                             <div class="equation-large katex-display">
                                 \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0
                             </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Mass cannot be created or destroyed in the flow</p>
+                                <p><strong>∂ρ/∂t:</strong> Rate of density change at a fixed point in space</p>
+                                <p><strong>∇·(ρu):</strong> Net mass flux divergence = ∂(ρu)/∂x + ∂(ρv)/∂y + ∂(ρw)/∂z</p>
+                                <p><strong>= 0:</strong> Mass accumulation rate + Net mass outflow rate = 0</p>
+                                <p><strong>Expanded Form:</strong> ∂ρ/∂t + ∂(ρu)/∂x + ∂(ρv)/∂y + ∂(ρw)/∂z = 0</p>
+                            </div>
+                        </div>
+
+                        <!-- Momentum Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Momentum Equation (Newton's 2nd Law)</h3>
                             <div class="equation-large katex-display">
                                 \frac{\partial (\rho \mathbf{u})}{\partial t} + \nabla \cdot (\rho \mathbf{u} \otimes \mathbf{u}) + \nabla p = \rho \mathbf{f}
                             </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Force = Mass × Acceleration (F = ma) for fluid elements</p>
+                                <p><strong>∂(ρu)/∂t:</strong> Rate of momentum change at a fixed point (local acceleration)</p>
+                                <p><strong>∇·(ρu⊗u):</strong> Convective momentum transport = ρu·∇u (advective acceleration)</p>
+                                <p><strong>∇p:</strong> Pressure gradient force = ∂p/∂x î + ∂p/∂y ĵ + ∂p/∂z k̂</p>
+                                <p><strong>ρf:</strong> Body forces per unit volume (gravity, electromagnetic, etc.)</p>
+                                <p><strong>Missing Terms:</strong> Viscous stresses (τ) = 0 in inviscid flow assumption</p>
+                                <p><strong>Vector Form:</strong> Each component (x,y,z) gives separate scalar equations</p>
+                            </div>
+                        </div>
+
+                        <!-- Energy Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(168,85,247,0.05), rgba(196,181,253,0.05)); border: 1px solid rgba(168,85,247,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Energy Equation (1st Law of Thermodynamics)</h3>
                             <div class="equation-large katex-display">
                                 \frac{\partial E}{\partial t} + \nabla \cdot ((E + p) \mathbf{u}) = \rho \mathbf{f} \cdot \mathbf{u}
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Energy conservation including kinetic + internal energy</p>
+                                <p><strong>E:</strong> Total energy per unit volume = ρ(e + u²/2) = ρe + ρu²/2</p>
+                                <p><strong>e:</strong> Specific internal energy (thermal energy per unit mass)</p>
+                                <p><strong>u²/2:</strong> Specific kinetic energy = (u² + v² + w²)/2</p>
+                                <p><strong>∂E/∂t:</strong> Rate of total energy change at fixed point</p>
+                                <p><strong>∇·((E+p)u):</strong> Net energy flux = convection of total energy + pressure work</p>
+                                <p><strong>ρf·u:</strong> Power input from body forces = force × velocity</p>
+                                <p><strong>Missing Terms:</strong> Heat conduction (q) and viscous dissipation (Φ) = 0</p>
+                            </div>
+                        </div>
+
+                        <!-- Mathematical Properties -->
+                        <div style="background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(245,158,11,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">🔢 Mathematical Properties</h3>
+                            <div style="font-size: 0.8rem; color: #64748b;">
+                                <p><strong>System Type:</strong> Hyperbolic PDE system (wave-like behavior)</p>
+                                <p><strong>Variables:</strong> 5 unknowns (ρ, u, v, w, p) in 3D</p>
+                                <p><strong>Equations:</strong> 5 equations (1 continuity + 3 momentum + 1 energy)</p>
+                                <p><strong>Closure:</strong> Equation of state p = p(ρ,T) needed for closure</p>
+                                <p><strong>Characteristics:</strong> Information propagates at acoustic speed c = √(∂p/∂ρ)</p>
+                                <p><strong>Eigenvalues:</strong> u±c, u, u, u (5 characteristic speeds)</p>
+                                <p><strong>Conservation Form:</strong> ∂U/∂t + ∇·F(U) = S where U = [ρ, ρu, ρv, ρw, E]ᵀ</p>
                             </div>
                         </div>
                     </div>
@@ -465,40 +517,48 @@
                         <p><strong>Energy conservation:</strong> Total energy is conserved in the absence of viscous dissipation.</p>
                     </div>
 
-                    <!-- Compact Guidance -->
+                    <!-- Enhanced CFD Guidance -->
                     <div class="content-section">
                         <h2>
                             <span>🎯</span>
                             CFD Guidance
                         </h2>
                         
-                        <h3>When to Use</h3>
-                        <ul>
-                            <li>High Reynolds number external flows (Re > 10⁶)</li>
-                            <li>Far-field flow analysis around objects</li>
-                            <li>Supersonic and hypersonic flow analysis</li>
-                            <li>Initial design studies and conceptual analysis</li>
-                            <li>When viscous effects are negligible</li>
-                            <li>Computational efficiency is critical</li>
-                        </ul>
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>High Reynolds number external flows</strong> (Re > 10⁶) - Viscous forces negligible compared to inertial forces</li>
+                                <li><strong>Far-field flow analysis</strong> around objects - Away from boundary layers where viscosity dominates</li>
+                                <li><strong>Supersonic and hypersonic flows</strong> - Shock waves and compressibility effects dominate over viscosity</li>
+                                <li><strong>Initial design studies</strong> - Quick conceptual analysis before detailed viscous calculations</li>
+                                <li><strong>Potential flow regions</strong> - Core flow areas where viscous effects are minimal</li>
+                                <li><strong>Computational efficiency critical</strong> - When speed is more important than viscous accuracy</li>
+                                <li><strong>Inviscid flow benchmarking</strong> - Validating CFD codes against analytical solutions</li>
+                            </ul>
+                        </div>
 
-                        <h3>When to Avoid</h3>
-                        <ul>
-                            <li>Any flow with significant viscous effects</li>
-                            <li>Boundary layer analysis</li>
-                            <li>Internal flows (pipes, ducts)</li>
-                            <li>Low Reynolds number flows (Re < 10⁴)</li>
-                            <li>Heat transfer calculations</li>
-                            <li>Flows with separation or recirculation</li>
-                        </ul>
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>ANY flow with significant viscous effects</strong> - Boundary layers, wake regions, viscous sublayers</li>
+                                <li><strong>Boundary layer analysis</strong> - No-slip conditions cannot be satisfied (infinite velocity gradients)</li>
+                                <li><strong>Internal flows</strong> (pipes, ducts) - Wall friction dominates, viscous losses critical</li>
+                                <li><strong>Low Reynolds number flows</strong> (Re < 10⁴) - Viscous forces comparable to inertial forces</li>
+                                <li><strong>Heat transfer calculations</strong> - No thermal boundary layers, infinite heat transfer rates</li>
+                                <li><strong>Flows with separation/recirculation</strong> - Viscous effects cause flow detachment</li>
+                                <li><strong>Drag force predictions</strong> - Cannot predict viscous (friction) drag components</li>
+                            </ul>
+                        </div>
 
                         <h3>Setup Tips</h3>
                         <ul>
-                            <li>Use slip boundary conditions at walls</li>
-                            <li>Focus on pressure and velocity distributions</li>
-                            <li>Monitor mass conservation carefully</li>
-                            <li>Check for shock wave formation in compressible flow</li>
-                            <li>Validate against potential flow theory when possible</li>
+                            <li><strong>Slip boundary conditions at walls</strong> - Tangential velocity ≠ 0, only normal velocity = 0</li>
+                            <li><strong>Focus on pressure and velocity distributions</strong> - Primary flow variables in inviscid analysis</li>
+                            <li><strong>Monitor mass conservation</strong> - ∇·(ρu) = 0 must be satisfied everywhere</li>
+                            <li><strong>Check for shock formation</strong> in compressible flow - Discontinuities in flow properties</li>
+                            <li><strong>Validate against potential flow theory</strong> - For incompressible, irrotational cases</li>
                         </ul>
                     </div>
 
