@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFD Solver Explainer - Setup Workflow</title>
-    <meta name="description" content="CFD setup workflow explained step by step. From steady/transient to relaxation factors.">
+    <title>CFD Solver Explainer - Premium CFD Workflow</title>
+    <meta name="description" content="Professional CFD setup workflow. From steady/transient to relaxation factors.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -24,23 +24,39 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #1f2937;
-            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            color: #0f172a;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* Compact Header */
+        /* Premium Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
-            padding: 0.75rem 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -55,228 +71,295 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             text-decoration: none;
             color: inherit;
         }
 
         .logo-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            border-radius: 0.75rem;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+            border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+            border-radius: 1rem;
+            z-index: -1;
+            opacity: 0.3;
         }
 
         .logo h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .logo p {
-            font-size: 0.75rem;
-            color: #6b7280;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         .github-link {
-            color: #6b7280;
+            color: #94a3b8;
             text-decoration: none;
-            transition: color 0.3s ease;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .github-link:hover {
-            color: #1f2937;
-            background: rgba(99, 102, 241, 0.1);
+            color: white;
+            background: rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* Compact Hero */
+        /* Premium Hero */
         .hero {
             text-align: center;
-            padding: 3rem 0;
+            padding: 4rem 0;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #4c1d95, #6366f1, #06b6d4);
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0, #94a3b8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             line-height: 1.1;
+            letter-spacing: -0.02em;
         }
 
         .hero p {
-            font-size: 1rem;
-            color: #4b5563;
-            margin-bottom: 2rem;
-            max-width: 500px;
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            font-weight: 400;
         }
 
-        /* CFD Workflow Steps */
+        /* Premium Workflow Steps */
         .workflow-section {
-            padding: 3rem 0;
+            padding: 4rem 0;
         }
 
         .workflow-title {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .workflow-title h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .workflow-title p {
-            color: #6b7280;
+            color: #94a3b8;
+            font-size: 1.125rem;
+            font-weight: 400;
         }
 
         .workflow-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         .step-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--step-color), var(--step-color-light));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .step-card:hover::before {
+            transform: scaleX(1);
         }
 
         .step-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-card:active {
             transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border-color: rgba(99, 102, 241, 0.3);
+            transition: transform 0.1s ease;
         }
 
         .step-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .step-number {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.75rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 800;
             color: white;
-            font-size: 1rem;
+            font-size: 1.25rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .step-number::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--step-gradient);
+            border-radius: 1rem;
+            z-index: -1;
+            opacity: 0.8;
         }
 
         .step-title {
-            font-size: 1.125rem;
+            font-size: 1.375rem;
             font-weight: 700;
-            color: #1f2937;
+            color: white;
         }
 
         .step-description {
-            color: #6b7280;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
+            color: #cbd5e1;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
         }
 
         .step-options {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .option-tag {
-            background: rgba(99, 102, 241, 0.1);
-            color: #4f46e5;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .step-status {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.5rem;
-            font-size: 0.625rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-available {
-            background: #10b981;
-            color: white;
-        }
-
-        .status-coming-soon {
-            background: #6b7280;
-            color: white;
+            gap: 0.75rem;
         }
 
         /* Step Colors */
-        .step-1 { background: linear-gradient(135deg, #10b981, #059669); }
-        .step-2 { background: linear-gradient(135deg, #7c3aed, #6366f1); }
-        .step-3 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .step-4 { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .step-5 { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .step-card:nth-child(1) {
+            --step-color: #10b981;
+            --step-color-light: #34d399;
+            --step-gradient: linear-gradient(135deg, #10b981, #34d399);
+        }
 
-        /* Dropdown Styles */
+        .step-card:nth-child(2) {
+            --step-color: #7c3aed;
+            --step-color-light: #a855f7;
+            --step-gradient: linear-gradient(135deg, #7c3aed, #a855f7);
+        }
+
+        .step-card:nth-child(3) {
+            --step-color: #3b82f6;
+            --step-color-light: #60a5fa;
+            --step-gradient: linear-gradient(135deg, #3b82f6, #60a5fa);
+        }
+
+        .step-card:nth-child(4) {
+            --step-color: #f59e0b;
+            --step-color-light: #fbbf24;
+            --step-gradient: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .step-card:nth-child(5) {
+            --step-color: #ef4444;
+            --step-color-light: #f87171;
+            --step-gradient: linear-gradient(135deg, #ef4444, #f87171);
+        }
+
+        .step-number {
+            background: var(--step-gradient);
+        }
+
+        /* Premium Dropdown Styles */
         .dropdown {
             position: relative;
             display: inline-block;
         }
 
         .dropdown-button {
-            background: rgba(99, 102, 241, 0.1);
-            color: #4f46e5;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .dropdown-button:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
 
         .dropdown-content {
             position: absolute;
             top: 100%;
             left: 0;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            min-width: 200px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            min-width: 220px;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-5px);
-            transition: all 0.2s ease;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
             z-index: 1000;
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
         }
 
         .dropdown:hover .dropdown-content {
@@ -287,57 +370,73 @@
 
         .dropdown-item {
             display: block;
-            padding: 0.5rem 1rem;
-            color: #374151;
+            padding: 0.75rem 1.25rem;
+            color: #e2e8f0;
             text-decoration: none;
-            font-size: 0.75rem;
-            transition: background 0.2s ease;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(99, 102, 241, 0.2);
+            color: white;
         }
 
         .dropdown-item.available {
-            font-weight: 600;
-            color: #059669;
+            font-weight: 700;
+            color: #34d399;
+            position: relative;
         }
 
-        /* Footer */
+        .dropdown-item.available::after {
+            content: '●';
+            position: absolute;
+            right: 1.25rem;
+            color: #34d399;
+        }
+
+        /* Premium Footer */
         .footer {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(99, 102, 241, 0.1);
-            padding: 1.5rem 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 0;
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
 
         .footer p {
-            color: #6b7280;
-            font-size: 0.875rem;
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .workflow-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
             
             .container {
                 padding: 0 1rem;
             }
+
+            .step-card {
+                padding: 1.5rem;
+            }
         }
 
-        /* Animations */
+        /* Premium Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -345,8 +444,17 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
         .step-card {
-            animation: fadeInUp 0.5s ease-out;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .step-card:nth-child(1) { animation-delay: 0.1s; }
@@ -354,6 +462,33 @@
         .step-card:nth-child(3) { animation-delay: 0.3s; }
         .step-card:nth-child(4) { animation-delay: 0.4s; }
         .step-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .step-card.clicked {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        /* Glowing effect for interactive elements */
+        .step-card:hover .step-number {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--step-color);
+        }
+
+        /* Premium scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        }
     </style>
 </head>
 <body>
@@ -363,26 +498,26 @@
             <div class="header-content">
                 <a href="#" class="logo">
                     <div class="logo-icon">
-                        <i data-lucide="cpu" style="color: white; width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="cpu" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
                     </div>
                     <div>
                         <h1>CFD Solver Explainer</h1>
-                        <p>Setup Workflow</p>
+                        <p>Professional Workflow</p>
                     </div>
                 </a>
                 
-                <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="github-link">
+                <a href="https://github.com/kuplulumert/cfdapps" target="_blank" class="github-link">
                     <i data-lucide="github" style="width: 1.25rem; height: 1.25rem;"></i>
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Compact Hero -->
+    <!-- Premium Hero -->
     <section class="hero">
         <div class="container">
             <h1>CFD Setup Workflow</h1>
-            <p>Step-by-step CFD configuration in the right order</p>
+            <p>Master computational fluid dynamics with our step-by-step professional workflow</p>
         </div>
     </section>
 
@@ -390,141 +525,136 @@
     <section class="workflow-section">
         <div class="container">
             <div class="workflow-title">
-                <h2>CFD Setup Steps</h2>
-                <p>Follow this order for proper CFD configuration</p>
+                <h2>Professional CFD Setup</h2>
+                <p>Follow the industry-standard configuration sequence</p>
             </div>
 
             <div class="workflow-grid">
                 
                 <!-- Step 1: Time Dependency -->
-                <div class="step-card">
-                    <div class="step-status status-coming-soon">Coming Soon</div>
+                <div class="step-card" onclick="handleStepClick(1)">
                     <div class="step-header">
-                        <div class="step-number step-1">1</div>
+                        <div class="step-number">1</div>
                         <div class="step-title">Time Dependency</div>
                     </div>
                     <div class="step-description">Choose steady or transient analysis</div>
                     <div class="step-options">
                         <div class="dropdown">
                             <button class="dropdown-button">
-                                Steady / Transient <i data-lucide="chevron-down" style="width: 0.75rem; height: 0.75rem; margin-left: 0.25rem;"></i>
+                                Steady / Transient <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item coming-soon">Steady State</a>
-                                <a href="#" class="dropdown-item coming-soon">Transient</a>
-                                <a href="#" class="dropdown-item coming-soon">Quasi-Steady</a>
+                                <a href="#time-dependency" class="dropdown-item">Steady State</a>
+                                <a href="#time-dependency" class="dropdown-item">Transient</a>
+                                <a href="#time-dependency" class="dropdown-item">Quasi-Steady</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 2: Turbulence Model -->
-                <div class="step-card">
-                    <div class="step-status status-available">1 Available</div>
+                <div class="step-card" onclick="handleStepClick(2)">
                     <div class="step-header">
-                        <div class="step-number step-2">2</div>
+                        <div class="step-number">2</div>
                         <div class="step-title">Turbulence Model</div>
                     </div>
                     <div class="step-description">Select turbulence treatment</div>
                     <div class="step-options">
                         <div class="dropdown">
                             <button class="dropdown-button">
-                                Models <i data-lucide="chevron-down" style="width: 0.75rem; height: 0.75rem; margin-left: 0.25rem;"></i>
+                                Models <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item coming-soon">Inviscid</a>
-                                <a href="#" class="dropdown-item coming-soon">Laminar</a>
-                                <a href="#" class="dropdown-item coming-soon">Spalart-Allmaras</a>
+                                <a href="#turbulence" class="dropdown-item">Inviscid</a>
+                                <a href="#turbulence" class="dropdown-item">Laminar</a>
+                                <a href="#turbulence" class="dropdown-item">Spalart-Allmaras</a>
                                 <a href="models/k-epsilon.html" class="dropdown-item available">k-ε Standard</a>
-                                <a href="#" class="dropdown-item coming-soon">k-ω Standard</a>
-                                <a href="#" class="dropdown-item coming-soon">k-ω SST</a>
-                                <a href="#" class="dropdown-item coming-soon">Reynolds Stress</a>
-                                <a href="#" class="dropdown-item coming-soon">LES</a>
-                                <a href="#" class="dropdown-item coming-soon">DES</a>
+                                <a href="#turbulence" class="dropdown-item">k-ω Standard</a>
+                                <a href="#turbulence" class="dropdown-item">k-ω SST</a>
+                                <a href="#turbulence" class="dropdown-item">Reynolds Stress</a>
+                                <a href="#turbulence" class="dropdown-item">LES</a>
+                                <a href="#turbulence" class="dropdown-item">DES</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 3: Boundary Conditions -->
-                <div class="step-card">
-                    <div class="step-status status-coming-soon">Coming Soon</div>
+                <div class="step-card" onclick="handleStepClick(3)">
                     <div class="step-header">
-                        <div class="step-number step-3">3</div>
+                        <div class="step-number">3</div>
                         <div class="step-title">Boundary Conditions</div>
                     </div>
                     <div class="step-description">Define domain boundaries</div>
                     <div class="step-options">
                         <div class="dropdown">
                             <button class="dropdown-button">
-                                Boundaries <i data-lucide="chevron-down" style="width: 0.75rem; height: 0.75rem; margin-left: 0.25rem;"></i>
+                                Boundaries <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item coming-soon">Velocity Inlet</a>
-                                <a href="#" class="dropdown-item coming-soon">Pressure Inlet</a>
-                                <a href="#" class="dropdown-item coming-soon">Mass Flow Inlet</a>
-                                <a href="#" class="dropdown-item coming-soon">Pressure Outlet</a>
-                                <a href="#" class="dropdown-item coming-soon">Outflow</a>
-                                <a href="#" class="dropdown-item coming-soon">Wall</a>
-                                <a href="#" class="dropdown-item coming-soon">Symmetry</a>
+                                <a href="#boundaries" class="dropdown-item">Velocity Inlet</a>
+                                <a href="#boundaries" class="dropdown-item">Pressure Inlet</a>
+                                <a href="#boundaries" class="dropdown-item">Mass Flow Inlet</a>
+                                <a href="#boundaries" class="dropdown-item">Pressure Outlet</a>
+                                <a href="#boundaries" class="dropdown-item">Outflow</a>
+                                <a href="#boundaries" class="dropdown-item">Wall</a>
+                                <a href="#boundaries" class="dropdown-item">Symmetry</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 4: Solution Method -->
-                <div class="step-card">
-                    <div class="step-status status-coming-soon">Coming Soon</div>
+                <div class="step-card" onclick="handleStepClick(4)">
                     <div class="step-header">
-                        <div class="step-number step-4">4</div>
+                        <div class="step-number">4</div>
                         <div class="step-title">Solution Method</div>
                     </div>
                     <div class="step-description">Choose solver algorithm</div>
                     <div class="step-options">
                         <div class="dropdown">
                             <button class="dropdown-button">
-                                Algorithms <i data-lucide="chevron-down" style="width: 0.75rem; height: 0.75rem; margin-left: 0.25rem;"></i>
+                                Algorithms <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item coming-soon">SIMPLE</a>
-                                <a href="#" class="dropdown-item coming-soon">SIMPLEC</a>
-                                <a href="#" class="dropdown-item coming-soon">PISO</a>
-                                <a href="#" class="dropdown-item coming-soon">Coupled</a>
-                                <a href="#" class="dropdown-item coming-soon">PIMPLE</a>
+                                <a href="#algorithms" class="dropdown-item">SIMPLE</a>
+                                <a href="#algorithms" class="dropdown-item">SIMPLEC</a>
+                                <a href="#algorithms" class="dropdown-item">PISO</a>
+                                <a href="#algorithms" class="dropdown-item">Coupled</a>
+                                <a href="#algorithms" class="dropdown-item">PIMPLE</a>
                             </div>
                         </div>
                         <div class="dropdown">
                             <button class="dropdown-button">
-                                Discretization <i data-lucide="chevron-down" style="width: 0.75rem; height: 0.75rem; margin-left: 0.25rem;"></i>
+                                Discretization <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item coming-soon">First Order Upwind</a>
-                                <a href="#" class="dropdown-item coming-soon">Second Order Upwind</a>
-                                <a href="#" class="dropdown-item coming-soon">Central Difference</a>
-                                <a href="#" class="dropdown-item coming-soon">QUICK</a>
+                                <a href="#discretization" class="dropdown-item">First Order Upwind</a>
+                                <a href="#discretization" class="dropdown-item">Second Order Upwind</a>
+                                <a href="#discretization" class="dropdown-item">Central Difference</a>
+                                <a href="#discretization" class="dropdown-item">QUICK</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 5: Relaxation & Convergence -->
-                <div class="step-card">
-                    <div class="step-status status-coming-soon">Coming Soon</div>
+                <div class="step-card" onclick="handleStepClick(5)">
                     <div class="step-header">
-                        <div class="step-number step-5">5</div>
+                        <div class="step-number">5</div>
                         <div class="step-title">Relaxation & Convergence</div>
                     </div>
                     <div class="step-description">Set solver controls</div>
                     <div class="step-options">
                         <div class="dropdown">
                             <button class="dropdown-button">
-                                Controls <i data-lucide="chevron-down" style="width: 0.75rem; height: 0.75rem; margin-left: 0.25rem;"></i>
+                                Controls <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
                             </button>
                             <div class="dropdown-content">
-                                <a href="#" class="dropdown-item coming-soon">Under-Relaxation</a>
-                                <a href="#" class="dropdown-item coming-soon">Residual Criteria</a>
-                                <a href="#" class="dropdown-item coming-soon">Iteration Limits</a>
-                                <a href="#" class="dropdown-item coming-soon">Time Step Size</a>
+                                <a href="#controls" class="dropdown-item">Under-Relaxation</a>
+                                <a href="#controls" class="dropdown-item">Residual Criteria</a>
+                                <a href="#controls" class="dropdown-item">Iteration Limits</a>
+                                <a href="#controls" class="dropdown-item">Time Step Size</a>
                             </div>
                         </div>
                     </div>
@@ -537,7 +667,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>CFD setup made simple</p>
+            <p>Professional CFD workflow made simple</p>
         </div>
     </footer>
 
@@ -545,16 +675,54 @@
         // Initialize icons
         lucide.createIcons();
 
-        // Step card click handling
-        document.querySelectorAll('.step-card').forEach(card => {
-            card.addEventListener('click', function() {
-                // Add highlight effect
-                this.style.background = 'rgba(99, 102, 241, 0.05)';
-                setTimeout(() => {
-                    this.style.background = '';
-                }, 1000);
-            });
-        });
+        // Handle step card clicks
+        function handleStepClick(stepNumber) {
+            const card = document.querySelector(`.step-card:nth-child(${stepNumber})`);
+            
+            // Add clicked animation
+            card.classList.add('clicked');
+            setTimeout(() => {
+                card.classList.remove('clicked');
+            }, 600);
+
+            // Add ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+            `;
+            
+            const rect = card.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+            
+            card.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+
+            // Scroll to relevant section or show info
+            console.log(`Step ${stepNumber} clicked - CFD workflow step activated`);
+        }
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Add stagger animation on scroll
         const observer = new IntersectionObserver((entries) => {
@@ -569,6 +737,16 @@
         document.querySelectorAll('.step-card').forEach((card) => {
             observer.observe(card);
         });
+
+        // Prevent dropdown from closing when clicking inside
+        document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
     </script>
 </body>
 </html>
