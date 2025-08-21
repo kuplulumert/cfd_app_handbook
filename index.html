@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turbulence Models in Computational Fluid Dynamics</title>
-    <meta name="description" content="Comprehensive academic guide to turbulence modeling in CFD. From fundamental theory to advanced methods.">
+    <meta name="description" content="Comprehensive academic reference for turbulence modeling in CFD. Complete classification from fundamental to scale-resolving methods.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,9 +23,9 @@
 
         body {
             font-family: 'Source Serif Pro', serif;
-            line-height: 1.7;
+            line-height: 1.6;
             color: #1e293b;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            background: #fefefe;
             min-height: 100vh;
             position: relative;
         }
@@ -38,29 +38,29 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+                linear-gradient(90deg, transparent 79px, #e2e8f0 80px, #e2e8f0 81px, transparent 82px),
+                linear-gradient(0deg, transparent 19px, #f1f5f9 20px, #f1f5f9 21px, transparent 22px);
+            background-size: 80px 20px;
+            opacity: 0.3;
             pointer-events: none;
             z-index: -1;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
         /* Academic Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid #e2e8f0;
-            padding: 1.5rem 0;
+            background: #ffffff;
+            border-bottom: 3px solid #1e40af;
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .header-content {
@@ -78,27 +78,26 @@
         }
 
         .logo-icon {
-            width: 3.5rem;
-            height: 3.5rem;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            border-radius: 0.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #1e40af;
+            border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
-            border: 2px solid #dbeafe;
+            border: 2px solid #3b82f6;
         }
 
         .logo h1 {
             font-family: 'Crimson Text', serif;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #1e293b;
             letter-spacing: -0.01em;
         }
 
         .logo p {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: #64748b;
             font-weight: 400;
             font-style: italic;
@@ -107,121 +106,93 @@
         .github-link {
             color: #64748b;
             text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
             border: 1px solid #e2e8f0;
-            background: white;
+            background: #f8fafc;
         }
 
         .github-link:hover {
             color: #1e40af;
             border-color: #3b82f6;
-            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.1);
+            background: #dbeafe;
         }
 
-        /* Academic Hero */
+        /* Compact Academic Hero */
         .hero {
             text-align: center;
-            padding: 4rem 0 3rem 0;
-            position: relative;
+            padding: 2rem 0 1.5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .hero h1 {
             font-family: 'Crimson Text', serif;
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             color: #0f172a;
             line-height: 1.2;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         .hero .subtitle {
             font-family: 'Crimson Text', serif;
-            font-size: 1.5rem;
+            font-size: 1.125rem;
             color: #475569;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             font-style: italic;
             font-weight: 400;
         }
 
         .hero p {
-            font-size: 1.125rem;
-            color: #64748b;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 400;
-            line-height: 1.6;
-        }
-
-        .academic-note {
-            background: rgba(59, 130, 246, 0.05);
-            border: 1px solid rgba(59, 130, 246, 0.1);
-            border-radius: 0.75rem;
-            padding: 1rem 1.5rem;
-            margin: 2rem auto;
-            max-width: 600px;
-            text-align: left;
-        }
-
-        .academic-note h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e40af;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .academic-note p {
             font-size: 0.875rem;
-            color: #475569;
-            margin: 0;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
             line-height: 1.5;
         }
 
-        /* Academic Models List */
+        /* Compact Models List */
         .models-section {
-            padding: 2rem 0 4rem 0;
+            padding: 1.5rem 0 2rem 0;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
         }
 
         .section-header h2 {
             font-family: 'Crimson Text', serif;
-            font-size: 2.25rem;
+            font-size: 1.75rem;
             font-weight: 600;
             color: #1e293b;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .section-header p {
             color: #64748b;
-            font-size: 1rem;
+            font-size: 0.875rem;
             font-style: italic;
         }
 
         .models-list {
             background: white;
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             border: 2px solid #e2e8f0;
             overflow: hidden;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
 
         .model-item {
             display: flex;
             align-items: center;
-            padding: 1.75rem 2rem;
+            padding: 0.875rem 1.5rem;
             border-bottom: 1px solid #f1f5f9;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
@@ -234,31 +205,33 @@
 
         .model-item:hover {
             background: #f8fafc;
-            border-left: 4px solid var(--model-border-color);
-            padding-left: 1.875rem;
+            border-left: 3px solid var(--model-border-color);
+            padding-left: 1.375rem;
         }
 
-        .model-item:active {
+        .model-item:nth-child(odd) {
+            background: #fafbfc;
+        }
+
+        .model-item:nth-child(odd):hover {
             background: #f1f5f9;
-            transition: background 0.1s ease;
         }
 
         .model-icon {
-            width: 3.5rem;
-            height: 3.5rem;
-            border-radius: 0.75rem;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.375rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 600;
             color: white;
-            font-size: 1rem;
+            font-size: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
-            margin-right: 1.75rem;
+            margin-right: 1rem;
             flex-shrink: 0;
             background: var(--model-gradient);
-            border: 2px solid var(--model-border-color);
-            box-shadow: 0 2px 15px var(--model-shadow);
+            border: 1px solid var(--model-border-color);
         }
 
         .model-content {
@@ -266,48 +239,55 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            min-height: 2.5rem;
         }
 
         .model-info {
             flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .model-title {
             font-family: 'Crimson Text', serif;
-            font-size: 1.5rem;
+            font-size: 1.125rem;
             font-weight: 600;
             color: #1e293b;
-            margin-bottom: 0.25rem;
+            min-width: 200px;
         }
 
         .model-description {
             color: #64748b;
-            font-size: 1rem;
+            font-size: 0.875rem;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 1.4;
+            flex: 1;
         }
 
         .model-tags {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-left: 1.5rem;
+            gap: 0.375rem;
+            margin-left: 1rem;
+            flex-shrink: 0;
         }
 
         .model-tag {
             background: #f1f5f9;
             color: #475569;
-            padding: 0.375rem 0.875rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
             font-weight: 500;
             border: 1px solid #e2e8f0;
+            white-space: nowrap;
         }
 
         .model-tag.available {
             background: #dcfce7;
             color: #166534;
             border-color: #bbf7d0;
+            font-weight: 600;
         }
 
         .model-tag.complexity {
@@ -319,20 +299,20 @@
 
         .arrow-icon {
             color: #94a3b8;
-            transition: all 0.3s ease;
-            margin-left: 1rem;
+            transition: all 0.2s ease;
+            margin-left: 0.5rem;
+            flex-shrink: 0;
         }
 
         .model-item:hover .arrow-icon {
             color: #3b82f6;
-            transform: translateX(4px);
+            transform: translateX(3px);
         }
 
         /* Academic Model Colors */
         .simple-model {
             --model-gradient: linear-gradient(135deg, #059669, #10b981);
             --model-border-color: #10b981;
-            --model-shadow: rgba(16, 185, 129, 0.2);
             --model-tag-bg: #dcfce7;
             --model-tag-color: #166534;
         }
@@ -340,7 +320,6 @@
         .rans-model {
             --model-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6);
             --model-border-color: #8b5cf6;
-            --model-shadow: rgba(139, 92, 246, 0.2);
             --model-tag-bg: #ede9fe;
             --model-tag-color: #5b21b6;
         }
@@ -348,7 +327,6 @@
         .transition-model {
             --model-gradient: linear-gradient(135deg, #d97706, #f59e0b);
             --model-border-color: #f59e0b;
-            --model-shadow: rgba(245, 158, 11, 0.2);
             --model-tag-bg: #fef3c7;
             --model-tag-color: #92400e;
         }
@@ -356,18 +334,17 @@
         .advanced-model {
             --model-gradient: linear-gradient(135deg, #dc2626, #ef4444);
             --model-border-color: #ef4444;
-            --model-shadow: rgba(239, 68, 68, 0.2);
             --model-tag-bg: #fee2e2;
             --model-tag-color: #991b1b;
         }
 
         /* Academic Footer */
         .footer {
-            background: white;
+            background: #f8fafc;
             border-top: 2px solid #e2e8f0;
-            padding: 3rem 0;
+            padding: 1.5rem 0;
             text-align: center;
-            margin-top: 4rem;
+            margin-top: 2rem;
         }
 
         .footer-content {
@@ -375,55 +352,83 @@
             margin: 0 auto;
         }
 
-        .footer h3 {
-            font-family: 'Crimson Text', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-
         .footer p {
             color: #64748b;
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
+            font-size: 0.75rem;
+            font-style: italic;
+            line-height: 1.5;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .footer-link {
             color: #3b82f6;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.875rem;
-            transition: color 0.3s ease;
+            font-size: 0.75rem;
+            transition: color 0.2s ease;
         }
 
         .footer-link:hover {
             color: #1e40af;
         }
 
-        .citation {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            font-style: italic;
-            margin-top: 1rem;
+        /* Academic Table Headers */
+        .table-header {
+            background: #f1f5f9;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .table-header .model-icon {
+            width: 2.25rem;
+            margin-right: 1rem;
+            background: transparent;
+            color: #64748b;
+            border: none;
+            justify-content: flex-start;
+            font-weight: 600;
+        }
+
+        .table-header .model-info {
+            gap: 1rem;
+        }
+
+        .table-header .model-title {
+            font-family: 'Source Serif Pro', serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            min-width: 200px;
+        }
+
+        .table-header .model-description {
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .table-header .model-tags {
+            margin-left: 1rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.75rem;
+                font-size: 2rem;
             }
             
             .hero .subtitle {
-                font-size: 1.25rem;
+                font-size: 1rem;
             }
             
             .container {
@@ -431,26 +436,31 @@
             }
 
             .model-item {
-                padding: 1.5rem 1.5rem;
+                padding: 1rem 1rem;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
+                gap: 0.75rem;
             }
 
             .model-content {
                 width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
+                gap: 0.75rem;
+            }
+
+            .model-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
             }
 
             .model-tags {
                 margin-left: 0;
             }
 
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
+            .table-header {
+                display: none;
             }
         }
 
@@ -458,7 +468,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -466,46 +476,35 @@
             }
         }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
         .models-list {
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.6s ease-out;
         }
 
         .model-item {
-            animation: slideInLeft 0.5s ease-out;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        .model-item:nth-child(1) { animation-delay: 0.1s; }
-        .model-item:nth-child(2) { animation-delay: 0.15s; }
-        .model-item:nth-child(3) { animation-delay: 0.2s; }
-        .model-item:nth-child(4) { animation-delay: 0.25s; }
-        .model-item:nth-child(5) { animation-delay: 0.3s; }
-        .model-item:nth-child(6) { animation-delay: 0.35s; }
-        .model-item:nth-child(7) { animation-delay: 0.4s; }
-        .model-item:nth-child(8) { animation-delay: 0.45s; }
-        .model-item:nth-child(9) { animation-delay: 0.5s; }
-        .model-item:nth-child(10) { animation-delay: 0.55s; }
-        .model-item:nth-child(11) { animation-delay: 0.6s; }
+        .model-item:nth-child(1) { animation-delay: 0.05s; }
+        .model-item:nth-child(2) { animation-delay: 0.1s; }
+        .model-item:nth-child(3) { animation-delay: 0.15s; }
+        .model-item:nth-child(4) { animation-delay: 0.2s; }
+        .model-item:nth-child(5) { animation-delay: 0.25s; }
+        .model-item:nth-child(6) { animation-delay: 0.3s; }
+        .model-item:nth-child(7) { animation-delay: 0.35s; }
+        .model-item:nth-child(8) { animation-delay: 0.4s; }
+        .model-item:nth-child(9) { animation-delay: 0.45s; }
+        .model-item:nth-child(10) { animation-delay: 0.5s; }
+        .model-item:nth-child(11) { animation-delay: 0.55s; }
 
         /* Academic hover effects */
         .model-item:hover .model-icon {
-            transform: scale(1.05);
-            box-shadow: 0 4px 25px var(--model-shadow);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         /* Academic scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
 
         ::-webkit-scrollbar-track {
@@ -513,13 +512,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            border-radius: 5px;
-            border: 2px solid #f1f5f9;
+            background: #cbd5e1;
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+            background: #94a3b8;
         }
     </style>
 </head>
@@ -530,70 +528,69 @@
             <div class="header-content">
                 <a href="#" class="logo">
                     <div class="logo-icon">
-                        <i data-lucide="book-open" style="color: white; width: 1.75rem; height: 1.75rem;"></i>
+                        <i data-lucide="book-open" style="color: white; width: 1.25rem; height: 1.25rem;"></i>
                     </div>
                     <div>
                         <h1>CFD Turbulence Models</h1>
-                        <p>Computational Fluid Dynamics</p>
+                        <p>Academic Reference</p>
                     </div>
                 </a>
                 
                 <a href="https://github.com/kuplulumert/cfdapps" target="_blank" class="github-link">
-                    <i data-lucide="github" style="width: 1.25rem; height: 1.25rem;"></i>
+                    <i data-lucide="github" style="width: 1rem; height: 1rem;"></i>
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Academic Hero -->
+    <!-- Compact Academic Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Turbulence Models in CFD</h1>
-            <div class="subtitle">A Comprehensive Academic Guide</div>
+            <h1>Turbulence Models in Computational Fluid Dynamics</h1>
+            <div class="subtitle">Complete Academic Classification</div>
             <p>
-                This reference provides detailed explanations of turbulence modeling approaches in computational fluid dynamics, 
-                from fundamental inviscid flow to advanced Large Eddy Simulation techniques. Each model is presented with 
-                mathematical foundations, physical interpretations, and practical implementation guidance.
+                Comprehensive reference for turbulence modeling approaches in CFD, organized by computational complexity and physical fidelity.
             </p>
-            
-            <div class="academic-note">
-                <h3>
-                    <i data-lucide="info" style="width: 1rem; height: 1rem;"></i>
-                    Academic Reference
-                </h3>
-                <p>
-                    This collection follows the hierarchy of turbulence modeling complexity, progressing from 
-                    simple inviscid assumptions through Reynolds-Averaged Navier-Stokes (RANS) methods to 
-                    scale-resolving approaches such as Large Eddy Simulation (LES).
-                </p>
-            </div>
         </div>
     </section>
 
-    <!-- Turbulence Models List -->
+    <!-- Compact Models List -->
     <section class="models-section">
         <div class="container">
             <div class="section-header">
                 <h2>Classification of Turbulence Models</h2>
-                <p>Organized by computational complexity and physical fidelity</p>
+                <p>From fundamental assumptions to scale-resolving methods</p>
             </div>
 
             <div class="models-list">
+                
+                <!-- Table Header -->
+                <div class="table-header">
+                    <div class="model-icon">Icon</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Model Name</div>
+                            <div class="model-description">Mathematical Foundation & Application</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag">Classification</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- Inviscid -->
                 <a href="models/inviscid.html" class="model-item simple-model">
                     <div class="model-icon">∅</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Inviscid Flow Model</div>
-                            <div class="model-description">Euler equations assuming perfect fluid with zero viscosity and no boundary layers</div>
+                            <div class="model-title">Inviscid Flow</div>
+                            <div class="model-description">Euler equations - perfect fluid assumption, zero viscosity</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Fundamental</span>
-                            <span class="model-tag">Euler Equations</span>
-                            <span class="model-tag">External Flow</span>
+                            <span class="model-tag">Euler</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -602,15 +599,14 @@
                     <div class="model-icon">L</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Laminar Flow Model</div>
-                            <div class="model-description">Direct solution of Navier-Stokes equations for smooth, ordered flow regimes</div>
+                            <div class="model-title">Laminar Flow</div>
+                            <div class="model-description">Direct Navier-Stokes solution - smooth, ordered flow regimes</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Fundamental</span>
-                            <span class="model-tag">Re < 2,300</span>
                             <span class="model-tag">DNS</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -619,15 +615,14 @@
                     <div class="model-icon">SA</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Spalart-Allmaras Model</div>
-                            <div class="model-description">One-equation RANS model solving for turbulent viscosity, optimized for aerospace applications</div>
+                            <div class="model-title">Spalart-Allmaras</div>
+                            <div class="model-description">One-equation RANS - turbulent viscosity transport</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">RANS</span>
-                            <span class="model-tag">One-Equation</span>
-                            <span class="model-tag">Aerospace</span>
+                            <span class="model-tag">1-Eq</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -636,16 +631,15 @@
                     <div class="model-icon">k-ε</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">k-ε Standard Model</div>
-                            <div class="model-description">Two-equation RANS model solving transport equations for turbulent kinetic energy and dissipation rate</div>
+                            <div class="model-title">k-ε Standard</div>
+                            <div class="model-description">Two-equation RANS - turbulent kinetic energy and dissipation rate</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag available">Available</span>
                             <span class="model-tag complexity">RANS</span>
-                            <span class="model-tag">Two-Equation</span>
-                            <span class="model-tag">Industrial Standard</span>
+                            <span class="model-tag">2-Eq</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -654,15 +648,14 @@
                     <div class="model-icon">k-ω</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">k-ω Standard Model</div>
-                            <div class="model-description">Two-equation RANS model with superior near-wall treatment and low Reynolds number formulation</div>
+                            <div class="model-title">k-ω Standard</div>
+                            <div class="model-description">Two-equation RANS - superior near-wall treatment</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">RANS</span>
-                            <span class="model-tag">Near-Wall</span>
-                            <span class="model-tag">Low Re</span>
+                            <span class="model-tag">2-Eq</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -671,15 +664,14 @@
                     <div class="model-icon">k-kL</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Transition k-kL-ω Model</div>
-                            <div class="model-description">Three-equation model capturing laminar-turbulent transition with laminar kinetic energy</div>
+                            <div class="model-title">Transition k-kL-ω</div>
+                            <div class="model-description">Three-equation - laminar kinetic energy with transition</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Transition</span>
-                            <span class="model-tag">Three-Equation</span>
-                            <span class="model-tag">Low Re Flows</span>
+                            <span class="model-tag">3-Eq</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -688,15 +680,14 @@
                     <div class="model-icon">γ-Re</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Transition SST Model</div>
-                            <div class="model-description">Four-equation model combining k-ω SST with γ-Reθ transition correlations</div>
+                            <div class="model-title">Transition SST</div>
+                            <div class="model-description">Four-equation - k-ω SST with γ-Reθ correlations</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Transition</span>
-                            <span class="model-tag">Four-Equation</span>
-                            <span class="model-tag">Aerospace</span>
+                            <span class="model-tag">4-Eq</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -705,15 +696,14 @@
                     <div class="model-icon">SST</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">k-ω SST Model</div>
-                            <div class="model-description">Shear Stress Transport model blending k-ε and k-ω formulations for optimal performance</div>
+                            <div class="model-title">k-ω SST</div>
+                            <div class="model-description">Hybrid formulation - blends k-ε and k-ω advantages</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">RANS</span>
-                            <span class="model-tag">Hybrid Formulation</span>
-                            <span class="model-tag">Separation</span>
+                            <span class="model-tag">Hybrid</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -722,15 +712,14 @@
                     <div class="model-icon">RSM</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Reynolds Stress Model</div>
-                            <div class="model-description">Seven-equation RANS model solving transport equations for each Reynolds stress component</div>
+                            <div class="model-title">Reynolds Stress</div>
+                            <div class="model-description">Seven-equation RANS - full stress tensor transport</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">RANS</span>
-                            <span class="model-tag">Seven-Equation</span>
-                            <span class="model-tag">Anisotropic</span>
+                            <span class="model-tag">7-Eq</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -739,15 +728,14 @@
                     <div class="model-icon">SAS</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Scale Adaptive Simulation</div>
-                            <div class="model-description">Modified RANS approach with scale-adaptive features for unsteady flow structures</div>
+                            <div class="model-title">Scale Adaptive</div>
+                            <div class="model-description">Modified RANS - scale-adaptive unsteady structures</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Scale-Resolving</span>
-                            <span class="model-tag">Unsteady RANS</span>
-                            <span class="model-tag">Adaptive</span>
+                            <span class="model-tag">URANS</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -756,15 +744,14 @@
                     <div class="model-icon">DES</div>
                     <div class="model-content">
                         <div class="model-info">
-                            <div class="model-title">Detached Eddy Simulation</div>
-                            <div class="model-description">Hybrid RANS-LES method utilizing RANS near walls and LES in separated flow regions</div>
+                            <div class="model-title">Detached Eddy</div>
+                            <div class="model-description">Hybrid RANS-LES - RANS near walls, LES in separation</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Scale-Resolving</span>
-                            <span class="model-tag">Hybrid RANS-LES</span>
-                            <span class="model-tag">Separation</span>
+                            <span class="model-tag">Hybrid</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -774,15 +761,13 @@
                     <div class="model-content">
                         <div class="model-info">
                             <div class="model-title">Large Eddy Simulation</div>
-                            <div class="model-description">Scale-resolving method directly computing large turbulent structures with subgrid-scale modeling</div>
+                            <div class="model-description">Direct scale resolution - large structures computed, SGS modeled</div>
                         </div>
                         <div class="model-tags">
                             <span class="model-tag complexity">Scale-Resolving</span>
-                            <span class="model-tag">Direct Resolution</span>
-                            <span class="model-tag">Unsteady</span>
-                            <span class="model-tag">High Fidelity</span>
+                            <span class="model-tag">Direct</span>
                         </div>
-                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1rem; height: 1rem;"></i>
                     </div>
                 </a>
 
@@ -794,21 +779,12 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <h3>Academic Reference</h3>
-                <p>
-                    This resource is designed for students, researchers, and practitioners in computational fluid dynamics. 
-                    Each turbulence model is presented with rigorous mathematical foundations and practical implementation details.
-                </p>
-                
                 <div class="footer-links">
-                    <a href="https://github.com/kuplulumert/cfdapps" class="footer-link">Source Code</a>
+                    <a href="https://github.com/kuplulumert/cfdapps" class="footer-link">Repository</a>
                     <a href="#" class="footer-link">References</a>
                     <a href="#" class="footer-link">Contribute</a>
                 </div>
-                
-                <div class="citation">
-                    <p>© 2024 CFD Turbulence Models Reference. Educational use permitted with attribution.</p>
-                </div>
+                <p>© 2024 CFD Turbulence Models Academic Reference. Educational use with attribution.</p>
             </div>
         </div>
     </footer>
@@ -824,7 +800,7 @@
         document.querySelectorAll('.model-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 const modelTitle = this.querySelector('.model-title').textContent;
-                console.log(`Accessing academic reference: ${modelTitle}`);
+                console.log(`Accessing: ${modelTitle}`);
             });
         });
     </script>
