@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFD Solver Explainer - Premium CFD Workflow</title>
-    <meta name="description" content="Professional CFD setup workflow. From steady/transient to relaxation factors.">
+    <title>CFD Turbulence Models - CFD Solver Explainer</title>
+    <meta name="description" content="Complete guide to CFD turbulence models. From inviscid to LES.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -160,12 +160,12 @@
             font-weight: 400;
         }
 
-        /* Premium Workflow List */
-        .workflow-section {
+        /* Turbulence Models List */
+        .models-section {
             padding: 2rem 0 4rem 0;
         }
 
-        .workflow-list {
+        .models-list {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 1.5rem;
@@ -173,7 +173,7 @@
             overflow: hidden;
         }
 
-        .step-item {
+        .model-item {
             display: flex;
             align-items: center;
             padding: 1.5rem 2rem;
@@ -184,21 +184,21 @@
             color: inherit;
         }
 
-        .step-item:last-child {
+        .model-item:last-child {
             border-bottom: none;
         }
 
-        .step-item:hover {
+        .model-item:hover {
             background: rgba(255, 255, 255, 0.08);
             transform: translateX(8px);
         }
 
-        .step-item:active {
+        .model-item:active {
             transform: translateX(4px);
             transition: transform 0.1s ease;
         }
 
-        .step-number {
+        .model-icon {
             width: 3rem;
             height: 3rem;
             border-radius: 1rem;
@@ -207,163 +207,60 @@
             justify-content: center;
             font-weight: 800;
             color: white;
-            font-size: 1.25rem;
+            font-size: 1rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            position: relative;
             margin-right: 1.5rem;
             flex-shrink: 0;
+            background: var(--model-gradient);
         }
 
-        .step-number::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: var(--step-gradient);
-            border-radius: 1rem;
-            z-index: -1;
-            opacity: 0.8;
-        }
-
-        .step-content {
+        .model-content {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .step-info {
+        .model-info {
             flex: 1;
         }
 
-        .step-title {
+        .model-title {
             font-size: 1.375rem;
             font-weight: 700;
             color: white;
             margin-bottom: 0.25rem;
         }
 
-        .step-description {
+        .model-description {
             color: #cbd5e1;
             font-size: 1rem;
             font-weight: 400;
         }
 
-        .step-options {
+        .model-tags {
             display: flex;
-            gap: 0.75rem;
+            gap: 0.5rem;
             margin-left: 1rem;
         }
 
-        /* Step Colors */
-        .step-item:nth-child(1) {
-            --step-color: #10b981;
-            --step-color-light: #34d399;
-            --step-gradient: linear-gradient(135deg, #10b981, #34d399);
-        }
-
-        .step-item:nth-child(2) {
-            --step-color: #7c3aed;
-            --step-color-light: #a855f7;
-            --step-gradient: linear-gradient(135deg, #7c3aed, #a855f7);
-        }
-
-        .step-item:nth-child(3) {
-            --step-color: #3b82f6;
-            --step-color-light: #60a5fa;
-            --step-gradient: linear-gradient(135deg, #3b82f6, #60a5fa);
-        }
-
-        .step-item:nth-child(4) {
-            --step-color: #f59e0b;
-            --step-color-light: #fbbf24;
-            --step-gradient: linear-gradient(135deg, #f59e0b, #fbbf24);
-        }
-
-        .step-item:nth-child(5) {
-            --step-color: #ef4444;
-            --step-color-light: #f87171;
-            --step-gradient: linear-gradient(135deg, #ef4444, #f87171);
-        }
-
-        .step-number {
-            background: var(--step-gradient);
-        }
-
-        /* Premium Dropdown Styles */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-button {
+        .model-tag {
             background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .dropdown-button:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            min-width: 220px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            margin-top: 0.5rem;
-        }
-
-        .dropdown:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            display: block;
-            padding: 0.75rem 1.25rem;
             color: #e2e8f0;
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
             font-weight: 500;
         }
 
-        .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.2);
+        .model-tag.available {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+        }
+
+        .model-tag.complexity {
+            background: var(--model-color);
             color: white;
-        }
-
-        .dropdown-item.available {
-            font-weight: 700;
-            color: #34d399;
-            position: relative;
-        }
-
-        .dropdown-item.available::after {
-            content: '●';
-            position: absolute;
-            right: 1.25rem;
-            color: #34d399;
         }
 
         .arrow-icon {
@@ -372,9 +269,30 @@
             margin-left: 1rem;
         }
 
-        .step-item:hover .arrow-icon {
+        .model-item:hover .arrow-icon {
             color: white;
             transform: translateX(4px);
+        }
+
+        /* Model Colors */
+        .simple-model {
+            --model-gradient: linear-gradient(135deg, #10b981, #34d399);
+            --model-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .rans-model {
+            --model-gradient: linear-gradient(135deg, #7c3aed, #a855f7);
+            --model-color: rgba(124, 58, 237, 0.2);
+        }
+
+        .transition-model {
+            --model-gradient: linear-gradient(135deg, #f59e0b, #fbbf24);
+            --model-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .advanced-model {
+            --model-gradient: linear-gradient(135deg, #ef4444, #f87171);
+            --model-color: rgba(239, 68, 68, 0.2);
         }
 
         /* Premium Footer */
@@ -403,27 +321,22 @@
                 padding: 0 1rem;
             }
 
-            .step-item {
+            .model-item {
                 padding: 1.25rem 1.5rem;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
             }
 
-            .step-content {
+            .model-content {
                 width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
             }
 
-            .step-options {
+            .model-tags {
                 margin-left: 0;
-            }
-
-            .dropdown-content {
-                right: auto;
-                left: 0;
             }
         }
 
@@ -450,23 +363,29 @@
             }
         }
 
-        .workflow-list {
+        .models-list {
             animation: fadeInUp 0.8s ease-out;
         }
 
-        .step-item {
+        .model-item {
             animation: slideInLeft 0.6s ease-out;
         }
 
-        .step-item:nth-child(1) { animation-delay: 0.1s; }
-        .step-item:nth-child(2) { animation-delay: 0.2s; }
-        .step-item:nth-child(3) { animation-delay: 0.3s; }
-        .step-item:nth-child(4) { animation-delay: 0.4s; }
-        .step-item:nth-child(5) { animation-delay: 0.5s; }
+        .model-item:nth-child(1) { animation-delay: 0.1s; }
+        .model-item:nth-child(2) { animation-delay: 0.15s; }
+        .model-item:nth-child(3) { animation-delay: 0.2s; }
+        .model-item:nth-child(4) { animation-delay: 0.25s; }
+        .model-item:nth-child(5) { animation-delay: 0.3s; }
+        .model-item:nth-child(6) { animation-delay: 0.35s; }
+        .model-item:nth-child(7) { animation-delay: 0.4s; }
+        .model-item:nth-child(8) { animation-delay: 0.45s; }
+        .model-item:nth-child(9) { animation-delay: 0.5s; }
+        .model-item:nth-child(10) { animation-delay: 0.55s; }
+        .model-item:nth-child(11) { animation-delay: 0.6s; }
 
         /* Glowing effect for interactive elements */
-        .step-item:hover .step-number {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--step-color);
+        .model-item:hover .model-icon {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--model-gradient);
         }
 
         /* Premium scrollbar */
@@ -499,7 +418,7 @@
                     </div>
                     <div>
                         <h1>CFD Solver Explainer</h1>
-                        <p>Professional Workflow</p>
+                        <p>Turbulence Models</p>
                     </div>
                 </a>
                 
@@ -513,157 +432,207 @@
     <!-- Premium Hero -->
     <section class="hero">
         <div class="container">
-            <h1>CFD Setup Workflow</h1>
-            <p>Master computational fluid dynamics with our step-by-step professional workflow</p>
+            <h1>Turbulence Models</h1>
+            <p>Choose the right turbulence treatment for your CFD simulation</p>
         </div>
     </section>
 
-    <!-- CFD Workflow List -->
-    <section class="workflow-section">
+    <!-- Turbulence Models List -->
+    <section class="models-section">
         <div class="container">
-            <div class="workflow-list">
+            <div class="models-list">
                 
-                <!-- Step 1: Time Dependency -->
-                <a href="pages/time-dependency.html" class="step-item">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <div class="step-info">
-                            <div class="step-title">Time Dependency</div>
-                            <div class="step-description">Choose steady or transient analysis</div>
+                <!-- Inviscid -->
+                <a href="models/inviscid.html" class="model-item simple-model">
+                    <div class="model-icon">∅</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Inviscid</div>
+                            <div class="model-description">Perfect fluid with no viscosity - fastest computation</div>
                         </div>
-                        <div class="step-options">
-                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
-                                <button class="dropdown-button">
-                                    Steady / Transient <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="pages/steady-state.html" class="dropdown-item">Steady State</a>
-                                    <a href="pages/transient.html" class="dropdown-item">Transient</a>
-                                    <a href="pages/quasi-steady.html" class="dropdown-item">Quasi-Steady</a>
-                                </div>
-                            </div>
-                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Simple</span>
+                            <span class="model-tag">Euler</span>
                         </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                     </div>
                 </a>
 
-                <!-- Step 2: Turbulence Model -->
-                <a href="pages/turbulence-models.html" class="step-item">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <div class="step-info">
-                            <div class="step-title">Turbulence Model</div>
-                            <div class="step-description">Select turbulence treatment</div>
+                <!-- Laminar -->
+                <a href="models/laminar.html" class="model-item simple-model">
+                    <div class="model-icon">L</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Laminar</div>
+                            <div class="model-description">Smooth, ordered flow without turbulence</div>
                         </div>
-                        <div class="step-options">
-                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
-                                <button class="dropdown-button">
-                                    Models <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="models/inviscid.html" class="dropdown-item">Inviscid</a>
-                                    <a href="models/laminar.html" class="dropdown-item">Laminar</a>
-                                    <a href="models/spalart-allmaras.html" class="dropdown-item">Spalart-Allmaras</a>
-                                    <a href="models/k-epsilon.html" class="dropdown-item available">k-ε Standard</a>
-                                    <a href="models/k-omega.html" class="dropdown-item">k-ω Standard</a>
-                                    <a href="models/k-omega-sst.html" class="dropdown-item">k-ω SST</a>
-                                    <a href="models/reynolds-stress.html" class="dropdown-item">Reynolds Stress</a>
-                                    <a href="models/les.html" class="dropdown-item">LES</a>
-                                    <a href="models/des.html" class="dropdown-item">DES</a>
-                                </div>
-                            </div>
-                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Simple</span>
+                            <span class="model-tag">Re < 2300</span>
                         </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                     </div>
                 </a>
 
-                <!-- Step 3: Boundary Conditions -->
-                <a href="pages/boundary-conditions.html" class="step-item">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <div class="step-info">
-                            <div class="step-title">Boundary Conditions</div>
-                            <div class="step-description">Define domain boundaries</div>
+                <!-- Spalart-Allmaras -->
+                <a href="models/spalart-allmaras.html" class="model-item rans-model">
+                    <div class="model-icon">SA</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Spalart-Allmaras</div>
+                            <div class="model-description">One-equation model for aerospace applications</div>
                         </div>
-                        <div class="step-options">
-                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
-                                <button class="dropdown-button">
-                                    Boundaries <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="pages/velocity-inlet.html" class="dropdown-item">Velocity Inlet</a>
-                                    <a href="pages/pressure-inlet.html" class="dropdown-item">Pressure Inlet</a>
-                                    <a href="pages/mass-flow-inlet.html" class="dropdown-item">Mass Flow Inlet</a>
-                                    <a href="pages/pressure-outlet.html" class="dropdown-item">Pressure Outlet</a>
-                                    <a href="pages/outflow.html" class="dropdown-item">Outflow</a>
-                                    <a href="pages/wall.html" class="dropdown-item">Wall</a>
-                                    <a href="pages/symmetry.html" class="dropdown-item">Symmetry</a>
-                                </div>
-                            </div>
-                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">RANS</span>
+                            <span class="model-tag">Aerospace</span>
                         </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                     </div>
                 </a>
 
-                <!-- Step 4: Solution Method -->
-                <a href="pages/solution-methods.html" class="step-item">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <div class="step-info">
-                            <div class="step-title">Solution Method</div>
-                            <div class="step-description">Choose solver algorithm</div>
+                <!-- k-epsilon -->
+                <a href="models/k-epsilon.html" class="model-item rans-model">
+                    <div class="model-icon">k-ε</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">k-ε Standard</div>
+                            <div class="model-description">Industry standard for high Reynolds number flows</div>
                         </div>
-                        <div class="step-options">
-                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
-                                <button class="dropdown-button">
-                                    Algorithms <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="pages/simple.html" class="dropdown-item">SIMPLE</a>
-                                    <a href="pages/simplec.html" class="dropdown-item">SIMPLEC</a>
-                                    <a href="pages/piso.html" class="dropdown-item">PISO</a>
-                                    <a href="pages/coupled.html" class="dropdown-item">Coupled</a>
-                                    <a href="pages/pimple.html" class="dropdown-item">PIMPLE</a>
-                                </div>
-                            </div>
-                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
-                                <button class="dropdown-button">
-                                    Discretization <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="pages/upwind.html" class="dropdown-item">First Order Upwind</a>
-                                    <a href="pages/second-order-upwind.html" class="dropdown-item">Second Order Upwind</a>
-                                    <a href="pages/central-difference.html" class="dropdown-item">Central Difference</a>
-                                    <a href="pages/quick.html" class="dropdown-item">QUICK</a>
-                                </div>
-                            </div>
-                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <div class="model-tags">
+                            <span class="model-tag available">Available</span>
+                            <span class="model-tag complexity">RANS</span>
+                            <span class="model-tag">Industrial</span>
                         </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                     </div>
                 </a>
 
-                <!-- Step 5: Relaxation & Convergence -->
-                <a href="pages/relaxation-convergence.html" class="step-item">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <div class="step-info">
-                            <div class="step-title">Relaxation & Convergence</div>
-                            <div class="step-description">Set solver controls</div>
+                <!-- k-omega -->
+                <a href="models/k-omega.html" class="model-item rans-model">
+                    <div class="model-icon">k-ω</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">k-ω Standard</div>
+                            <div class="model-description">Better near-wall treatment than k-ε</div>
                         </div>
-                        <div class="step-options">
-                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
-                                <button class="dropdown-button">
-                                    Controls <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="pages/under-relaxation.html" class="dropdown-item">Under-Relaxation</a>
-                                    <a href="pages/residual-criteria.html" class="dropdown-item">Residual Criteria</a>
-                                    <a href="pages/iteration-limits.html" class="dropdown-item">Iteration Limits</a>
-                                    <a href="pages/time-step-size.html" class="dropdown-item">Time Step Size</a>
-                                </div>
-                            </div>
-                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">RANS</span>
+                            <span class="model-tag">Near-wall</span>
                         </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- Transition k-kL-omega -->
+                <a href="models/transition-k-kl-omega.html" class="model-item transition-model">
+                    <div class="model-icon">k-kL</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Transition k-kL-ω</div>
+                            <div class="model-description">Captures laminar-turbulent transition</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Transition</span>
+                            <span class="model-tag">Low Re</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- Transition SST -->
+                <a href="models/transition-sst.html" class="model-item transition-model">
+                    <div class="model-icon">γ-Re</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Transition SST</div>
+                            <div class="model-description">k-ω SST with transition modeling</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Transition</span>
+                            <span class="model-tag">Aerospace</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- k-omega SST -->
+                <a href="models/k-omega-sst.html" class="model-item rans-model">
+                    <div class="model-icon">SST</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">k-ω SST</div>
+                            <div class="model-description">Best of k-ε and k-ω - excellent for separation</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">RANS</span>
+                            <span class="model-tag">Separation</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- Reynolds Stress -->
+                <a href="models/reynolds-stress.html" class="model-item rans-model">
+                    <div class="model-icon">RSM</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Reynolds Stress</div>
+                            <div class="model-description">Full Reynolds stress tensor modeling</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">RANS</span>
+                            <span class="model-tag">Complex</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- Scale Adaptive Simulation -->
+                <a href="models/scale-adaptive.html" class="model-item advanced-model">
+                    <div class="model-icon">SAS</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Scale Adaptive Simulation</div>
+                            <div class="model-description">Adaptive RANS-LES approach</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Advanced</span>
+                            <span class="model-tag">Hybrid</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- Detached Eddy Simulation -->
+                <a href="models/detached-eddy.html" class="model-item advanced-model">
+                    <div class="model-icon">DES</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Detached Eddy Simulation</div>
+                            <div class="model-description">RANS near walls, LES in separated regions</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Advanced</span>
+                            <span class="model-tag">Hybrid</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </div>
+                </a>
+
+                <!-- Large Eddy Simulation -->
+                <a href="models/large-eddy.html" class="model-item advanced-model">
+                    <div class="model-icon">LES</div>
+                    <div class="model-content">
+                        <div class="model-info">
+                            <div class="model-title">Large Eddy Simulation</div>
+                            <div class="model-description">Resolves large turbulent structures directly</div>
+                        </div>
+                        <div class="model-tags">
+                            <span class="model-tag complexity">Advanced</span>
+                            <span class="model-tag">Unsteady</span>
+                            <span class="model-tag">High Cost</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                     </div>
                 </a>
 
@@ -682,22 +651,14 @@
         // Initialize icons
         lucide.createIcons();
 
-        // Prevent dropdown from closing when clicking inside
-        document.querySelectorAll('.dropdown-content').forEach(dropdown => {
-            dropdown.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-        });
-
         // Add smooth scroll behavior
         document.documentElement.style.scrollBehavior = 'smooth';
 
-        // Handle step item clicks (for analytics or future features)
-        document.querySelectorAll('.step-item').forEach(item => {
+        // Handle model item clicks (for analytics)
+        document.querySelectorAll('.model-item').forEach(item => {
             item.addEventListener('click', function(e) {
-                // Don't interfere with navigation, just log for analytics
-                const stepTitle = this.querySelector('.step-title').textContent;
-                console.log(`Navigating to: ${stepTitle}`);
+                const modelTitle = this.querySelector('.model-title').textContent;
+                console.log(`Navigating to: ${modelTitle}`);
             });
         });
     </script>
