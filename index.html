@@ -46,7 +46,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -134,7 +134,7 @@
         /* Premium Hero */
         .hero {
             text-align: center;
-            padding: 4rem 0;
+            padding: 4rem 0 2rem 0;
             position: relative;
         }
 
@@ -153,92 +153,49 @@
         .hero p {
             font-size: 1.25rem;
             color: #94a3b8;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
             font-weight: 400;
         }
 
-        /* Premium Workflow Steps */
+        /* Premium Workflow List */
         .workflow-section {
-            padding: 4rem 0;
+            padding: 2rem 0 4rem 0;
         }
 
-        .workflow-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .workflow-title h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff, #e2e8f0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .workflow-title p {
-            color: #94a3b8;
-            font-size: 1.125rem;
-            font-weight: 400;
-        }
-
-        .workflow-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step-card {
+        .workflow-list {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 1.5rem;
-            padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
             overflow: hidden;
         }
 
-        .step-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--step-color), var(--step-color-light));
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .step-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .step-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .step-card:active {
-            transform: translateY(-4px);
-            transition: transform 0.1s ease;
-        }
-
-        .step-header {
+        .step-item {
             display: flex;
             align-items: center;
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+        }
+
+        .step-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(8px);
+        }
+
+        .step-item:active {
+            transform: translateX(4px);
+            transition: transform 0.1s ease;
         }
 
         .step-number {
@@ -253,6 +210,8 @@
             font-size: 1.25rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             position: relative;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
         }
 
         .step-number::before {
@@ -265,51 +224,62 @@
             opacity: 0.8;
         }
 
+        .step-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
         .step-title {
             font-size: 1.375rem;
             font-weight: 700;
             color: white;
+            margin-bottom: 0.25rem;
         }
 
         .step-description {
             color: #cbd5e1;
             font-size: 1rem;
-            margin-bottom: 1.5rem;
             font-weight: 400;
         }
 
         .step-options {
             display: flex;
-            flex-wrap: wrap;
             gap: 0.75rem;
+            margin-left: 1rem;
         }
 
         /* Step Colors */
-        .step-card:nth-child(1) {
+        .step-item:nth-child(1) {
             --step-color: #10b981;
             --step-color-light: #34d399;
             --step-gradient: linear-gradient(135deg, #10b981, #34d399);
         }
 
-        .step-card:nth-child(2) {
+        .step-item:nth-child(2) {
             --step-color: #7c3aed;
             --step-color-light: #a855f7;
             --step-gradient: linear-gradient(135deg, #7c3aed, #a855f7);
         }
 
-        .step-card:nth-child(3) {
+        .step-item:nth-child(3) {
             --step-color: #3b82f6;
             --step-color-light: #60a5fa;
             --step-gradient: linear-gradient(135deg, #3b82f6, #60a5fa);
         }
 
-        .step-card:nth-child(4) {
+        .step-item:nth-child(4) {
             --step-color: #f59e0b;
             --step-color-light: #fbbf24;
             --step-gradient: linear-gradient(135deg, #f59e0b, #fbbf24);
         }
 
-        .step-card:nth-child(5) {
+        .step-item:nth-child(5) {
             --step-color: #ef4444;
             --step-color-light: #f87171;
             --step-gradient: linear-gradient(135deg, #ef4444, #f87171);
@@ -347,7 +317,7 @@
         .dropdown-content {
             position: absolute;
             top: 100%;
-            left: 0;
+            right: 0;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -396,6 +366,17 @@
             color: #34d399;
         }
 
+        .arrow-icon {
+            color: #64748b;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .step-item:hover .arrow-icon {
+            color: white;
+            transform: translateX(4px);
+        }
+
         /* Premium Footer */
         .footer {
             background: rgba(15, 23, 42, 0.8);
@@ -418,17 +399,31 @@
                 font-size: 2.5rem;
             }
             
-            .workflow-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
             .container {
                 padding: 0 1rem;
             }
 
-            .step-card {
-                padding: 1.5rem;
+            .step-item {
+                padding: 1.25rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .step-content {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .step-options {
+                margin-left: 0;
+            }
+
+            .dropdown-content {
+                right: auto;
+                left: 0;
             }
         }
 
@@ -444,31 +439,33 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
             }
-            50% {
-                opacity: 0.7;
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
-        .step-card {
+        .workflow-list {
             animation: fadeInUp 0.8s ease-out;
         }
 
-        .step-card:nth-child(1) { animation-delay: 0.1s; }
-        .step-card:nth-child(2) { animation-delay: 0.2s; }
-        .step-card:nth-child(3) { animation-delay: 0.3s; }
-        .step-card:nth-child(4) { animation-delay: 0.4s; }
-        .step-card:nth-child(5) { animation-delay: 0.5s; }
-
-        .step-card.clicked {
-            animation: pulse 0.6s ease-in-out;
+        .step-item {
+            animation: slideInLeft 0.6s ease-out;
         }
 
+        .step-item:nth-child(1) { animation-delay: 0.1s; }
+        .step-item:nth-child(2) { animation-delay: 0.2s; }
+        .step-item:nth-child(3) { animation-delay: 0.3s; }
+        .step-item:nth-child(4) { animation-delay: 0.4s; }
+        .step-item:nth-child(5) { animation-delay: 0.5s; }
+
         /* Glowing effect for interactive elements */
-        .step-card:hover .step-number {
+        .step-item:hover .step-number {
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--step-color);
         }
 
@@ -521,144 +518,154 @@
         </div>
     </section>
 
-    <!-- CFD Workflow Steps -->
+    <!-- CFD Workflow List -->
     <section class="workflow-section">
         <div class="container">
-            <div class="workflow-title">
-                <h2>Professional CFD Setup</h2>
-                <p>Follow the industry-standard configuration sequence</p>
-            </div>
-
-            <div class="workflow-grid">
+            <div class="workflow-list">
                 
                 <!-- Step 1: Time Dependency -->
-                <div class="step-card" onclick="handleStepClick(1)">
-                    <div class="step-header">
-                        <div class="step-number">1</div>
-                        <div class="step-title">Time Dependency</div>
-                    </div>
-                    <div class="step-description">Choose steady or transient analysis</div>
-                    <div class="step-options">
-                        <div class="dropdown">
-                            <button class="dropdown-button">
-                                Steady / Transient <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#time-dependency" class="dropdown-item">Steady State</a>
-                                <a href="#time-dependency" class="dropdown-item">Transient</a>
-                                <a href="#time-dependency" class="dropdown-item">Quasi-Steady</a>
+                <a href="pages/time-dependency.html" class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-info">
+                            <div class="step-title">Time Dependency</div>
+                            <div class="step-description">Choose steady or transient analysis</div>
+                        </div>
+                        <div class="step-options">
+                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+                                <button class="dropdown-button">
+                                    Steady / Transient <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="pages/steady-state.html" class="dropdown-item">Steady State</a>
+                                    <a href="pages/transient.html" class="dropdown-item">Transient</a>
+                                    <a href="pages/quasi-steady.html" class="dropdown-item">Quasi-Steady</a>
+                                </div>
                             </div>
+                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Step 2: Turbulence Model -->
-                <div class="step-card" onclick="handleStepClick(2)">
-                    <div class="step-header">
-                        <div class="step-number">2</div>
-                        <div class="step-title">Turbulence Model</div>
-                    </div>
-                    <div class="step-description">Select turbulence treatment</div>
-                    <div class="step-options">
-                        <div class="dropdown">
-                            <button class="dropdown-button">
-                                Models <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#turbulence" class="dropdown-item">Inviscid</a>
-                                <a href="#turbulence" class="dropdown-item">Laminar</a>
-                                <a href="#turbulence" class="dropdown-item">Spalart-Allmaras</a>
-                                <a href="models/k-epsilon.html" class="dropdown-item available">k-ε Standard</a>
-                                <a href="#turbulence" class="dropdown-item">k-ω Standard</a>
-                                <a href="#turbulence" class="dropdown-item">k-ω SST</a>
-                                <a href="#turbulence" class="dropdown-item">Reynolds Stress</a>
-                                <a href="#turbulence" class="dropdown-item">LES</a>
-                                <a href="#turbulence" class="dropdown-item">DES</a>
+                <a href="pages/turbulence-models.html" class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-info">
+                            <div class="step-title">Turbulence Model</div>
+                            <div class="step-description">Select turbulence treatment</div>
+                        </div>
+                        <div class="step-options">
+                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+                                <button class="dropdown-button">
+                                    Models <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="models/inviscid.html" class="dropdown-item">Inviscid</a>
+                                    <a href="models/laminar.html" class="dropdown-item">Laminar</a>
+                                    <a href="models/spalart-allmaras.html" class="dropdown-item">Spalart-Allmaras</a>
+                                    <a href="models/k-epsilon.html" class="dropdown-item available">k-ε Standard</a>
+                                    <a href="models/k-omega.html" class="dropdown-item">k-ω Standard</a>
+                                    <a href="models/k-omega-sst.html" class="dropdown-item">k-ω SST</a>
+                                    <a href="models/reynolds-stress.html" class="dropdown-item">Reynolds Stress</a>
+                                    <a href="models/les.html" class="dropdown-item">LES</a>
+                                    <a href="models/des.html" class="dropdown-item">DES</a>
+                                </div>
                             </div>
+                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Step 3: Boundary Conditions -->
-                <div class="step-card" onclick="handleStepClick(3)">
-                    <div class="step-header">
-                        <div class="step-number">3</div>
-                        <div class="step-title">Boundary Conditions</div>
-                    </div>
-                    <div class="step-description">Define domain boundaries</div>
-                    <div class="step-options">
-                        <div class="dropdown">
-                            <button class="dropdown-button">
-                                Boundaries <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#boundaries" class="dropdown-item">Velocity Inlet</a>
-                                <a href="#boundaries" class="dropdown-item">Pressure Inlet</a>
-                                <a href="#boundaries" class="dropdown-item">Mass Flow Inlet</a>
-                                <a href="#boundaries" class="dropdown-item">Pressure Outlet</a>
-                                <a href="#boundaries" class="dropdown-item">Outflow</a>
-                                <a href="#boundaries" class="dropdown-item">Wall</a>
-                                <a href="#boundaries" class="dropdown-item">Symmetry</a>
+                <a href="pages/boundary-conditions.html" class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-info">
+                            <div class="step-title">Boundary Conditions</div>
+                            <div class="step-description">Define domain boundaries</div>
+                        </div>
+                        <div class="step-options">
+                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+                                <button class="dropdown-button">
+                                    Boundaries <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="pages/velocity-inlet.html" class="dropdown-item">Velocity Inlet</a>
+                                    <a href="pages/pressure-inlet.html" class="dropdown-item">Pressure Inlet</a>
+                                    <a href="pages/mass-flow-inlet.html" class="dropdown-item">Mass Flow Inlet</a>
+                                    <a href="pages/pressure-outlet.html" class="dropdown-item">Pressure Outlet</a>
+                                    <a href="pages/outflow.html" class="dropdown-item">Outflow</a>
+                                    <a href="pages/wall.html" class="dropdown-item">Wall</a>
+                                    <a href="pages/symmetry.html" class="dropdown-item">Symmetry</a>
+                                </div>
                             </div>
+                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Step 4: Solution Method -->
-                <div class="step-card" onclick="handleStepClick(4)">
-                    <div class="step-header">
-                        <div class="step-number">4</div>
-                        <div class="step-title">Solution Method</div>
-                    </div>
-                    <div class="step-description">Choose solver algorithm</div>
-                    <div class="step-options">
-                        <div class="dropdown">
-                            <button class="dropdown-button">
-                                Algorithms <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#algorithms" class="dropdown-item">SIMPLE</a>
-                                <a href="#algorithms" class="dropdown-item">SIMPLEC</a>
-                                <a href="#algorithms" class="dropdown-item">PISO</a>
-                                <a href="#algorithms" class="dropdown-item">Coupled</a>
-                                <a href="#algorithms" class="dropdown-item">PIMPLE</a>
-                            </div>
+                <a href="pages/solution-methods.html" class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-info">
+                            <div class="step-title">Solution Method</div>
+                            <div class="step-description">Choose solver algorithm</div>
                         </div>
-                        <div class="dropdown">
-                            <button class="dropdown-button">
-                                Discretization <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#discretization" class="dropdown-item">First Order Upwind</a>
-                                <a href="#discretization" class="dropdown-item">Second Order Upwind</a>
-                                <a href="#discretization" class="dropdown-item">Central Difference</a>
-                                <a href="#discretization" class="dropdown-item">QUICK</a>
+                        <div class="step-options">
+                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+                                <button class="dropdown-button">
+                                    Algorithms <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="pages/simple.html" class="dropdown-item">SIMPLE</a>
+                                    <a href="pages/simplec.html" class="dropdown-item">SIMPLEC</a>
+                                    <a href="pages/piso.html" class="dropdown-item">PISO</a>
+                                    <a href="pages/coupled.html" class="dropdown-item">Coupled</a>
+                                    <a href="pages/pimple.html" class="dropdown-item">PIMPLE</a>
+                                </div>
                             </div>
+                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+                                <button class="dropdown-button">
+                                    Discretization <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="pages/upwind.html" class="dropdown-item">First Order Upwind</a>
+                                    <a href="pages/second-order-upwind.html" class="dropdown-item">Second Order Upwind</a>
+                                    <a href="pages/central-difference.html" class="dropdown-item">Central Difference</a>
+                                    <a href="pages/quick.html" class="dropdown-item">QUICK</a>
+                                </div>
+                            </div>
+                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Step 5: Relaxation & Convergence -->
-                <div class="step-card" onclick="handleStepClick(5)">
-                    <div class="step-header">
-                        <div class="step-number">5</div>
-                        <div class="step-title">Relaxation & Convergence</div>
-                    </div>
-                    <div class="step-description">Set solver controls</div>
-                    <div class="step-options">
-                        <div class="dropdown">
-                            <button class="dropdown-button">
-                                Controls <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="#controls" class="dropdown-item">Under-Relaxation</a>
-                                <a href="#controls" class="dropdown-item">Residual Criteria</a>
-                                <a href="#controls" class="dropdown-item">Iteration Limits</a>
-                                <a href="#controls" class="dropdown-item">Time Step Size</a>
+                <a href="pages/relaxation-convergence.html" class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-info">
+                            <div class="step-title">Relaxation & Convergence</div>
+                            <div class="step-description">Set solver controls</div>
+                        </div>
+                        <div class="step-options">
+                            <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+                                <button class="dropdown-button">
+                                    Controls <i data-lucide="chevron-down" style="width: 0.875rem; height: 0.875rem; margin-left: 0.5rem;"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="pages/under-relaxation.html" class="dropdown-item">Under-Relaxation</a>
+                                    <a href="pages/residual-criteria.html" class="dropdown-item">Residual Criteria</a>
+                                    <a href="pages/iteration-limits.html" class="dropdown-item">Iteration Limits</a>
+                                    <a href="pages/time-step-size.html" class="dropdown-item">Time Step Size</a>
+                                </div>
                             </div>
+                            <i data-lucide="arrow-right" class="arrow-icon" style="width: 1.25rem; height: 1.25rem;"></i>
                         </div>
                     </div>
-                </div>
+                </a>
 
             </div>
         </div>
@@ -675,69 +682,6 @@
         // Initialize icons
         lucide.createIcons();
 
-        // Handle step card clicks
-        function handleStepClick(stepNumber) {
-            const card = document.querySelector(`.step-card:nth-child(${stepNumber})`);
-            
-            // Add clicked animation
-            card.classList.add('clicked');
-            setTimeout(() => {
-                card.classList.remove('clicked');
-            }, 600);
-
-            // Add ripple effect
-            const ripple = document.createElement('div');
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.3);
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                pointer-events: none;
-            `;
-            
-            const rect = card.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
-            ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
-            
-            card.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-
-            // Scroll to relevant section or show info
-            console.log(`Step ${stepNumber} clicked - CFD workflow step activated`);
-        }
-
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Add stagger animation on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        });
-
-        document.querySelectorAll('.step-card').forEach((card) => {
-            observer.observe(card);
-        });
-
         // Prevent dropdown from closing when clicking inside
         document.querySelectorAll('.dropdown-content').forEach(dropdown => {
             dropdown.addEventListener('click', function(e) {
@@ -747,6 +691,15 @@
 
         // Add smooth scroll behavior
         document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Handle step item clicks (for analytics or future features)
+        document.querySelectorAll('.step-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Don't interfere with navigation, just log for analytics
+                const stepTitle = this.querySelector('.step-title').textContent;
+                console.log(`Navigating to: ${stepTitle}`);
+            });
+        });
     </script>
 </body>
 </html>
