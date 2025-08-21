@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFD Solver Explainer - Turbulence Models Simplified</title>
-    <meta name="description" content="Every CFD turbulence model explained with clear analogies and practical insights. From inviscid to LES.">
+    <title>CFD Solver Explainer - Models & Methods Simplified</title>
+    <meta name="description" content="Every CFD model and method explained with clear analogies. Turbulence models, discretization schemes, solver methods, and more.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,12 +34,12 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* Header with Enhanced Dropdown */
+        /* Header with Multiple Dropdowns */
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -78,7 +78,7 @@
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .dropdown {
@@ -88,10 +88,10 @@
         .dropdown-button {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            color: white;
-            padding: 0.75rem 1.5rem;
+            gap: 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #4f46e5;
+            padding: 0.75rem 1.25rem;
             border-radius: 0.75rem;
             text-decoration: none;
             font-weight: 600;
@@ -99,12 +99,11 @@
             transition: all 0.3s ease;
             cursor: pointer;
             border: none;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
         }
 
         .dropdown-button:hover {
+            background: rgba(99, 102, 241, 0.2);
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
 
         .dropdown-menu {
@@ -115,7 +114,7 @@
             border: 1px solid rgba(99, 102, 241, 0.2);
             border-radius: 1rem;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            min-width: 350px;
+            min-width: 280px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
@@ -131,7 +130,7 @@
         }
 
         .dropdown-section {
-            padding: 1.25rem;
+            padding: 1rem;
             border-bottom: 1px solid #f3f4f6;
         }
 
@@ -145,35 +144,29 @@
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .dropdown-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0.75rem;
-            border-radius: 0.75rem;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
             text-decoration: none;
             color: #374151;
             transition: all 0.2s ease;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .dropdown-item:hover {
             background: rgba(99, 102, 241, 0.1);
             color: #4f46e5;
-            transform: translateX(4px);
         }
 
         .dropdown-item.available {
             color: #1f2937;
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        .dropdown-item.available:hover {
-            background: rgba(16, 185, 129, 0.1);
-            color: #059669;
+            font-weight: 600;
         }
 
         .dropdown-item.coming-soon {
@@ -181,18 +174,17 @@
             opacity: 0.7;
         }
 
-        .model-icon-small {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.75rem;
+        .model-icon-dropdown {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.625rem;
             color: white;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .github-link {
@@ -229,7 +221,7 @@
             font-size: 1.25rem;
             color: #4b5563;
             margin-bottom: 3rem;
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -254,8 +246,8 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
         }
 
-        /* Models List Section */
-        .models-section {
+        /* Main Categories Section */
+        .categories-section {
             padding: 4rem 0;
         }
 
@@ -276,169 +268,97 @@
             color: #6b7280;
         }
 
-        .models-container {
-            background: white;
-            border-radius: 2rem;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .model-group {
-            margin-bottom: 3rem;
-        }
-
-        .model-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .group-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f3f4f6;
-        }
-
-        .group-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .group-header h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .group-header p {
-            color: #6b7280;
-            font-size: 0.875rem;
-            margin-left: auto;
-        }
-
-        .models-list {
+        .categories-grid {
             display: grid;
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
-        .model-item {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 1rem;
+        .category-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             color: inherit;
-            transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
+            cursor: pointer;
         }
 
-        .model-item:hover {
-            border-color: #6366f1;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
-            background: #f0f4f8;
-        }
-
-        .model-item.available {
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        .model-item.available:hover {
-            border-color: #059669;
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .model-item.available::after {
-            content: "Available";
+        .category-card::before {
+            content: '';
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #10b981;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
-            font-weight: 600;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #06b6d4);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
-        .model-item.coming-soon {
-            opacity: 0.6;
+        .category-card:hover::before {
+            transform: scaleX(1);
         }
 
-        .model-item.coming-soon::after {
-            content: "Coming Soon";
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #6b7280;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
-        .model-icon-list {
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
             width: 4rem;
             height: 4rem;
             border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
             color: white;
-            flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .model-info {
-            flex: 1;
-        }
-
-        .model-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .model-description-list {
-            color: #6b7280;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            margin-bottom: 0.75rem;
-        }
-
-        .model-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .complexity-tag {
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
+        .category-status {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .feature-tag {
+        .category-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-description {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .category-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-tag {
             background: rgba(99, 102, 241, 0.1);
             color: #4f46e5;
             padding: 0.25rem 0.75rem;
@@ -447,19 +367,37 @@
             font-weight: 500;
         }
 
-        /* Complexity Tags */
-        .tag-simple { background: rgba(34, 197, 94, 0.1); color: #15803d; }
-        .tag-basic { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
-        .tag-intermediate { background: rgba(249, 115, 22, 0.1); color: #ea580c; }
-        .tag-advanced { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
-        .tag-expert { background: rgba(147, 51, 234, 0.1); color: #7c3aed; }
+        .category-insight {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #059669;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+        }
 
-        /* Model Icons */
-        .icon-simple { background: linear-gradient(135deg, #22c55e, #16a34a); }
-        .icon-basic { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .icon-intermediate { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .icon-advanced { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        .icon-expert { background: linear-gradient(135deg, #7c3aed, #6366f1); }
+        /* Category Specific Styles */
+        .turbulence-card {
+            border-left: 4px solid #7c3aed;
+        }
+
+        .discretization-card {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .solver-card {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .boundary-card {
+            border-left: 4px solid #10b981;
+        }
+
+        .status-available { background: rgba(16, 185, 129, 0.1); color: #059669; }
+        .status-coming-soon { background: rgba(107, 114, 128, 0.1); color: #6b7280; }
 
         /* Footer */
         .footer {
@@ -482,22 +420,18 @@
                 font-size: 2.5rem;
             }
             
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
             .container {
                 padding: 0 1rem;
             }
 
             .nav-menu {
-                display: none;
-            }
-
-            .model-item {
                 flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .model-tags {
-                justify-content: center;
+                gap: 0.5rem;
             }
         }
 
@@ -505,7 +439,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -513,15 +447,14 @@
             }
         }
 
-        .model-item {
-            animation: fadeInUp 0.5s ease-out;
+        .category-card {
+            animation: fadeInUp 0.6s ease-out;
         }
 
-        .model-item:nth-child(1) { animation-delay: 0.1s; }
-        .model-item:nth-child(2) { animation-delay: 0.2s; }
-        .model-item:nth-child(3) { animation-delay: 0.3s; }
-        .model-item:nth-child(4) { animation-delay: 0.4s; }
-        .model-item:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
@@ -535,109 +468,131 @@
                     </div>
                     <div>
                         <h1>CFD Solver Explainer</h1>
-                        <p>Turbulence Models</p>
+                        <p>Models & Methods</p>
                     </div>
                 </a>
                 
                 <div class="nav-menu">
+                    <!-- Turbulence Models Dropdown -->
                     <div class="dropdown">
                         <button class="dropdown-button">
-                            <i data-lucide="layers" style="width: 1.25rem; height: 1.25rem;"></i>
-                            <span>Browse All Models</span>
-                            <i data-lucide="chevron-down" style="width: 1.25rem; height: 1.25rem;"></i>
+                            <i data-lucide="zap" style="width: 1rem; height: 1rem;"></i>
+                            <span>Turbulence Models</span>
+                            <i data-lucide="chevron-down" style="width: 1rem; height: 1rem;"></i>
                         </button>
                         
                         <div class="dropdown-menu">
                             <div class="dropdown-section">
                                 <h3>Simple Models</h3>
-                                <a href="#inviscid" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #22c55e, #16a34a);">∅</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Inviscid</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">No viscosity effects</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #22c55e;">∅</div>
+                                    <span>Inviscid</span>
                                 </a>
-                                <a href="#laminar" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #22c55e, #16a34a);">L</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Laminar</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Smooth, ordered flow</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #22c55e;">L</div>
+                                    <span>Laminar</span>
                                 </a>
                             </div>
                             
                             <div class="dropdown-section">
                                 <h3>RANS Models</h3>
-                                <a href="#spalart-allmaras" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">SA</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Spalart-Allmaras</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">One-equation model</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #3b82f6;">SA</div>
+                                    <span>Spalart-Allmaras</span>
                                 </a>
                                 <a href="models/k-epsilon.html" class="dropdown-item available">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">k-ε</div>
-                                    <div>
-                                        <div style="font-weight: 600;">k-ε Standard</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Two-equation workhorse</div>
-                                    </div>
+                                    <div class="model-icon-dropdown" style="background: #7c3aed;">k-ε</div>
+                                    <span>k-ε Standard</span>
                                 </a>
-                                <a href="#k-omega" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">k-ω</div>
-                                    <div>
-                                        <div style="font-weight: 600;">k-ω Standard</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Better near walls</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #7c3aed;">k-ω</div>
+                                    <span>k-ω Standard</span>
                                 </a>
-                                <a href="#reynolds-stress" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #ef4444, #dc2626);">RSM</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Reynolds Stress</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Seven equations</div>
-                                    </div>
-                                </a>
-                            </div>
-                            
-                            <div class="dropdown-section">
-                                <h3>Transition Models</h3>
-                                <a href="#transition-k-kl-omega" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #f59e0b, #d97706);">k-kL</div>
-                                    <div>
-                                        <div style="font-weight: 600;">k-kL-ω</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Laminar length scale</div>
-                                    </div>
-                                </a>
-                                <a href="#transition-sst" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #f59e0b, #d97706);">γ-Reθ</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Transition SST</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Intermittency model</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #ef4444;">RSM</div>
+                                    <span>Reynolds Stress</span>
                                 </a>
                             </div>
                             
                             <div class="dropdown-section">
                                 <h3>Advanced Methods</h3>
-                                <a href="#sas" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">SAS</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Scale Adaptive Simulation</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Hybrid RANS-LES</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #f59e0b;">SAS</div>
+                                    <span>Scale Adaptive</span>
                                 </a>
-                                <a href="#des" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">DES</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Detached Eddy Simulation</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">RANS + LES hybrid</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #ef4444;">DES</div>
+                                    <span>Detached Eddy</span>
                                 </a>
-                                <a href="#les" class="dropdown-item coming-soon">
-                                    <div class="model-icon-small" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">LES</div>
-                                    <div>
-                                        <div style="font-weight: 600;">Large Eddy Simulation</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">Resolve large eddies</div>
-                                    </div>
+                                <a href="#turbulence" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #dc2626;">LES</div>
+                                    <span>Large Eddy</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discretization Dropdown -->
+                    <div class="dropdown">
+                        <button class="dropdown-button">
+                            <i data-lucide="grid-3x3" style="width: 1rem; height: 1rem;"></i>
+                            <span>Discretization</span>
+                            <i data-lucide="chevron-down" style="width: 1rem; height: 1rem;"></i>
+                        </button>
+                        
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h3>Spatial Schemes</h3>
+                                <a href="#discretization" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #3b82f6;">UW</div>
+                                    <span>Upwind</span>
+                                </a>
+                                <a href="#discretization" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #3b82f6;">CDS</div>
+                                    <span>Central Difference</span>
+                                </a>
+                                <a href="#discretization" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #6366f1;">Q</div>
+                                    <span>QUICK</span>
+                                </a>
+                            </div>
+                            
+                            <div class="dropdown-section">
+                                <h3>Temporal Schemes</h3>
+                                <a href="#discretization" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #f59e0b;">1st</div>
+                                    <span>First Order Implicit</span>
+                                </a>
+                                <a href="#discretization" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #f59e0b;">2nd</div>
+                                    <span>Second Order Implicit</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solvers Dropdown -->
+                    <div class="dropdown">
+                        <button class="dropdown-button">
+                            <i data-lucide="settings" style="width: 1rem; height: 1rem;"></i>
+                            <span>Solvers</span>
+                            <i data-lucide="chevron-down" style="width: 1rem; height: 1rem;"></i>
+                        </button>
+                        
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h3>Pressure-Velocity</h3>
+                                <a href="#solvers" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #f59e0b;">SIM</div>
+                                    <span>SIMPLE</span>
+                                </a>
+                                <a href="#solvers" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #f59e0b;">PSO</div>
+                                    <span>PISO</span>
+                                </a>
+                                <a href="#solvers" class="dropdown-item coming-soon">
+                                    <div class="model-icon-dropdown" style="background: #ef4444;">CPL</div>
+                                    <span>Coupled</span>
                                 </a>
                             </div>
                         </div>
@@ -654,244 +609,176 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>CFD Turbulence Models<br>Simply Explained</h1>
+            <h1>CFD Models & Methods<br>Simply Explained</h1>
             <p>
-                From inviscid flow to Large Eddy Simulation - understand every turbulence model 
-                in your CFD solver. Learn when to use each one, how they work, and their limitations.
+                Understand every aspect of your CFD solver - from turbulence models to discretization schemes. 
+                Learn when to use each method, how they work, and their trade-offs for accurate simulations.
             </p>
-            <a href="#models" class="cta-button">
-                <span>Explore All Models</span>
+            <a href="#categories" class="cta-button">
+                <span>Explore All Categories</span>
                 <i data-lucide="arrow-right" style="width: 1.25rem; height: 1.25rem;"></i>
             </a>
         </div>
     </section>
 
-    <!-- All Turbulence Models as List -->
-    <section id="models" class="models-section">
+    <!-- Main Categories -->
+    <section id="categories" class="categories-section">
         <div class="container">
             <div class="section-title">
-                <h2>All Turbulence Models</h2>
-                <p>Organized by complexity - from simple to expert level</p>
+                <h2>CFD Categories</h2>
+                <p>Everything you need to understand your CFD solver</p>
             </div>
 
-            <div class="models-container">
+            <div class="categories-grid">
                 
-                <!-- Simple Models -->
-                <div class="model-group">
-                    <div class="group-header">
-                        <div class="group-icon icon-simple">
-                            <i data-lucide="circle" style="width: 1.25rem; height: 1.25rem;"></i>
+                <!-- Turbulence Models -->
+                <div class="category-card turbulence-card" id="turbulence">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">
+                            <i data-lucide="zap" style="width: 2rem; height: 2rem;"></i>
                         </div>
-                        <h3>Simple Models</h3>
-                        <p>Basic flow assumptions</p>
+                        <span class="category-status status-available">10 Models</span>
                     </div>
                     
-                    <div class="models-list">
-                        <div class="model-item coming-soon" id="inviscid">
-                            <div class="model-icon-list icon-simple">∅</div>
-                            <div class="model-info">
-                                <div class="model-name">Inviscid Flow</div>
-                                <div class="model-description-list">
-                                    Perfect fluid with no viscosity. Solves Euler equations for pressure-driven flows.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-simple">Simple</span>
-                                    <span class="feature-tag">No viscosity</span>
-                                    <span class="feature-tag">External flow</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="model-item coming-soon" id="laminar">
-                            <div class="model-icon-list icon-simple">L</div>
-                            <div class="model-info">
-                                <div class="model-name">Laminar Flow</div>
-                                <div class="model-description-list">
-                                    Smooth, ordered flow with no turbulence. Solves Navier-Stokes equations directly.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-simple">Simple</span>
-                                    <span class="feature-tag">No turbulence</span>
-                                    <span class="feature-tag">Low Re</span>
-                                </div>
-                            </div>
-                        </div>
+                    <h3 class="category-title">Turbulence Models</h3>
+                    <p class="category-description">
+                        From inviscid to Large Eddy Simulation. Understand how your solver 
+                        handles turbulent flows and when to use each model.
+                    </p>
+                    
+                    <div class="category-examples">
+                        <span class="example-tag">k-ε Standard</span>
+                        <span class="example-tag">k-ω SST</span>
+                        <span class="example-tag">LES</span>
+                        <span class="example-tag">DES</span>
+                    </div>
+                    
+                    <div class="category-insight">
+                        <i data-lucide="layers" style="width: 1rem; height: 1rem;"></i>
+                        <span>From simple RANS to advanced LES</span>
                     </div>
                 </div>
 
-                <!-- RANS Models -->
-                <div class="model-group">
-                    <div class="group-header">
-                        <div class="group-icon icon-basic">
-                            <i data-lucide="layers" style="width: 1.25rem; height: 1.25rem;"></i>
+                <!-- Discretization Schemes -->
+                <div class="category-card discretization-card" id="discretization">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+                            <i data-lucide="grid-3x3" style="width: 2rem; height: 2rem;"></i>
                         </div>
-                        <h3>RANS Models</h3>
-                        <p>Reynolds-Averaged Navier-Stokes</p>
+                        <span class="category-status status-coming-soon">Coming Soon</span>
                     </div>
                     
-                    <div class="models-list">
-                        <div class="model-item coming-soon" id="spalart-allmaras">
-                            <div class="model-icon-list icon-basic">SA</div>
-                            <div class="model-info">
-                                <div class="model-name">Spalart-Allmaras</div>
-                                <div class="model-description-list">
-                                    One-equation model for turbulent viscosity. Popular in aerospace applications.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-basic">Basic</span>
-                                    <span class="feature-tag">One equation</span>
-                                    <span class="feature-tag">Aerospace</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="models/k-epsilon.html" class="model-item available" id="k-epsilon">
-                            <div class="model-icon-list icon-basic">k-ε</div>
-                            <div class="model-info">
-                                <div class="model-name">k-ε Standard</div>
-                                <div class="model-description-list">
-                                    Two-equation model for turbulent kinetic energy and dissipation. Industry workhorse.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-basic">Basic</span>
-                                    <span class="feature-tag">Two equations</span>
-                                    <span class="feature-tag">Robust</span>
-                                    <span class="feature-tag">Industrial</span>
-                                </div>
-                            </div>
-                        </a>
-
-                        <div class="model-item coming-soon" id="k-omega">
-                            <div class="model-icon-list icon-basic">k-ω</div>
-                            <div class="model-info">
-                                <div class="model-name">k-ω Standard</div>
-                                <div class="model-description-list">
-                                    Two-equation model with specific dissipation rate. Better near-wall treatment.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-basic">Basic</span>
-                                    <span class="feature-tag">Two equations</span>
-                                    <span class="feature-tag">Near-wall</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="model-item coming-soon" id="reynolds-stress">
-                            <div class="model-icon-list icon-advanced">RSM</div>
-                            <div class="model-info">
-                                <div class="model-name">Reynolds Stress Model</div>
-                                <div class="model-description-list">
-                                    Seven-equation model solving individual Reynolds stress components.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-advanced">Advanced</span>
-                                    <span class="feature-tag">Seven equations</span>
-                                    <span class="feature-tag">Anisotropic</span>
-                                </div>
-                            </div>
-                        </div>
+                    <h3 class="category-title">Discretization Schemes</h3>
+                    <p class="category-description">
+                        How your solver converts continuous equations into discrete form. 
+                        Learn the trade-offs between accuracy and stability.
+                    </p>
+                    
+                    <div class="category-examples">
+                        <span class="example-tag">Upwind</span>
+                        <span class="example-tag">Central Difference</span>
+                        <span class="example-tag">QUICK</span>
+                        <span class="example-tag">TVD</span>
+                    </div>
+                    
+                    <div class="category-insight">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Transition Models -->
-                <div class="model-group">
-                    <div class="group-header">
-                        <div class="group-icon icon-intermediate">
-                            <i data-lucide="trending-up" style="width: 1.25rem; height: 1.25rem;"></i>
+                <!-- Solver Methods -->
+                <div class="category-card solver-card" id="solvers">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <i data-lucide="settings" style="width: 2rem; height: 2rem;"></i>
                         </div>
-                        <h3>Transition Models</h3>
-                        <p>Laminar-to-turbulent transition</p>
+                        <span class="category-status status-coming-soon">Coming Soon</span>
                     </div>
                     
-                    <div class="models-list">
-                        <div class="model-item coming-soon" id="transition-k-kl-omega">
-                            <div class="model-icon-list icon-intermediate">k-kL</div>
-                            <div class="model-info">
-                                <div class="model-name">k-kL-ω Transition</div>
-                                <div class="model-description-list">
-                                    Three-equation model with laminar kinetic energy for natural transition.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-intermediate">Intermediate</span>
-                                    <span class="feature-tag">Three equations</span>
-                                    <span class="feature-tag">Transition</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="model-item coming-soon" id="transition-sst">
-                            <div class="model-icon-list icon-intermediate">γ-Reθ</div>
-                            <div class="model-info">
-                                <div class="model-name">Transition SST</div>
-                                <div class="model-description-list">
-                                    Four-equation model with intermittency and transition onset criteria.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-intermediate">Intermediate</span>
-                                    <span class="feature-tag">Four equations</span>
-                                    <span class="feature-tag">Intermittency</span>
-                                </div>
-                            </div>
-                        </div>
+                    <h3 class="category-title">Solver Methods</h3>
+                    <p class="category-description">
+                        Pressure-velocity coupling algorithms and solution strategies. 
+                        Understand how your solver achieves convergence.
+                    </p>
+                    
+                    <div class="category-examples">
+                        <span class="example-tag">SIMPLE</span>
+                        <span class="example-tag">PISO</span>
+                        <span class="example-tag">Coupled</span>
+                        <span class="example-tag">SIMPLEC</span>
+                    </div>
+                    
+                    <div class="category-insight">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Advanced Methods -->
-                <div class="model-group">
-                    <div class="group-header">
-                        <div class="group-icon icon-expert">
-                            <i data-lucide="zap" style="width: 1.25rem; height: 1.25rem;"></i>
+                <!-- Boundary Conditions -->
+                <div class="category-card boundary-card" id="boundary">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <i data-lucide="square-dashed-bottom-code" style="width: 2rem; height: 2rem;"></i>
                         </div>
-                        <h3>Advanced Methods</h3>
-                        <p>High-fidelity turbulence simulation</p>
+                        <span class="category-status status-coming-soon">Coming Soon</span>
                     </div>
                     
-                    <div class="models-list">
-                        <div class="model-item coming-soon" id="sas">
-                            <div class="model-icon-list icon-expert">SAS</div>
-                            <div class="model-info">
-                                <div class="model-name">Scale Adaptive Simulation</div>
-                                <div class="model-description-list">
-                                    Hybrid RANS-LES that automatically adapts based on local flow conditions.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-expert">Expert</span>
-                                    <span class="feature-tag">Hybrid</span>
-                                    <span class="feature-tag">Adaptive</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="model-item coming-soon" id="des">
-                            <div class="model-icon-list icon-expert">DES</div>
-                            <div class="model-info">
-                                <div class="model-name">Detached Eddy Simulation</div>
-                                <div class="model-description-list">
-                                    RANS near walls, LES in separated regions. Best for massive separation.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-expert">Expert</span>
-                                    <span class="feature-tag">Hybrid</span>
-                                    <span class="feature-tag">Separation</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="model-item coming-soon" id="les">
-                            <div class="model-icon-list icon-expert">LES</div>
-                            <div class="model-info">
-                                <div class="model-name">Large Eddy Simulation</div>
-                                <div class="model-description-list">
-                                    Resolves large turbulent structures, models small ones. Most accurate for unsteady flows.
-                                </div>
-                                <div class="model-tags">
-                                    <span class="complexity-tag tag-expert">Expert</span>
-                                    <span class="feature-tag">Time-accurate</span>
-                                    <span class="feature-tag">Fine mesh</span>
-                                </div>
-                            </div>
-                        </div>
+                    <h3 class="category-title">Boundary Conditions</h3>
+                    <p class="category-description">
+                        How your solver handles domain boundaries. Learn when to use 
+                        each type and how they affect your solution.
+                    </p>
+                    
+                    <div class="category-examples">
+                        <span class="example-tag">Velocity Inlet</span>
+                        <span class="example-tag">Pressure Outlet</span>
+                        <span class="example-tag">Wall Functions</span>
+                        <span class="example-tag">Symmetry</span>
                     </div>
+                    
+                    <div class="category-insight">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Guide -->
+    <section style="background: white; padding: 4rem 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>CFD Quick Start Guide</h2>
+                <p>Essential knowledge for CFD practitioners</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                
+                <div style="background: linear-gradient(135deg, #f3e8ff, #e9d5ff); border: 2px solid #7c3aed; border-radius: 1.5rem; padding: 2rem; text-align: center;">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #7c3aed, #6366f1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">1</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Choose Turbulence Model</h3>
+                    <p style="color: #6b7280;">Start with k-ε for industrial flows, k-ω for aerospace, LES for research</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #3b82f6; border-radius: 1.5rem; padding: 2rem; text-align: center;">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">2</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Set Discretization</h3>
+                    <p style="color: #6b7280;">Second-order schemes for accuracy, first-order for stability</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 1.5rem; padding: 2rem; text-align: center;">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">3</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Configure Solver</h3>
+                    <p style="color: #6b7280;">SIMPLE for steady, PISO for unsteady, Coupled for speed</p>
                 </div>
 
             </div>
@@ -912,7 +799,7 @@
         // Initialize icons
         lucide.createIcons();
 
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links and category navigation
         document.addEventListener('click', function(e) {
             if (e.target.closest('a[href^="#"]')) {
                 e.preventDefault();
@@ -937,6 +824,18 @@
             }
         });
 
+        // Category card click handling
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const categoryId = this.id;
+                // For now, just add a highlight effect
+                this.style.background = 'rgba(99, 102, 241, 0.05)';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 1000);
+            });
+        });
+
         // Add stagger animation on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -947,8 +846,8 @@
             });
         });
 
-        document.querySelectorAll('.model-item').forEach((item) => {
-            observer.observe(item);
+        document.querySelectorAll('.category-card').forEach((card) => {
+            observer.observe(card);
         });
     </script>
 </body>
