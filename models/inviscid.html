@@ -396,8 +396,53 @@
             <div class="content-grid">
                 <div class="main-column">
                     
+                    <!-- FIRST: Enhanced CFD Guidance -->
+                    <div class="content-section" id="guidance">
+                        <h2>
+                            <span>🎯</span>
+                            CFD Guidance - Inviscid Flow
+                        </h2>
+                        
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use Inviscid Flow (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>High Reynolds number external flows</strong> (Re > 10⁶) - Viscous forces negligible compared to inertial forces</li>
+                                <li><strong>Far-field flow analysis</strong> around objects - Away from boundary layers where viscosity dominates</li>
+                                <li><strong>Supersonic and hypersonic flows</strong> - Shock waves and compressibility effects dominate over viscosity</li>
+                                <li><strong>Initial design studies</strong> - Quick conceptual analysis before detailed viscous calculations</li>
+                                <li><strong>Potential flow regions</strong> - Core flow areas where viscous effects are minimal</li>
+                                <li><strong>Computational efficiency critical</strong> - When speed is more important than viscous accuracy</li>
+                                <li><strong>Inviscid flow benchmarking</strong> - Validating CFD codes against analytical solutions</li>
+                            </ul>
+                        </div>
+
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid Inviscid Flow (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>ANY flow with significant viscous effects</strong> - Boundary layers, wake regions, viscous sublayers</li>
+                                <li><strong>Boundary layer analysis</strong> - No-slip conditions cannot be satisfied (infinite velocity gradients)</li>
+                                <li><strong>Internal flows</strong> (pipes, ducts) - Wall friction dominates, viscous losses critical</li>
+                                <li><strong>Low Reynolds number flows</strong> (Re < 10⁴) - Viscous forces comparable to inertial forces</li>
+                                <li><strong>Heat transfer calculations</strong> - No thermal boundary layers, infinite heat transfer rates</li>
+                                <li><strong>Flows with separation/recirculation</strong> - Viscous effects cause flow detachment</li>
+                                <li><strong>Drag force predictions</strong> - Cannot predict viscous (friction) drag components</li>
+                            </ul>
+                        </div>
+
+                        <h3>Setup Tips & Best Practices</h3>
+                        <ul>
+                            <li><strong>Slip boundary conditions at walls</strong> - Tangential velocity ≠ 0, only normal velocity = 0</li>
+                            <li><strong>Focus on pressure and velocity distributions</strong> - Primary flow variables in inviscid analysis</li>
+                            <li><strong>Monitor mass conservation</strong> - ∇·(ρu) = 0 must be satisfied everywhere</li>
+                            <li><strong>Check for shock formation</strong> in compressible flow - Discontinuities in flow properties</li>
+                            <li><strong>Validate against potential flow theory</strong> - For incompressible, irrotational cases</li>
+                        </ul>
+                    </div>
+
                     <!-- Enhanced Equations with Detailed Explanations -->
-                    <div class="content-section">
+                    <div class="content-section" id="equations">
                         <h2>
                             <span>📐</span>
                             Euler Equations - Detailed Analysis
@@ -517,50 +562,7 @@
                         <p><strong>Energy conservation:</strong> Total energy is conserved in the absence of viscous dissipation.</p>
                     </div>
 
-                    <!-- Enhanced CFD Guidance -->
-                    <div class="content-section">
-                        <h2>
-                            <span>🎯</span>
-                            CFD Guidance
-                        </h2>
-                        
-                        <!-- HIGHLIGHTED: When to Use -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use (Critical Applications)</h3>
-                            <ul style="color: #065f46; font-weight: 500;">
-                                <li><strong>High Reynolds number external flows</strong> (Re > 10⁶) - Viscous forces negligible compared to inertial forces</li>
-                                <li><strong>Far-field flow analysis</strong> around objects - Away from boundary layers where viscosity dominates</li>
-                                <li><strong>Supersonic and hypersonic flows</strong> - Shock waves and compressibility effects dominate over viscosity</li>
-                                <li><strong>Initial design studies</strong> - Quick conceptual analysis before detailed viscous calculations</li>
-                                <li><strong>Potential flow regions</strong> - Core flow areas where viscous effects are minimal</li>
-                                <li><strong>Computational efficiency critical</strong> - When speed is more important than viscous accuracy</li>
-                                <li><strong>Inviscid flow benchmarking</strong> - Validating CFD codes against analytical solutions</li>
-                            </ul>
-                        </div>
 
-                        <!-- HIGHLIGHTED: When to Avoid -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid (Critical Limitations)</h3>
-                            <ul style="color: #7f1d1d; font-weight: 500;">
-                                <li><strong>ANY flow with significant viscous effects</strong> - Boundary layers, wake regions, viscous sublayers</li>
-                                <li><strong>Boundary layer analysis</strong> - No-slip conditions cannot be satisfied (infinite velocity gradients)</li>
-                                <li><strong>Internal flows</strong> (pipes, ducts) - Wall friction dominates, viscous losses critical</li>
-                                <li><strong>Low Reynolds number flows</strong> (Re < 10⁴) - Viscous forces comparable to inertial forces</li>
-                                <li><strong>Heat transfer calculations</strong> - No thermal boundary layers, infinite heat transfer rates</li>
-                                <li><strong>Flows with separation/recirculation</strong> - Viscous effects cause flow detachment</li>
-                                <li><strong>Drag force predictions</strong> - Cannot predict viscous (friction) drag components</li>
-                            </ul>
-                        </div>
-
-                        <h3>Setup Tips</h3>
-                        <ul>
-                            <li><strong>Slip boundary conditions at walls</strong> - Tangential velocity ≠ 0, only normal velocity = 0</li>
-                            <li><strong>Focus on pressure and velocity distributions</strong> - Primary flow variables in inviscid analysis</li>
-                            <li><strong>Monitor mass conservation</strong> - ∇·(ρu) = 0 must be satisfied everywhere</li>
-                            <li><strong>Check for shock formation</strong> in compressible flow - Discontinuities in flow properties</li>
-                            <li><strong>Validate against potential flow theory</strong> - For incompressible, irrotational cases</li>
-                        </ul>
-                    </div>
 
                     <!-- Compact Assumptions -->
                     <div class="content-section">
@@ -607,10 +609,10 @@
                         Quick Navigation
                     </h3>
                     <ul>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
                         <li><a href="#equations">📐 Equations</a></li>
                         <li><a href="#variables">🔤 Variables</a></li>
                         <li><a href="#analogy">💡 Analogy</a></li>
-                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
                         <li><a href="#assumptions">📋 Assumptions</a></li>
                     </ul>
 

@@ -396,19 +396,103 @@
             <div class="content-grid">
                 <div class="main-column">
                     
-                    <!-- Compact Equations -->
-                    <div class="content-section">
+                    <!-- FIRST: Enhanced CFD Guidance -->
+                    <div class="content-section" id="guidance">
                         <h2>
-                            <span>📐</span>
-                            Transport Equations
+                            <span>🎯</span>
+                            CFD Guidance - k-ε Model
                         </h2>
                         
-                        <div class="main-equations">
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use k-ε Model (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>High Reynolds number flows</strong> (Re > 10,000) - Fully turbulent attached flows</li>
+                                <li><strong>Industrial applications</strong> with complex geometry - Heat exchangers, mixing chambers</li>
+                                <li><strong>External aerodynamics</strong> - Aircraft, automotive, building flows away from walls</li>
+                                <li><strong>Jet flows and mixing</strong> - Free shear layers, wakes, plumes</li>
+                                <li><strong>Computational efficiency critical</strong> - Large-scale simulations, parametric studies</li>
+                                <li><strong>Standard engineering analysis</strong> - Well-established, widely validated</li>
+                                <li><strong>Flows without strong pressure gradients</strong> - Gradually varying flows</li>
+                            </ul>
+                        </div>
+
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid k-ε Model (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>Near-wall regions without wall functions</strong> - Cannot handle viscous sublayer (y+ < 30)</li>
+                                <li><strong>Strong streamline curvature</strong> - Overpredicts turbulence in curved flows</li>
+                                <li><strong>Rotating or swirling flows</strong> - Missing rotation/curvature corrections</li>
+                                <li><strong>Low Reynolds number flows</strong> - Viscous effects dominate, damping functions needed</li>
+                                <li><strong>Separated flows</strong> - Poor prediction of separation and reattachment</li>
+                                <li><strong>Strong adverse pressure gradients</strong> - Premature separation prediction</li>
+                                <li><strong>Transitional flows</strong> - Cannot predict laminar-turbulent transition</li>
+                                <li><strong>Buoyancy-driven flows</strong> - Needs additional buoyancy corrections</li>
+                            </ul>
+                        </div>
+
+                        <h3>Setup Tips & Best Practices</h3>
+                        <ul>
+                            <li><strong>Wall treatment:</strong> Use y+ > 30 with wall functions, or y+ < 1 with enhanced wall treatment</li>
+                            <li><strong>Initialization:</strong> k = 1.5(UI)², ε = C_μ^(3/4) k^(3/2) / (0.07L) where I = turbulence intensity, L = length scale</li>
+                            <li><strong>Boundary conditions:</strong> Specify k and ε at inlets based on turbulence intensity and length scale</li>
+                            <li><strong>Convergence:</strong> Monitor residuals for both k and ε equations (< 1e-4 for engineering accuracy)</li>
+                            <li><strong>Realizability:</strong> Check for negative k or ε values, use realizable k-ε if needed</li>
+                            <li><strong>Grid requirements:</strong> Adequate resolution in high-gradient regions, especially shear layers</li>
+                        </ul>
+                    </div>
+
+                    <!-- Enhanced Equations with Detailed Explanations -->
+                    <div class="content-section" id="equations">
+                        <h2>
+                            <span>📐</span>
+                            Transport Equations - Detailed Analysis
+                        </h2>
+                        
+                        <!-- k Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Turbulent Kinetic Energy (k) Equation</h3>
                             <div class="equation-large katex-display">
                                 \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \varepsilon + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_k}\right)\frac{\partial k}{\partial x_j}\right]
                             </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Energy balance for turbulent kinetic energy</p>
+                                <p><strong>∂k/∂t:</strong> Rate of k change at fixed point (unsteady term)</p>
+                                <p><strong>U_j ∂k/∂x_j:</strong> Convection of k by mean flow</p>
+                                <p><strong>P_k:</strong> Production of k by mean shear = ν_t (∂U_i/∂x_j)(∂U_i/∂x_j + ∂U_j/∂x_i)</p>
+                                <p><strong>-ε:</strong> Dissipation of k to heat (sink term)</p>
+                                <p><strong>Diffusion term:</strong> (ν + ν_t/σ_k) ∂²k/∂x_j² where σ_k = 1.0</p>
+                            </div>
+                        </div>
+
+                        <!-- ε Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Dissipation Rate (ε) Equation</h3>
                             <div class="equation-large katex-display">
                                 \frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} = C_{1\varepsilon}\frac{\varepsilon}{k}P_k - C_{2\varepsilon}\frac{\varepsilon^2}{k} + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_\varepsilon}\right)\frac{\partial \varepsilon}{\partial x_j}\right]
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Transport equation for dissipation rate (modeled, not exact)</p>
+                                <p><strong>∂ε/∂t:</strong> Rate of ε change at fixed point</p>
+                                <p><strong>U_j ∂ε/∂x_j:</strong> Convection of ε by mean flow</p>
+                                <p><strong>C_1ε (ε/k)P_k:</strong> Production of ε proportional to k production (C_1ε = 1.44)</p>
+                                <p><strong>-C_2ε ε²/k:</strong> Destruction of ε (C_2ε = 1.92)</p>
+                                <p><strong>Diffusion term:</strong> (ν + ν_t/σ_ε) ∂²ε/∂x_j² where σ_ε = 1.3</p>
+                            </div>
+                        </div>
+
+                        <!-- Turbulent Viscosity -->
+                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Turbulent Viscosity Closure</h3>
+                            <div class="equation-large katex-display">
+                                \nu_t = C_\mu \frac{k^2}{\varepsilon}
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Eddy viscosity based on k and ε</p>
+                                <p><strong>C_μ = 0.09:</strong> Model constant from dimensional analysis</p>
+                                <p><strong>k²/ε:</strong> Velocity scale × length scale = (√k) × (k^(3/2)/ε)</p>
+                                <p><strong>Dimensional check:</strong> [ν_t] = [k²/ε] = (m²/s²)²/(m²/s³) = m²/s ✓</p>
                             </div>
                         </div>
                     </div>
@@ -460,37 +544,7 @@
                         <p><strong>ε equation:</strong> Controls how fast energy cascades down the eddy spectrum to molecular dissipation.</p>
                     </div>
 
-                    <!-- Compact Guidance -->
-                    <div class="content-section">
-                        <h2>
-                            <span>🎯</span>
-                            CFD Guidance
-                        </h2>
-                        
-                        <h3>When to Use</h3>
-                        <ul>
-                            <li>High Reynolds number flows (Re > 10,000)</li>
-                            <li>Industrial applications with complex geometry</li>
-                            <li>Flows without significant adverse pressure gradients</li>
-                            <li>When computational efficiency is important</li>
-                        </ul>
 
-                        <h3>When to Avoid</h3>
-                        <ul>
-                            <li>Near-wall regions (use wall functions)</li>
-                            <li>Flows with strong streamline curvature</li>
-                            <li>Rotating or swirling flows</li>
-                            <li>Low Reynolds number applications</li>
-                        </ul>
-
-                        <h3>Setup Tips</h3>
-                        <ul>
-                            <li>Use y+ > 30 with wall functions</li>
-                            <li>Initialize k and ε based on turbulence intensity</li>
-                            <li>Monitor residuals for both k and ε equations</li>
-                            <li>Check for realizability violations</li>
-                        </ul>
-                    </div>
 
                     <!-- Compact Constants -->
                     <div class="content-section">
@@ -528,10 +582,10 @@
                         Quick Navigation
                     </h3>
                     <ul>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
                         <li><a href="#equations">📐 Equations</a></li>
                         <li><a href="#variables">🔤 Variables</a></li>
                         <li><a href="#analogy">💡 Analogy</a></li>
-                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
                         <li><a href="#constants">📊 Constants</a></li>
                     </ul>
 
