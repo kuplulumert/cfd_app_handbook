@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fluid Dynamics Formulas Explained Simply</title>
-    <meta name="description" content="Every fluid dynamics formula explained with sophisticated analogies and clear logic. Make complex concepts stick.">
+    <title>CFD Solver Explainer - Models & Methods Simplified</title>
+    <meta name="description" content="Every CFD model explained with clear analogies and practical insights. Understand what's happening inside your solver.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +29,7 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: #1f2937;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
             min-height: 100vh;
         }
 
@@ -41,9 +41,9 @@
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
             padding: 1rem 0;
             position: sticky;
             top: 0;
@@ -67,12 +67,12 @@
         .logo-icon {
             width: 3rem;
             height: 3rem;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
             border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .logo h1 {
@@ -97,7 +97,7 @@
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #1e40af, #3b82f6, #06b6d4);
+            background: linear-gradient(135deg, #4c1d95, #6366f1, #06b6d4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -108,7 +108,7 @@
             font-size: 1.25rem;
             color: #4b5563;
             margin-bottom: 3rem;
-            max-width: 600px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -117,24 +117,24 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             padding: 1rem 2rem;
             border-radius: 1rem;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.125rem;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
             transition: all 0.3s ease;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
         }
 
-        /* Formula Preview Cards */
-        .formulas-section {
+        /* CFD Model Cards */
+        .models-section {
             padding: 4rem 0;
         }
 
@@ -155,19 +155,19 @@
             color: #6b7280;
         }
 
-        .formulas-grid {
+        .models-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .formula-card {
+        .model-card {
             background: white;
             border-radius: 1.5rem;
             padding: 2.5rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             color: inherit;
@@ -175,36 +175,36 @@
             overflow: hidden;
         }
 
-        .formula-card::before {
+        .model-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            background: linear-gradient(90deg, #6366f1, #06b6d4);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
 
-        .formula-card:hover::before {
+        .model-card:hover::before {
             transform: scaleX(1);
         }
 
-        .formula-card:hover {
+        .model-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: rgba(59, 130, 246, 0.3);
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
-        .formula-header {
+        .model-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 1.5rem;
         }
 
-        .formula-icon {
+        .model-icon {
             width: 3.5rem;
             height: 3.5rem;
             border-radius: 1rem;
@@ -212,14 +212,12 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .tag {
-            background: rgba(59, 130, 246, 0.1);
-            color: #1d4ed8;
             padding: 0.5rem 1rem;
             border-radius: 2rem;
             font-size: 0.75rem;
@@ -228,14 +226,14 @@
             letter-spacing: 0.05em;
         }
 
-        .formula-title {
+        .model-title {
             font-size: 1.5rem;
             font-weight: 700;
             color: #1f2937;
             margin-bottom: 0.75rem;
         }
 
-        .formula-description {
+        .model-description {
             color: #6b7280;
             margin-bottom: 1.5rem;
             line-height: 1.6;
@@ -257,11 +255,11 @@
 
         .equation {
             font-size: 1.25rem;
-            color: #1e40af;
+            color: #4c1d95;
             font-weight: 500;
         }
 
-        .analogy-preview {
+        .model-insight {
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -282,27 +280,28 @@
             background: linear-gradient(135deg, #6b7280, #4b5563);
         }
 
-        .tag-conservation {
-            background: rgba(59, 130, 246, 0.1);
-            color: #1d4ed8;
-        }
-
-        .tag-governing {
+        /* Category Tags */
+        .tag-turbulence {
             background: rgba(147, 51, 234, 0.1);
             color: #7c3aed;
         }
 
-        .tag-internal {
+        .tag-discretization {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1d4ed8;
+        }
+
+        .tag-boundary {
             background: rgba(16, 185, 129, 0.1);
             color: #059669;
         }
 
-        .tag-external {
+        .tag-solver {
             background: rgba(249, 115, 22, 0.1);
             color: #ea580c;
         }
 
-        .tag-dimensionless {
+        .tag-multiphase {
             background: rgba(99, 102, 241, 0.1);
             color: #4f46e5;
         }
@@ -316,7 +315,7 @@
         .footer {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
             padding: 2rem 0;
             text-align: center;
             margin-top: 4rem;
@@ -343,7 +342,7 @@
                 font-size: 2.5rem;
             }
             
-            .formulas-grid {
+            .models-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
@@ -365,16 +364,18 @@
             }
         }
 
-        .formula-card {
+        .model-card {
             animation: fadeInUp 0.6s ease-out;
         }
 
-        .formula-card:nth-child(1) { animation-delay: 0.1s; }
-        .formula-card:nth-child(2) { animation-delay: 0.2s; }
-        .formula-card:nth-child(3) { animation-delay: 0.3s; }
-        .formula-card:nth-child(4) { animation-delay: 0.4s; }
-        .formula-card:nth-child(5) { animation-delay: 0.5s; }
-        .formula-card:nth-child(6) { animation-delay: 0.6s; }
+        .model-card:nth-child(1) { animation-delay: 0.1s; }
+        .model-card:nth-child(2) { animation-delay: 0.2s; }
+        .model-card:nth-child(3) { animation-delay: 0.3s; }
+        .model-card:nth-child(4) { animation-delay: 0.4s; }
+        .model-card:nth-child(5) { animation-delay: 0.5s; }
+        .model-card:nth-child(6) { animation-delay: 0.6s; }
+        .model-card:nth-child(7) { animation-delay: 0.7s; }
+        .model-card:nth-child(8) { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
@@ -384,11 +385,11 @@
             <div class="header-content">
                 <a href="#" class="logo">
                     <div class="logo-icon">
-                        <i data-lucide="waves" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
+                        <i data-lucide="cpu" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
                     </div>
                     <div>
-                        <h1>Fluid Formulas</h1>
-                        <p>Simply Explained</p>
+                        <h1>CFD Solver Explainer</h1>
+                        <p>Models & Methods</p>
                     </div>
                 </a>
                 
@@ -402,173 +403,224 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Every Fluid Formula,<br>Simply Explained</h1>
+            <h1>CFD Models<br>Simply Explained</h1>
             <p>
-                Complex fluid dynamics made simple with engineering-focused analogies, 
-                step-by-step derivations, and real-world applications.
+                Understand what's happening inside your CFD solver. Every turbulence model, 
+                discretization scheme, and boundary condition explained with clear analogies 
+                and practical guidance for when to use each one.
             </p>
-            <a href="#formulas" class="cta-button">
-                <span>Start Learning</span>
+            <a href="#models" class="cta-button">
+                <span>Explore CFD Models</span>
                 <i data-lucide="arrow-right" style="width: 1.25rem; height: 1.25rem;"></i>
             </a>
         </div>
     </section>
 
-    <!-- Formulas Section -->
-    <section id="formulas" class="formulas-section">
+    <!-- CFD Models Section -->
+    <section id="models" class="models-section">
         <div class="container">
             <div class="section-title">
-                <h2>All Formulas</h2>
-                <p>Each formula explained with engineering analogies that make sense</p>
+                <h2>All CFD Models</h2>
+                <p>Each model explained with practical insights for CFD practitioners</p>
             </div>
 
-            <div class="formulas-grid">
+            <div class="models-grid">
                 
-                <!-- Bernoulli Equation -->
-                <a href="formulas/bernoulli.html" class="formula-card">
-                    <div class="formula-header">
-                        <div class="formula-icon status-complete">B</div>
-                        <span class="tag tag-conservation">Conservation</span>
+                <!-- k-epsilon Model -->
+                <a href="models/k-epsilon.html" class="model-card">
+                    <div class="model-header">
+                        <div class="model-icon status-complete">k-ε</div>
+                        <span class="tag tag-turbulence">Turbulence</span>
                     </div>
                     
-                    <h3 class="formula-title">Bernoulli Equation</h3>
-                    <p class="formula-description">
-                        Energy conservation along streamlines. Like a hydraulic energy budget 
-                        where pressure head, velocity head, and elevation head trade off.
+                    <h3 class="model-title">k-ε Turbulence Model</h3>
+                    <p class="model-description">
+                        Two-equation RANS model solving for turbulent kinetic energy and dissipation rate. 
+                        Like modeling turbulence as a energy cascade from large to small eddies.
                     </p>
                     
                     <div class="equation-box">
                         <div class="equation katex-display">
-                            \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
+                            \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \varepsilon + \frac{\partial}{\partial x_j}\left[\frac{\mu_t}{\sigma_k}\frac{\partial k}{\partial x_j}\right]
                         </div>
                     </div>
                     
-                    <div class="analogy-preview">
-                        <i data-lucide="gauge" style="width: 1rem; height: 1rem;"></i>
-                        <span>Hydraulic energy budget analogy</span>
+                    <div class="model-insight">
+                        <i data-lucide="zap" style="width: 1rem; height: 1rem;"></i>
+                        <span>Energy cascade analogy</span>
                     </div>
                 </a>
 
-                <!-- Continuity Equation -->
-                <div class="formula-card" style="opacity: 0.7;">
-                    <div class="formula-header">
-                        <div class="formula-icon status-coming-soon">C</div>
-                        <span class="tag tag-conservation">Conservation</span>
+                <!-- k-omega Model -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">k-ω</div>
+                        <span class="tag tag-turbulence">Turbulence</span>
                     </div>
                     
-                    <h3 class="formula-title">Continuity Equation</h3>
-                    <p class="formula-description">
-                        Mass conservation in fluid flow. Like a pipe network where 
-                        flow rate must be conserved at every junction.
+                    <h3 class="model-title">k-ω Turbulence Model</h3>
+                    <p class="model-description">
+                        Two-equation model with specific dissipation rate. Better near-wall behavior 
+                        than k-ε. Like having different turbulence time scales for different regions.
                     </p>
                     
                     <div class="equation-box">
                         <div class="equation katex-display">
-                            \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+                            \frac{\partial \omega}{\partial t} + U_j \frac{\partial \omega}{\partial x_j} = \alpha \frac{\omega}{k} P_k - \beta \omega^2
                         </div>
                     </div>
                     
-                    <div class="analogy-preview">
+                    <div class="model-insight">
                         <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
                         <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Navier-Stokes -->
-                <div class="formula-card" style="opacity: 0.7;">
-                    <div class="formula-header">
-                        <div class="formula-icon status-coming-soon">NS</div>
-                        <span class="tag tag-governing">Governing</span>
+                <!-- SST Model -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">SST</div>
+                        <span class="tag tag-turbulence">Turbulence</span>
                     </div>
                     
-                    <h3 class="formula-title">Navier-Stokes Equations</h3>
-                    <p class="formula-description">
-                        Newton's second law for viscous fluids. Like analyzing forces on 
-                        a fluid particle including pressure gradients and viscous stresses.
+                    <h3 class="model-title">SST k-ω Model</h3>
+                    <p class="model-description">
+                        Shear Stress Transport model blending k-ε and k-ω advantages. 
+                        Like having the best of both worlds for different flow regions.
                     </p>
                     
                     <div class="equation-box">
                         <div class="equation katex-display">
-                            \rho \frac{D\mathbf{v}}{Dt} = -\nabla p + \mu \nabla^2 \mathbf{v} + \rho \mathbf{g}
+                            F_1 = \tanh\left(\arg_1^4\right), \quad \arg_1 = \min\left[\max\left(\frac{\sqrt{k}}{0.09\omega y}, \frac{500\nu}{y^2\omega}\right), \frac{4\rho k}{CD_{k\omega}\sigma_{\omega 2}y^2}\right]
                         </div>
                     </div>
                     
-                    <div class="analogy-preview">
+                    <div class="model-insight">
                         <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
                         <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Reynolds Number -->
-                <div class="formula-card" style="opacity: 0.7;">
-                    <div class="formula-header">
-                        <div class="formula-icon status-coming-soon">Re</div>
-                        <span class="tag tag-dimensionless">Dimensionless</span>
+                <!-- LES -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">LES</div>
+                        <span class="tag tag-turbulence">Turbulence</span>
                     </div>
                     
-                    <h3 class="formula-title">Reynolds Number</h3>
-                    <p class="formula-description">
-                        Ratio of inertial to viscous forces. Like comparing momentum 
-                        of a flowing stream versus the stickiness trying to slow it down.
+                    <h3 class="model-title">Large Eddy Simulation</h3>
+                    <p class="model-description">
+                        Resolves large turbulent structures, models small ones. 
+                        Like watching the big whirlpools while estimating the small ripples.
                     </p>
                     
                     <div class="equation-box">
                         <div class="equation katex-display">
-                            Re = \frac{\rho v L}{\mu} = \frac{vL}{\nu}
+                            \frac{\partial \bar{u}_i}{\partial t} + \frac{\partial}{\partial x_j}(\bar{u}_i \bar{u}_j) = -\frac{1}{\rho}\frac{\partial \bar{p}}{\partial x_i} - \frac{\partial \tau_{ij}}{\partial x_j}
                         </div>
                     </div>
                     
-                    <div class="analogy-preview">
+                    <div class="model-insight">
                         <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
                         <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Darcy-Weisbach -->
-                <div class="formula-card" style="opacity: 0.7;">
-                    <div class="formula-header">
-                        <div class="formula-icon status-coming-soon">D</div>
-                        <span class="tag tag-internal">Internal Flow</span>
+                <!-- SIMPLE Algorithm -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">SIM</div>
+                        <span class="tag tag-solver">Solver</span>
                     </div>
                     
-                    <h3 class="formula-title">Darcy-Weisbach Equation</h3>
-                    <p class="formula-description">
-                        Pressure drop due to wall friction in pipes. Like calculating 
-                        energy loss from fluid shearing against pipe walls.
+                    <h3 class="model-title">SIMPLE Algorithm</h3>
+                    <p class="model-description">
+                        Semi-Implicit Method for Pressure-Linked Equations. 
+                        Like an iterative negotiation between pressure and velocity fields.
                     </p>
                     
                     <div class="equation-box">
                         <div class="equation katex-display">
-                            \Delta p = f \frac{L}{D} \frac{\rho v^2}{2}
+                            p^{n+1} = p^n + \alpha_p p'
                         </div>
                     </div>
                     
-                    <div class="analogy-preview">
+                    <div class="model-insight">
                         <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
                         <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Drag Coefficient -->
-                <div class="formula-card" style="opacity: 0.7;">
-                    <div class="formula-header">
-                        <div class="formula-icon status-coming-soon">CD</div>
-                        <span class="tag tag-external">External Flow</span>
+                <!-- Upwind Scheme -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">UW</div>
+                        <span class="tag tag-discretization">Discretization</span>
                     </div>
                     
-                    <h3 class="formula-title">Drag Coefficient</h3>
-                    <p class="formula-description">
-                        Normalized drag force on objects in crossflow. Like quantifying 
-                        how streamlined a body is relative to a flat plate.
+                    <h3 class="model-title">Upwind Scheme</h3>
+                    <p class="model-description">
+                        First-order discretization using upstream information. 
+                        Like looking behind you to predict what's coming next.
                     </p>
                     
                     <div class="equation-box">
                         <div class="equation katex-display">
-                            C_D = \frac{F_D}{\frac{1}{2}\rho v^2 A}
+                            \phi_f = \phi_{upwind} = \begin{cases} \phi_P & \text{if } F \geq 0 \\ \phi_E & \text{if } F < 0 \end{cases}
                         </div>
                     </div>
                     
-                    <div class="analogy-preview">
+                    <div class="model-insight">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
+                    </div>
+                </div>
+
+                <!-- Wall Functions -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">y+</div>
+                        <span class="tag tag-boundary">Boundary</span>
+                    </div>
+                    
+                    <h3 class="model-title">Wall Functions</h3>
+                    <p class="model-description">
+                        Near-wall treatment bridging viscous sublayer to log-law region. 
+                        Like using a universal translator for wall-adjacent cells.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation katex-display">
+                            u^+ = \frac{1}{\kappa}\ln(y^+) + B, \quad y^+ = \frac{u_\tau y}{\nu}
+                        </div>
+                    </div>
+                    
+                    <div class="model-insight">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
+                    </div>
+                </div>
+
+                <!-- VOF Method -->
+                <div class="model-card" style="opacity: 0.7;">
+                    <div class="model-header">
+                        <div class="model-icon status-coming-soon">VOF</div>
+                        <span class="tag tag-multiphase">Multiphase</span>
+                    </div>
+                    
+                    <h3 class="model-title">Volume of Fluid (VOF)</h3>
+                    <p class="model-description">
+                        Interface tracking for immiscible fluids. 
+                        Like painting each cell with the fraction of each phase present.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation katex-display">
+                            \frac{\partial \alpha}{\partial t} + \nabla \cdot (\alpha \mathbf{v}) = 0
+                        </div>
+                    </div>
+                    
+                    <div class="model-insight">
                         <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
                         <span>Coming soon</span>
                     </div>
@@ -582,34 +634,80 @@
     <section style="background: white; padding: 4rem 0;">
         <div class="container">
             <div class="section-title">
-                <h2>What Makes This Different</h2>
-                <p>Every formula explained with engineering insight and physical intuition</p>
+                <h2>Why CFD Models Matter</h2>
+                <p>Understanding your solver's inner workings for better results</p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
                 
                 <div style="text-align: center; padding: 2rem;">
-                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-                        <i data-lucide="lightbulb" style="color: white; width: 2rem; height: 2rem;"></i>
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #7c3aed, #6366f1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);">
+                        <i data-lucide="settings" style="color: white; width: 2rem; height: 2rem;"></i>
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Engineering Analogies</h3>
-                    <p style="color: #6b7280;">Every formula compared to familiar engineering concepts - hydraulic systems, mechanical forces, thermal processes.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Model Selection</h3>
+                    <p style="color: #6b7280;">Learn which turbulence model, discretization scheme, and solver settings work best for your specific flow physics.</p>
                 </div>
 
                 <div style="text-align: center; padding: 2rem;">
-                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
-                        <i data-lucide="layers" style="color: white; width: 2rem; height: 2rem;"></i>
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #059669, #10b981); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);">
+                        <i data-lucide="target" style="color: white; width: 2rem; height: 2rem;"></i>
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Physical Derivations</h3>
-                    <p style="color: #6b7280;">See exactly where each formula comes from using control volumes, force balances, and conservation principles.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Accuracy vs Speed</h3>
+                    <p style="color: #6b7280;">Understand the trade-offs between computational cost and accuracy. Know when you need DNS, LES, or RANS for your application.</p>
                 </div>
 
                 <div style="text-align: center; padding: 2rem;">
-                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
-                        <i data-lucide="alert-triangle" style="color: white; width: 2rem; height: 2rem;"></i>
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #dc2626, #ef4444); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);">
+                        <i data-lucide="alert-circle" style="color: white; width: 2rem; height: 2rem;"></i>
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Engineering Limits</h3>
-                    <p style="color: #6b7280;">Learn when formulas break down with real examples - boundary layer effects, compressibility, unsteady flow.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Common Pitfalls</h3>
+                    <p style="color: #6b7280;">Learn the typical mistakes and how to avoid them - wrong y+ values, inappropriate models, convergence issues.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CFD Workflow -->
+    <section style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 4rem 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>CFD Workflow Explained</h2>
+                <p>From geometry to results - understand each step</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                
+                <div style="background: white; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); text-align: center;">
+                    <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">1</span>
+                    </div>
+                    <h3 style="font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">Mesh Generation</h3>
+                    <p style="color: #6b7280; font-size: 0.875rem;">Discretize your domain into computational cells</p>
+                </div>
+
+                <div style="background: white; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); text-align: center;">
+                    <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #7c3aed, #6366f1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">2</span>
+                    </div>
+                    <h3 style="font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">Model Selection</h3>
+                    <p style="color: #6b7280; font-size: 0.875rem;">Choose turbulence model and physics</p>
+                </div>
+
+                <div style="background: white; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); text-align: center;">
+                    <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">3</span>
+                    </div>
+                    <h3 style="font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">Boundary Conditions</h3>
+                    <p style="color: #6b7280; font-size: 0.875rem;">Set inlet, outlet, and wall conditions</p>
+                </div>
+
+                <div style="background: white; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); text-align: center;">
+                    <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">4</span>
+                    </div>
+                    <h3 style="font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">Solution & Post-Process</h3>
+                    <p style="color: #6b7280; font-size: 0.875rem;">Solve equations and analyze results</p>
                 </div>
 
             </div>
@@ -619,7 +717,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>Making fluid dynamics accessible, one formula at a time.</p>
+            <p>Making CFD accessible, one model at a time.</p>
             <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="github-link">
                 <i data-lucide="github" style="width: 1.5rem; height: 1.5rem;"></i>
             </a>
@@ -638,7 +736,7 @@
                     katex.render(latex, el, {
                         displayMode: true,
                         throwOnError: false,
-                        fontSize: '1.25rem'
+                        fontSize: '1rem'
                     });
                 });
             }
@@ -671,7 +769,7 @@
             });
         });
 
-        document.querySelectorAll('.formula-card').forEach((card) => {
+        document.querySelectorAll('.model-card').forEach((card) => {
             observer.observe(card);
         });
     </script>
