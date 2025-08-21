@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bernoulli Equation - Simply Explained</title>
-    <meta name="description" content="Bernoulli's equation explained with a simple bank account analogy. Understand energy conservation in fluid flow.">
+    <meta name="description" content="Bernoulli's equation explained with hydraulic system analogies. Understand energy conservation in fluid flow.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -149,16 +149,15 @@
             background: linear-gradient(135deg, #eff6ff, #dbeafe);
             border: 3px solid #3b82f6;
             border-radius: 1.5rem;
-            padding: 2rem;
+            padding: 2.5rem;
             margin: 2rem 0;
         }
 
         .equation-large {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 600;
             color: #1e40af;
             text-align: center;
-            font-family: 'JetBrains Mono', monospace;
         }
 
         /* Content Sections */
@@ -197,7 +196,7 @@
         /* Symbol Explanations */
         .symbols-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
@@ -254,8 +253,8 @@
 
         /* Analogy Section */
         .analogy-section {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 2px solid #f59e0b;
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
             border-radius: 1.5rem;
             padding: 2.5rem;
             margin: 2rem 0;
@@ -269,13 +268,13 @@
         .analogy-header h2 {
             font-size: 2rem;
             font-weight: 700;
-            color: #92400e;
+            color: #065f46;
             margin-bottom: 0.5rem;
         }
 
         .analogy-accounts {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -286,6 +285,7 @@
             padding: 1.5rem;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #10b981;
         }
 
         .account-emoji {
@@ -296,19 +296,20 @@
         .account-card h3 {
             font-size: 1.125rem;
             font-weight: 700;
-            color: #92400e;
+            color: #065f46;
             margin-bottom: 0.5rem;
         }
 
         .account-card p {
-            color: #78350f;
+            color: #047857;
             font-size: 0.875rem;
+            line-height: 1.5;
         }
 
         /* Example Section */
         .example-section {
-            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-            border: 2px solid #10b981;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
             border-radius: 1.5rem;
             padding: 2.5rem;
         }
@@ -329,22 +330,21 @@
         .example-given h3, .example-solution h3 {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #065f46;
+            color: #92400e;
             margin-bottom: 1rem;
         }
 
         .example-list {
             list-style: none;
-            space: 0.5rem;
         }
 
         .example-list li {
             margin-bottom: 0.5rem;
-            color: #047857;
+            color: #a16207;
         }
 
         .result-highlight {
-            background: #10b981;
+            background: #f59e0b;
             color: white;
             padding: 1rem;
             border-radius: 0.5rem;
@@ -364,7 +364,7 @@
 
         .warning-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -386,6 +386,7 @@
         .warning-card p {
             color: #7f1d1d;
             font-size: 0.875rem;
+            line-height: 1.5;
         }
 
         /* Responsive */
@@ -395,7 +396,7 @@
             }
             
             .equation-large {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
             .example-grid {
@@ -443,7 +444,7 @@
                 </div>
                 
                 <h1>Bernoulli Equation</h1>
-                <p>Energy is conserved along a streamline in flowing fluids</p>
+                <p>Energy is conserved along a streamline in ideal fluid flow</p>
                 
                 <div class="main-equation">
                     <div class="equation-large katex-display">
@@ -452,7 +453,7 @@
                 </div>
                 
                 <p style="color: #3b82f6; font-weight: 600;">
-                    Valid for: Steady flow, incompressible fluids, no viscosity effects
+                    Valid for: Steady, incompressible, inviscid flow along streamlines
                 </p>
             </div>
 
@@ -474,8 +475,8 @@
                                 <p>Pascals (Pa)</p>
                             </div>
                         </div>
-                        <p class="symbol-description">The push that the fluid exerts on everything around it</p>
-                        <p class="symbol-example"><strong>Example:</strong> 101,325 Pa (atmospheric pressure)</p>
+                        <p class="symbol-description">Static pressure - the normal stress exerted by fluid on surfaces</p>
+                        <p class="symbol-example"><strong>Example:</strong> 101,325 Pa (atmospheric), 200,000 Pa (typical pump discharge)</p>
                     </div>
 
                     <div class="symbol-card">
@@ -486,8 +487,8 @@
                                 <p>kg/m³</p>
                             </div>
                         </div>
-                        <p class="symbol-description">How much stuff is packed into a given space</p>
-                        <p class="symbol-example"><strong>Example:</strong> 1000 kg/m³ (water)</p>
+                        <p class="symbol-description">Mass per unit volume - determines fluid's inertial properties</p>
+                        <p class="symbol-example"><strong>Example:</strong> 998 kg/m³ (water), 1.225 kg/m³ (air at STP)</p>
                     </div>
 
                     <div class="symbol-card">
@@ -498,8 +499,8 @@
                                 <p>m/s²</p>
                             </div>
                         </div>
-                        <p class="symbol-description">How fast things fall due to Earth's pull</p>
-                        <p class="symbol-example"><strong>Example:</strong> 9.81 m/s² (standard gravity)</p>
+                        <p class="symbol-description">Gravitational acceleration - creates hydrostatic pressure gradients</p>
+                        <p class="symbol-example"><strong>Example:</strong> 9.81 m/s² (standard), varies ±0.5% globally</p>
                     </div>
 
                     <div class="symbol-card">
@@ -510,20 +511,20 @@
                                 <p>m/s</p>
                             </div>
                         </div>
-                        <p class="symbol-description">How fast the fluid is moving</p>
-                        <p class="symbol-example"><strong>Example:</strong> 5 m/s (fast walking speed)</p>
+                        <p class="symbol-description">Local fluid velocity magnitude - creates dynamic pressure effects</p>
+                        <p class="symbol-example"><strong>Example:</strong> 2 m/s (pipe flow), 50 m/s (aircraft), 300 m/s (turbine)</p>
                     </div>
 
                     <div class="symbol-card">
                         <div class="symbol-header">
                             <div class="symbol">z</div>
                             <div class="symbol-info">
-                                <h3>Height</h3>
+                                <h3>Elevation</h3>
                                 <p>m</p>
                             </div>
                         </div>
-                        <p class="symbol-description">How high above your reference point</p>
-                        <p class="symbol-example"><strong>Example:</strong> 10 m (3-story building)</p>
+                        <p class="symbol-description">Height above datum - stores gravitational potential energy</p>
+                        <p class="symbol-example"><strong>Example:</strong> 50 m (water tower), 10 km (aircraft altitude)</p>
                     </div>
                 </div>
             </div>
@@ -531,38 +532,44 @@
             <!-- The Analogy -->
             <div class="analogy-section">
                 <div class="analogy-header">
-                    <h2>💰 Think of it Like a Bank Account</h2>
-                    <p style="color: #92400e; font-size: 1.125rem;">
-                        Bernoulli's equation is like managing your energy budget. 
-                        You have a total amount of energy that never changes, 
-                        but you can move it between different "accounts."
+                    <h2>🏗️ Think Like a Hydraulic Engineer</h2>
+                    <p style="color: #065f46; font-size: 1.125rem;">
+                        Bernoulli's equation is like designing a hydraulic system where you manage 
+                        three forms of mechanical energy. Each term represents a different way 
+                        energy is stored and transported in the flowing fluid.
                     </p>
                 </div>
 
                 <div class="analogy-accounts">
                     <div class="account-card">
-                        <div class="account-emoji">🏦</div>
-                        <h3>Pressure Account (p/ρg)</h3>
-                        <p>Your <strong>checking account</strong> - energy you can spend right now. High pressure means lots of available energy.</p>
+                        <div class="account-emoji">⚡</div>
+                        <h3>Pressure Head (p/ρg)</h3>
+                        <p>Like a <strong>compressed air tank</strong> - stored energy ready to do work. 
+                        High pressure means high potential to accelerate fluid or lift it to higher elevations. 
+                        Measured in meters of fluid column.</p>
                     </div>
 
                     <div class="account-card">
-                        <div class="account-emoji">🚗</div>
-                        <h3>Speed Account (v²/2g)</h3>
-                        <p>Your <strong>investment account</strong> - energy tied up in motion. Going faster means more energy invested in movement.</p>
+                        <div class="account-emoji">🌊</div>
+                        <h3>Velocity Head (v²/2g)</h3>
+                        <p>Like a <strong>moving turbine</strong> - kinetic energy in motion. 
+                        Fast-moving fluid has energy tied up in its momentum. 
+                        Can be converted to pressure by slowing the flow down.</p>
                     </div>
 
                     <div class="account-card">
-                        <div class="account-emoji">⛰️</div>
-                        <h3>Height Account (z)</h3>
-                        <p>Your <strong>savings account</strong> - energy stored for later. Being higher up means more potential energy saved.</p>
+                        <div class="account-emoji">🏔️</div>
+                        <h3>Elevation Head (z)</h3>
+                        <p>Like a <strong>water tower</strong> - gravitational potential energy. 
+                        Higher elevation stores energy that can drive flow downward. 
+                        Every 10 meters = ~1 bar of pressure equivalent.</p>
                     </div>
                 </div>
 
                 <div style="background: white; border-radius: 1rem; padding: 1.5rem; margin-top: 2rem; text-align: center;">
-                    <p style="color: #92400e; font-size: 1.125rem; font-weight: 600;">
-                        💡 <strong>Key Insight:</strong> Your total balance stays the same! 
-                        You can move money between accounts, but you can't create or destroy energy.
+                    <p style="color: #065f46; font-size: 1.125rem; font-weight: 600;">
+                        🔧 <strong>Engineering Insight:</strong> Total mechanical energy per unit weight stays constant along a streamline. 
+                        Energy can transform between forms but cannot be created or destroyed (absent friction or work input).
                     </p>
                 </div>
             </div>
@@ -570,80 +577,98 @@
             <!-- Real Example -->
             <div class="content-section">
                 <div class="section-header">
-                    <div class="section-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
                         <i data-lucide="calculator" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
                     </div>
-                    <h2>Real Example: Water Tank</h2>
+                    <h2>Engineering Example: Reservoir Discharge</h2>
                 </div>
 
                 <div class="example-section">
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #065f46; text-align: center; margin-bottom: 2rem;">
-                        🚰 Water Shooting Out of a Tank
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #92400e; text-align: center; margin-bottom: 2rem;">
+                        🚰 Torricelli's Law: Free Jet from Reservoir
                     </h3>
                     
                     <div class="example-grid">
                         <div class="example-given">
-                            <h3>📝 What We Know</h3>
+                            <h3>📋 Given Conditions</h3>
                             <ul class="example-list">
-                                <li>• Tank height: 5 meters</li>
-                                <li>• Water at top barely moving</li>
-                                <li>• Both top and bottom at atmospheric pressure</li>
-                                <li>• Want to find: How fast does water shoot out?</li>
+                                <li>• Large reservoir (v₁ ≈ 0)</li>
+                                <li>• Height difference: h = 5 m</li>
+                                <li>• Both points at atmospheric pressure</li>
+                                <li>• Sharp-edged orifice (assume inviscid)</li>
+                                <li>• Find: Discharge velocity</li>
                             </ul>
                         </div>
 
                         <div class="example-solution">
-                            <h3>🧮 The Solution</h3>
-                            <p style="color: #047857; margin-bottom: 1rem;">
-                                Since pressure is the same everywhere and the top is nearly still, 
-                                all the height energy converts to speed energy:
+                            <h3>⚖️ Energy Balance</h3>
+                            <p style="color: #a16207; margin-bottom: 1rem;">
+                                Apply Bernoulli between reservoir surface and jet exit. 
+                                Since p₁ = p₂ and v₁ ≈ 0, all elevation head converts to velocity head:
                             </p>
                             <div class="result-highlight">
-                                v = √(2gh) = 9.9 m/s
+                                v₂ = √(2gh) = 9.9 m/s
                             </div>
-                            <p style="color: #047857; font-size: 0.875rem;">
-                                That's about 22 mph - like a garden hose on full blast!
+                            <p style="color: #a16207; font-size: 0.875rem;">
+                                <strong>Physical meaning:</strong> Same velocity as free-fall from height h. 
+                                This is why fire hoses and water jets work!
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- When Bernoulli Lies -->
+            <!-- When Bernoulli Fails -->
             <div class="content-section">
                 <div class="section-header">
                     <div class="section-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
                         <i data-lucide="alert-triangle" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
                     </div>
-                    <h2>When Bernoulli Lies to You</h2>
+                    <h2>When Bernoulli Breaks Down</h2>
                 </div>
 
                 <div class="warning-section">
                     <div style="text-align: center; margin-bottom: 2rem;">
                         <p style="color: #7f1d1d; font-size: 1.125rem;">
-                            Bernoulli assumes perfect, frictionless flow. In the real world, it breaks down when:
+                            Bernoulli assumes inviscid, steady, incompressible flow. Real engineering situations where it fails:
                         </p>
                     </div>
 
                     <div class="warning-grid">
                         <div class="warning-card">
-                            <h3>🌪️ Viscous Effects</h3>
-                            <p>When fluid sticks to walls or has internal friction (like honey vs water)</p>
+                            <h3>🌀 Viscous Boundary Layers</h3>
+                            <p>Near walls where no-slip condition creates velocity gradients. 
+                            Viscous stresses violate the inviscid assumption. Use boundary layer theory instead.</p>
                         </div>
 
                         <div class="warning-card">
-                            <h3>⚡ High Speed Flow</h3>
-                            <p>When flow gets close to the speed of sound (compressible effects kick in)</p>
+                            <h3>💨 Compressible Flow (Ma > 0.3)</h3>
+                            <p>When fluid density changes significantly with pressure. 
+                            Gas flows in turbomachinery, nozzles, or high-speed applications need compressible flow equations.</p>
                         </div>
 
                         <div class="warning-card">
-                            <h3>🔄 Pumps & Turbines</h3>
-                            <p>When machines add or remove energy from the flow</p>
+                            <h3>⚙️ Turbomachinery</h3>
+                            <p>Across pumps, compressors, turbines where work is added or extracted. 
+                            Need to include shaft work terms in energy equation.</p>
                         </div>
 
                         <div class="warning-card">
-                            <h3>⏱️ Unsteady Flow</h3>
-                            <p>When things change rapidly with time (like water hammer)</p>
+                            <h3>📊 Unsteady Acceleration</h3>
+                            <p>Rapidly changing flow conditions like water hammer or pulsating flow. 
+                            Unsteady terms in momentum equation become significant.</p>
+                        </div>
+
+                        <div class="warning-card">
+                            <h3>🔥 Heat Transfer Effects</h3>
+                            <p>When temperature changes affect density or when thermal energy 
+                            is significant compared to mechanical energy.</p>
+                        </div>
+
+                        <div class="warning-card">
+                            <h3>🌪️ Flow Separation</h3>
+                            <p>Behind bluff bodies or in adverse pressure gradients where 
+                            streamlines break down and recirculation occurs.</p>
                         </div>
                     </div>
                 </div>
@@ -651,12 +676,19 @@
 
             <!-- Navigation -->
             <div class="content-section" style="text-align: center;">
-                <h2 style="margin-bottom: 2rem;">What's Next?</h2>
+                <h2 style="margin-bottom: 2rem;">Continue Your Learning Journey</h2>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <a href="../index.html" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 1rem 2rem; border-radius: 1rem; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.3s ease;">
                         <i data-lucide="home" style="width: 1.25rem; height: 1.25rem;"></i>
                         <span>Explore More Formulas</span>
                     </a>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f0f9ff; border-radius: 1rem; border: 1px solid #3b82f6;">
+                    <p style="color: #1e40af; font-weight: 600;">
+                        💡 <strong>Next:</strong> Learn about the Continuity Equation to understand how Bernoulli 
+                        connects with mass conservation in fluid systems.
+                    </p>
                 </div>
             </div>
 

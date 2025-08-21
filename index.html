@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fluid Dynamics Formulas Explained Simply</title>
-    <meta name="description" content="Every fluid dynamics formula explained with simple analogies and clear logic. Make complex concepts stick.">
+    <meta name="description" content="Every fluid dynamics formula explained with sophisticated analogies and clear logic. Make complex concepts stick.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -157,7 +157,7 @@
 
         .formulas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -165,7 +165,7 @@
         .formula-card {
             background: white;
             border-radius: 1.5rem;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(59, 130, 246, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -205,14 +205,14 @@
         }
 
         .formula-icon {
-            width: 3rem;
-            height: 3rem;
+            width: 3.5rem;
+            height: 3.5rem;
             border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
@@ -232,27 +232,31 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #1f2937;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .formula-description {
             color: #6b7280;
             margin-bottom: 1.5rem;
             line-height: 1.6;
+            font-size: 1rem;
         }
 
         .equation-box {
             background: linear-gradient(135deg, #f8fafc, #f1f5f9);
             border: 2px solid #e2e8f0;
             border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .equation {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             color: #1e40af;
             font-weight: 500;
         }
@@ -264,6 +268,9 @@
             color: #059669;
             font-size: 0.875rem;
             font-weight: 500;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
         }
 
         /* Status Indicators */
@@ -366,6 +373,8 @@
         .formula-card:nth-child(2) { animation-delay: 0.2s; }
         .formula-card:nth-child(3) { animation-delay: 0.3s; }
         .formula-card:nth-child(4) { animation-delay: 0.4s; }
+        .formula-card:nth-child(5) { animation-delay: 0.5s; }
+        .formula-card:nth-child(6) { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
@@ -395,8 +404,8 @@
         <div class="container">
             <h1>Every Fluid Formula,<br>Simply Explained</h1>
             <p>
-                Complex fluid dynamics made simple with clear analogies, step-by-step logic, 
-                and real-world examples. No more confusion, just understanding.
+                Complex fluid dynamics made simple with engineering-focused analogies, 
+                step-by-step derivations, and real-world applications.
             </p>
             <a href="#formulas" class="cta-button">
                 <span>Start Learning</span>
@@ -410,7 +419,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>All Formulas</h2>
-                <p>Each formula explained with analogies that make it stick</p>
+                <p>Each formula explained with engineering analogies that make sense</p>
             </div>
 
             <div class="formulas-grid">
@@ -424,17 +433,19 @@
                     
                     <h3 class="formula-title">Bernoulli Equation</h3>
                     <p class="formula-description">
-                        Energy is conserved along a streamline in flowing fluids. 
-                        Think of it like a bank account for energy.
+                        Energy conservation along streamlines. Like a hydraulic energy budget 
+                        where pressure head, velocity head, and elevation head trade off.
                     </p>
                     
                     <div class="equation-box">
-                        <div class="equation">p/ρg + v²/2g + z = constant</div>
+                        <div class="equation katex-display">
+                            \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
+                        </div>
                     </div>
                     
                     <div class="analogy-preview">
-                        <i data-lucide="lightbulb" style="width: 1rem; height: 1rem;"></i>
-                        <span>Bank account analogy</span>
+                        <i data-lucide="gauge" style="width: 1rem; height: 1rem;"></i>
+                        <span>Hydraulic energy budget analogy</span>
                     </div>
                 </a>
 
@@ -447,12 +458,14 @@
                     
                     <h3 class="formula-title">Continuity Equation</h3>
                     <p class="formula-description">
-                        Mass cannot be created or destroyed in flowing fluids. 
-                        Like traffic flow - cars can't disappear.
+                        Mass conservation in fluid flow. Like a pipe network where 
+                        flow rate must be conserved at every junction.
                     </p>
                     
                     <div class="equation-box">
-                        <div class="equation">∂ρ/∂t + ∇·(ρv) = 0</div>
+                        <div class="equation katex-display">
+                            \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+                        </div>
                     </div>
                     
                     <div class="analogy-preview">
@@ -470,12 +483,14 @@
                     
                     <h3 class="formula-title">Navier-Stokes Equations</h3>
                     <p class="formula-description">
-                        Newton's second law for fluids with viscosity. 
-                        The master equation of fluid motion.
+                        Newton's second law for viscous fluids. Like analyzing forces on 
+                        a fluid particle including pressure gradients and viscous stresses.
                     </p>
                     
                     <div class="equation-box">
-                        <div class="equation">ρ(∂v/∂t + v·∇v) = -∇p + μ∇²v</div>
+                        <div class="equation katex-display">
+                            \rho \frac{D\mathbf{v}}{Dt} = -\nabla p + \mu \nabla^2 \mathbf{v} + \rho \mathbf{g}
+                        </div>
                     </div>
                     
                     <div class="analogy-preview">
@@ -493,12 +508,14 @@
                     
                     <h3 class="formula-title">Reynolds Number</h3>
                     <p class="formula-description">
-                        Tells you if flow is smooth (laminar) or chaotic (turbulent). 
-                        Like a crowd control indicator.
+                        Ratio of inertial to viscous forces. Like comparing momentum 
+                        of a flowing stream versus the stickiness trying to slow it down.
                     </p>
                     
                     <div class="equation-box">
-                        <div class="equation">Re = ρvL/μ</div>
+                        <div class="equation katex-display">
+                            Re = \frac{\rho v L}{\mu} = \frac{vL}{\nu}
+                        </div>
                     </div>
                     
                     <div class="analogy-preview">
@@ -514,14 +531,16 @@
                         <span class="tag tag-internal">Internal Flow</span>
                     </div>
                     
-                    <h3 class="formula-title">Darcy-Weisbach</h3>
+                    <h3 class="formula-title">Darcy-Weisbach Equation</h3>
                     <p class="formula-description">
-                        Pressure drop in pipes due to friction. 
-                        Like dragging a rug through a hallway.
+                        Pressure drop due to wall friction in pipes. Like calculating 
+                        energy loss from fluid shearing against pipe walls.
                     </p>
                     
                     <div class="equation-box">
-                        <div class="equation">Δp = f(L/D)(ρv²/2)</div>
+                        <div class="equation katex-display">
+                            \Delta p = f \frac{L}{D} \frac{\rho v^2}{2}
+                        </div>
                     </div>
                     
                     <div class="analogy-preview">
@@ -539,12 +558,14 @@
                     
                     <h3 class="formula-title">Drag Coefficient</h3>
                     <p class="formula-description">
-                        How much objects resist moving through fluids. 
-                        Like swimming through honey vs water.
+                        Normalized drag force on objects in crossflow. Like quantifying 
+                        how streamlined a body is relative to a flat plate.
                     </p>
                     
                     <div class="equation-box">
-                        <div class="equation">CD = FD/(½ρv²A)</div>
+                        <div class="equation katex-display">
+                            C_D = \frac{F_D}{\frac{1}{2}\rho v^2 A}
+                        </div>
                     </div>
                     
                     <div class="analogy-preview">
@@ -562,7 +583,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>What Makes This Different</h2>
-                <p>Every formula is explained like you're talking to a friend</p>
+                <p>Every formula explained with engineering insight and physical intuition</p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
@@ -571,24 +592,24 @@
                     <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
                         <i data-lucide="lightbulb" style="color: white; width: 2rem; height: 2rem;"></i>
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Simple Analogies</h3>
-                    <p style="color: #6b7280;">Every formula compared to something you already understand - bank accounts, traffic, cooking, sports.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Engineering Analogies</h3>
+                    <p style="color: #6b7280;">Every formula compared to familiar engineering concepts - hydraulic systems, mechanical forces, thermal processes.</p>
                 </div>
 
                 <div style="text-align: center; padding: 2rem;">
                     <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
                         <i data-lucide="layers" style="color: white; width: 2rem; height: 2rem;"></i>
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Step-by-Step Logic</h3>
-                    <p style="color: #6b7280;">See exactly where each formula comes from. No hand-waving, no "it can be shown that..."</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Physical Derivations</h3>
+                    <p style="color: #6b7280;">See exactly where each formula comes from using control volumes, force balances, and conservation principles.</p>
                 </div>
 
                 <div style="text-align: center; padding: 2rem;">
                     <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
                         <i data-lucide="alert-triangle" style="color: white; width: 2rem; height: 2rem;"></i>
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">When It Fails</h3>
-                    <p style="color: #6b7280;">Learn when formulas break down and why. Real engineering means knowing the limits.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Engineering Limits</h3>
+                    <p style="color: #6b7280;">Learn when formulas break down with real examples - boundary layer effects, compressibility, unsteady flow.</p>
                 </div>
 
             </div>
@@ -608,6 +629,20 @@
     <script>
         // Initialize icons
         lucide.createIcons();
+
+        // Render all equations with KaTeX
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof katex !== 'undefined') {
+                document.querySelectorAll('.katex-display').forEach(el => {
+                    const latex = el.textContent.trim();
+                    katex.render(latex, el, {
+                        displayMode: true,
+                        throwOnError: false,
+                        fontSize: '1.25rem'
+                    });
+                });
+            }
+        });
 
         // Smooth scrolling for anchor links
         document.addEventListener('click', function(e) {
