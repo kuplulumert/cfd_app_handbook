@@ -4,212 +4,232 @@
     <title>CFD Turbulence Models</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body style="margin:0; padding:0; font-family:Georgia,serif; background:white; color:#333;">
+<body style="margin:0; padding:0; font-family:'Inter',sans-serif; background:linear-gradient(135deg,#fafbfc 0%,#f8fafc 50%,#f1f5f9 100%); color:#1e293b; height:100vh; overflow:hidden;">
 
-    <!-- Header -->
-    <div style="background:#f8f9fa; border-bottom:3px solid #007bff; padding:1rem; text-align:center;">
-        <h1 style="margin:0; font-size:1.5rem; color:#333;">CFD Turbulence Models</h1>
-        <p style="margin:0.25rem 0 0 0; font-size:0.875rem; color:#666; font-style:italic;">Academic Reference Guide</p>
+    <!-- Premium Header -->
+    <div style="background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(59,130,246,0.15); padding:1rem 2rem; box-shadow:0 1px 20px rgba(0,0,0,0.04);">
+        <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <div style="width:2.5rem; height:2.5rem; background:linear-gradient(135deg,#3b82f6,#1e40af); border-radius:0.75rem; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(59,130,246,0.25);">
+                    <span style="color:white; font-size:1rem; font-weight:600;">∇</span>
+                </div>
+                <div>
+                    <h1 style="margin:0; font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:600; color:#1e293b; letter-spacing:-0.01em;">CFD Turbulence Models</h1>
+                    <p style="margin:0; font-size:0.875rem; color:#64748b; font-weight:400;">Premium Academic Reference</p>
+                </div>
+            </div>
+            <a href="https://github.com/kuplulumert/fdapp" style="color:#64748b; text-decoration:none; padding:0.5rem 1rem; border-radius:0.5rem; border:1px solid #e2e8f0; background:rgba(255,255,255,0.8); transition:all 0.2s ease; font-size:0.875rem; font-weight:500;" onmouseover="this.style.color='#3b82f6'; this.style.borderColor='#3b82f6'; this.style.background='rgba(59,130,246,0.05)';" onmouseout="this.style.color='#64748b'; this.style.borderColor='#e2e8f0'; this.style.background='rgba(255,255,255,0.8)';">
+                GitHub Repository
+            </a>
+        </div>
     </div>
 
-    <!-- Hero -->
-    <div style="background:#f1f3f4; padding:1rem; text-align:center; border-bottom:1px solid #dee2e6;">
-        <h2 style="margin:0 0 0.5rem 0; font-size:1.25rem; color:#333;">Turbulence Models in Computational Fluid Dynamics</h2>
-        <p style="margin:0; font-size:0.875rem; color:#666; font-style:italic;">Complete classification from fundamental to advanced methods</p>
+    <!-- Premium Hero -->
+    <div style="background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(248,250,252,0.9)); padding:1.5rem 2rem; text-align:center; border-bottom:1px solid rgba(59,130,246,0.1);">
+        <div style="max-width:1200px; margin:0 auto;">
+            <h2 style="margin:0 0 0.5rem 0; font-family:'Playfair Display',serif; font-size:2rem; font-weight:600; color:#1e293b; letter-spacing:-0.02em;">Turbulence Models in CFD</h2>
+            <p style="margin:0; font-size:1rem; color:#64748b; font-weight:400; max-width:600px; margin:0 auto;">Complete academic classification from fundamental assumptions to advanced scale-resolving methods</p>
+        </div>
     </div>
 
-    <!-- Models List -->
-    <div style="padding:1rem; max-width:1200px; margin:0 auto;">
-        <h3 style="text-align:center; margin:0 0 1rem 0; font-size:1rem; color:#333;">Classification of Turbulence Models</h3>
+    <!-- Premium Models Table -->
+    <div style="padding:1.5rem 2rem; max-width:1200px; margin:0 auto; flex:1; display:flex; flex-direction:column;">
+        <h3 style="text-align:center; margin:0 0 1rem 0; font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:500; color:#1e293b;">Classification of Turbulence Models</h3>
         
-        <table style="width:100%; border-collapse:collapse; border:1px solid #dee2e6; background:white;">
-            <!-- Header -->
-            <tr style="background:#e9ecef; font-weight:bold; font-size:0.75rem; color:#495057;">
-                <td style="padding:0.5rem; border-bottom:1px solid #dee2e6; width:4rem; text-align:center;">Icon</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #dee2e6; width:12rem;">Model Name</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #dee2e6;">Mathematical Foundation</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #dee2e6; width:10rem; text-align:center;">Classification</td>
+        <table style="width:100%; border-collapse:collapse; background:rgba(255,255,255,0.9); border-radius:1rem; overflow:hidden; box-shadow:0 4px 25px rgba(0,0,0,0.08); border:1px solid rgba(59,130,246,0.1);">
+            <!-- Premium Header -->
+            <tr style="background:linear-gradient(135deg,#f8fafc,#f1f5f9); font-weight:600; font-size:0.875rem; color:#475569;">
+                <td style="padding:0.75rem 1rem; border-bottom:2px solid rgba(59,130,246,0.1); width:5rem; text-align:center; font-family:'Inter',sans-serif;">Icon</td>
+                <td style="padding:0.75rem 1rem; border-bottom:2px solid rgba(59,130,246,0.1); width:14rem; font-family:'Playfair Display',serif;">Model Name</td>
+                <td style="padding:0.75rem 1rem; border-bottom:2px solid rgba(59,130,246,0.1); font-family:'Inter',sans-serif;">Mathematical Foundation</td>
+                <td style="padding:0.75rem 1rem; border-bottom:2px solid rgba(59,130,246,0.1); width:12rem; text-align:center; font-family:'Inter',sans-serif;">Classification</td>
             </tr>
             
             <!-- Inviscid -->
-            <tr style="background:#fafbfc;">
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#28a745; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">∅</div>
+            <tr style="background:rgba(255,255,255,0.7); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(255,255,255,0.7)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#10b981,#34d399); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(16,185,129,0.2);">∅</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/inviscid.html" style="text-decoration:none; color:#333;">Inviscid Flow</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/inviscid.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Inviscid Flow</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Euler equations - perfect fluid assumption</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#d4edda; color:#155724; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Fundamental</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Euler equations - perfect fluid assumption</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(16,185,129,0.1); color:#065f46; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(16,185,129,0.2);">Fundamental</span>
                 </td>
             </tr>
 
             <!-- Laminar -->
-            <tr>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#28a745; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">L</div>
+            <tr style="background:rgba(248,250,252,0.8); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(248,250,252,0.8)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#10b981,#34d399); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(16,185,129,0.2);">L</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/laminar.html" style="text-decoration:none; color:#333;">Laminar Flow</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/laminar.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Laminar Flow</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Direct Navier-Stokes solution</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#d4edda; color:#155724; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Fundamental</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Direct Navier-Stokes solution</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(16,185,129,0.1); color:#065f46; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(16,185,129,0.2);">Fundamental</span>
                 </td>
             </tr>
 
             <!-- Spalart-Allmaras -->
-            <tr style="background:#fafbfc;">
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#6f42c1; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">SA</div>
+            <tr style="background:rgba(255,255,255,0.7); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(255,255,255,0.7)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#8b5cf6,#a855f7); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(139,92,246,0.2);">SA</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/spalart-allmaras.html" style="text-decoration:none; color:#333;">Spalart-Allmaras</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/spalart-allmaras.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Spalart-Allmaras</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">One-equation RANS model</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#e2e3ff; color:#383d41; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">RANS (1-Eq)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">One-equation RANS model</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(139,92,246,0.1); color:#5b21b6; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(139,92,246,0.2);">RANS (1-Eq)</span>
                 </td>
             </tr>
 
             <!-- k-epsilon -->
-            <tr>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#6f42c1; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">k-ε</div>
+            <tr style="background:rgba(248,250,252,0.8); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(248,250,252,0.8)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#8b5cf6,#a855f7); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(139,92,246,0.2);">k-ε</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/k-epsilon.html" style="text-decoration:none; color:#333;">k-ε Standard</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/k-epsilon.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">k-ε Standard</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Two-equation RANS model</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#d1ecf1; color:#0c5460; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:bold; margin-right:0.25rem;">Available</span>
-                    <span style="background:#e2e3ff; color:#383d41; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">RANS (2-Eq)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Two-equation RANS model</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:linear-gradient(135deg,#10b981,#34d399); color:white; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:600; margin-right:0.375rem; box-shadow:0 2px 8px rgba(16,185,129,0.2);">Available</span>
+                    <span style="background:rgba(139,92,246,0.1); color:#5b21b6; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(139,92,246,0.2);">RANS (2-Eq)</span>
                 </td>
             </tr>
 
             <!-- k-omega -->
-            <tr style="background:#fafbfc;">
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#6f42c1; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">k-ω</div>
+            <tr style="background:rgba(255,255,255,0.7); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(255,255,255,0.7)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#8b5cf6,#a855f7); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(139,92,246,0.2);">k-ω</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/k-omega.html" style="text-decoration:none; color:#333;">k-ω Standard</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/k-omega.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">k-ω Standard</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Two-equation RANS model</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#e2e3ff; color:#383d41; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">RANS (2-Eq)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Two-equation RANS model</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(139,92,246,0.1); color:#5b21b6; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(139,92,246,0.2);">RANS (2-Eq)</span>
                 </td>
             </tr>
 
             <!-- Transition k-kL-omega -->
-            <tr>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#fd7e14; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">k-kL</div>
+            <tr style="background:rgba(248,250,252,0.8); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(248,250,252,0.8)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#f59e0b,#fbbf24); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(245,158,11,0.2);">k-kL</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/transition-k-kl-omega.html" style="text-decoration:none; color:#333;">Transition k-kL-ω</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/transition-k-kl-omega.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Transition k-kL-ω</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Three-equation transition model</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#fff3cd; color:#856404; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Transition (3-Eq)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Three-equation transition model</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(245,158,11,0.1); color:#92400e; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(245,158,11,0.2);">Transition (3-Eq)</span>
                 </td>
             </tr>
 
             <!-- Transition SST -->
-            <tr style="background:#fafbfc;">
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#fd7e14; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">γ-Re</div>
+            <tr style="background:rgba(255,255,255,0.7); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(255,255,255,0.7)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#f59e0b,#fbbf24); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(245,158,11,0.2);">γ-Re</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/transition-sst.html" style="text-decoration:none; color:#333;">Transition SST</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/transition-sst.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Transition SST</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Four-equation transition model</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#fff3cd; color:#856404; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Transition (4-Eq)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Four-equation transition model</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(245,158,11,0.1); color:#92400e; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(245,158,11,0.2);">Transition (4-Eq)</span>
                 </td>
             </tr>
 
             <!-- k-omega SST -->
-            <tr>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#6f42c1; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">SST</div>
+            <tr style="background:rgba(248,250,252,0.8); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(248,250,252,0.8)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#8b5cf6,#a855f7); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(139,92,246,0.2);">SST</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/k-omega-sst.html" style="text-decoration:none; color:#333;">k-ω SST</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/k-omega-sst.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">k-ω SST</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Hybrid RANS formulation</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#e2e3ff; color:#383d41; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">RANS (Hybrid)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Hybrid RANS formulation</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(139,92,246,0.1); color:#5b21b6; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(139,92,246,0.2);">RANS (Hybrid)</span>
                 </td>
             </tr>
 
             <!-- Reynolds Stress -->
-            <tr style="background:#fafbfc;">
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#6f42c1; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">RSM</div>
+            <tr style="background:rgba(255,255,255,0.7); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(255,255,255,0.7)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#8b5cf6,#a855f7); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(139,92,246,0.2);">RSM</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/reynolds-stress.html" style="text-decoration:none; color:#333;">Reynolds Stress</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/reynolds-stress.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Reynolds Stress</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Seven-equation RANS model</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#e2e3ff; color:#383d41; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">RANS (7-Eq)</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Seven-equation RANS model</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(139,92,246,0.1); color:#5b21b6; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(139,92,246,0.2);">RANS (7-Eq)</span>
                 </td>
             </tr>
 
             <!-- Scale Adaptive Simulation -->
-            <tr>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#dc3545; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">SAS</div>
+            <tr style="background:rgba(248,250,252,0.8); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(248,250,252,0.8)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#ef4444,#f87171); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(239,68,68,0.2);">SAS</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/scale-adaptive.html" style="text-decoration:none; color:#333;">Scale Adaptive</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/scale-adaptive.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Scale Adaptive</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Modified RANS approach</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#f8d7da; color:#721c24; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Scale-Resolving</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Modified RANS approach</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(239,68,68,0.1); color:#991b1b; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(239,68,68,0.2);">Scale-Resolving</span>
                 </td>
             </tr>
 
             <!-- Detached Eddy Simulation -->
-            <tr style="background:#fafbfc;">
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <div style="background:#dc3545; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">DES</div>
+            <tr style="background:rgba(255,255,255,0.7); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(255,255,255,0.7)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <div style="background:linear-gradient(135deg,#ef4444,#f87171); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(239,68,68,0.2);">DES</div>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-weight:600; color:#333;">
-                    <a href="models/detached-eddy.html" style="text-decoration:none; color:#333;">Detached Eddy</a>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-weight:600; color:#1e293b;">
+                    <a href="models/detached-eddy.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Detached Eddy</a>
                 </td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; font-size:0.875rem; color:#666;">Hybrid RANS-LES method</td>
-                <td style="padding:0.5rem; border-bottom:1px solid #f8f9fa; text-align:center;">
-                    <span style="background:#f8d7da; color:#721c24; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Scale-Resolving</span>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); font-size:0.875rem; color:#64748b; font-weight:400;">Hybrid RANS-LES method</td>
+                <td style="padding:0.75rem 1rem; border-bottom:1px solid rgba(59,130,246,0.05); text-align:center;">
+                    <span style="background:rgba(239,68,68,0.1); color:#991b1b; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(239,68,68,0.2);">Scale-Resolving</span>
                 </td>
             </tr>
 
             <!-- Large Eddy Simulation -->
-            <tr>
-                <td style="padding:0.5rem; text-align:center;">
-                    <div style="background:#dc3545; color:white; padding:0.25rem 0.5rem; border-radius:0.25rem; font-family:monospace; font-size:0.75rem; font-weight:bold;">LES</div>
+            <tr style="background:rgba(248,250,252,0.8); transition:all 0.2s ease;" onmouseover="this.style.background='rgba(59,130,246,0.03)'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='rgba(248,250,252,0.8)'; this.style.transform='translateX(0)';">
+                <td style="padding:0.75rem 1rem; text-align:center;">
+                    <div style="background:linear-gradient(135deg,#ef4444,#f87171); color:white; padding:0.375rem 0.75rem; border-radius:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.875rem; font-weight:500; box-shadow:0 2px 10px rgba(239,68,68,0.2);">LES</div>
                 </td>
-                <td style="padding:0.5rem; font-weight:600; color:#333;">
-                    <a href="models/large-eddy.html" style="text-decoration:none; color:#333;">Large Eddy Simulation</a>
+                <td style="padding:0.75rem 1rem; font-weight:600; color:#1e293b;">
+                    <a href="models/large-eddy.html" style="text-decoration:none; color:#1e293b; font-family:'Playfair Display',serif; font-size:1rem; transition:color 0.2s ease;" onmouseover="this.style.color='#3b82f6';" onmouseout="this.style.color='#1e293b';">Large Eddy Simulation</a>
                 </td>
-                <td style="padding:0.5rem; font-size:0.875rem; color:#666;">Direct turbulence resolution</td>
-                <td style="padding:0.5rem; text-align:center;">
-                    <span style="background:#f8d7da; color:#721c24; padding:0.125rem 0.375rem; border-radius:0.125rem; font-size:0.625rem; font-weight:500;">Scale-Resolving</span>
+                <td style="padding:0.75rem 1rem; font-size:0.875rem; color:#64748b; font-weight:400;">Direct turbulence resolution</td>
+                <td style="padding:0.75rem 1rem; text-align:center;">
+                    <span style="background:rgba(239,68,68,0.1); color:#991b1b; padding:0.25rem 0.75rem; border-radius:0.375rem; font-size:0.75rem; font-weight:500; border:1px solid rgba(239,68,68,0.2);">Scale-Resolving</span>
                 </td>
             </tr>
 
         </table>
     </div>
 
-    <!-- Footer -->
-    <div style="background:#f8f9fa; border-top:1px solid #dee2e6; padding:0.75rem; text-align:center;">
-        <p style="margin:0; font-size:0.75rem; color:#666;">
-            © 2024 CFD Academic Reference | 
-            <a href="https://github.com/kuplulumert/fdapp" style="color:#007bff; text-decoration:none;">GitHub Repository</a>
-        </p>
+    <!-- Premium Footer -->
+    <div style="background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-top:1px solid rgba(59,130,246,0.15); padding:1rem 2rem; text-align:center;">
+        <div style="max-width:1200px; margin:0 auto;">
+            <p style="margin:0; font-size:0.875rem; color:#64748b; font-weight:400;">
+                © 2024 CFD Turbulence Models Reference | 
+                <a href="https://github.com/kuplulumert/fdapp" style="color:#3b82f6; text-decoration:none; font-weight:500; transition:color 0.2s ease;" onmouseover="this.style.color='#1e40af';" onmouseout="this.style.color='#3b82f6';">GitHub Repository</a>
+            </p>
+        </div>
     </div>
 
 </body>
