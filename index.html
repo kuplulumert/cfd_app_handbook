@@ -1,566 +1,619 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everyday Fluids, Explained</title>
-    <meta name="description" content="A beautiful collection of fluid dynamics formulas with clear explanations and memorable analogies.">
-    <meta name="keywords" content="fluid dynamics, engineering, formulas, CFD, education, physics">
+    <title>Fluid Dynamics Formulas Explained Simply</title>
+    <meta name="description" content="Every fluid dynamics formula explained with simple analogies and clear logic. Make complex concepts stick.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- KaTeX -->
+    <!-- KaTeX for Math -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     
-    <!-- Lucide Icons -->
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .logo p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: -0.25rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Formula Preview Cards */
+        .formulas-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+
+        .formulas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .formula-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .formula-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .formula-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .formula-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .formula-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .formula-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .formula-description {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .equation-box {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .equation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.125rem;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .analogy-preview {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #059669;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Status Indicators */
+        .status-complete {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .status-coming-soon {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+        }
+
+        .tag-conservation {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1d4ed8;
+        }
+
+        .tag-governing {
+            background: rgba(147, 51, 234, 0.1);
+            color: #7c3aed;
+        }
+
+        .tag-internal {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+        }
+
+        .tag-external {
+            background: rgba(249, 115, 22, 0.1);
+            color: #ea580c;
+        }
+
+        .tag-dimensionless {
+            background: rgba(99, 102, 241, 0.1);
+            color: #4f46e5;
+        }
+
+        .tag-heat {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .github-link {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .github-link:hover {
+            color: #1f2937;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .formulas-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Smooth animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .formula-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .formula-card:nth-child(1) { animation-delay: 0.1s; }
+        .formula-card:nth-child(2) { animation-delay: 0.2s; }
+        .formula-card:nth-child(3) { animation-delay: 0.3s; }
+        .formula-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
 </head>
-<body class="antialiased bg-gray-50 text-gray-900">
+<body>
     <!-- Header -->
-    <header class="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                        <i data-lucide="droplets" class="w-7 h-7 text-white"></i>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i data-lucide="waves" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Everyday Fluids</h1>
-                        <p class="text-sm text-gray-600">Formulas that make sense</p>
+                        <h1>Fluid Formulas</h1>
+                        <p>Simply Explained</p>
                     </div>
-                </div>
+                </a>
                 
-                <div class="flex items-center space-x-4">
-                    <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <i data-lucide="github" class="w-5 h-5"></i>
-                        <span class="hidden sm:inline text-sm">GitHub</span>
-                    </a>
-                </div>
+                <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="github-link">
+                    <i data-lucide="github" style="width: 1.5rem; height: 1.5rem;"></i>
+                </a>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 text-white py-20">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                Fluid Dynamics Formulas
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Every equation explained with clear analogies and real examples
+    <section class="hero">
+        <div class="container">
+            <h1>Every Fluid Formula,<br>Simply Explained</h1>
+            <p>
+                Complex fluid dynamics made simple with clear analogies, step-by-step logic, 
+                and real-world examples. No more confusion, just understanding.
             </p>
-            
-            <div class="flex justify-center">
-                <a href="#formulas" class="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 inline-flex items-center space-x-2">
-                    <span>Explore Formulas</span>
-                    <i data-lucide="arrow-down" class="w-5 h-5"></i>
-                </a>
-            </div>
+            <a href="#formulas" class="cta-button">
+                <span>Start Learning</span>
+                <i data-lucide="arrow-right" style="width: 1.25rem; height: 1.25rem;"></i>
+            </a>
         </div>
     </section>
 
-    <!-- Filter Tabs -->
-    <section class="bg-white border-b border-gray-200 sticky top-20 z-30">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex flex-wrap gap-2 justify-center">
-                <button class="filter-tab active" data-filter="all">
-                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
-                    <span>All Formulas</span>
-                </button>
-                <button class="filter-tab" data-filter="conservation">
-                    <i data-lucide="balance-scale" class="w-4 h-4"></i>
-                    <span>Conservation Laws</span>
-                </button>
-                <button class="filter-tab" data-filter="governing">
-                    <i data-lucide="function-square" class="w-4 h-4"></i>
-                    <span>Governing Equations</span>
-                </button>
-                <button class="filter-tab" data-filter="internal">
-                    <i data-lucide="pipe" class="w-4 h-4"></i>
-                    <span>Internal Flow</span>
-                </button>
-                <button class="filter-tab" data-filter="external">
-                    <i data-lucide="wind" class="w-4 h-4"></i>
-                    <span>External Flow</span>
-                </button>
-                <button class="filter-tab" data-filter="dimensionless">
-                    <i data-lucide="hash" class="w-4 h-4"></i>
-                    <span>Dimensionless</span>
-                </button>
-                <button class="filter-tab" data-filter="heat">
-                    <i data-lucide="thermometer" class="w-4 h-4"></i>
-                    <span>Heat Transfer</span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- All Formulas Grid -->
-    <section id="formulas" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">All Fluid Dynamics Formulas</h2>
-                <p class="text-lg text-gray-600">Click any card to dive deep into the explanation</p>
+    <!-- Formulas Section -->
+    <section id="formulas" class="formulas-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>All Formulas</h2>
+                <p>Each formula explained with analogies that make it stick</p>
             </div>
 
-            <div id="formulas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="formulas-grid">
                 
                 <!-- Bernoulli Equation -->
-                <a href="formulas/bernoulli.html" class="formula-card group" data-category="conservation">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-blue-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">B</span>
-                            </div>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Conservation</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                            Bernoulli Equation
-                        </h3>
-                        <p class="text-sm text-gray-600 mb-4">Energy conservation along streamlines</p>
-                        
-                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 mb-4">
-                            <div class="katex-display text-center text-sm">
-                                \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-500">
-                            <i data-lucide="lightbulb" class="w-3 h-3"></i>
-                            <span>Bank account analogy</span>
-                        </div>
+                <a href="formulas/bernoulli.html" class="formula-card">
+                    <div class="formula-header">
+                        <div class="formula-icon status-complete">B</div>
+                        <span class="tag tag-conservation">Conservation</span>
+                    </div>
+                    
+                    <h3 class="formula-title">Bernoulli Equation</h3>
+                    <p class="formula-description">
+                        Energy is conserved along a streamline in flowing fluids. 
+                        Think of it like a bank account for energy.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation">p/ρg + v²/2g + z = constant</div>
+                    </div>
+                    
+                    <div class="analogy-preview">
+                        <i data-lucide="lightbulb" style="width: 1rem; height: 1rem;"></i>
+                        <span>Bank account analogy</span>
                     </div>
                 </a>
 
                 <!-- Continuity Equation -->
-                <div class="formula-card group" data-category="conservation">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-green-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">C</span>
-                            </div>
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Conservation</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Continuity Equation</h3>
-                        <p class="text-sm text-gray-500 mb-4">Mass conservation in flowing fluids</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">∂ρ/∂t + ∇·(ρv) = 0</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
+                <div class="formula-card" style="opacity: 0.7;">
+                    <div class="formula-header">
+                        <div class="formula-icon status-coming-soon">C</div>
+                        <span class="tag tag-conservation">Conservation</span>
+                    </div>
+                    
+                    <h3 class="formula-title">Continuity Equation</h3>
+                    <p class="formula-description">
+                        Mass cannot be created or destroyed in flowing fluids. 
+                        Like traffic flow - cars can't disappear.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation">∂ρ/∂t + ∇·(ρv) = 0</div>
+                    </div>
+                    
+                    <div class="analogy-preview">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
                 <!-- Navier-Stokes -->
-                <div class="formula-card group" data-category="governing">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-purple-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">N</span>
-                            </div>
-                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Governing</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Navier-Stokes</h3>
-                        <p class="text-sm text-gray-500 mb-4">Momentum conservation with viscosity</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">ρDv/Dt = -∇p + μ∇²v</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
+                <div class="formula-card" style="opacity: 0.7;">
+                    <div class="formula-header">
+                        <div class="formula-icon status-coming-soon">NS</div>
+                        <span class="tag tag-governing">Governing</span>
                     </div>
-                </div>
-
-                <!-- Darcy-Weisbach -->
-                <div class="formula-card group" data-category="internal">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">D</span>
-                            </div>
-                            <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">Internal Flow</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Darcy-Weisbach</h3>
-                        <p class="text-sm text-gray-500 mb-4">Pressure drop in pipe flow</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">Δp = f(L/D)(ρv²/2)</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
+                    
+                    <h3 class="formula-title">Navier-Stokes Equations</h3>
+                    <p class="formula-description">
+                        Newton's second law for fluids with viscosity. 
+                        The master equation of fluid motion.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation">ρ(∂v/∂t + v·∇v) = -∇p + μ∇²v</div>
+                    </div>
+                    
+                    <div class="analogy-preview">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
                 <!-- Reynolds Number -->
-                <div class="formula-card group" data-category="dimensionless">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-indigo-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">Re</span>
-                            </div>
-                            <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">Dimensionless</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Reynolds Number</h3>
-                        <p class="text-sm text-gray-500 mb-4">Inertial vs viscous forces</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">Re = ρvL/μ</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
+                <div class="formula-card" style="opacity: 0.7;">
+                    <div class="formula-header">
+                        <div class="formula-icon status-coming-soon">Re</div>
+                        <span class="tag tag-dimensionless">Dimensionless</span>
+                    </div>
+                    
+                    <h3 class="formula-title">Reynolds Number</h3>
+                    <p class="formula-description">
+                        Tells you if flow is smooth (laminar) or chaotic (turbulent). 
+                        Like a crowd control indicator.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation">Re = ρvL/μ</div>
+                    </div>
+                    
+                    <div class="analogy-preview">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Euler Equations -->
-                <div class="formula-card group" data-category="governing">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-purple-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">E</span>
-                            </div>
-                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Governing</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Euler Equations</h3>
-                        <p class="text-sm text-gray-500 mb-4">Inviscid momentum conservation</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">ρDv/Dt = -∇p + ρg</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
+                <!-- Darcy-Weisbach -->
+                <div class="formula-card" style="opacity: 0.7;">
+                    <div class="formula-header">
+                        <div class="formula-icon status-coming-soon">D</div>
+                        <span class="tag tag-internal">Internal Flow</span>
+                    </div>
+                    
+                    <h3 class="formula-title">Darcy-Weisbach</h3>
+                    <p class="formula-description">
+                        Pressure drop in pipes due to friction. 
+                        Like dragging a rug through a hallway.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation">Δp = f(L/D)(ρv²/2)</div>
+                    </div>
+                    
+                    <div class="analogy-preview">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
                 <!-- Drag Coefficient -->
-                <div class="formula-card group" data-category="external">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-orange-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">CD</span>
-                            </div>
-                            <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">External Flow</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Drag Coefficient</h3>
-                        <p class="text-sm text-gray-500 mb-4">Resistance force on objects</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">CD = FD/(½ρv²A)</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
+                <div class="formula-card" style="opacity: 0.7;">
+                    <div class="formula-header">
+                        <div class="formula-icon status-coming-soon">CD</div>
+                        <span class="tag tag-external">External Flow</span>
+                    </div>
+                    
+                    <h3 class="formula-title">Drag Coefficient</h3>
+                    <p class="formula-description">
+                        How much objects resist moving through fluids. 
+                        Like swimming through honey vs water.
+                    </p>
+                    
+                    <div class="equation-box">
+                        <div class="equation">CD = FD/(½ρv²A)</div>
+                    </div>
+                    
+                    <div class="analogy-preview">
+                        <i data-lucide="clock" style="width: 1rem; height: 1rem;"></i>
+                        <span>Coming soon</span>
                     </div>
                 </div>
 
-                <!-- Mach Number -->
-                <div class="formula-card group" data-category="dimensionless">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-indigo-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">Ma</span>
-                            </div>
-                            <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">Dimensionless</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Mach Number</h3>
-                        <p class="text-sm text-gray-500 mb-4">Flow speed vs sound speed</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">Ma = v/c</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nusselt Number -->
-                <div class="formula-card group" data-category="heat">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-red-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">Nu</span>
-                            </div>
-                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">Heat Transfer</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Nusselt Number</h3>
-                        <p class="text-sm text-gray-500 mb-4">Convective vs conductive heat transfer</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">Nu = hL/k</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Energy Equation -->
-                <div class="formula-card group" data-category="conservation">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-blue-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">H</span>
-                            </div>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Conservation</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Energy Equation</h3>
-                        <p class="text-sm text-gray-500 mb-4">Total energy conservation</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">ρDh/Dt = Dp/Dt + Φ</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Moody Chart -->
-                <div class="formula-card group" data-category="internal">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">f</span>
-                            </div>
-                            <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">Internal Flow</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Moody Chart</h3>
-                        <p class="text-sm text-gray-500 mb-4">Friction factor correlations</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">f = f(Re, ε/D)</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lift Coefficient -->
-                <div class="formula-card group" data-category="external">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-orange-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">CL</span>
-                            </div>
-                            <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">External Flow</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Lift Coefficient</h3>
-                        <p class="text-sm text-gray-500 mb-4">Perpendicular force on objects</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">CL = FL/(½ρv²A)</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Prandtl Number -->
-                <div class="formula-card group" data-category="heat">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-red-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">Pr</span>
-                            </div>
-                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">Heat Transfer</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Prandtl Number</h3>
-                        <p class="text-sm text-gray-500 mb-4">Momentum vs thermal diffusion</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">Pr = ν/α</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Froude Number -->
-                <div class="formula-card group" data-category="dimensionless">
-                    <div class="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-indigo-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-75">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <span class="text-white font-bold text-lg">Fr</span>
-                            </div>
-                            <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">Dimensionless</span>
-                        </div>
-                        
-                        <h3 class="text-lg font-bold text-gray-700 mb-2">Froude Number</h3>
-                        <p class="text-sm text-gray-500 mb-4">Inertial vs gravitational forces</p>
-                        
-                        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-4">
-                            <div class="font-mono text-center text-sm text-gray-600">Fr = v/√(gL)</div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 text-xs text-gray-400">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>Coming soon</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Empty State for Filtered Results -->
-            <div id="no-results" class="text-center py-16 hidden">
-                <i data-lucide="search-x" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">No formulas found</h3>
-                <p class="text-gray-500">Try selecting a different category</p>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-4">Ready to Start Learning?</h2>
-            <p class="text-xl mb-8 opacity-90">
-                Begin with Bernoulli's equation - the foundation of fluid energy
-            </p>
-            
-            <a href="formulas/bernoulli.html" class="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 inline-flex items-center space-x-2">
-                <i data-lucide="play" class="w-6 h-6"></i>
-                <span>Start with Bernoulli</span>
-            </a>
+    <!-- What Makes This Different -->
+    <section style="background: white; padding: 4rem 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Makes This Different</h2>
+                <p>Every formula is explained like you're talking to a friend</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                        <i data-lucide="lightbulb" style="color: white; width: 2rem; height: 2rem;"></i>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Simple Analogies</h3>
+                    <p style="color: #6b7280;">Every formula compared to something you already understand - bank accounts, traffic, cooking, sports.</p>
+                </div>
+
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
+                        <i data-lucide="layers" style="color: white; width: 2rem; height: 2rem;"></i>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">Step-by-Step Logic</h3>
+                    <p style="color: #6b7280;">See exactly where each formula comes from. No hand-waving, no "it can be shown that..."</p>
+                </div>
+
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+                        <i data-lucide="alert-triangle" style="color: white; width: 2rem; height: 2rem;"></i>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">When It Fails</h3>
+                    <p style="color: #6b7280;">Learn when formulas break down and why. Real engineering means knowing the limits.</p>
+                </div>
+
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <div class="flex items-center justify-center space-x-3 mb-4">
-                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
-                    <i data-lucide="droplets" class="w-5 h-5 text-white"></i>
-                </div>
-                <span class="text-xl font-bold text-white">Everyday Fluids, Explained</span>
-            </div>
-            
-            <p class="text-gray-400 mb-6">Making fluid dynamics accessible, one formula at a time.</p>
-            
-            <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                <i data-lucide="github" class="w-5 h-5"></i>
+    <footer class="footer">
+        <div class="container">
+            <p>Making fluid dynamics accessible, one formula at a time.</p>
+            <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="github-link">
+                <i data-lucide="github" style="width: 1.5rem; height: 1.5rem;"></i>
             </a>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // Initialize Lucide icons
+        // Initialize icons
         lucide.createIcons();
 
-        // Render math on load
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof katex !== 'undefined') {
-                document.querySelectorAll('.katex-display').forEach(el => {
-                    const latex = el.textContent.trim();
-                    katex.render(latex, el, {
-                        displayMode: true,
-                        throwOnError: false
-                    });
-                });
-            }
-
-            // Initialize filtering
-            initializeFiltering();
-        });
-
-        // Filtering functionality
-        function initializeFiltering() {
-            const filterTabs = document.querySelectorAll('.filter-tab');
-            const formulaCards = document.querySelectorAll('.formula-card');
-            const noResults = document.getElementById('no-results');
-
-            filterTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const filter = this.dataset.filter;
-                    
-                    // Update active tab
-                    filterTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Filter cards
-                    let visibleCount = 0;
-                    formulaCards.forEach(card => {
-                        const category = card.dataset.category;
-                        const shouldShow = filter === 'all' || category === filter;
-                        
-                        if (shouldShow) {
-                            card.style.display = 'block';
-                            card.style.animation = 'fadeInUp 0.3s ease-out';
-                            visibleCount++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                    
-                    // Show/hide no results message
-                    if (visibleCount === 0) {
-                        noResults.classList.remove('hidden');
-                    } else {
-                        noResults.classList.add('hidden');
-                    }
-                });
-            });
-        }
-
-        // Smooth scroll for anchor links
+        // Smooth scrolling for anchor links
         document.addEventListener('click', function(e) {
-            const target = e.target.closest('a[href^="#"]');
-            if (target) {
+            if (e.target.closest('a[href^="#"]')) {
                 e.preventDefault();
+                const target = e.target.closest('a[href^="#"]');
                 const targetId = target.getAttribute('href').substring(1);
                 const targetElement = document.getElementById(targetId);
                 
@@ -572,84 +625,20 @@
                 }
             }
         });
+
+        // Add stagger animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.formula-card').forEach((card) => {
+            observer.observe(card);
+        });
     </script>
-
-    <style>
-        /* Additional styles for the new design */
-        .filter-tab {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.75rem;
-            font-weight: 500;
-            color: #6b7280;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .filter-tab:hover {
-            border-color: #3b82f6;
-            color: #3b82f6;
-            transform: translateY(-1px);
-        }
-
-        .filter-tab.active {
-            background: #3b82f6;
-            border-color: #3b82f6;
-            color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-
-        .category-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .category-card:hover {
-            transform: translateY(-8px) scale(1.02);
-        }
-
-        .formula-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .bg-white\/95 {
-            background-color: rgba(255, 255, 255, 0.95);
-        }
-
-        .backdrop-blur-sm {
-            backdrop-filter: blur(4px);
-        }
-
-        .bg-white\/20 {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .border-white\/30 {
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .bg-clip-text {
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-
-        .text-transparent {
-            color: transparent;
-        }
-    </style>
 </body>
 </html>

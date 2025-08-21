@@ -1,319 +1,683 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bernoulli Equation | Everyday Fluids Explained</title>
-    <meta name="description" content="Interactive explanation of Bernoulli's equation with analogies, derivation, and practical applications. Learn energy conservation in fluid flow.">
-    <meta name="keywords" content="Bernoulli equation, fluid mechanics, energy conservation, streamline, CFD">
+    <title>Bernoulli Equation - Simply Explained</title>
+    <meta name="description" content="Bernoulli's equation explained with a simple bank account analogy. Understand energy conservation in fluid flow.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- KaTeX -->
+    <!-- KaTeX for Math -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     
-    <!-- Lucide Icons -->
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #1f2937;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .formula-hero {
+            background: white;
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+        }
+
+        .formula-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .formula-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .formula-hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .main-equation {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border: 3px solid #3b82f6;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .equation-large {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e40af;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        /* Symbol Explanations */
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .symbol-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .symbol-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .symbol-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+
+        .symbol-info h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .symbol-info p {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .symbol-description {
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .symbol-example {
+            font-size: 0.875rem;
+            color: #059669;
+            font-weight: 500;
+        }
+
+        /* Analogy Section */
+        .analogy-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .analogy-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .analogy-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .analogy-accounts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .account-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .account-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .account-card p {
+            color: #78350f;
+            font-size: 0.875rem;
+        }
+
+        /* Example Section */
+        .example-section {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .example-given, .example-solution {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .example-given h3, .example-solution h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 1rem;
+        }
+
+        .example-list {
+            list-style: none;
+            space: 0.5rem;
+        }
+
+        .example-list li {
+            margin-bottom: 0.5rem;
+            color: #047857;
+        }
+
+        .result-highlight {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        /* Warning Section */
+        .warning-section {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 2px solid #ef4444;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+        }
+
+        .warning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .warning-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid #ef4444;
+        }
+
+        .warning-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-card p {
+            color: #7f1d1d;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .formula-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .equation-large {
+                font-size: 1.5rem;
+            }
+            
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
 </head>
-<body class="antialiased bg-gray-50 text-gray-900">
-    <!-- Simple Header -->
-    <header class="bg-white border-b border-gray-200">
-        <div class="max-w-6xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center">
-                        <i data-lucide="droplets" class="w-6 h-6 text-white"></i>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">
+                        <i data-lucide="waves" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Everyday Fluids</h1>
-                        <p class="text-sm text-gray-600">Simple. Clear. Explained.</p>
+                        <h1>Fluid Formulas</h1>
+                        <p>Simply Explained</p>
                     </div>
-                </div>
+                </a>
                 
-                <a href="../index.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                    <span class="hidden sm:inline text-sm">Back to Home</span>
+                <a href="../index.html" class="back-button">
+                    <i data-lucide="arrow-left" style="width: 1.25rem; height: 1.25rem;"></i>
+                    <span>Back to All Formulas</span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto p-6">
-        <!-- Header Card -->
-        <div class="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-8 mb-8 text-center">
-            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span class="text-white font-bold text-2xl">B</span>
-            </div>
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Bernoulli Equation</h1>
-            <p class="text-xl text-gray-600 mb-6">Energy per unit weight is conserved along a streamline in ideal fluid flow</p>
+    <main class="main-content">
+        <div class="container">
             
-            <!-- Main Equation -->
-            <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-6">
-                <div class="katex-display text-center text-2xl">
-                    \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
-                </div>
-            </div>
-
-            <!-- Trust Level & Assumptions -->
-            <div class="flex flex-wrap justify-center gap-2 mb-4">
-                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Fundamental</span>
-                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Steady Flow</span>
-                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Incompressible</span>
-                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Inviscid</span>
-            </div>
-
-            <div class="bg-blue-50 rounded-lg p-4">
-                <p class="text-sm text-blue-800">
-                    <strong>Valid when:</strong> Re > 1,000, Ma < 0.3, viscous effects negligible
-                </p>
-            </div>
-        </div>
-
-        <!-- Content Sections -->
-        <div class="space-y-8">
-            <!-- What Each Symbol Means -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                <div class="flex items-center space-x-3 mb-6">
-                    <i data-lucide="book-open" class="w-6 h-6 text-green-600"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">What Each Symbol Means</h2>
+            <!-- Formula Hero -->
+            <div class="formula-hero">
+                <div class="formula-badge">
+                    <i data-lucide="balance-scale" style="width: 1rem; height: 1rem;"></i>
+                    <span>Conservation Law</span>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <span class="font-mono text-2xl font-bold text-blue-600">p</span>
-                            <div>
-                                <p class="font-semibold text-gray-900">Pressure</p>
-                                <p class="text-sm text-gray-600">Pa (Pascals)</p>
+                <h1>Bernoulli Equation</h1>
+                <p>Energy is conserved along a streamline in flowing fluids</p>
+                
+                <div class="main-equation">
+                    <div class="equation-large katex-display">
+                        \frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
+                    </div>
+                </div>
+                
+                <p style="color: #3b82f6; font-weight: 600;">
+                    Valid for: Steady flow, incompressible fluids, no viscosity effects
+                </p>
+            </div>
+
+            <!-- What Each Symbol Means -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i data-lucide="book-open" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
+                    </div>
+                    <h2>What Each Symbol Means</h2>
+                </div>
+
+                <div class="symbols-grid">
+                    <div class="symbol-card">
+                        <div class="symbol-header">
+                            <div class="symbol">p</div>
+                            <div class="symbol-info">
+                                <h3>Pressure</h3>
+                                <p>Pascals (Pa)</p>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700">The force per unit area that the fluid exerts</p>
-                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 101,325 Pa (atmospheric pressure)</p>
+                        <p class="symbol-description">The push that the fluid exerts on everything around it</p>
+                        <p class="symbol-example"><strong>Example:</strong> 101,325 Pa (atmospheric pressure)</p>
                     </div>
 
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <span class="font-mono text-2xl font-bold text-blue-600">ρ</span>
-                            <div>
-                                <p class="font-semibold text-gray-900">Density</p>
-                                <p class="text-sm text-gray-600">kg/m³</p>
+                    <div class="symbol-card">
+                        <div class="symbol-header">
+                            <div class="symbol">ρ</div>
+                            <div class="symbol-info">
+                                <h3>Density</h3>
+                                <p>kg/m³</p>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700">How much mass is packed into a given volume</p>
-                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 998 kg/m³ (water at 20°C)</p>
+                        <p class="symbol-description">How much stuff is packed into a given space</p>
+                        <p class="symbol-example"><strong>Example:</strong> 1000 kg/m³ (water)</p>
                     </div>
 
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <span class="font-mono text-2xl font-bold text-blue-600">v</span>
-                            <div>
-                                <p class="font-semibold text-gray-900">Velocity</p>
-                                <p class="text-sm text-gray-600">m/s</p>
+                    <div class="symbol-card">
+                        <div class="symbol-header">
+                            <div class="symbol">g</div>
+                            <div class="symbol-info">
+                                <h3>Gravity</h3>
+                                <p>m/s²</p>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700">How fast the fluid is moving</p>
-                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 5 m/s (typical pipe flow)</p>
+                        <p class="symbol-description">How fast things fall due to Earth's pull</p>
+                        <p class="symbol-example"><strong>Example:</strong> 9.81 m/s² (standard gravity)</p>
                     </div>
 
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <span class="font-mono text-2xl font-bold text-blue-600">z</span>
-                            <div>
-                                <p class="font-semibold text-gray-900">Elevation</p>
-                                <p class="text-sm text-gray-600">m</p>
+                    <div class="symbol-card">
+                        <div class="symbol-header">
+                            <div class="symbol">v</div>
+                            <div class="symbol-info">
+                                <h3>Velocity</h3>
+                                <p>m/s</p>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700">Height above your chosen reference point</p>
-                        <p class="text-xs text-green-700 mt-1"><strong>Example:</strong> 10 m above ground level</p>
+                        <p class="symbol-description">How fast the fluid is moving</p>
+                        <p class="symbol-example"><strong>Example:</strong> 5 m/s (fast walking speed)</p>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-header">
+                            <div class="symbol">z</div>
+                            <div class="symbol-info">
+                                <h3>Height</h3>
+                                <p>m</p>
+                            </div>
+                        </div>
+                        <p class="symbol-description">How high above your reference point</p>
+                        <p class="symbol-example"><strong>Example:</strong> 10 m (3-story building)</p>
                     </div>
                 </div>
             </div>
 
             <!-- The Analogy -->
-            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl p-8">
-                <div class="flex items-center space-x-3 mb-6">
-                    <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-600"></i>
-                    <h2 class="text-2xl font-bold text-yellow-900">The Bank Account Analogy</h2>
-                </div>
-                
-                <div class="bg-white rounded-lg p-6 mb-6">
-                    <p class="text-lg text-gray-800 leading-relaxed">
-                        Think of Bernoulli's equation like a <strong>bank account for energy</strong>. 
-                        Your total balance must always stay the same (conservation), but you can move money between different accounts:
+            <div class="analogy-section">
+                <div class="analogy-header">
+                    <h2>💰 Think of it Like a Bank Account</h2>
+                    <p style="color: #92400e; font-size: 1.125rem;">
+                        Bernoulli's equation is like managing your energy budget. 
+                        You have a total amount of energy that never changes, 
+                        but you can move it between different "accounts."
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white rounded-lg p-4 text-center">
-                        <div class="text-3xl mb-2">🏦</div>
-                        <h3 class="font-bold text-yellow-900 mb-2">Pressure Head (p/ρg)</h3>
-                        <p class="text-sm text-yellow-800">Your <strong>checking account</strong> - readily available energy you can spend immediately</p>
+                <div class="analogy-accounts">
+                    <div class="account-card">
+                        <div class="account-emoji">🏦</div>
+                        <h3>Pressure Account (p/ρg)</h3>
+                        <p>Your <strong>checking account</strong> - energy you can spend right now. High pressure means lots of available energy.</p>
                     </div>
 
-                    <div class="bg-white rounded-lg p-4 text-center">
-                        <div class="text-3xl mb-2">🚗</div>
-                        <h3 class="font-bold text-yellow-900 mb-2">Velocity Head (v²/2g)</h3>
-                        <p class="text-sm text-yellow-800">Your <strong>investment account</strong> - energy tied up in motion, earning kinetic returns</p>
+                    <div class="account-card">
+                        <div class="account-emoji">🚗</div>
+                        <h3>Speed Account (v²/2g)</h3>
+                        <p>Your <strong>investment account</strong> - energy tied up in motion. Going faster means more energy invested in movement.</p>
                     </div>
 
-                    <div class="bg-white rounded-lg p-4 text-center">
-                        <div class="text-3xl mb-2">⛰️</div>
-                        <h3 class="font-bold text-yellow-900 mb-2">Elevation Head (z)</h3>
-                        <p class="text-sm text-yellow-800">Your <strong>savings account</strong> - potential energy stored at altitude for later use</p>
+                    <div class="account-card">
+                        <div class="account-emoji">⛰️</div>
+                        <h3>Height Account (z)</h3>
+                        <p>Your <strong>savings account</strong> - energy stored for later. Being higher up means more potential energy saved.</p>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg p-4 mt-4">
-                    <p class="text-center text-yellow-800">
-                        <strong>💡 Key Insight:</strong> You can transfer money between accounts, but your total balance stays constant 
-                        (unless you add energy with a pump or lose it to friction)
+                <div style="background: white; border-radius: 1rem; padding: 1.5rem; margin-top: 2rem; text-align: center;">
+                    <p style="color: #92400e; font-size: 1.125rem; font-weight: 600;">
+                        💡 <strong>Key Insight:</strong> Your total balance stays the same! 
+                        You can move money between accounts, but you can't create or destroy energy.
                     </p>
                 </div>
             </div>
 
             <!-- Real Example -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                <div class="flex items-center space-x-3 mb-6">
-                    <i data-lucide="calculator" class="w-6 h-6 text-green-600"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Real Example: Water Tank</h2>
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i data-lucide="calculator" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
+                    </div>
+                    <h2>Real Example: Water Tank</h2>
                 </div>
-                
-                <div class="bg-green-50 border border-green-200 rounded-lg p-6">
-                    <h3 class="text-lg font-bold text-green-900 mb-4">
-                        🚰 Water Tank to Jet (Torricelli's Law)
+
+                <div class="example-section">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #065f46; text-align: center; margin-bottom: 2rem;">
+                        🚰 Water Shooting Out of a Tank
                     </h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-semibold text-green-800 mb-3">📝 Given:</h4>
-                            <ul class="space-y-2 text-green-800">
-                                <li><span class="font-mono">h</span> = 5 m (height difference)</li>
-                                <li><span class="font-mono">p₁ = p₂</span> = atmospheric pressure</li>
-                                <li><span class="font-mono">v₁</span> ≈ 0 (large tank, slow surface)</li>
+                    <div class="example-grid">
+                        <div class="example-given">
+                            <h3>📝 What We Know</h3>
+                            <ul class="example-list">
+                                <li>• Tank height: 5 meters</li>
+                                <li>• Water at top barely moving</li>
+                                <li>• Both top and bottom at atmospheric pressure</li>
+                                <li>• Want to find: How fast does water shoot out?</li>
                             </ul>
                         </div>
-                        
-                        <div>
-                            <h4 class="font-semibold text-green-800 mb-3">✅ Answer:</h4>
-                            <div class="bg-white rounded p-4">
-                                <p class="text-2xl font-bold text-green-900">v₂ = 9.9 m/s</p>
-                                <p class="text-sm text-green-700">Exit velocity depends only on height!</p>
+
+                        <div class="example-solution">
+                            <h3>🧮 The Solution</h3>
+                            <p style="color: #047857; margin-bottom: 1rem;">
+                                Since pressure is the same everywhere and the top is nearly still, 
+                                all the height energy converts to speed energy:
+                            </p>
+                            <div class="result-highlight">
+                                v = √(2gh) = 9.9 m/s
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6">
-                        <h4 class="font-semibold text-green-800 mb-3">🧮 How we solved it:</h4>
-                        <div class="bg-white rounded-lg p-4">
-                            <ol class="list-decimal list-inside space-y-2 text-green-800">
-                                <li>Since pressures are equal and v₁ ≈ 0, Bernoulli simplifies to: <span class="font-mono">h = v₂²/2g</span></li>
-                                <li>Solve for v₂: <span class="font-mono">v₂ = √(2gh) = √(2 × 9.81 × 5)</span></li>
-                                <li>Calculate: <span class="font-mono">v₂ = √98.1 = 9.9 m/s</span></li>
-                            </ol>
+                            <p style="color: #047857; font-size: 0.875rem;">
+                                That's about 22 mph - like a garden hose on full blast!
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- When It Fails -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                <div class="flex items-center space-x-3 mb-6">
-                    <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">When Bernoulli Lies to You</h2>
+            <!-- When Bernoulli Lies -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                        <i data-lucide="alert-triangle" style="color: white; width: 1.5rem; height: 1.5rem;"></i>
+                    </div>
+                    <h2>When Bernoulli Lies to You</h2>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <div class="flex items-start space-x-3">
-                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
-                            <div>
-                                <h3 class="font-semibold text-red-900">Viscous Effects</h3>
-                                <p class="text-sm text-red-800">Boundary layers, pipe friction, flow separation</p>
-                            </div>
-                        </div>
+
+                <div class="warning-section">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <p style="color: #7f1d1d; font-size: 1.125rem;">
+                            Bernoulli assumes perfect, frictionless flow. In the real world, it breaks down when:
+                        </p>
                     </div>
 
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <div class="flex items-start space-x-3">
-                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
-                            <div>
-                                <h3 class="font-semibold text-red-900">High-Speed Flow</h3>
-                                <p class="text-sm text-red-800">Compressible flow when Ma > 0.3</p>
-                            </div>
+                    <div class="warning-grid">
+                        <div class="warning-card">
+                            <h3>🌪️ Viscous Effects</h3>
+                            <p>When fluid sticks to walls or has internal friction (like honey vs water)</p>
                         </div>
-                    </div>
 
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <div class="flex items-start space-x-3">
-                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
-                            <div>
-                                <h3 class="font-semibold text-red-900">Pumps & Turbines</h3>
-                                <p class="text-sm text-red-800">Devices that add or remove energy</p>
-                            </div>
+                        <div class="warning-card">
+                            <h3>⚡ High Speed Flow</h3>
+                            <p>When flow gets close to the speed of sound (compressible effects kick in)</p>
                         </div>
-                    </div>
 
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <div class="flex items-start space-x-3">
-                            <i data-lucide="x-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-1"></i>
-                            <div>
-                                <h3 class="font-semibold text-red-900">Unsteady Flow</h3>
-                                <p class="text-sm text-red-800">Rapidly changing conditions</p>
-                            </div>
+                        <div class="warning-card">
+                            <h3>🔄 Pumps & Turbines</h3>
+                            <p>When machines add or remove energy from the flow</p>
+                        </div>
+
+                        <div class="warning-card">
+                            <h3>⏱️ Unsteady Flow</h3>
+                            <p>When things change rapidly with time (like water hammer)</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Navigation -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">What's Next?</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <a href="../index.html" class="block bg-blue-50 border-2 border-blue-200 rounded-lg p-6 hover:border-blue-300 hover:shadow-md transition-all duration-200 group">
-                        <div class="text-center">
-                            <i data-lucide="home" class="w-8 h-8 text-blue-600 mx-auto mb-3"></i>
-                            <h3 class="font-bold text-blue-900 group-hover:text-blue-700">Explore More Categories</h3>
-                            <p class="text-sm text-blue-800 mt-2">Conservation Laws, Internal Flow, External Flow, and more</p>
-                        </div>
+            <div class="content-section" style="text-align: center;">
+                <h2 style="margin-bottom: 2rem;">What's Next?</h2>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="../index.html" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 1rem 2rem; border-radius: 1rem; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.3s ease;">
+                        <i data-lucide="home" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <span>Explore More Formulas</span>
                     </a>
-
-                    <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-6 opacity-75">
-                        <div class="text-center">
-                            <i data-lucide="clock" class="w-8 h-8 text-gray-500 mx-auto mb-3"></i>
-                            <h3 class="font-bold text-gray-700">More Formulas Coming</h3>
-                            <p class="text-sm text-gray-600 mt-2">Continuity, Navier-Stokes, Reynolds Number, and 20+ more</p>
-                        </div>
-                    </div>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <!-- Simple Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-8 mt-16">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <p class="mb-4">Making fluid dynamics accessible, one formula at a time.</p>
-            <a href="https://github.com/kuplulumert/fdapp" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                <i data-lucide="github" class="w-5 h-5"></i>
+    <!-- Footer -->
+    <footer style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-top: 1px solid rgba(59, 130, 246, 0.1); padding: 2rem 0; text-align: center;">
+        <div class="container">
+            <p style="color: #6b7280; margin-bottom: 1rem;">Making fluid dynamics accessible, one formula at a time.</p>
+            <a href="https://github.com/kuplulumert/fdapp" target="_blank" style="color: #6b7280; text-decoration: none;">
+                <i data-lucide="github" style="width: 1.5rem; height: 1.5rem;"></i>
             </a>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // Initialize Lucide icons
+        // Initialize icons
         lucide.createIcons();
-        
-        // Initialize math rendering
+
+        // Render KaTeX math
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof katex !== 'undefined') {
                 document.querySelectorAll('.katex-display').forEach(el => {
@@ -324,6 +688,17 @@
                     });
                 });
             }
+        });
+
+        // Smooth hover effects for cards
+        document.querySelectorAll('.symbol-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
         });
     </script>
 </body>
