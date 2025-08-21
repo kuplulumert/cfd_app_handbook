@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFD Turbulence Models - Academic Reference v2.0</title>
-    <meta name="description" content="Complete guide to CFD turbulence models from fundamental to advanced methods.">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <title>CFD Turbulence Models - Compact Reference</title>
+    <meta name="description" content="Compact guide to CFD turbulence models.">
     
     <style>
         * {
@@ -24,40 +21,26 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
             color: #1e293b;
-            line-height: 1.6;
-            /* SCROLLING ENABLED - NO HEIGHT RESTRICTIONS */
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 25% 25%, rgba(59,130,246,0.03) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(139,92,246,0.03) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
+            line-height: 1.4;
+            font-size: 14px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
 
-        /* Premium Header */
+        /* Compact Header */
         .header {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(59,130,246,0.15);
-            padding: 1.25rem 0;
+            padding: 0.75rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
         }
 
         .header-content {
@@ -69,43 +52,30 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             text-decoration: none;
             color: inherit;
         }
 
         .logo-icon {
-            width: 3rem;
-            height: 3rem;
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 50%, #1e3a8a 100%);
-            border-radius: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 30px rgba(59,130,246,0.3);
-            position: relative;
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            border-radius: 1rem;
-            opacity: 0.3;
-            z-index: -1;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.2);
         }
 
         .logo-text h1 {
-            font-family: Georgia, serif;
-            font-size: 1.75rem;
+            font-size: 1.125rem;
             font-weight: 600;
             color: #1e293b;
-            letter-spacing: -0.02em;
         }
 
         .logo-text p {
-            font-size: 1rem;
+            font-size: 0.75rem;
             color: #64748b;
             font-style: italic;
         }
@@ -113,101 +83,94 @@
         .github-link {
             color: #64748b;
             text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            border: 1px solid rgba(59,130,246,0.2);
-            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.15);
+            background: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
         }
 
         .github-link:hover {
             color: #3b82f6;
             border-color: #3b82f6;
             background: rgba(59,130,246,0.05);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59,130,246,0.15);
         }
 
-        /* Premium Hero */
+        /* Compact Hero */
         .hero {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%);
-            padding: 3rem 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
+            padding: 1.5rem 0;
             text-align: center;
             border-bottom: 1px solid rgba(59,130,246,0.1);
         }
 
         .hero h1 {
-            font-family: Georgia, serif;
-            font-size: 3rem;
+            font-size: 1.75rem;
             font-weight: 600;
             color: #1e293b;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 0.875rem;
             color: #64748b;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            line-height: 1.5;
         }
 
-        /* Premium Models Section */
+        /* Compact Models Section */
         .models-section {
-            padding: 3rem 0;
+            padding: 1.5rem 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .section-title h2 {
-            font-family: Georgia, serif;
-            font-size: 2rem;
+            font-size: 1.25rem;
             font-weight: 500;
             color: #1e293b;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
         }
 
         .section-title p {
-            font-size: 1.125rem;
+            font-size: 0.75rem;
             color: #64748b;
             font-style: italic;
         }
 
-        /* Premium Table */
+        /* Compact Table */
         .models-table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(255,255,255,0.95);
-            border-radius: 1.25rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            border: 1px solid rgba(59,130,246,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border: 1px solid rgba(59,130,246,0.1);
+            font-size: 0.875rem;
         }
 
         .table-header {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.75rem;
             color: #475569;
         }
 
         .table-header td {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 2px solid rgba(59,130,246,0.2);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(59,130,246,0.15);
             text-align: center;
         }
 
         .table-header .name-col {
             text-align: left;
-            font-family: Georgia, serif;
         }
 
         .table-header .desc-col {
@@ -215,225 +178,180 @@
         }
 
         .model-row {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .model-row:nth-child(even) {
-            background: rgba(248,250,252,0.8);
+            background: rgba(248,250,252,0.6);
         }
 
         .model-row:nth-child(odd) {
-            background: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.5);
         }
 
         .model-row:hover {
             background: rgba(59,130,246,0.05) !important;
-            transform: translateX(8px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transform: translateX(4px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
         .model-row td {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid rgba(59,130,246,0.08);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(59,130,246,0.05);
             vertical-align: middle;
         }
 
         .model-icon {
-            width: 3.5rem;
-            height: 2.5rem;
-            border-radius: 0.75rem;
+            width: 2.5rem;
+            height: 1.75rem;
+            border-radius: 0.375rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-family: 'Courier New', monospace;
-            font-size: 1.125rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .model-icon::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 0.75rem;
-            opacity: 0.4;
-            z-index: -1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         /* Icon Colors */
-        .icon-fundamental {
-            background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%);
-        }
-        .icon-fundamental::before {
-            background: linear-gradient(135deg, #10b981, #34d399);
-        }
-
-        .icon-rans {
-            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%);
-        }
-        .icon-rans::before {
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
-        }
-
-        .icon-transition {
-            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%);
-        }
-        .icon-transition::before {
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-        }
-
-        .icon-advanced {
-            background: linear-gradient(135deg, #ef4444 0%, #f87171 50%, #fca5a5 100%);
-        }
-        .icon-advanced::before {
-            background: linear-gradient(135deg, #ef4444, #f87171);
-        }
+        .icon-fundamental { background: linear-gradient(135deg, #10b981, #34d399); }
+        .icon-rans { background: linear-gradient(135deg, #8b5cf6, #a855f7); }
+        .icon-transition { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .icon-advanced { background: linear-gradient(135deg, #ef4444, #f87171); }
 
         .model-name {
-            font-family: Georgia, serif;
-            font-size: 1.25rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #1e293b;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: color 0.2s ease;
         }
 
         .model-name:hover {
             color: #3b82f6;
-            text-shadow: 0 2px 8px rgba(59,130,246,0.3);
         }
 
         .model-desc {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: #64748b;
-            line-height: 1.5;
+            line-height: 1.3;
         }
 
         .classification-tags {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.25rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .class-tag {
-            padding: 0.5rem 1.25rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.625rem;
             font-weight: 600;
             border: 1px solid;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .tag-fundamental {
-            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(52,211,153,0.15));
+            background: rgba(16,185,129,0.1);
             color: #065f46;
-            border-color: rgba(16,185,129,0.25);
+            border-color: rgba(16,185,129,0.2);
         }
 
         .tag-rans {
-            background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(168,85,247,0.15));
+            background: rgba(139,92,246,0.1);
             color: #5b21b6;
-            border-color: rgba(139,92,246,0.25);
+            border-color: rgba(139,92,246,0.2);
         }
 
         .tag-transition {
-            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(251,191,36,0.15));
+            background: rgba(245,158,11,0.1);
             color: #92400e;
-            border-color: rgba(245,158,11,0.25);
+            border-color: rgba(245,158,11,0.2);
         }
 
         .tag-advanced {
-            background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(248,113,113,0.15));
+            background: rgba(239,68,68,0.1);
             color: #991b1b;
-            border-color: rgba(239,68,68,0.25);
+            border-color: rgba(239,68,68,0.2);
         }
 
         .available-tag {
-            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            background: linear-gradient(135deg, #10b981, #34d399);
             color: white;
             font-weight: 700;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+            box-shadow: 0 2px 6px rgba(16,185,129,0.2);
         }
 
-        /* Footer */
+        /* Compact Footer */
         .footer {
             background: rgba(255,255,255,0.9);
-            border-top: 1px solid rgba(59,130,246,0.15);
-            padding: 2rem 0;
+            border-top: 1px solid rgba(59,130,246,0.1);
+            padding: 1rem 0;
             text-align: center;
-            margin-top: 3rem;
-            box-shadow: 0 -2px 20px rgba(0,0,0,0.05);
+            margin-top: 1rem;
         }
 
         .footer p {
-            font-size: 1rem;
+            font-size: 0.75rem;
             color: #64748b;
         }
 
         .footer a {
             color: #3b82f6;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .footer a:hover {
             color: #1e40af;
-            text-shadow: 0 2px 8px rgba(59,130,246,0.3);
         }
 
-        /* Test Section to Ensure Scrolling */
+        /* Test Section */
         .scroll-test {
             background: rgba(59,130,246,0.05);
-            padding: 2rem 0;
+            padding: 1rem 0;
             text-align: center;
-            margin-top: 2rem;
-            border: 2px dashed rgba(59,130,246,0.2);
+            margin-top: 1rem;
+            border: 1px dashed rgba(59,130,246,0.2);
+            border-radius: 0.5rem;
         }
 
         .scroll-test h3 {
             color: #3b82f6;
-            font-size: 1.5rem;
+            font-size: 1rem;
             margin-bottom: 0.5rem;
         }
 
         .scroll-test p {
             color: #64748b;
-            font-size: 1rem;
+            font-size: 0.75rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .container {
-                padding: 0 1rem;
+                padding: 0 0.75rem;
             }
             
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             .hero p {
-                font-size: 1rem;
-            }
-            
-            .logo {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
+                font-size: 0.8rem;
             }
             
             .header-content {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.5rem;
             }
             
             .models-table {
-                font-size: 0.875rem;
+                font-size: 0.75rem;
             }
             
             .table-header {
@@ -442,7 +360,7 @@
             
             .model-row td {
                 display: block;
-                padding: 1rem;
+                padding: 0.75rem;
                 border: none;
                 text-align: left !important;
             }
@@ -457,81 +375,53 @@
                 margin-top: 0.5rem;
             }
         }
-
-        /* Animation Effects */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .model-row {
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .model-row:nth-child(2) { animation-delay: 0.1s; }
-        .model-row:nth-child(3) { animation-delay: 0.15s; }
-        .model-row:nth-child(4) { animation-delay: 0.2s; }
-        .model-row:nth-child(5) { animation-delay: 0.25s; }
-        .model-row:nth-child(6) { animation-delay: 0.3s; }
-        .model-row:nth-child(7) { animation-delay: 0.35s; }
-        .model-row:nth-child(8) { animation-delay: 0.4s; }
-        .model-row:nth-child(9) { animation-delay: 0.45s; }
-        .model-row:nth-child(10) { animation-delay: 0.5s; }
-        .model-row:nth-child(11) { animation-delay: 0.55s; }
-        .model-row:nth-child(12) { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
-    <!-- Premium Header -->
+    <!-- Compact Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
                     <div class="logo-icon">
-                        <span style="color: white; font-size: 1.5rem; font-weight: 700; font-family: Georgia, serif;">∇</span>
+                        <span style="color: white; font-size: 1rem; font-weight: 700;">∇</span>
                     </div>
                     <div class="logo-text">
                         <h1>CFD Turbulence Models</h1>
-                        <p>Academic Reference</p>
+                        <p>Compact Reference</p>
                     </div>
                 </a>
                 
                 <a href="https://github.com/kuplulumert/fdapp" class="github-link">
-                    GitHub Repository
+                    GitHub
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Premium Hero -->
+    <!-- Compact Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Turbulence Models in Computational Fluid Dynamics</h1>
-            <p>Complete academic classification from fundamental assumptions to advanced scale-resolving methods</p>
+            <h1>Turbulence Models in CFD</h1>
+            <p>Complete classification from fundamental to advanced methods</p>
         </div>
     </section>
 
-    <!-- Premium Models Section -->
+    <!-- Compact Models Section -->
     <section class="models-section">
         <div class="container">
             <div class="section-title">
                 <h2>Classification of Turbulence Models</h2>
-                <p>Organized by computational complexity and physical fidelity</p>
+                <p>Organized by computational complexity</p>
             </div>
             
             <table class="models-table">
-                <!-- Table Header -->
+                <!-- Compact Header -->
                 <tr class="table-header">
-                    <td style="width: 6rem;">Icon</td>
-                    <td class="name-col" style="width: 16rem;">Model Name</td>
-                    <td class="desc-col">Mathematical Foundation</td>
-                    <td style="width: 14rem;">Classification</td>
+                    <td style="width: 4rem;">Icon</td>
+                    <td class="name-col" style="width: 12rem;">Model</td>
+                    <td class="desc-col">Foundation</td>
+                    <td style="width: 10rem;">Class</td>
                 </tr>
 
                 <!-- Inviscid Flow -->
@@ -542,11 +432,9 @@
                     <td>
                         <a href="models/inviscid.html" class="model-name">Inviscid Flow</a>
                     </td>
-                    <td class="model-desc">Euler equations - perfect fluid assumption</td>
+                    <td class="model-desc">Euler equations</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-fundamental">Fundamental</span>
-                        </div>
+                        <span class="class-tag tag-fundamental">Fundamental</span>
                     </td>
                 </tr>
 
@@ -558,11 +446,9 @@
                     <td>
                         <a href="models/laminar.html" class="model-name">Laminar Flow</a>
                     </td>
-                    <td class="model-desc">Direct Navier-Stokes solution</td>
+                    <td class="model-desc">Direct Navier-Stokes</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-fundamental">Fundamental</span>
-                        </div>
+                        <span class="class-tag tag-fundamental">Fundamental</span>
                     </td>
                 </tr>
 
@@ -574,11 +460,9 @@
                     <td>
                         <a href="models/spalart-allmaras.html" class="model-name">Spalart-Allmaras</a>
                     </td>
-                    <td class="model-desc">One-equation RANS model</td>
+                    <td class="model-desc">One-equation RANS</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-rans">RANS (1-Eq)</span>
-                        </div>
+                        <span class="class-tag tag-rans">RANS (1-Eq)</span>
                     </td>
                 </tr>
 
@@ -590,12 +474,10 @@
                     <td>
                         <a href="models/k-epsilon.html" class="model-name">k-ε Standard</a>
                     </td>
-                    <td class="model-desc">Two-equation RANS model</td>
+                    <td class="model-desc">Two-equation RANS</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag available-tag">Available</span>
-                            <span class="class-tag tag-rans">RANS (2-Eq)</span>
-                        </div>
+                        <span class="class-tag available-tag">Available</span>
+                        <span class="class-tag tag-rans">RANS</span>
                     </td>
                 </tr>
 
@@ -607,11 +489,9 @@
                     <td>
                         <a href="models/k-omega.html" class="model-name">k-ω Standard</a>
                     </td>
-                    <td class="model-desc">Two-equation RANS model</td>
+                    <td class="model-desc">Two-equation RANS</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-rans">RANS (2-Eq)</span>
-                        </div>
+                        <span class="class-tag tag-rans">RANS (2-Eq)</span>
                     </td>
                 </tr>
 
@@ -623,11 +503,9 @@
                     <td>
                         <a href="models/transition-k-kl-omega.html" class="model-name">Transition k-kL-ω</a>
                     </td>
-                    <td class="model-desc">Three-equation transition model</td>
+                    <td class="model-desc">Three-equation transition</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-transition">Transition (3-Eq)</span>
-                        </div>
+                        <span class="class-tag tag-transition">Transition</span>
                     </td>
                 </tr>
 
@@ -639,11 +517,9 @@
                     <td>
                         <a href="models/transition-sst.html" class="model-name">Transition SST</a>
                     </td>
-                    <td class="model-desc">Four-equation transition model</td>
+                    <td class="model-desc">Four-equation transition</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-transition">Transition (4-Eq)</span>
-                        </div>
+                        <span class="class-tag tag-transition">Transition</span>
                     </td>
                 </tr>
 
@@ -655,11 +531,9 @@
                     <td>
                         <a href="models/k-omega-sst.html" class="model-name">k-ω SST</a>
                     </td>
-                    <td class="model-desc">Hybrid RANS formulation</td>
+                    <td class="model-desc">Hybrid RANS</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-rans">RANS (Hybrid)</span>
-                        </div>
+                        <span class="class-tag tag-rans">RANS</span>
                     </td>
                 </tr>
 
@@ -671,11 +545,9 @@
                     <td>
                         <a href="models/reynolds-stress.html" class="model-name">Reynolds Stress</a>
                     </td>
-                    <td class="model-desc">Seven-equation RANS model</td>
+                    <td class="model-desc">Seven-equation RANS</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-rans">RANS (7-Eq)</span>
-                        </div>
+                        <span class="class-tag tag-rans">RANS</span>
                     </td>
                 </tr>
 
@@ -687,11 +559,9 @@
                     <td>
                         <a href="models/scale-adaptive.html" class="model-name">Scale Adaptive</a>
                     </td>
-                    <td class="model-desc">Modified RANS approach</td>
+                    <td class="model-desc">Modified RANS</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-advanced">Scale-Resolving</span>
-                        </div>
+                        <span class="class-tag tag-advanced">Advanced</span>
                     </td>
                 </tr>
 
@@ -703,11 +573,9 @@
                     <td>
                         <a href="models/detached-eddy.html" class="model-name">Detached Eddy</a>
                     </td>
-                    <td class="model-desc">Hybrid RANS-LES method</td>
+                    <td class="model-desc">Hybrid RANS-LES</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-advanced">Scale-Resolving</span>
-                        </div>
+                        <span class="class-tag tag-advanced">Advanced</span>
                     </td>
                 </tr>
 
@@ -719,11 +587,9 @@
                     <td>
                         <a href="models/large-eddy.html" class="model-name">Large Eddy Simulation</a>
                     </td>
-                    <td class="model-desc">Direct turbulence resolution</td>
+                    <td class="model-desc">Direct turbulence</td>
                     <td style="text-align: center;">
-                        <div class="classification-tags">
-                            <span class="class-tag tag-advanced">Scale-Resolving</span>
-                        </div>
+                        <span class="class-tag tag-advanced">Advanced</span>
                     </td>
                 </tr>
 
@@ -731,26 +597,24 @@
         </div>
     </section>
 
-    <!-- Test Section to Ensure Scrolling Works -->
+    <!-- Compact Test Section -->
     <section class="scroll-test">
         <div class="container">
-            <h3>✅ Scrolling Test Section</h3>
-            <p>If you can see this section, scrolling is working properly!</p>
-            <p style="margin-top: 0.5rem; font-size: 0.875rem;">This test section will be removed once scrolling is confirmed.</p>
+            <h3>✅ Navigation Test</h3>
+            <p>Test scrolling and navigation</p>
             
-            <!-- Direct Test Link -->
-            <div style="margin-top: 1rem;">
-                <a href="models/k-epsilon.html" style="background: linear-gradient(135deg, #10b981, #34d399); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; box-shadow: 0 4px 15px rgba(16,185,129,0.3);">
-                    🧪 Test k-ε Model Link
+            <div style="margin-top: 0.75rem;">
+                <a href="models/k-epsilon.html" style="background: linear-gradient(135deg, #10b981, #34d399); color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; text-decoration: none; font-weight: 600; font-size: 0.75rem; box-shadow: 0 2px 8px rgba(16,185,129,0.2);">
+                    🧪 Test k-ε Link
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Premium Footer -->
+    <!-- Compact Footer -->
     <footer class="footer">
         <div class="container">
-            <p>© 2024 CFD Turbulence Models Reference | <a href="https://github.com/kuplulumert/fdapp">GitHub Repository</a></p>
+            <p>© 2024 CFD Reference | <a href="https://github.com/kuplulumert/fdapp">GitHub</a></p>
         </div>
     </footer>
 
@@ -767,22 +631,8 @@
             });
         });
 
-        // Visual feedback on click
-        document.querySelectorAll('.model-row').forEach(row => {
-            row.addEventListener('mousedown', function() {
-                this.style.transform = 'translateX(4px) scale(0.98)';
-            });
-            
-            row.addEventListener('mouseup', function() {
-                this.style.transform = 'translateX(8px)';
-            });
-        });
-
-        // Smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth';
-
-        // Console log to confirm JavaScript is working
-        console.log('CFD Turbulence Models site loaded - Scrolling should work!');
+        // Console log for debugging
+        console.log('CFD Models loaded - Compact design active');
     </script>
 </body>
 </html>
