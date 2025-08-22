@@ -471,11 +471,11 @@
                         </ul>
                     </div>
 
-                    <!-- Enhanced Equations -->
+                    <!-- Enhanced Equations with Detailed Explanations -->
                     <div class="content-section" id="equations">
                         <h2>
                             <span>📐</span>
-                            Reynolds Stress Transport Equations
+                            Reynolds Stress Transport Equations - Detailed Analysis
                         </h2>
                         
                         <!-- Reynolds Stress Transport -->
@@ -490,29 +490,70 @@
                                 </div>
                             </div>
                             <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Transport of each Reynolds stress component</p>
-                                <p><strong>Pᵢⱼ:</strong> Production by mean strain</p>
-                                <p><strong>Πᵢⱼ:</strong> Pressure-strain redistribution (modeled)</p>
-                                <p><strong>εᵢⱼ:</strong> Dissipation tensor (modeled)</p>
-                                <p><strong>Dᵢⱼ:</strong> Diffusion (modeled)</p>
+                                <p><strong>Physical Meaning:</strong> Exact transport equation for each Reynolds stress component</p>
+                                <p><strong>∂u'ᵢu'ⱼ/∂t + Uₖ ∂u'ᵢu'ⱼ/∂xₖ:</strong> Unsteady + convection (exact terms)</p>
+                                <p><strong>Pᵢⱼ = -u'ᵢu'ₖ ∂Uⱼ/∂xₖ - u'ⱼu'ₖ ∂Uᵢ/∂xₖ:</strong> Exact production by mean strain</p>
+                                <p><strong>Πᵢⱼ:</strong> Pressure-strain redistribution (requires modeling)</p>
+                                <p><strong>εᵢⱼ:</strong> Dissipation tensor (requires modeling)</p>
+                                <p><strong>Dᵢⱼ:</strong> Turbulent + molecular diffusion (requires modeling)</p>
+                            </div>
+                        </div>
+
+                        <!-- Pressure-Strain Model -->
+                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Pressure-Strain Redistribution Model</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \Pi_{ij} = \Pi_{ij,1} + \Pi_{ij,2} + \Pi_{ij,w}
+                                </div>
+                                <div class="equation-large katex-display">
+                                    \Pi_{ij,1} = -C_1 \varepsilon \left(a_{ij} - \frac{1}{3}\delta_{ij}\right)
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Redistributes energy between stress components</p>
+                                <p><strong>Πᵢⱼ,₁:</strong> Linear return-to-isotropy (slow term)</p>
+                                <p><strong>Πᵢⱼ,₂:</strong> Rapid pressure-strain (fast term)</p>
+                                <p><strong>Πᵢⱼ,w:</strong> Wall reflection effects</p>
+                                <p><strong>aᵢⱼ = u'ᵢu'ⱼ/k - (2/3)δᵢⱼ:</strong> Anisotropy tensor</p>
+                                <p><strong>C₁ ≈ 1.8:</strong> Return-to-isotropy coefficient</p>
                             </div>
                         </div>
 
                         <!-- Dissipation Equation -->
                         <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(248,113,113,0.05)); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Dissipation Rate (ε) Equation</h3>
+                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Dissipation Rate (ε) Equation</h3>
                             <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
                                 <div class="equation-large katex-display">
                                     \frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} =
                                 </div>
                                 <div class="equation-large katex-display">
-                                    C_{1\varepsilon} \frac{\varepsilon}{k} P_k - C_{2\varepsilon} \frac{\varepsilon^2}{k} + \text{diffusion}
+                                    C_{1\varepsilon} \frac{\varepsilon}{k} P_k - C_{2\varepsilon} \frac{\varepsilon^2}{k} + \frac{\partial}{\partial x_j}\left[(\nu + \frac{\nu_t}{\sigma_\varepsilon})\frac{\partial \varepsilon}{\partial x_j}\right]
                                 </div>
                             </div>
                             <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Similar to k-ε dissipation equation</p>
-                                <p><strong>Used for:</strong> Length scale information</p>
-                                <p><strong>C₁ε = 1.44, C₂ε = 1.92:</strong> Standard constants</p>
+                                <p><strong>Physical Meaning:</strong> Length scale equation (same as k-ε model)</p>
+                                <p><strong>∂ε/∂t + Uⱼ ∂ε/∂xⱼ:</strong> Transport of dissipation rate</p>
+                                <p><strong>C₁ε (ε/k)Pk:</strong> Production proportional to turbulence production</p>
+                                <p><strong>-C₂ε ε²/k:</strong> Destruction of dissipation rate</p>
+                                <p><strong>Pk = ½Pᵢᵢ:</strong> Trace of production tensor</p>
+                                <p><strong>Purpose:</strong> Provides length scale for Reynolds stress transport</p>
+                            </div>
+                        </div>
+
+                        <!-- Turbulent Viscosity -->
+                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Turbulent Viscosity (For Momentum Equations)</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \nu_t = C_\mu \frac{k^2}{\varepsilon}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Used only for mean momentum equations</p>
+                                <p><strong>Note:</strong> Reynolds stresses are computed directly, not via eddy viscosity</p>
+                                <p><strong>Cμ = 0.09:</strong> Standard coefficient</p>
+                                <p><strong>Usage:</strong> For computing mean velocity field from momentum equations</p>
                             </div>
                         </div>
                     </div>
@@ -521,14 +562,44 @@
                     <div class="content-section" id="variables">
                         <h2>
                             <span>🔤</span>
-                            Variables & Components
+                            Variables & Tensor Components
                         </h2>
                         
                         <div class="variables-grid">
                             <div class="variable-item">
-                                <div class="variable-symbol">u'ᵢu'ⱼ</div>
-                                <div class="variable-name">Reynolds Stress Tensor</div>
-                                <div class="variable-description">6 independent components</div>
+                                <div class="variable-symbol">u'₁u'₁</div>
+                                <div class="variable-name">Normal Stress xx</div>
+                                <div class="variable-description">Streamwise normal stress</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">u'₂u'₂</div>
+                                <div class="variable-name">Normal Stress yy</div>
+                                <div class="variable-description">Cross-stream normal stress</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">u'₃u'₃</div>
+                                <div class="variable-name">Normal Stress zz</div>
+                                <div class="variable-description">Spanwise normal stress</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">u'₁u'₂</div>
+                                <div class="variable-name">Shear Stress xy</div>
+                                <div class="variable-description">Primary shear stress</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">u'₁u'₃</div>
+                                <div class="variable-name">Shear Stress xz</div>
+                                <div class="variable-description">Streamwise-spanwise shear</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">u'₂u'₃</div>
+                                <div class="variable-name">Shear Stress yz</div>
+                                <div class="variable-description">Cross-stream-spanwise shear</div>
                             </div>
                             
                             <div class="variable-item">
@@ -538,16 +609,179 @@
                             </div>
                             
                             <div class="variable-item">
-                                <div class="variable-symbol">Pᵢⱼ</div>
-                                <div class="variable-name">Production Tensor</div>
-                                <div class="variable-description">Exact production terms</div>
-                            </div>
-                            
-                            <div class="variable-item">
                                 <div class="variable-symbol">Πᵢⱼ</div>
                                 <div class="variable-name">Pressure-Strain</div>
                                 <div class="variable-description">Redistribution mechanism</div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Analogy -->
+                    <div class="content-section" id="analogy">
+                        <h2>
+                            <span>💡</span>
+                            Anisotropic Turbulence Analogy
+                        </h2>
+                        <p>Think of Reynolds Stress Model as <strong>tracking the complete "personality" of turbulence</strong> - not just its overall energy (like k-ε), but how it behaves differently in each direction.</p>
+                        
+                        <p><strong>Six stress components:</strong> Like measuring a person's mood in six different aspects - happiness, sadness, anxiety, excitement, calmness, and energy. Each can be different at the same time.</p>
+                        
+                        <p><strong>Anisotropy:</strong> Like recognizing that someone can be happy in one situation but anxious in another - turbulence can be strong in one direction but weak in another.</p>
+                        
+                        <p><strong>Pressure-strain redistribution:</strong> Like social dynamics where strong emotions in one area gradually spread to other areas - energy gets redistributed between different stress components.</p>
+                        
+                        <p><strong>Eddy viscosity assumption failure:</strong> Like assuming everyone has the same emotional response - clearly wrong for complex personalities (complex flows).</p>
+                        
+                        <p><strong>Seven equations advantage:</strong> Like having a detailed psychological profile instead of just asking "How do you feel?" - much more accurate but much more complex.</p>
+                    </div>
+
+                    <!-- Model Components -->
+                    <div class="content-section" id="components">
+                        <h2>
+                            <span>🧩</span>
+                            RSM Model Components
+                        </h2>
+                        
+                        <!-- Stress Tensor Structure -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(124,58,237,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #581c87; font-weight: 600; margin-bottom: 0.5rem;">Reynolds Stress Tensor Structure</h4>
+                            <div class="equation-large katex-display">
+                                \tau_{ij} = \begin{bmatrix} u'_1 u'_1 & u'_1 u'_2 & u'_1 u'_3 \\ u'_2 u'_1 & u'_2 u'_2 & u'_2 u'_3 \\ u'_3 u'_1 & u'_3 u'_2 & u'_3 u'_3 \end{bmatrix}
+                            </div>
+                            <p style="font-size: 0.8rem; color: #64748b;">Symmetric tensor: 6 independent components (3 normal + 3 shear stresses)</p>
+                        </div>
+
+                        <!-- Exact vs Modeled Terms -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Exact vs Modeled Terms</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;"><strong>Exact:</strong> Convection, Production. <strong>Modeled:</strong> Pressure-strain (Πᵢⱼ), Dissipation (εᵢⱼ), Diffusion (Dᵢⱼ). The modeling of these terms is where different RSM variants differ.</p>
+                        </div>
+
+                        <!-- Computational Considerations -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(239,68,68,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">Computational Considerations</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">7 transport equations vs 2 for k-ε means ~3.5x more computational cost. Memory requirements also increase significantly. Convergence is more challenging due to coupling between equations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Model Constants -->
+                    <div class="content-section" id="constants">
+                        <h2>
+                            <span>📊</span>
+                            RSM Model Constants
+                        </h2>
+                        
+                        <table class="properties-table">
+                            <tr>
+                                <th>Constant</th>
+                                <th>Value</th>
+                                <th>Physical Role</th>
+                                <th>Model Component</th>
+                            </tr>
+                            <tr>
+                                <td><strong>C₁</strong></td>
+                                <td>1.8</td>
+                                <td>Return-to-isotropy coefficient</td>
+                                <td>Pressure-strain (slow)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>C₂</strong></td>
+                                <td>0.6</td>
+                                <td>Rapid pressure-strain coefficient</td>
+                                <td>Pressure-strain (fast)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>C₁ε</strong></td>
+                                <td>1.44</td>
+                                <td>ε production coefficient</td>
+                                <td>Dissipation equation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>C₂ε</strong></td>
+                                <td>1.92</td>
+                                <td>ε destruction coefficient</td>
+                                <td>Dissipation equation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cμ</strong></td>
+                                <td>0.09</td>
+                                <td>Turbulent viscosity coefficient</td>
+                                <td>Mean momentum equations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>σε</strong></td>
+                                <td>1.3</td>
+                                <td>ε diffusion coefficient</td>
+                                <td>Dissipation equation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cs</strong></td>
+                                <td>0.22</td>
+                                <td>Turbulent diffusion coefficient</td>
+                                <td>Reynolds stress diffusion</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- RSM Advantages -->
+                    <div class="content-section" id="features">
+                        <h2>
+                            <span>🚀</span>
+                            RSM Key Features
+                        </h2>
+                        
+                        <!-- No Eddy Viscosity -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(124,58,237,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #581c87; font-weight: 600; margin-bottom: 0.5rem;">No Eddy Viscosity Assumption</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Directly computes Reynolds stresses without assuming isotropic turbulent viscosity. Captures anisotropic turbulence effects that k-ε and k-ω miss.</p>
+                        </div>
+
+                        <!-- Exact Production -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Exact Production Terms</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Production terms Pᵢⱼ are exact (no modeling required). This gives superior accuracy in flows with strong mean strain, rotation, or curvature effects.</p>
+                        </div>
+
+                        <!-- Complex Flow Capability -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Complex Flow Capability</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Handles rotating flows, swirling flows, flows with strong curvature, and secondary flows - all cases where simpler models fail due to anisotropy.</p>
+                        </div>
+                    </div>
+
+                    <!-- Advantages & Disadvantages -->
+                    <div class="content-section" id="comparison">
+                        <h2>
+                            <span>⚖️</span>
+                            RSM vs Eddy Viscosity Models
+                        </h2>
+                        
+                        <!-- Advantages -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages over k-ε, k-ω, SST</h4>
+                            <ul style="font-size: 0.8rem; color: #065f46;">
+                                <li><strong>No eddy viscosity assumption:</strong> Captures anisotropic turbulence</li>
+                                <li><strong>Exact production terms:</strong> Superior accuracy in complex strain fields</li>
+                                <li><strong>Rotation and curvature effects:</strong> Naturally included</li>
+                                <li><strong>Secondary flow prediction:</strong> Captures cross-stream flows</li>
+                                <li><strong>Swirling flow capability:</strong> Handles cyclones, combustors</li>
+                                <li><strong>Research accuracy:</strong> Highest fidelity RANS approach</li>
+                                <li><strong>Complex 3D flows:</strong> Superior to simpler models</li>
+                            </ul>
+                        </div>
+
+                        <!-- Disadvantages -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Disadvantages vs Simpler Models</h4>
+                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
+                                <li><strong>Very high computational cost:</strong> 3-5x more expensive than k-ε</li>
+                                <li><strong>Memory requirements:</strong> Significantly higher storage needs</li>
+                                <li><strong>Convergence challenges:</strong> More difficult to achieve convergence</li>
+                                <li><strong>Implementation complexity:</strong> More complex coding and debugging</li>
+                                <li><strong>Modeling uncertainties:</strong> Pressure-strain and dissipation still modeled</li>
+                                <li><strong>Overkill for simple flows:</strong> Unnecessary for 2D attached flows</li>
+                                <li><strong>Industrial reluctance:</strong> Often avoided due to cost and complexity</li>
+                            </ul>
                         </div>
                     </div>
 
@@ -564,6 +798,11 @@
                         <li><a href="#guidance">🎯 CFD Guidance</a></li>
                         <li><a href="#equations">📐 Equations</a></li>
                         <li><a href="#variables">🔤 Variables</a></li>
+                        <li><a href="#analogy">💡 Analogy</a></li>
+                        <li><a href="#components">🧩 Components</a></li>
+                        <li><a href="#constants">📊 Constants</a></li>
+                        <li><a href="#features">🚀 Features</a></li>
+                        <li><a href="#comparison">⚖️ Comparison</a></li>
                     </ul>
 
                     <h3 style="margin-top: 1.5rem;">
@@ -572,6 +811,7 @@
                     </h3>
                     <ul>
                         <li><a href="k-epsilon.html">k-ε Standard</a></li>
+                        <li><a href="k-omega-sst.html">k-ω SST</a></li>
                         <li><a href="k-omega.html">k-ω Standard</a></li>
                         <li><a href="spalart-allmaras.html">Spalart-Allmaras</a></li>
                         <li><a href="../index.html">← All Models</a></li>
@@ -587,6 +827,39 @@
                         <li><span style="color: #7c3aed;">Equations:</span> 7 transport</li>
                         <li><span style="color: #7c3aed;">Cost:</span> Very High</li>
                         <li><span style="color: #7c3aed; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>⚙️</span>
+                        Key Parameters
+                    </h3>
+                    <ul>
+                        <li><span style="color: #7c3aed;">Grid:</span> y+ < 1 essential</li>
+                        <li><span style="color: #7c3aed;">Components:</span> 6 stress + 1 ε</li>
+                        <li><span style="color: #7c3aed;">Anisotropy:</span> Full tensor</li>
+                        <li><span style="color: #7c3aed;">Best for:</span> Complex 3D flows</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🏆</span>
+                        Validation Cases
+                    </h3>
+                    <ul>
+                        <li><span style="color: #7c3aed;">Rotating flows:</span> Excellent</li>
+                        <li><span style="color: #7c3aed;">Swirling flows:</span> Excellent</li>
+                        <li><span style="color: #7c3aed;">Secondary flows:</span> Very good</li>
+                        <li><span style="color: #7c3aed;">3D separation:</span> Good</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🔬</span>
+                        Research Status
+                    </h3>
+                    <ul>
+                        <li><span style="color: #7c3aed;">Accuracy:</span> Highest RANS</li>
+                        <li><span style="color: #7c3aed;">Usage:</span> Research/validation</li>
+                        <li><span style="color: #7c3aed;">Industry:</span> Limited (cost)</li>
+                        <li><span style="color: #7c3aed;">Future:</span> Benchmark standard</li>
                     </ul>
                 </div>
             </div>
