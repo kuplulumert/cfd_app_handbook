@@ -285,6 +285,63 @@
             line-height: 1.4;
         }
 
+        /* Enhanced Variables */
+        .variables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .variable-item {
+            background: rgba(248,250,252,0.8);
+            border: 1px solid rgba(59,130,246,0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+
+        .variable-symbol {
+            font-family: 'KaTeX_Math', 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #06b6d4;
+            margin-bottom: 0.25rem;
+        }
+
+        .variable-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.125rem;
+        }
+
+        .variable-description {
+            font-size: 0.625rem;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        /* Properties Table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .properties-table th,
+        .properties-table td {
+            padding: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            text-align: left;
+        }
+
+        .properties-table th {
+            background: rgba(6,182,212,0.1);
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .content-grid {
                 grid-template-columns: 1fr;
@@ -432,6 +489,272 @@
                         </ul>
                     </div>
 
+                    <!-- Enhanced Equations with Detailed Explanations -->
+                    <div class="content-section" id="equations">
+                        <h2>
+                            <span>📐</span>
+                            SST Equations - Detailed Analysis
+                        </h2>
+                        
+                        <!-- k Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Turbulent Kinetic Energy (k) Equation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    P_k - \beta^* k \omega + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_k \nu_t)\frac{\partial k}{\partial x_j}\right]
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Turbulent kinetic energy (same as standard k-ω)</p>
+                                <p><strong>∂k/∂t + Uⱼ ∂k/∂xⱼ:</strong> Unsteady + convection terms</p>
+                                <p><strong>Pk:</strong> Production by mean shear = νₜ (∂Uᵢ/∂xⱼ)(∂Uᵢ/∂xⱼ + ∂Uⱼ/∂xᵢ)</p>
+                                <p><strong>-β*kω:</strong> Dissipation term, β* = 0.09</p>
+                                <p><strong>Diffusion:</strong> (ν + σₖνₜ) ∂²k/∂xⱼ² where σₖ = F₁σₖ₁ + (1-F₁)σₖ₂</p>
+                            </div>
+                        </div>
+
+                        <!-- ω Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(6,182,212,0.05), rgba(103,232,249,0.05)); border: 1px solid rgba(6,182,212,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #0c4a6e; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Specific Dissipation Rate (ω) Equation - SST Formulation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \omega}{\partial t} + U_j \frac{\partial \omega}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    \alpha \frac{\omega}{k} P_k - \beta \omega^2 + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_\omega \nu_t)\frac{\partial \omega}{\partial x_j}\right] + CD_{k\omega}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Hybrid ω equation with cross-diffusion term</p>
+                                <p><strong>∂ω/∂t + Uⱼ ∂ω/∂xⱼ:</strong> Transport of specific dissipation rate</p>
+                                <p><strong>α (ω/k)Pk:</strong> Production with blended coefficient α = F₁α₁ + (1-F₁)α₂</p>
+                                <p><strong>-β ω²:</strong> Destruction with blended β = F₁β₁ + (1-F₁)β₂</p>
+                                <p><strong>CDkω:</strong> Cross-diffusion term (key SST addition) = 2(1-F₁)σω₂(1/ω)(∂k/∂xⱼ)(∂ω/∂xⱼ)</p>
+                                <p><strong>Diffusion:</strong> (ν + σωνₜ) ∂²ω/∂xⱼ² with blended σω</p>
+                            </div>
+                        </div>
+
+                        <!-- Blending Function -->
+                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Blending Function F₁</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    F_1 = \tanh\left(\min\left[\max\left(\frac{\sqrt{k}}{\beta^* \omega d}, \frac{500\nu}{\omega d^2}\right), \frac{4\sigma_{\omega 2} k}{CD_{k\omega} d^2}\right]^4\right)
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Switches between k-ω (near walls) and k-ε (freestream)</p>
+                                <p><strong>F₁ = 1:</strong> k-ω formulation (near walls)</p>
+                                <p><strong>F₁ = 0:</strong> k-ε formulation (away from walls)</p>
+                                <p><strong>d:</strong> Distance to nearest wall</p>
+                                <p><strong>Automatic switching:</strong> No user intervention needed</p>
+                            </div>
+                        </div>
+
+                        <!-- Turbulent Viscosity -->
+                        <div style="background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(245,158,11,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Turbulent Viscosity with Strain Rate Limitation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \nu_t = \frac{a_1 k}{\max(a_1 \omega, \Omega F_2)}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Limited turbulent viscosity for adverse pressure gradients</p>
+                                <p><strong>a₁ = 0.31:</strong> Limiting coefficient</p>
+                                <p><strong>Ω:</strong> Magnitude of vorticity tensor</p>
+                                <p><strong>F₂:</strong> Second blending function</p>
+                                <p><strong>Key advantage:</strong> Prevents excessive νₜ in adverse pressure gradients</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Variables -->
+                    <div class="content-section" id="variables">
+                        <h2>
+                            <span>🔤</span>
+                            Variables & Functions
+                        </h2>
+                        
+                        <div class="variables-grid">
+                            <div class="variable-item">
+                                <div class="variable-symbol">k</div>
+                                <div class="variable-name">Turbulent Kinetic Energy</div>
+                                <div class="variable-description">Turbulent energy (m²/s²)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">ω</div>
+                                <div class="variable-name">Specific Dissipation Rate</div>
+                                <div class="variable-description">Turbulence frequency (1/s)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">F₁</div>
+                                <div class="variable-name">Blending Function 1</div>
+                                <div class="variable-description">k-ω/k-ε switch (0-1)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">F₂</div>
+                                <div class="variable-name">Blending Function 2</div>
+                                <div class="variable-description">νₜ limiter function</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">CDkω</div>
+                                <div class="variable-name">Cross-Diffusion</div>
+                                <div class="variable-description">SST cross-diffusion term</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">νₜ</div>
+                                <div class="variable-name">Turbulent Viscosity</div>
+                                <div class="variable-description">Limited by strain rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Analogy -->
+                    <div class="content-section" id="analogy">
+                        <h2>
+                            <span>💡</span>
+                            Hybrid Model Analogy
+                        </h2>
+                        <p>Think of k-ω SST as a <strong>smart hybrid car that automatically switches between two engines</strong> - using the best engine for each driving condition without the driver needing to decide.</p>
+                        
+                        <p><strong>Near walls (k-ω mode):</strong> Like using the electric motor in city driving - precise, efficient, and perfect for stop-and-go conditions (boundary layers).</p>
+                        
+                        <p><strong>Away from walls (k-ε mode):</strong> Like switching to the gasoline engine on highways - robust, proven, and ideal for high-speed cruising (freestream flow).</p>
+                        
+                        <p><strong>Blending function F₁:</strong> Like the smart transmission that seamlessly switches between engines based on driving conditions - no manual intervention needed.</p>
+                        
+                        <p><strong>Cross-diffusion term:</strong> Like the hybrid system's energy recovery - captures energy that would be lost in the transition between modes.</p>
+                        
+                        <p><strong>Strain rate limiter:</strong> Like the car's stability control - prevents the system from going unstable in challenging conditions (adverse pressure gradients).</p>
+                    </div>
+
+                    <!-- Model Constants -->
+                    <div class="content-section" id="constants">
+                        <h2>
+                            <span>📊</span>
+                            SST Model Constants
+                        </h2>
+                        
+                        <table class="properties-table">
+                            <tr>
+                                <th>Constant</th>
+                                <th>Set 1 (k-ω)</th>
+                                <th>Set 2 (k-ε)</th>
+                                <th>Blended Value</th>
+                                <th>Physical Role</th>
+                            </tr>
+                            <tr>
+                                <td><strong>α</strong></td>
+                                <td>5/9</td>
+                                <td>0.44</td>
+                                <td>F₁α₁ + (1-F₁)α₂</td>
+                                <td>ω production coefficient</td>
+                            </tr>
+                            <tr>
+                                <td><strong>β</strong></td>
+                                <td>0.075</td>
+                                <td>0.0828</td>
+                                <td>F₁β₁ + (1-F₁)β₂</td>
+                                <td>ω destruction coefficient</td>
+                            </tr>
+                            <tr>
+                                <td><strong>σₖ</strong></td>
+                                <td>0.85</td>
+                                <td>1.0</td>
+                                <td>F₁σₖ₁ + (1-F₁)σₖ₂</td>
+                                <td>k diffusion coefficient</td>
+                            </tr>
+                            <tr>
+                                <td><strong>σω</strong></td>
+                                <td>0.5</td>
+                                <td>0.856</td>
+                                <td>F₁σω₁ + (1-F₁)σω₂</td>
+                                <td>ω diffusion coefficient</td>
+                            </tr>
+                            <tr>
+                                <td><strong>β*</strong></td>
+                                <td colspan="2">0.09</td>
+                                <td>0.09</td>
+                                <td>k dissipation coefficient</td>
+                            </tr>
+                            <tr>
+                                <td><strong>a₁</strong></td>
+                                <td colspan="2">0.31</td>
+                                <td>0.31</td>
+                                <td>Strain rate limiter</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- SST Features -->
+                    <div class="content-section" id="features">
+                        <h2>
+                            <span>🚀</span>
+                            SST Key Features
+                        </h2>
+                        
+                        <!-- Hybrid Formulation -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(6,182,212,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #0c4a6e; font-weight: 600; margin-bottom: 0.5rem;">Hybrid Formulation</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Combines the best of both worlds: k-ω accuracy near walls with k-ε robustness in freestream. Automatic blending via F₁ function eliminates user guesswork.</p>
+                        </div>
+
+                        <!-- Cross-Diffusion Term -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Cross-Diffusion Innovation</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">The CDkω term captures the mathematical transformation between k-ε and k-ω formulations, ensuring consistent physics across the blending region.</p>
+                        </div>
+
+                        <!-- Strain Rate Limitation -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(245,158,11,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">Strain Rate Limitation</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Prevents excessive turbulent viscosity in adverse pressure gradients by limiting νₜ based on strain rate magnitude. Critical for separation prediction.</p>
+                        </div>
+                    </div>
+
+                    <!-- Advantages & Disadvantages -->
+                    <div class="content-section" id="comparison">
+                        <h2>
+                            <span>⚖️</span>
+                            SST vs Standard Models
+                        </h2>
+                        
+                        <!-- Advantages -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages over k-ω and k-ε</h4>
+                            <ul style="font-size: 0.8rem; color: #065f46;">
+                                <li><strong>Best of both worlds:</strong> k-ω accuracy + k-ε robustness</li>
+                                <li><strong>Superior separation prediction:</strong> Better than both parent models</li>
+                                <li><strong>Automatic model switching:</strong> No user intervention required</li>
+                                <li><strong>Industry validation:</strong> Extensively validated in commercial applications</li>
+                                <li><strong>Robust convergence:</strong> More stable than standard k-ω</li>
+                                <li><strong>Strain rate limitation:</strong> Handles adverse pressure gradients</li>
+                                <li><strong>Wide applicability:</strong> Works for most flow types</li>
+                            </ul>
+                        </div>
+
+                        <!-- Disadvantages -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Limitations</h4>
+                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
+                                <li><strong>Higher complexity:</strong> More complex than individual parent models</li>
+                                <li><strong>Computational cost:</strong> Slightly higher than k-ε due to blending</li>
+                                <li><strong>Still RANS limitations:</strong> Cannot predict transition without add-ons</li>
+                                <li><strong>Wall distance dependency:</strong> Requires wall distance calculation</li>
+                                <li><strong>Free shear flow limitations:</strong> Still some issues inherited from k-ω</li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="sidebar">
@@ -442,6 +765,12 @@
                     <ul>
                         <li><a href="#applications">🛠️ Applications</a></li>
                         <li><a href="#guidance">🎯 CFD Guidance</a></li>
+                        <li><a href="#equations">📐 Equations</a></li>
+                        <li><a href="#variables">🔤 Variables</a></li>
+                        <li><a href="#analogy">💡 Analogy</a></li>
+                        <li><a href="#constants">📊 Constants</a></li>
+                        <li><a href="#features">🚀 Features</a></li>
+                        <li><a href="#comparison">⚖️ Comparison</a></li>
                     </ul>
 
                     <h3 style="margin-top: 1.5rem;">
@@ -451,6 +780,7 @@
                     <ul>
                         <li><a href="k-omega.html">k-ω Standard</a></li>
                         <li><a href="k-epsilon.html">k-ε Standard</a></li>
+                        <li><a href="transition-sst.html">Transition SST</a></li>
                         <li><a href="../index.html">← All Models</a></li>
                     </ul>
 
@@ -459,10 +789,44 @@
                         Model Info
                     </h3>
                     <ul>
-                        <li><span style="color: #06b6d4;">Type:</span> Hybrid RANS</li>
-                        <li><span style="color: #06b6d4;">Variables:</span> k, ω</li>
+                        <li><span style="color: #06b6d4;">Type:</span> Hybrid Two-Equation RANS</li>
+                        <li><span style="color: #06b6d4;">Variables:</span> k, ω, F₁, F₂</li>
+                        <li><span style="color: #06b6d4;">Equations:</span> 2 transport + blending</li>
                         <li><span style="color: #06b6d4;">Cost:</span> Medium</li>
                         <li><span style="color: #06b6d4; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>⚙️</span>
+                        Key Parameters
+                    </h3>
+                    <ul>
+                        <li><span style="color: #06b6d4;">Grid:</span> y+ < 1 preferred</li>
+                        <li><span style="color: #06b6d4;">BC:</span> Standard k-ω</li>
+                        <li><span style="color: #06b6d4;">Blending:</span> Automatic</li>
+                        <li><span style="color: #06b6d4;">Best for:</span> General CFD</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🏆</span>
+                        Validation Cases
+                    </h3>
+                    <ul>
+                        <li><span style="color: #06b6d4;">External flows:</span> Excellent</li>
+                        <li><span style="color: #06b6d4;">Separation:</span> Excellent</li>
+                        <li><span style="color: #06b6d4;">Turbomachinery:</span> Very good</li>
+                        <li><span style="color: #06b6d4;">Heat transfer:</span> Good</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🌟</span>
+                        Industry Status
+                    </h3>
+                    <ul>
+                        <li><span style="color: #06b6d4;">Commercial codes:</span> Default choice</li>
+                        <li><span style="color: #06b6d4;">Aerospace:</span> Widely used</li>
+                        <li><span style="color: #06b6d4;">Automotive:</span> Standard</li>
+                        <li><span style="color: #06b6d4;">Reputation:</span> Most trusted RANS</li>
                     </ul>
                 </div>
             </div>
