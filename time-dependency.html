@@ -313,15 +313,8 @@
                     </tr>
                 </thead>
 
-                <!-- STEADY STATE FLOWS -->
-                <tr style="background: rgba(16,185,129,0.03); border-top: 2px solid rgba(16,185,129,0.15);">
-                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #065f46; font-size: 0.8rem; background: rgba(16,185,129,0.06);">
-                        ⏸️ STEADY STATE FLOWS
-                    </td>
-                </tr>
-                
                 <!-- Steady State (Most Common) -->
-                <tr class="model-row" style="background: rgba(16,185,129,0.02);">
+                <tr class="model-row" style="background: rgba(16,185,129,0.025);">
                     <td style="text-align: center;">
                         <div class="model-icon icon-steady">∂/∂t=0</div>
                     </td>
@@ -334,43 +327,8 @@
                     </td>
                 </tr>
 
-                <!-- Quasi-Steady -->
-                <tr class="model-row">
-                    <td style="text-align: center;">
-                        <div class="model-icon icon-steady">≈∂/∂t=0</div>
-                    </td>
-                    <td>
-                        <span class="model-name">Quasi-Steady</span>
-                    </td>
-                    <td class="model-desc">Slowly varying conditions - Multiple steady states</td>
-                    <td style="text-align: center;">
-                        <span class="class-tag tag-steady">Steady</span>
-                    </td>
-                </tr>
-
-                <!-- TRANSIENT FLOWS -->
-                <tr style="background: rgba(239,68,68,0.03); border-top: 2px solid rgba(239,68,68,0.15);">
-                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #7f1d1d; font-size: 0.8rem; background: rgba(239,68,68,0.06);">
-                        ⏯️ TRANSIENT FLOWS
-                    </td>
-                </tr>
-
-                <!-- Periodic Unsteady -->
-                <tr class="model-row">
-                    <td style="text-align: center;">
-                        <div class="model-icon icon-transient">~∂/∂t</div>
-                    </td>
-                    <td>
-                        <span class="model-name">Periodic Unsteady</span>
-                    </td>
-                    <td class="model-desc">Periodic time variation - Vortex shedding, pulsating flows</td>
-                    <td style="text-align: center;">
-                        <span class="class-tag tag-transient">Transient</span>
-                    </td>
-                </tr>
-
                 <!-- Fully Transient -->
-                <tr class="model-row" style="background: rgba(239,68,68,0.02);">
+                <tr class="model-row" style="background: rgba(239,68,68,0.025);">
                     <td style="text-align: center;">
                         <div class="model-icon icon-transient">∂φ/∂t</div>
                     </td>
@@ -378,20 +336,6 @@
                         <span class="model-name">Fully Transient</span>
                     </td>
                     <td class="model-desc">∂φ/∂t ≠ 0 - Complex time-dependent behavior - Research Applications</td>
-                    <td style="text-align: center;">
-                        <span class="class-tag tag-transient">Transient</span>
-                    </td>
-                </tr>
-
-                <!-- Moving Boundaries -->
-                <tr class="model-row">
-                    <td style="text-align: center;">
-                        <div class="model-icon icon-transient">∂Ω/∂t</div>
-                    </td>
-                    <td>
-                        <span class="model-name">Moving Boundaries</span>
-                    </td>
-                    <td class="model-desc">Time-dependent geometry - Moving meshes, deforming domains</td>
                     <td style="text-align: center;">
                         <span class="class-tag tag-transient">Transient</span>
                     </td>
