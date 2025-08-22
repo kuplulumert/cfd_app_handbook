@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>k-ε Turbulence Model - Compact Guide v2.0</title>
-    <meta name="description" content="k-epsilon turbulence model explained compactly with equations and guidance.">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <title>k-epsilon - Beko CFD AI Agent</title>
     
-    <!-- KaTeX for Math -->
+    <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     
     <style>
         * {
@@ -21,677 +21,624 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.4;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
             color: #1e293b;
-            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
-            font-size: 14px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
 
-        /* Compact Header */
+        /* Header */
         .header {
             background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03));
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(59,130,246,0.15);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139,92,246,0.12);
             padding: 0.75rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
         }
 
         .header-content {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+        }
+
+        .nav-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .model-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 6px -1px rgba(139,92,246,0.2);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Quick Decision Cards - PROMINENT AT TOP */
+        .quick-decisions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .decision-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .decision-card.use-it {
+            border-color: #10b981;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .decision-card.avoid-it {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+        }
+
+        .decision-header {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            text-decoration: none;
-            color: inherit;
+            margin-bottom: 1rem;
         }
 
-        .logo-icon {
+        .decision-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .use-it .decision-icon {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        .avoid-it .decision-icon {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+
+        .decision-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .decision-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .decision-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .decision-list li:last-child {
+            border-bottom: none;
+        }
+
+        .decision-list li::before {
+            content: "•";
+            color: #8b5cf6;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid rgba(139,92,246,0.1);
+        }
+
+        .section-icon {
             width: 2rem;
             height: 2rem;
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
             border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(139,92,246,0.2);
+            font-size: 0.875rem;
+            font-weight: 700;
         }
 
-        .logo h1 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .logo p {
-            font-size: 0.75rem;
-            color: #64748b;
-            font-style: italic;
-        }
-
-        .back-button {
-            color: #64748b;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(59,130,246,0.15);
-            background: rgba(255,255,255,0.8);
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-button:hover {
-            color: #3b82f6;
-            border-color: #3b82f6;
-            background: rgba(59,130,246,0.05);
-        }
-
-        /* Compact Main Content */
-        .main-content {
-            padding: 1rem 0;
-        }
-
-        /* Compact Model Hero */
-        .model-hero {
-            text-align: center;
-            padding: 1.5rem 0 1rem 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(59,130,246,0.1);
-        }
-
-        .model-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
-            color: white;
-            padding: 0.375rem 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            box-shadow: 0 2px 8px rgba(139,92,246,0.2);
-        }
-
-        .model-hero h1 {
-            font-size: 2rem;
+        .section-title {
+            font-size: 1.25rem;
             font-weight: 700;
             color: #1e293b;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: rgba(139,92,246,0.05);
+            border-left: 4px solid #8b5cf6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #8b5cf6;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        .model-hero p {
             font-size: 1rem;
-            color: #64748b;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
-        /* Compact Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .main-column {
-            min-width: 0;
-        }
-
-        .sidebar {
-            background: rgba(255,255,255,0.8);
+        /* Equation Boxes */
+        .equation-box {
+            background: rgba(248, 250, 252, 0.9);
+            border: 2px solid rgba(139,92,246,0.15);
             border-radius: 0.75rem;
-            padding: 1rem;
-            border: 1px solid rgba(59,130,246,0.1);
-            height: fit-content;
-            position: sticky;
-            top: 5rem;
-        }
-
-        /* Compact Sections */
-        .content-section {
-            background: rgba(255,255,255,0.8);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(59,130,246,0.1);
-        }
-
-        .content-section h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin: 1rem 0 0.5rem 0;
-        }
-
-        .content-section p {
-            font-size: 0.875rem;
-            color: #64748b;
-            line-height: 1.5;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Compact Equations */
-        .main-equations {
-            background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05));
-            border: 1px solid rgba(139,92,246,0.15);
-            border-radius: 0.75rem;
-            padding: 1rem;
+            padding: 1.5rem;
             margin: 1rem 0;
             text-align: center;
         }
 
-        .equation-large {
-            font-size: 1rem !important;
-            margin: 0.75rem 0 !important;
-        }
-
-        /* Compact Variables */
-        .variables-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.75rem;
-            margin: 1rem 0;
-        }
-
-        .variable-item {
-            background: rgba(248,250,252,0.8);
-            border: 1px solid rgba(59,130,246,0.1);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-        }
-
-        .variable-symbol {
-            font-family: 'KaTeX_Math', 'Times New Roman', serif;
+        .equation-title {
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-item {
+            background: rgba(139,92,246,0.05);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .info-label {
+            font-weight: 700;
             color: #8b5cf6;
             margin-bottom: 0.25rem;
+            font-size: 0.875rem;
         }
 
-        .variable-name {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.125rem;
-        }
-
-        .variable-description {
-            font-size: 0.625rem;
+        .info-value {
+            font-size: 0.875rem;
             color: #64748b;
-            line-height: 1.3;
         }
 
-        /* Compact Sidebar */
-        .sidebar h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            margin-bottom: 1rem;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.375rem;
-        }
-
-        .sidebar a {
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.75rem;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.25rem 0;
-        }
-
-        .sidebar a:hover {
-            color: #3b82f6;
-        }
-
-        /* Compact Lists */
-        .content-section ul {
-            margin: 0.75rem 0;
-            padding-left: 1.25rem;
-        }
-
-        .content-section li {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-bottom: 0.25rem;
-            line-height: 1.4;
-        }
-
-        /* Compact Constants Table */
-        .constants-table {
+        /* Comparison Table */
+        .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.75rem;
-            margin: 0.75rem 0;
+            margin-top: 1rem;
         }
 
-        .constants-table th,
-        .constants-table td {
-            padding: 0.5rem;
-            border: 1px solid rgba(59,130,246,0.1);
-            text-align: center;
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(139,92,246,0.1);
         }
 
-        .constants-table th {
-            background: rgba(139,92,246,0.1);
-            color: #5b21b6;
-            font-weight: 600;
+        .comparison-table th {
+            background: rgba(139,92,246,0.08);
+            font-weight: 700;
+            color: #8b5cf6;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .content-grid {
+            .quick-decisions {
                 grid-template-columns: 1fr;
-                gap: 1rem;
             }
             
-            .sidebar {
-                position: static;
-                order: -1;
+            .info-grid {
+                grid-template-columns: 1fr;
             }
             
-            .container {
-                padding: 0 0.75rem;
+            .page-title {
+                font-size: 2rem;
             }
-            
-            .model-hero h1 {
-                font-size: 1.5rem;
-            }
-            
-            .model-hero p {
-                font-size: 0.875rem;
-            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #94a3b8;
+            font-size: 0.75rem;
         }
     </style>
 </head>
 <body>
-    <!-- Compact Header -->
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">
-                    <div class="logo-icon">
-                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">k-ε</span>
-                    </div>
-                    <div>
-                        <h1>k-ε Turbulence Model</h1>
-                        <p>RANS Model</p>
-                    </div>
-                </a>
+                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
                 
-                <a href="../turbulence-models.html" class="back-button">
-                    <span>←</span>
-                    <span>Back to Models</span>
-                </a>
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <a href="../home.html" class="nav-tab">🏠 Home</a>
+                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
+                    <a href="../turbulence-models.html" class="nav-tab active">2. Turbulence Models</a>
+                    <a href="../methods.html" class="nav-tab">3. Methods</a>
+                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Compact Main Content -->
-    <main class="main-content">
-        <div class="container">
-            
-            <!-- UPDATED COMPACT DESIGN INDICATOR -->
-            <div style="background: linear-gradient(135deg, #10b981, #34d399); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
-                ✅ UPDATED: Compact Design v2.0 - Much smaller and easier to navigate!
+    <div class="container">
+        <div class="main-content">
+            <a href="../turbulence-models.html" class="back-link">
+                ← Back to Turbulence Models
+            </a>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="model-icon">k-ε</div>
+                <h1 class="page-title">k-ε Turbulence Model</h1>
+                <p class="page-subtitle">Two-equation RANS model - Industry standard for most engineering applications</p>
             </div>
 
-            <!-- Compact Model Hero -->
-            <div class="model-hero">
-                <div class="model-badge">
-                    <span>⚡</span>
-                    <span>Two-Equation RANS Model</span>
+            <!-- QUICK DECISION CARDS - MOST PROMINENT -->
+            <div class="quick-decisions">
+                <div class="decision-card use-it">
+                    <div class="decision-header">
+                        <div class="decision-icon">✅</div>
+                        <div class="decision-title">Use k-ε When</div>
+                    </div>
+                    <ul class="decision-list">
+                        <li><strong>Industrial flows</strong> - HVAC, pumps, fans</li>
+                        <li><strong>High Reynolds number</strong> - Re > 10,000</li>
+                        <li><strong>Fully turbulent</strong> - No transition zones</li>
+                        <li><strong>Far from walls</strong> - Wall functions OK</li>
+                        <li><strong>Engineering accuracy</strong> - ±10-20% acceptable</li>
+                        <li><strong>Fast results needed</strong> - Robust convergence</li>
+                        <li><strong>Home appliances</strong> - Refrigerators, ovens</li>
+                    </ul>
+                </div>
+
+                <div class="decision-card avoid-it">
+                    <div class="decision-header">
+                        <div class="decision-icon">⚠️</div>
+                        <div class="decision-title">Avoid k-ε When</div>
+                    </div>
+                    <ul class="decision-list">
+                        <li><strong>Low Reynolds number</strong> - Re < 2,000</li>
+                        <li><strong>Near-wall accuracy</strong> - y+ < 30 required</li>
+                        <li><strong>Transition flows</strong> - Laminar to turbulent</li>
+                        <li><strong>Adverse pressure gradients</strong> - Separation</li>
+                        <li><strong>Swirling flows</strong> - Strong rotation</li>
+                        <li><strong>Research precision</strong> - Need < 5% error</li>
+                        <li><strong>Unsteady phenomena</strong> - Time-dependent</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Practical Applications -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <div class="section-title">Practical Applications</div>
                 </div>
                 
-                <h1>k-ε Turbulence Model</h1>
-                <p>Two-equation RANS model solving transport equations for turbulent kinetic energy (k) and dissipation rate (ε)</p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🏠 Home Appliances</div>
+                        <div class="info-value">Refrigerators, ovens, HVAC systems</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⚡ Industrial Equipment</div>
+                        <div class="info-value">Pumps, fans, heat exchangers</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🌊 Flow Systems</div>
+                        <div class="info-value">Pipes, ducts, mixing chambers</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔥 Heat Transfer</div>
+                        <div class="info-value">Convection, cooling systems</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Compact Content Grid -->
-            <div class="content-grid">
-                <div class="main-column">
-                    
-                    <!-- FIRST: Practical Applications -->
-                    <div class="content-section" id="applications">
-                        <h2>
-                            <span>🛠️</span>
-                            Practical Applications
-                        </h2>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
-                            <!-- Excellent Applications -->
-                            <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">🎯 Excellent For:</h4>
-                                <ul style="font-size: 0.75rem; color: #065f46; list-style: none; padding: 0;">
-                                    <li>• Industrial mixing chambers</li>
-                                    <li>• Heat exchanger design</li>
-                                    <li>• Building ventilation systems</li>
-                                    <li>• Large-scale flow simulations</li>
-                                    <li>• Jet engine combustors</li>
-                                    <li>• Chemical reactor design</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Poor Applications -->
-                            <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Avoid For:</h4>
-                                <ul style="font-size: 0.75rem; color: #7f1d1d; list-style: none; padding: 0;">
-                                    <li>• Airfoil boundary layers</li>
-                                    <li>• Separated flow regions</li>
-                                    <li>• Low Reynolds number flows</li>
-                                    <li>• Rotating machinery</li>
-                                    <li>• Transitional flows</li>
-                                    <li>• Swirling flows</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced CFD Guidance -->
-                    <div class="content-section" id="guidance">
-                        <h2>
-                            <span>🎯</span>
-                            CFD Guidance - k-ε Model
-                        </h2>
-                        
-                        <!-- HIGHLIGHTED: When to Use -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use k-ε Model (Critical Applications)</h3>
-                            <ul style="color: #065f46; font-weight: 500;">
-                                <li><strong>High Reynolds number flows</strong> (Re > 10,000) - Fully turbulent attached flows</li>
-                                <li><strong>Industrial applications</strong> with complex geometry - Heat exchangers, mixing chambers</li>
-                                <li><strong>External aerodynamics</strong> - Aircraft, automotive, building flows away from walls</li>
-                                <li><strong>Jet flows and mixing</strong> - Free shear layers, wakes, plumes</li>
-                                <li><strong>Computational efficiency critical</strong> - Large-scale simulations, parametric studies</li>
-                                <li><strong>Standard engineering analysis</strong> - Well-established, widely validated</li>
-                                <li><strong>Flows without strong pressure gradients</strong> - Gradually varying flows</li>
-                            </ul>
-                        </div>
-
-                        <!-- HIGHLIGHTED: When to Avoid -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid k-ε Model (Critical Limitations)</h3>
-                            <ul style="color: #7f1d1d; font-weight: 500;">
-                                <li><strong>Near-wall regions without wall functions</strong> - Cannot handle viscous sublayer (y+ < 30)</li>
-                                <li><strong>Strong streamline curvature</strong> - Overpredicts turbulence in curved flows</li>
-                                <li><strong>Rotating or swirling flows</strong> - Missing rotation/curvature corrections</li>
-                                <li><strong>Low Reynolds number flows</strong> - Viscous effects dominate, damping functions needed</li>
-                                <li><strong>Separated flows</strong> - Poor prediction of separation and reattachment</li>
-                                <li><strong>Strong adverse pressure gradients</strong> - Premature separation prediction</li>
-                                <li><strong>Transitional flows</strong> - Cannot predict laminar-turbulent transition</li>
-                                <li><strong>Buoyancy-driven flows</strong> - Needs additional buoyancy corrections</li>
-                            </ul>
-                        </div>
-
-                        <h3>Setup Tips & Best Practices</h3>
-                        <ul>
-                            <li><strong>Wall treatment:</strong> Use y+ > 30 with wall functions, or y+ < 1 with enhanced wall treatment</li>
-                            <li><strong>Initialization:</strong> k = 1.5(UI)², ε = C_μ^(3/4) k^(3/2) / (0.07L) where I = turbulence intensity, L = length scale</li>
-                            <li><strong>Boundary conditions:</strong> Specify k and ε at inlets based on turbulence intensity and length scale</li>
-                            <li><strong>Convergence:</strong> Monitor residuals for both k and ε equations (< 1e-4 for engineering accuracy)</li>
-                            <li><strong>Realizability:</strong> Check for negative k or ε values, use realizable k-ε if needed</li>
-                            <li><strong>Grid requirements:</strong> Adequate resolution in high-gradient regions, especially shear layers</li>
-                        </ul>
-                    </div>
-
-                    <!-- Enhanced Equations with Detailed Explanations -->
-                    <div class="content-section" id="equations">
-                        <h2>
-                            <span>📐</span>
-                            Transport Equations - Detailed Analysis
-                        </h2>
-                        
-                        <!-- k Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Turbulent Kinetic Energy (k) Equation</h3>
-                            <div class="equation-large katex-display">
-                                \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \varepsilon + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_k}\right)\frac{\partial k}{\partial x_j}\right]
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Energy balance for turbulent kinetic energy</p>
-                                <p><strong>∂k/∂t:</strong> Rate of k change at fixed point (unsteady term)</p>
-                                <p><strong>U_j ∂k/∂x_j:</strong> Convection of k by mean flow</p>
-                                <p><strong>P_k:</strong> Production of k by mean shear = ν_t (∂U_i/∂x_j)(∂U_i/∂x_j + ∂U_j/∂x_i)</p>
-                                <p><strong>-ε:</strong> Dissipation of k to heat (sink term)</p>
-                                <p><strong>Diffusion term:</strong> (ν + ν_t/σ_k) ∂²k/∂x_j² where σ_k = 1.0</p>
-                            </div>
-                        </div>
-
-                        <!-- ε Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Dissipation Rate (ε) Equation</h3>
-                            <div class="equation-large katex-display">
-                                \frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} = C_{1\varepsilon}\frac{\varepsilon}{k}P_k - C_{2\varepsilon}\frac{\varepsilon^2}{k} + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_\varepsilon}\right)\frac{\partial \varepsilon}{\partial x_j}\right]
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Transport equation for dissipation rate (modeled, not exact)</p>
-                                <p><strong>∂ε/∂t:</strong> Rate of ε change at fixed point</p>
-                                <p><strong>U_j ∂ε/∂x_j:</strong> Convection of ε by mean flow</p>
-                                <p><strong>C_1ε (ε/k)P_k:</strong> Production of ε proportional to k production (C_1ε = 1.44)</p>
-                                <p><strong>-C_2ε ε²/k:</strong> Destruction of ε (C_2ε = 1.92)</p>
-                                <p><strong>Diffusion term:</strong> (ν + ν_t/σ_ε) ∂²ε/∂x_j² where σ_ε = 1.3</p>
-                            </div>
-                        </div>
-
-                        <!-- Turbulent Viscosity -->
-                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Turbulent Viscosity Closure</h3>
-                            <div class="equation-large katex-display">
-                                \nu_t = C_\mu \frac{k^2}{\varepsilon}
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Eddy viscosity based on k and ε</p>
-                                <p><strong>C_μ = 0.09:</strong> Model constant from dimensional analysis</p>
-                                <p><strong>k²/ε:</strong> Velocity scale × length scale = (√k) × (k^(3/2)/ε)</p>
-                                <p><strong>Dimensional check:</strong> [ν_t] = [k²/ε] = (m²/s²)²/(m²/s³) = m²/s ✓</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Compact Variables -->
-                    <div class="content-section">
-                        <h2>
-                            <span>🔤</span>
-                            Variables
-                        </h2>
-                        
-                        <div class="variables-grid">
-                            <div class="variable-item">
-                                <div class="variable-symbol">k</div>
-                                <div class="variable-name">Turbulent Kinetic Energy</div>
-                                <div class="variable-description">Energy per unit mass in turbulent fluctuations (m²/s²)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">ε</div>
-                                <div class="variable-name">Dissipation Rate</div>
-                                <div class="variable-description">Rate of energy dissipation (m²/s³)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">P_k</div>
-                                <div class="variable-name">Production Term</div>
-                                <div class="variable-description">Turbulence production by mean shear</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">ν_t</div>
-                                <div class="variable-name">Turbulent Viscosity</div>
-                                <div class="variable-description">ν_t = C_μ k²/ε</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Compact Analogy -->
-                    <div class="content-section">
-                        <h2>
-                            <span>💡</span>
-                            Energy Cascade Analogy
-                        </h2>
-                        <p>Think of turbulent flow as a <strong>waterfall cascade</strong>. Large eddies (k) are like big rocks creating turbulence at the top. Energy cascades down through smaller and smaller eddies until it's finally dissipated as heat (ε) at the molecular level.</p>
-                        
-                        <p><strong>k equation:</strong> Tracks the energy in the "turbulent reservoir" - production from mean flow minus losses to dissipation.</p>
-                        
-                        <p><strong>ε equation:</strong> Controls how fast energy cascades down the eddy spectrum to molecular dissipation.</p>
-                    </div>
-
-
-
-                    <!-- Compact Constants -->
-                    <div class="content-section">
-                        <h2>
-                            <span>📊</span>
-                            Model Constants
-                        </h2>
-                        
-                        <table class="constants-table">
-                            <tr>
-                                <th>Constant</th>
-                                <th>C_μ</th>
-                                <th>C_{1ε}</th>
-                                <th>C_{2ε}</th>
-                                <th>σ_k</th>
-                                <th>σ_ε</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Value</strong></td>
-                                <td>0.09</td>
-                                <td>1.44</td>
-                                <td>1.92</td>
-                                <td>1.0</td>
-                                <td>1.3</td>
-                            </tr>
-                        </table>
-                    </div>
-
+            <!-- Mathematical Formulation -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🔢</div>
+                    <div class="section-title">Key Equations</div>
                 </div>
 
-                <!-- Compact Sidebar -->
-                <div class="sidebar">
-                    <h3>
-                        <span>🧭</span>
-                        Quick Navigation
-                    </h3>
-                    <ul>
-                        <li><a href="#applications">🛠️ Applications</a></li>
-                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
-                        <li><a href="#equations">📐 Equations</a></li>
-                        <li><a href="#variables">🔤 Variables</a></li>
-                        <li><a href="#analogy">💡 Analogy</a></li>
-                        <li><a href="#constants">📊 Constants</a></li>
-                    </ul>
+                <div class="equation-box">
+                    <div class="equation-title">Turbulent Kinetic Energy (k)</div>
+                    <div>$$\frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \varepsilon + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right]$$</div>
+                </div>
 
-                    <h3 style="margin-top: 1.5rem;">
-                        <span>🔗</span>
-                        Related Models
-                    </h3>
-                    <ul>
-                        <li><a href="k-omega.html">k-ω Standard</a></li>
-                        <li><a href="k-omega-sst.html">k-ω SST</a></li>
-                        <li><a href="reynolds-stress.html">Reynolds Stress</a></li>
-                        <li><a href="../turbulence-models.html">← All Models</a></li>
-                    </ul>
+                <div class="equation-box">
+                    <div class="equation-title">Dissipation Rate (ε)</div>
+                    <div>$$\frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} = C_{1\varepsilon} \frac{\varepsilon}{k} P_k - C_{2\varepsilon} \frac{\varepsilon^2}{k} + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_\varepsilon}\right) \frac{\partial \varepsilon}{\partial x_j}\right]$$</div>
+                </div>
 
-                    <h3 style="margin-top: 1.5rem;">
-                        <span>📚</span>
-                        Model Info
-                    </h3>
-                    <ul>
-                        <li><span style="color: #8b5cf6;">Type:</span> RANS</li>
-                        <li><span style="color: #8b5cf6;">Equations:</span> 2</li>
-                        <li><span style="color: #8b5cf6;">Variables:</span> k, ε</li>
-                        <li><span style="color: #8b5cf6;">Cost:</span> Medium</li>
-                        <li><span style="color: #10b981; font-weight: 600;">Status:</span> Available</li>
+                <div class="equation-box">
+                    <div class="equation-title">Turbulent Viscosity</div>
+                    <div>$$\nu_t = C_\mu \frac{k^2}{\varepsilon}$$</div>
+                </div>
+            </div>
+
+            <!-- Model Constants -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">📊</div>
+                    <div class="section-title">Standard Constants</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">C_μ</div>
+                        <div class="info-value">0.09</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">C₁ε</div>
+                        <div class="info-value">1.44</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">C₂ε</div>
+                        <div class="info-value">1.92</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">σ_k</div>
+                        <div class="info-value">1.0</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">σ_ε</div>
+                        <div class="info-value">1.3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Engineering Analogy -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🧠</div>
+                    <div class="section-title">Engineering Analogy</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>🏭 Factory Production Line</h4>
+                    <p><strong>k-ε is like managing a busy factory production line:</strong></p>
+                    <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                        <li><strong>k (energy):</strong> "How much activity/energy the workers have"</li>
+                        <li><strong>ε (dissipation):</strong> "How fast energy gets used up by friction"</li>
+                        <li><strong>Balance:</strong> "More energy input → more production, but also more energy loss"</li>
+                        <li><strong>Limitation:</strong> "Works great for standard operations, struggles with unusual situations"</li>
                     </ul>
                 </div>
             </div>
 
+            <!-- Performance Comparison -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">⚖️</div>
+                    <div class="section-title">vs Other Models</div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Accuracy</th>
+                            <th>Speed</th>
+                            <th>Robustness</th>
+                            <th>Best Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(139,92,246,0.05);">
+                            <td><strong>k-ε Standard</strong></td>
+                            <td>Good</td>
+                            <td>Fast</td>
+                            <td>Very High</td>
+                            <td>Industrial flows</td>
+                        </tr>
+                        <tr>
+                            <td>k-ω SST</td>
+                            <td>Better</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>Aerospace</td>
+                        </tr>
+                        <tr>
+                            <td>Laminar</td>
+                            <td>Perfect*</td>
+                            <td>Fastest</td>
+                            <td>High</td>
+                            <td>Re < 2300</td>
+                        </tr>
+                        <tr>
+                            <td>Reynolds Stress</td>
+                            <td>Best</td>
+                            <td>Slow</td>
+                            <td>Medium</td>
+                            <td>Research</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Compact Footer -->
-    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <p style="color: #64748b; font-size: 0.75rem;">
-                © 2024 CFD Reference | 
-                <a href="https://github.com/kuplulumert/fdapp" style="color: #3b82f6; text-decoration: none;">GitHub</a> |
-                <a href="../turbulence-models.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a>
-            </p>
+            Developed By Mert Küplülü
         </div>
     </footer>
 
     <script>
-        // Initialize KaTeX
-        document.addEventListener("DOMContentLoaded", function() {
-            const equations = document.querySelectorAll('.katex-display');
-            equations.forEach(eq => {
-                katex.render(eq.textContent, eq, {
-                    displayMode: true,
-                    throwOnError: false
-                });
-            });
-        });
+        // Smooth transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
 
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Add smooth transition to navigation tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
                 }
             });
         });
 
-        console.log('k-ε Model page loaded - Compact design active');
+        // Add smooth transition to back link
+        document.querySelector('.back-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothTransition(this.href);
+        });
+
+        // KaTeX rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+
+        console.log('k-epsilon model page loaded with improved readability');
     </script>
 </body>
 </html>
