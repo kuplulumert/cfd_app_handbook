@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Dependency - CFD Reference</title>
+    <meta name="description" content="Understanding steady state and transient flows in CFD.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="version" content="1.0">
+    <meta name="last-modified" content="2024-12-19">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.4;
+            color: #1e293b;
+            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
+            font-size: 14px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59,130,246,0.15);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+        }
+
+        .logo h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(59,130,246,0.15);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .nav-tab:not(.active) {
+            background: rgba(255,255,255,0.8);
+            color: #64748b;
+        }
+
+        .nav-tab:not(.active):hover {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            background: rgba(59,130,246,0.05);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 1.5rem 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .hero h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Table */
+        .models-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.9);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(147,197,253,0.1));
+            border-bottom: 2px solid rgba(59,130,246,0.15);
+        }
+
+        .header-cell {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            color: #1e40af;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .model-row {
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            cursor: pointer;
+            border-bottom: 1px solid rgba(59,130,246,0.06);
+        }
+
+        .model-row:hover {
+            background: rgba(59,130,246,0.04);
+            transform: translateX(6px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .model-cell {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(59,130,246,0.05);
+            vertical-align: middle;
+        }
+
+        .model-icon {
+            width: 2.5rem;
+            height: 1.75rem;
+            border-radius: 0.375rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .icon-steady { background: linear-gradient(135deg, #10b981, #34d399); }
+        .icon-transient { background: linear-gradient(135deg, #ef4444, #f87171); }
+
+        .model-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1e293b;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .model-name:hover {
+            color: #3b82f6;
+        }
+
+        .model-desc {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        .class-tag {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+            border: 1px solid;
+            background: rgba(255,255,255,0.8);
+        }
+
+        .tag-steady {
+            color: #065f46;
+            border-color: rgba(16,185,129,0.25);
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(52,211,153,0.15));
+        }
+
+        .tag-transient {
+            color: #7f1d1d;
+            border-color: rgba(239,68,68,0.25);
+            background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(248,113,113,0.15));
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255,255,255,0.9);
+            border-top: 1px solid rgba(59,130,246,0.1);
+            padding: 1rem 0;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 0.875rem;
+            }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">⏱</span>
+                    </div>
+                    <div>
+                        <h1>Time Dependency</h1>
+                        <p>CFD Reference</p>
+                    </div>
+                </a>
+                
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <a href="time-dependency.html" class="nav-tab active">1. Time Dependency</a>
+                    <a href="index.html" class="nav-tab">2. Turbulence Models</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Time Dependency in CFD</h1>
+            <p>Understanding steady state and transient flow behavior - the first fundamental choice in CFD analysis</p>
+        </div>
+    </section>
+
+    <!-- Models Table -->
+    <section class="models-section">
+        <div class="container">
+            <table class="models-table">
+                <thead class="table-header">
+                    <tr>
+                        <td class="header-cell" style="width: 4rem;">Icon</td>
+                        <td class="header-cell" style="width: 12rem;">Time Behavior</td>
+                        <td class="header-cell">Mathematical Description</td>
+                        <td class="header-cell" style="width: 10rem;">Type</td>
+                    </tr>
+                </thead>
+
+                <!-- STEADY STATE FLOWS -->
+                <tr style="background: rgba(16,185,129,0.03); border-top: 2px solid rgba(16,185,129,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #065f46; font-size: 0.8rem; background: rgba(16,185,129,0.06);">
+                        ⏸️ STEADY STATE FLOWS
+                    </td>
+                </tr>
+                
+                <!-- Steady State (Most Common) -->
+                <tr class="model-row" style="background: rgba(16,185,129,0.02);">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-steady">∂/∂t=0</div>
+                    </td>
+                    <td>
+                        <span class="model-name">Steady State</span>
+                    </td>
+                    <td class="model-desc">∂φ/∂t = 0 - Flow properties do not change with time - Most Common in Industry</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-steady">Steady</span>
+                    </td>
+                </tr>
+
+                <!-- Quasi-Steady -->
+                <tr class="model-row">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-steady">≈∂/∂t=0</div>
+                    </td>
+                    <td>
+                        <span class="model-name">Quasi-Steady</span>
+                    </td>
+                    <td class="model-desc">Slowly varying conditions - Multiple steady states</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-steady">Steady</span>
+                    </td>
+                </tr>
+
+                <!-- TRANSIENT FLOWS -->
+                <tr style="background: rgba(239,68,68,0.03); border-top: 2px solid rgba(239,68,68,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #7f1d1d; font-size: 0.8rem; background: rgba(239,68,68,0.06);">
+                        ⏯️ TRANSIENT FLOWS
+                    </td>
+                </tr>
+
+                <!-- Periodic Unsteady -->
+                <tr class="model-row">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-transient">~∂/∂t</div>
+                    </td>
+                    <td>
+                        <span class="model-name">Periodic Unsteady</span>
+                    </td>
+                    <td class="model-desc">Periodic time variation - Vortex shedding, pulsating flows</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-transient">Transient</span>
+                    </td>
+                </tr>
+
+                <!-- Fully Transient -->
+                <tr class="model-row" style="background: rgba(239,68,68,0.02);">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-transient">∂φ/∂t</div>
+                    </td>
+                    <td>
+                        <span class="model-name">Fully Transient</span>
+                    </td>
+                    <td class="model-desc">∂φ/∂t ≠ 0 - Complex time-dependent behavior - Research Applications</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-transient">Transient</span>
+                    </td>
+                </tr>
+
+                <!-- Moving Boundaries -->
+                <tr class="model-row">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-transient">∂Ω/∂t</div>
+                    </td>
+                    <td>
+                        <span class="model-name">Moving Boundaries</span>
+                    </td>
+                    <td class="model-desc">Time-dependent geometry - Moving meshes, deforming domains</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-transient">Transient</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Detailed Explanations -->
+    <section style="margin: 2rem 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                
+                <!-- Steady State Explanation -->
+                <div style="background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid rgba(16,185,129,0.2);">
+                    <h2 style="color: #065f46; font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>⏸️</span> Steady State Flows
+                    </h2>
+                    
+                    <div style="background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
+                        <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Mathematical Definition</h3>
+                        <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem;"><strong>∂φ/∂t = 0</strong> for all flow variables φ</p>
+                        <p style="font-size: 0.8rem; color: #64748b;">Flow properties (velocity, pressure, temperature) do not change with time at any fixed point in space.</p>
+                    </div>
+
+                    <h3 style="color: #065f46; font-weight: 600; margin: 1rem 0 0.5rem 0;">When to Use Steady State:</h3>
+                    <ul style="font-size: 0.8rem; color: #64748b; margin-left: 1rem;">
+                        <li>• Industrial design applications (90% of CFD)</li>
+                        <li>• Heat exchanger analysis</li>
+                        <li>• Pipe flow calculations</li>
+                        <li>• External aerodynamics (time-averaged)</li>
+                        <li>• Preliminary design studies</li>
+                        <li>• When time-averaged results are sufficient</li>
+                    </ul>
+
+                    <h3 style="color: #065f46; font-weight: 600; margin: 1rem 0 0.5rem 0;">Advantages:</h3>
+                    <ul style="font-size: 0.8rem; color: #64748b; margin-left: 1rem;">
+                        <li>• Much lower computational cost</li>
+                        <li>• Easier convergence assessment</li>
+                        <li>• Standard in industrial CFD</li>
+                        <li>• Simpler post-processing</li>
+                    </ul>
+                </div>
+
+                <!-- Transient Explanation -->
+                <div style="background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid rgba(239,68,68,0.2);">
+                    <h2 style="color: #7f1d1d; font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>⏯️</span> Transient Flows
+                    </h2>
+                    
+                    <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
+                        <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">Mathematical Definition</h3>
+                        <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem;"><strong>∂φ/∂t ≠ 0</strong> for flow variables φ</p>
+                        <p style="font-size: 0.8rem; color: #64748b;">Flow properties change with time - requires time integration and temporal accuracy.</p>
+                    </div>
+
+                    <h3 style="color: #7f1d1d; font-weight: 600; margin: 1rem 0 0.5rem 0;">When to Use Transient:</h3>
+                    <ul style="font-size: 0.8rem; color: #64748b; margin-left: 1rem;">
+                        <li>• Vortex shedding phenomena</li>
+                        <li>• Mixing and combustion</li>
+                        <li>• Startup/shutdown processes</li>
+                        <li>• Acoustics and noise prediction</li>
+                        <li>• Research applications</li>
+                        <li>• When unsteady physics is critical</li>
+                    </ul>
+
+                    <h3 style="color: #7f1d1d; font-weight: 600; margin: 1rem 0 0.5rem 0;">Challenges:</h3>
+                    <ul style="font-size: 0.8rem; color: #64748b; margin-left: 1rem;">
+                        <li>• Much higher computational cost</li>
+                        <li>• Requires time step selection</li>
+                        <li>• Statistical convergence needed</li>
+                        <li>• Complex post-processing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Decision Matrix -->
+            <div style="background: rgba(255,255,255,0.9); border-radius: 0.75rem; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid rgba(59,130,246,0.1);">
+                <h2 style="color: #1e293b; font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; text-align: center;">
+                    🎯 Decision Matrix: Steady vs Transient
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                    <div style="text-align: center; font-weight: 600; color: #1e293b; font-size: 0.9rem;">Flow Characteristic</div>
+                    <div style="text-align: center; font-weight: 600; color: #065f46; font-size: 0.9rem;">Choose Steady</div>
+                    <div style="text-align: center; font-weight: 600; color: #7f1d1d; font-size: 0.9rem;">Choose Transient</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 0.5rem 0; padding: 0.5rem; background: rgba(248,250,252,0.5); border-radius: 0.5rem;">
+                    <div style="font-size: 0.8rem; color: #64748b;">Time dependency</div>
+                    <div style="font-size: 0.8rem; color: #065f46;">Time-averaged acceptable</div>
+                    <div style="font-size: 0.8rem; color: #7f1d1d;">Time history important</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 0.5rem 0; padding: 0.5rem;">
+                    <div style="font-size: 0.8rem; color: #64748b;">Computational budget</div>
+                    <div style="font-size: 0.8rem; color: #065f46;">Limited resources</div>
+                    <div style="font-size: 0.8rem; color: #7f1d1d;">High-end resources available</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 0.5rem 0; padding: 0.5rem; background: rgba(248,250,252,0.5); border-radius: 0.5rem;">
+                    <div style="font-size: 0.8rem; color: #64748b;">Application type</div>
+                    <div style="font-size: 0.8rem; color: #065f46;">Industrial design</div>
+                    <div style="font-size: 0.8rem; color: #7f1d1d;">Research & development</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 0.5rem 0; padding: 0.5rem;">
+                    <div style="font-size: 0.8rem; color: #64748b;">Flow phenomena</div>
+                    <div style="font-size: 0.8rem; color: #065f46;">Attached flows, heat transfer</div>
+                    <div style="font-size: 0.8rem; color: #7f1d1d;">Vortex shedding, mixing, acoustics</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 CFD Reference | <span style="font-size: 0.7rem; color: #94a3b8;">Developed By Mert Küplülü</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Add hover effects
+        document.querySelectorAll('.model-row').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.background = 'rgba(59,130,246,0.04)';
+                this.style.transform = 'translateX(6px)';
+                this.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                // Reset to original background if it had highlighting
+                if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(16,185,129,0.02)')) {
+                    this.style.background = 'rgba(16,185,129,0.02)';
+                } else if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(239,68,68,0.02)')) {
+                    this.style.background = 'rgba(239,68,68,0.02)';
+                } else {
+                    this.style.background = 'rgba(255,255,255,0.8)';
+                }
+                this.style.transform = 'translateX(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        console.log('Time Dependency page loaded');
+    </script>
+</body>
+</html>
