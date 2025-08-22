@@ -35,6 +35,15 @@
         .content-section p { font-size: 0.875rem; color: #64748b; line-height: 1.5; margin-bottom: 0.75rem; }
         .content-section ul { margin: 0.75rem 0; padding-left: 1.25rem; }
         .content-section li { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; line-height: 1.4; }
+        .equation-large { font-size: 1rem !important; margin: 0.75rem 0 !important; }
+        .variables-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+        .variable-item { background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; }
+        .variable-symbol { font-family: 'KaTeX_Math', 'Times New Roman', serif; font-size: 1rem; font-weight: 600; color: #22c55e; margin-bottom: 0.25rem; }
+        .variable-name { font-size: 0.75rem; font-weight: 600; color: #1e293b; margin-bottom: 0.125rem; }
+        .variable-description { font-size: 0.625rem; color: #64748b; line-height: 1.3; }
+        .properties-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin: 0.75rem 0; }
+        .properties-table th, .properties-table td { padding: 0.5rem; border: 1px solid rgba(59,130,246,0.1); text-align: left; }
+        .properties-table th { background: rgba(34,197,94,0.1); color: #065f46; font-weight: 600; }
         .sidebar h3 { font-size: 1rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
         .sidebar ul { list-style: none; margin-bottom: 1rem; }
         .sidebar li { margin-bottom: 0.375rem; }
@@ -92,6 +101,7 @@
                                     <li>• Heat transfer with transition</li>
                                     <li>• Industrial turbomachinery</li>
                                     <li>• Automotive aerodynamics</li>
+                                    <li>• Wind turbine blade analysis</li>
                                 </ul>
                             </div>
                             <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
@@ -101,8 +111,322 @@
                                     <li>• More complex setup</li>
                                     <li>• Additional boundary conditions</li>
                                     <li>• Convergence challenges</li>
+                                    <li>• Requires transition expertise</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced CFD Guidance -->
+                    <div class="content-section" id="guidance">
+                        <h2>
+                            <span>🎯</span>
+                            CFD Guidance - Transition SST Model
+                        </h2>
+                        
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use Transition SST (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>Industrial turbomachinery</strong> - Turbines, compressors, fans where transition matters</li>
+                                <li><strong>Airfoil design and optimization</strong> - When transition location affects performance</li>
+                                <li><strong>Heat transfer applications</strong> - Transition significantly affects heat transfer rates</li>
+                                <li><strong>Automotive aerodynamics</strong> - External flows with transition on body surfaces</li>
+                                <li><strong>Wind energy applications</strong> - Wind turbine blades with varying transition</li>
+                                <li><strong>Commercial CFD analysis</strong> - Industry standard for transition prediction</li>
+                                <li><strong>Design optimization</strong> - When transition location is a design parameter</li>
+                                <li><strong>Validation studies</strong> - Comparing with experimental transition data</li>
+                            </ul>
+                        </div>
+
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid Transition SST (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>Fully turbulent flows</strong> - No transition effects present, unnecessary complexity</li>
+                                <li><strong>Preliminary design studies</strong> - Too detailed for initial conceptual analysis</li>
+                                <li><strong>Large-scale simulations</strong> - Four equations increase computational cost significantly</li>
+                                <li><strong>Simple internal flows</strong> - Transition less critical in fully developed flows</li>
+                                <li><strong>Limited computational resources</strong> - Higher memory and CPU requirements</li>
+                                <li><strong>Routine industrial analysis</strong> - k-ω SST often sufficient for many applications</li>
+                                <li><strong>Separated flow dominated cases</strong> - Separation physics more important than transition</li>
+                                <li><strong>Convergence difficulties</strong> - More equations = more potential convergence issues</li>
+                            </ul>
+                        </div>
+
+                        <h3>Setup Tips & Best Practices</h3>
+                        <ul>
+                            <li><strong>Grid requirements:</strong> y+ < 1 at walls essential for accurate transition capture</li>
+                            <li><strong>Initialization:</strong> Initialize k, ω, γ, and Reθt based on freestream conditions</li>
+                            <li><strong>Boundary conditions:</strong> Specify turbulence intensity at inlets, γ = 1 at walls</li>
+                            <li><strong>Convergence:</strong> Monitor all four equation residuals, use under-relaxation</li>
+                            <li><strong>Transition validation:</strong> Compare predicted transition location with experiments</li>
+                            <li><strong>Intermittency interpretation:</strong> γ = 0 (laminar), γ = 1 (turbulent)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Enhanced Equations with Detailed Explanations -->
+                    <div class="content-section" id="equations">
+                        <h2>
+                            <span>📐</span>
+                            Transport Equations - Detailed Analysis
+                        </h2>
+                        
+                        <!-- k Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Turbulent Kinetic Energy (k) Equation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    \gamma P_k - \beta^* k \omega + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_k \nu_t)\frac{\partial k}{\partial x_j}\right]
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Turbulent kinetic energy with intermittency effects</p>
+                                <p><strong>∂k/∂t + Uⱼ ∂k/∂xⱼ:</strong> Unsteady + convection terms</p>
+                                <p><strong>γ Pk:</strong> Production modulated by intermittency (γ = 0 in laminar, γ = 1 in turbulent)</p>
+                                <p><strong>-β*kω:</strong> Dissipation term, β* = 0.09</p>
+                                <p><strong>Diffusion:</strong> (ν + σₖνₜ) ∂²k/∂xⱼ²</p>
+                            </div>
+                        </div>
+
+                        <!-- ω Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(248,113,113,0.05)); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Specific Dissipation Rate (ω) Equation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \omega}{\partial t} + U_j \frac{\partial \omega}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    \gamma \alpha \frac{\omega}{k} P_k - \beta \omega^2 + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_\omega \nu_t)\frac{\partial \omega}{\partial x_j}\right]
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Specific dissipation rate with intermittency effects</p>
+                                <p><strong>∂ω/∂t + Uⱼ ∂ω/∂xⱼ:</strong> Transport of specific dissipation rate</p>
+                                <p><strong>γ α (ω/k)Pk:</strong> Production modulated by intermittency</p>
+                                <p><strong>-β ω²:</strong> Destruction of ω</p>
+                                <p><strong>Diffusion:</strong> (ν + σωνₜ) ∂²ω/∂xⱼ²</p>
+                            </div>
+                        </div>
+
+                        <!-- γ Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(34,197,94,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Intermittency (γ) Equation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \gamma}{\partial t} + U_j \frac{\partial \gamma}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    P_{\gamma} - E_{\gamma} + \frac{\partial}{\partial x_j}\left[(\nu + \frac{\nu_t}{\sigma_{\gamma}})\frac{\partial \gamma}{\partial x_j}\right]
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Fraction of time flow is turbulent (0 = laminar, 1 = turbulent)</p>
+                                <p><strong>∂γ/∂t + Uⱼ ∂γ/∂xⱼ:</strong> Transport of intermittency</p>
+                                <p><strong>Pγ:</strong> Production of intermittency (transition onset)</p>
+                                <p><strong>-Eγ:</strong> Destruction of intermittency (relaminarization)</p>
+                                <p><strong>Diffusion:</strong> (ν + νₜ/σγ) ∂²γ/∂xⱼ²</p>
+                            </div>
+                        </div>
+
+                        <!-- Reθt Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Transition Momentum Thickness Reynolds Number (Reθt)</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \tilde{Re}_{\theta t}}{\partial t} + U_j \frac{\partial \tilde{Re}_{\theta t}}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    P_{\theta t} + \frac{\partial}{\partial x_j}\left[2(\nu + \nu_t)\frac{\partial \tilde{Re}_{\theta t}}{\partial x_j}\right]
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Critical Reynolds number for transition onset</p>
+                                <p><strong>∂Reθt/∂t + Uⱼ ∂Reθt/∂xⱼ:</strong> Transport of transition criterion</p>
+                                <p><strong>Pθt:</strong> Source term based on local flow conditions</p>
+                                <p><strong>Diffusion:</strong> Enhanced diffusion (factor of 2)</p>
+                                <p><strong>Purpose:</strong> Provides transition criterion based on local pressure gradient and turbulence</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Variables -->
+                    <div class="content-section" id="variables">
+                        <h2>
+                            <span>🔤</span>
+                            Variables & Terms
+                        </h2>
+                        
+                        <div class="variables-grid">
+                            <div class="variable-item">
+                                <div class="variable-symbol">k</div>
+                                <div class="variable-name">Turbulent Kinetic Energy</div>
+                                <div class="variable-description">Turbulent energy (m²/s²)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">ω</div>
+                                <div class="variable-name">Specific Dissipation Rate</div>
+                                <div class="variable-description">Turbulence frequency (1/s)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">γ</div>
+                                <div class="variable-name">Intermittency</div>
+                                <div class="variable-description">Turbulent fraction (0-1)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Reθt</div>
+                                <div class="variable-name">Transition Reynolds Number</div>
+                                <div class="variable-description">Critical Re for transition</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Pγ</div>
+                                <div class="variable-name">Intermittency Production</div>
+                                <div class="variable-description">Transition onset source</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Eγ</div>
+                                <div class="variable-name">Intermittency Destruction</div>
+                                <div class="variable-description">Relaminarization sink</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Analogy -->
+                    <div class="content-section" id="analogy">
+                        <h2>
+                            <span>💡</span>
+                            Intermittency-Based Analogy
+                        </h2>
+                        <p>Think of Transition SST as modeling <strong>the gradual switch from laminar to turbulent flow</strong> - like a dimmer switch that gradually turns on turbulence instead of an instant on/off switch.</p>
+                        
+                        <p><strong>Intermittency (γ):</strong> Like the dimmer setting - γ = 0 means "turbulence off" (fully laminar), γ = 1 means "turbulence fully on" (fully turbulent), and values in between represent partial turbulence.</p>
+                        
+                        <p><strong>Transition Reynolds number (Reθt):</strong> Like the voltage threshold needed to turn on the dimmer - it depends on local conditions (pressure gradient, surface roughness, freestream turbulence).</p>
+                        
+                        <p><strong>Production terms (Pγ, Pθt):</strong> Like sensors that detect when conditions are right to start turning up the dimmer switch.</p>
+                        
+                        <p><strong>k-ω SST base:</strong> The underlying turbulence model that gets "dimmed" by the intermittency - like the light bulb that gets controlled by the dimmer switch.</p>
+                        
+                        <p><strong>Advantage:</strong> Smooth transition instead of abrupt change - like gradually increasing light instead of sudden on/off.</p>
+                    </div>
+
+                    <!-- Model Constants -->
+                    <div class="content-section" id="constants">
+                        <h2>
+                            <span>📊</span>
+                            Model Constants & Correlations
+                        </h2>
+                        
+                        <table class="properties-table">
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value/Expression</th>
+                                <th>Physical Role</th>
+                                <th>Source</th>
+                            </tr>
+                            <tr>
+                                <td><strong>ca1</strong></td>
+                                <td>2.0</td>
+                                <td>Intermittency production coefficient</td>
+                                <td>Calibrated from experiments</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ca2</strong></td>
+                                <td>0.06</td>
+                                <td>Intermittency destruction coefficient</td>
+                                <td>Relaminarization studies</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ce1</strong></td>
+                                <td>1.0</td>
+                                <td>Reθt production coefficient</td>
+                                <td>Transition correlation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cθt</strong></td>
+                                <td>0.03</td>
+                                <td>Transition length scale</td>
+                                <td>Experimental data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>σγ</strong></td>
+                                <td>1.0</td>
+                                <td>Intermittency diffusion</td>
+                                <td>Standard value</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flength</strong></td>
+                                <td>f(pressure gradient)</td>
+                                <td>Transition length correlation</td>
+                                <td>Boundary layer theory</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Transition Physics -->
+                    <div class="content-section" id="physics">
+                        <h2>
+                            <span>🔬</span>
+                            Transition Physics & Correlations
+                        </h2>
+                        
+                        <!-- Intermittency Concept -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(34,197,94,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Intermittency Concept</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">γ represents the fraction of time the flow is turbulent at a given location. In the transition region, γ varies from 0 to 1, providing smooth transition between laminar and turbulent states.</p>
+                        </div>
+
+                        <!-- Correlation-Based Approach -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Correlation-Based Approach</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Model uses empirical correlations from extensive experimental databases to predict transition onset based on local pressure gradient, freestream turbulence, and Reynolds number.</p>
+                        </div>
+
+                        <!-- Industrial Robustness -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(245,158,11,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">Industrial Robustness</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Designed for industrial applications with robust convergence properties and extensive validation in turbomachinery applications. More practical than research-oriented models.</p>
+                        </div>
+                    </div>
+
+                    <!-- Advantages & Disadvantages -->
+                    <div class="content-section" id="comparison">
+                        <h2>
+                            <span>⚖️</span>
+                            Model Comparison
+                        </h2>
+                        
+                        <!-- Advantages -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages vs k-ω SST</h4>
+                            <ul style="font-size: 0.8rem; color: #065f46;">
+                                <li>Predicts transition location automatically</li>
+                                <li>Smooth transition via intermittency factor</li>
+                                <li>Industry-validated correlations</li>
+                                <li>Robust convergence properties</li>
+                                <li>Extensive turbomachinery validation</li>
+                                <li>Handles pressure gradient effects</li>
+                            </ul>
+                        </div>
+
+                        <!-- Disadvantages -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Disadvantages vs k-ω SST</h4>
+                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
+                                <li>Higher computational cost (4 equations vs 2)</li>
+                                <li>More complex setup and boundary conditions</li>
+                                <li>Additional convergence monitoring required</li>
+                                <li>Correlation-based (less fundamental than k-kL-ω)</li>
+                                <li>Limited to calibrated flow types</li>
+                            </ul>
                         </div>
                     </div>
 
@@ -112,13 +436,53 @@
                     <h3><span>🧭</span> Quick Navigation</h3>
                     <ul>
                         <li><a href="#applications">🛠️ Applications</a></li>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
+                        <li><a href="#equations">📐 Equations</a></li>
+                        <li><a href="#variables">🔤 Variables</a></li>
+                        <li><a href="#analogy">💡 Analogy</a></li>
+                        <li><a href="#constants">📊 Constants</a></li>
+                        <li><a href="#physics">🔬 Physics</a></li>
+                        <li><a href="#comparison">⚖️ Comparison</a></li>
                     </ul>
+                    
+                    <h3 style="margin-top: 1.5rem;"><span>🔗</span> Related Models</h3>
+                    <ul>
+                        <li><a href="k-omega-sst.html">k-ω SST</a></li>
+                        <li><a href="k-kl-omega.html">k-kL-ω Transition</a></li>
+                        <li><a href="k-omega.html">k-ω Standard</a></li>
+                        <li><a href="../index.html">← All Models</a></li>
+                    </ul>
+                    
                     <h3 style="margin-top: 1.5rem;"><span>📚</span> Model Info</h3>
                     <ul>
-                        <li><span style="color: #22c55e;">Type:</span> Transition</li>
+                        <li><span style="color: #22c55e;">Type:</span> Four-Equation Transition</li>
                         <li><span style="color: #22c55e;">Variables:</span> k, ω, γ, Reθt</li>
+                        <li><span style="color: #22c55e;">Equations:</span> 4 transport</li>
                         <li><span style="color: #22c55e;">Cost:</span> High</li>
                         <li><span style="color: #22c55e; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;"><span>⚙️</span> Key Parameters</h3>
+                    <ul>
+                        <li><span style="color: #22c55e;">Grid:</span> y+ < 1 essential</li>
+                        <li><span style="color: #22c55e;">BC:</span> γ = 1 at walls</li>
+                        <li><span style="color: #22c55e;">Base:</span> k-ω SST</li>
+                        <li><span style="color: #22c55e;">Best for:</span> Turbomachinery</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;"><span>🏆</span> Validation Cases</h3>
+                    <ul>
+                        <li><span style="color: #22c55e;">Turbine cascades:</span> Excellent</li>
+                        <li><span style="color: #22c55e;">Airfoils:</span> Very good</li>
+                        <li><span style="color: #22c55e;">Heat transfer:</span> Good</li>
+                        <li><span style="color: #22c55e;">Industrial flows:</span> Very good</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;"><span>🔄</span> Model Evolution</h3>
+                    <ul>
+                        <li><span style="color: #22c55e;">Base:</span> k-ω SST (Menter)</li>
+                        <li><span style="color: #22c55e;">Transition:</span> γ-Reθt (Langtry-Menter)</li>
+                        <li><span style="color: #22c55e;">Status:</span> Industry standard</li>
                     </ul>
                 </div>
             </div>
