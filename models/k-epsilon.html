@@ -408,38 +408,124 @@
                 <p class="page-subtitle">Two-equation RANS model - Industry standard for most engineering applications</p>
             </div>
 
-            <!-- QUICK DECISION CARDS - MOST PROMINENT -->
+            <!-- INDUSTRY-FOCUSED DECISION TABLES -->
             <div class="quick-decisions">
                 <div class="decision-card use-it">
                     <div class="decision-header">
                         <div class="decision-icon">✅</div>
-                        <div class="decision-title">Use k-ε When</div>
+                        <div class="decision-title">Use k-ε When (Industry Focus)</div>
                     </div>
-                    <ul class="decision-list">
-                        <li><strong>Industrial flows</strong> - HVAC, pumps, fans</li>
-                        <li><strong>High Reynolds number</strong> - Re > 10,000</li>
-                        <li><strong>Fully turbulent</strong> - No transition zones</li>
-                        <li><strong>Far from walls</strong> - Wall functions OK</li>
-                        <li><strong>Engineering accuracy</strong> - ±10-20% acceptable</li>
-                        <li><strong>Fast results needed</strong> - Robust convergence</li>
-                        <li><strong>Home appliances</strong> - Refrigerators, ovens</li>
-                    </ul>
+                    
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                        <thead>
+                            <tr style="background: rgba(16,185,129,0.1);">
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Situation</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Why It Works</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Advice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>High Re, fully turbulent flows (Re > 10,000)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">k-ε is tuned for industrial turbulence</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Don't waste time resolving laminar/turbulent transitions</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Far from walls (ducts, pipes, HVAC)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Wall functions are acceptable</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Keep y⁺ > 30 and avoid fine near-wall meshing</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Common equipment (pumps, fans, HVAC, appliances)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Matches empirical data, widely validated</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Use it for design iterations and quick feasibility</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Engineering accuracy is enough (±10–20%)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Fast turnaround > precision</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Good for sizing, feasibility, or system-level trade-offs</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem;"><strong>Tight deadlines / fast results needed</strong></td>
+                                <td style="padding: 0.5rem;">Robust and stable convergence</td>
+                                <td style="padding: 0.5rem;">Default choice when project delivery > research detail</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="decision-card avoid-it">
                     <div class="decision-header">
                         <div class="decision-icon">⚠️</div>
-                        <div class="decision-title">Avoid k-ε When</div>
+                        <div class="decision-title">Avoid k-ε When (Industry Focus)</div>
                     </div>
-                    <ul class="decision-list">
-                        <li><strong>Low Reynolds number</strong> - Re < 2,000</li>
-                        <li><strong>Near-wall accuracy</strong> - y+ < 30 required</li>
-                        <li><strong>Transition flows</strong> - Laminar to turbulent</li>
-                        <li><strong>Adverse pressure gradients</strong> - Separation</li>
-                        <li><strong>Swirling flows</strong> - Strong rotation</li>
-                        <li><strong>Research precision</strong> - Need < 5% error</li>
-                        <li><strong>Unsteady phenomena</strong> - Time-dependent</li>
-                    </ul>
+                    
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                        <thead>
+                            <tr style="background: rgba(245,158,11,0.1);">
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Situation</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Why It Fails</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Industry Advice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Low Re or transitional flows (Re < 2,000)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Assumes fully turbulent</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ω SST or transitional models</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Near-wall accuracy needed (heat transfer, fouling, thin films)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Wall functions break down</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Go for low-Re k-ε or k-ω SST</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Flow separation expected (diffusers, curved ducts, aero surfaces)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Poor at predicting separation</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ω SST or hybrid RANS/LES</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Swirling or rotating flows (mixers, cyclones, turbines)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Weak in strong rotation</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Try RNG k-ε or Reynolds Stress Model</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>High precision required (<5% error, research cases)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Too crude for detailed studies</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">LES, DES, or advanced RANS needed</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem;"><strong>Unsteady/time-dependent flows (pulsation, combustion, acoustics)</strong></td>
+                                <td style="padding: 0.5rem;">k-ε assumes steady averaging</td>
+                                <td style="padding: 0.5rem;">Use LES/DES if time resolution is critical</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Industry Takeaway -->
+            <div class="content-section" style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 2px solid #3b82f6;">
+                <div class="section-header">
+                    <div class="section-icon">🔑</div>
+                    <div class="section-title">Industry Takeaway</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="highlight-box" style="background: rgba(16,185,129,0.05); border-left: 4px solid #10b981;">
+                        <h4 style="color: #065f46;">✅ Default Choice</h4>
+                        <p>Use standard k-ε as your default when speed, robustness, and "good-enough" accuracy are the priority.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(245,158,11,0.05); border-left: 4px solid #f59e0b;">
+                        <h4 style="color: #92400e;">⚡ Upgrade When Needed</h4>
+                        <p>Switch to k-ω SST when walls, separation, or transitional regions matter.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
+                        <h4 style="color: #5b21b6;">🎯 High Fidelity</h4>
+                        <p>Go higher fidelity (LES, DES, RSM) only when precision is worth the cost.</p>
+                    </div>
                 </div>
             </div>
 
