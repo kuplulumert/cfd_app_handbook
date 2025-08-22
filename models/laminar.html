@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laminar Flow Model - Compact Guide v1.0</title>
-    <meta name="description" content="Laminar flow model explained compactly with Navier-Stokes equations and guidance.">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <title>Laminar Flow - Beko CFD AI Agent</title>
     
-    <!-- KaTeX for Math -->
+    <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     
     <style>
         * {
@@ -21,760 +21,661 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.4;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
             color: #1e293b;
-            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
-            font-size: 14px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
 
-        /* Compact Header */
+        /* Header */
         .header {
             background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03));
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(59,130,246,0.15);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139,92,246,0.12);
             padding: 0.75rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
         }
 
         .header-content {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+        }
+
+        .nav-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .model-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 6px -1px rgba(139,92,246,0.2);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Quick Decision Cards */
+        .quick-decisions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .decision-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .decision-card.use-it {
+            border-color: #10b981;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .decision-card.avoid-it {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+        }
+
+        .decision-header {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            text-decoration: none;
-            color: inherit;
+            margin-bottom: 1rem;
         }
 
-        .logo-icon {
+        .decision-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .use-it .decision-icon {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        .avoid-it .decision-icon {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+
+        .decision-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid rgba(139,92,246,0.1);
+        }
+
+        .section-icon {
             width: 2rem;
             height: 2rem;
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
             border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(59,130,246,0.2);
+            font-size: 0.875rem;
+            font-weight: 700;
         }
 
-        .logo h1 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .logo p {
-            font-size: 0.75rem;
-            color: #64748b;
-            font-style: italic;
-        }
-
-        .back-button {
-            color: #64748b;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(59,130,246,0.15);
-            background: rgba(255,255,255,0.8);
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-button:hover {
-            color: #3b82f6;
-            border-color: #3b82f6;
-            background: rgba(59,130,246,0.05);
-        }
-
-        /* Compact Main Content */
-        .main-content {
-            padding: 1rem 0;
-        }
-
-        /* Compact Model Hero */
-        .model-hero {
-            text-align: center;
-            padding: 1.5rem 0 1rem 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(59,130,246,0.1);
-        }
-
-        .model-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
-            color: white;
-            padding: 0.375rem 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            box-shadow: 0 2px 8px rgba(59,130,246,0.2);
-        }
-
-        .model-hero h1 {
-            font-size: 2rem;
+        .section-title {
+            font-size: 1.25rem;
             font-weight: 700;
             color: #1e293b;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: rgba(139,92,246,0.05);
+            border-left: 4px solid #8b5cf6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #8b5cf6;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        .model-hero p {
             font-size: 1rem;
-            color: #64748b;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
-        /* Compact Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .main-column {
-            min-width: 0;
-        }
-
-        .sidebar {
-            background: rgba(255,255,255,0.8);
+        /* Equation Boxes */
+        .equation-box {
+            background: rgba(248, 250, 252, 0.9);
+            border: 2px solid rgba(139,92,246,0.15);
             border-radius: 0.75rem;
-            padding: 1rem;
-            border: 1px solid rgba(59,130,246,0.1);
-            height: fit-content;
-            position: sticky;
-            top: 5rem;
-        }
-
-        /* Compact Sections */
-        .content-section {
-            background: rgba(255,255,255,0.8);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(59,130,246,0.1);
-        }
-
-        .content-section h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin: 1rem 0 0.5rem 0;
-        }
-
-        .content-section p {
-            font-size: 0.875rem;
-            color: #64748b;
-            line-height: 1.5;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Compact Equations */
-        .main-equations {
-            background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05));
-            border: 1px solid rgba(59,130,246,0.15);
-            border-radius: 0.75rem;
-            padding: 1rem;
+            padding: 1.5rem;
             margin: 1rem 0;
             text-align: center;
         }
 
-        .equation-large {
-            font-size: 1rem !important;
-            margin: 0.75rem 0 !important;
-        }
-
-        /* Compact Variables */
-        .variables-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.75rem;
-            margin: 1rem 0;
-        }
-
-        .variable-item {
-            background: rgba(248,250,252,0.8);
-            border: 1px solid rgba(59,130,246,0.1);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-        }
-
-        .variable-symbol {
-            font-family: 'KaTeX_Math', 'Times New Roman', serif;
+        .equation-title {
             font-size: 1rem;
-            font-weight: 600;
-            color: #3b82f6;
-            margin-bottom: 0.25rem;
-        }
-
-        .variable-name {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.125rem;
-        }
-
-        .variable-description {
-            font-size: 0.625rem;
-            color: #64748b;
-            line-height: 1.3;
-        }
-
-        /* Compact Sidebar */
-        .sidebar h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .sidebar ul {
-            list-style: none;
+            font-weight: 700;
+            color: #8b5cf6;
             margin-bottom: 1rem;
         }
 
-        .sidebar li {
-            margin-bottom: 0.375rem;
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
-        .sidebar a {
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.75rem;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.25rem 0;
+        .info-item {
+            background: rgba(139,92,246,0.05);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(139,92,246,0.1);
         }
 
-        .sidebar a:hover {
-            color: #3b82f6;
-        }
-
-        /* Compact Lists */
-        .content-section ul {
-            margin: 0.75rem 0;
-            padding-left: 1.25rem;
-        }
-
-        .content-section li {
-            font-size: 0.8rem;
-            color: #64748b;
+        .info-label {
+            font-weight: 700;
+            color: #8b5cf6;
             margin-bottom: 0.25rem;
-            line-height: 1.4;
+            font-size: 0.875rem;
         }
 
-        /* Properties Table */
-        .properties-table {
+        .info-value {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.75rem;
-            margin: 0.75rem 0;
+            margin-top: 1rem;
         }
 
-        .properties-table th,
-        .properties-table td {
-            padding: 0.5rem;
-            border: 1px solid rgba(59,130,246,0.1);
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
             text-align: left;
+            border-bottom: 1px solid rgba(139,92,246,0.1);
         }
 
-        .properties-table th {
-            background: rgba(59,130,246,0.1);
-            color: #1e40af;
-            font-weight: 600;
+        .comparison-table th {
+            background: rgba(139,92,246,0.08);
+            font-weight: 700;
+            color: #8b5cf6;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .content-grid {
+            .quick-decisions {
                 grid-template-columns: 1fr;
-                gap: 1rem;
             }
             
-            .sidebar {
-                position: static;
-                order: -1;
+            .info-grid {
+                grid-template-columns: 1fr;
             }
             
-            .container {
-                padding: 0 0.75rem;
+            .page-title {
+                font-size: 2rem;
             }
-            
-            .model-hero h1 {
-                font-size: 1.5rem;
-            }
-            
-            .model-hero p {
-                font-size: 0.875rem;
-            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #94a3b8;
+            font-size: 0.75rem;
         }
     </style>
 </head>
 <body>
-    <!-- Compact Header -->
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">
-                    <div class="logo-icon">
-                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">≈</span>
-                    </div>
-                    <div>
-                        <h1>Laminar Flow Model</h1>
-                        <p>Viscous Model</p>
-                    </div>
-                </a>
+                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
                 
-                <a href="../turbulence-models.html" class="back-button">
-                    <span>←</span>
-                    <span>Back to Models</span>
-                </a>
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <a href="../home.html" class="nav-tab">🏠 Home</a>
+                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
+                    <a href="../turbulence-models.html" class="nav-tab active">2. Turbulence Models</a>
+                    <a href="../methods.html" class="nav-tab">3. Methods</a>
+                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Compact Main Content -->
-    <main class="main-content">
-        <div class="container">
-            
-            <!-- NEW COMPACT DESIGN INDICATOR -->
-            <div style="background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
-                ✅ NEW: Laminar Flow Model Available - Enhanced CFD Guidance!
+    <div class="container">
+        <div class="main-content">
+            <a href="../turbulence-models.html" class="back-link">
+                ← Back to Turbulence Models
+            </a>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="model-icon">λ</div>
+                <h1 class="page-title">Laminar Flow</h1>
+                <p class="page-subtitle">Viscous flow model - Perfect for low Reynolds number flows and smooth, ordered motion</p>
             </div>
 
-            <!-- Compact Model Hero -->
-            <div class="model-hero">
-                <div class="model-badge">
-                    <span>≈</span>
-                    <span>Viscous Flow Model</span>
+            <!-- INDUSTRY-FOCUSED DECISION TABLES -->
+            <div class="quick-decisions">
+                <div class="decision-card use-it">
+                    <div class="decision-header">
+                        <div class="decision-icon">✅</div>
+                        <div class="decision-title">Use Laminar When (Industry Focus)</div>
+                    </div>
+                    
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                        <thead>
+                            <tr style="background: rgba(16,185,129,0.1);">
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Situation</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Why It Works</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Advice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Low Reynolds number flows (Re < 2,300)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Viscous forces dominate, flow remains smooth</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Perfect accuracy for low Re applications</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Microfluidics (small devices, lab-on-chip)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Small scales ensure laminar conditions</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Standard choice for microfluidic devices</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Viscous fluids (oils, honey, polymers)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">High viscosity suppresses turbulence</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Use for high-viscosity industrial processes</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Heat transfer accuracy critical (electronics cooling)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Precise thermal boundary layer resolution</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Best for precise heat transfer calculations</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem;"><strong>Educational/validation purposes</strong></td>
+                                <td style="padding: 0.5rem;">Analytical solutions available for comparison</td>
+                                <td style="padding: 0.5rem;">Excellent for CFD validation and learning</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="decision-card avoid-it">
+                    <div class="decision-header">
+                        <div class="decision-icon">⚠️</div>
+                        <div class="decision-title">Avoid Laminar When (Industry Focus)</div>
+                    </div>
+                    
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                        <thead>
+                            <tr style="background: rgba(245,158,11,0.1);">
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Situation</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Why It Fails</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Industry Advice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>High Reynolds number flows (Re > 4,000)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Flow becomes turbulent, laminar assumption invalid</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use appropriate turbulence model</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Most industrial equipment (pumps, fans, HVAC)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Operating Re typically > 10,000, fully turbulent</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ε or k-ω SST for industrial equipment</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>External aerodynamics (cars, aircraft)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">High-speed flows are always turbulent</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ω SST or Spalart-Allmaras</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Transitional flow regions (mixed laminar/turbulent)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Cannot predict transition to turbulence</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use transition models for transition prediction</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Large-scale mixing (industrial reactors)</strong></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Turbulent mixing much more effective</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use turbulence models for mixing applications</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem;"><strong>Unsteady flows with disturbances</strong></td>
+                                <td style="padding: 0.5rem;">Disturbances can trigger transition to turbulence</td>
+                                <td style="padding: 0.5rem;">Consider stability analysis or turbulence models</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Industry Takeaway -->
+            <div class="content-section" style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 2px solid #3b82f6;">
+                <div class="section-header">
+                    <div class="section-icon">🔑</div>
+                    <div class="section-title">Industry Takeaway</div>
                 </div>
                 
-                <h1>Laminar Flow Model</h1>
-                <p>Viscous flow model based on Navier-Stokes equations for smooth, ordered fluid motion</p>
-            </div>
-
-            <!-- Compact Content Grid -->
-            <div class="content-grid">
-                <div class="main-column">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="highlight-box" style="background: rgba(16,185,129,0.05); border-left: 4px solid #10b981;">
+                        <h4 style="color: #065f46;">✅ Low Re Specialist</h4>
+                        <p>Use laminar for Re < 2,300 - gives perfect accuracy when flow is actually laminar.</p>
+                    </div>
                     
-                    <!-- FIRST: Practical Applications -->
-                    <div class="content-section" id="applications">
-                        <h2>
-                            <span>🛠️</span>
-                            Practical Applications
-                        </h2>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
-                            <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">🎯 Excellent For:</h4>
-                                <ul style="font-size: 0.75rem; color: #065f46; list-style: none; padding: 0;">
-                                    <li>• Microfluidics and lab-on-chip</li>
-                                    <li>• Blood flow analysis</li>
-                                    <li>• Oil pipeline design</li>
-                                    <li>• Polymer processing</li>
-                                    <li>• Precise heat transfer calculations</li>
-                                    <li>• Low-speed aerodynamics</li>
-                                </ul>
-                            </div>
-                            <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Avoid For:</h4>
-                                <ul style="font-size: 0.75rem; color: #7f1d1d; list-style: none; padding: 0;">
-                                    <li>• High-speed flows</li>
-                                    <li>• Large-scale industrial flows</li>
-                                    <li>• Mixing applications</li>
-                                    <li>• Turbulent heat transfer</li>
-                                    <li>• External aerodynamics at high Re</li>
-                                    <li>• Rough surface flows</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="highlight-box" style="background: rgba(245,158,11,0.05); border-left: 4px solid #f59e0b;">
+                        <h4 style="color: #92400e;">⚡ Check Re First</h4>
+                        <p>Always verify Reynolds number - most industrial flows are turbulent (Re > 4,000).</p>
                     </div>
-
-                    <!-- Enhanced CFD Guidance -->
-                    <div class="content-section" id="guidance">
-                        <h2>
-                            <span>🎯</span>
-                            CFD Guidance - Laminar Flow
-                        </h2>
-                        
-                        <!-- HIGHLIGHTED: When to Use -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use Laminar Flow (Critical Applications)</h3>
-                            <ul style="color: #065f46; font-weight: 500;">
-                                <li><strong>Low Reynolds number flows</strong> (Re < 2,300 for pipes, Re < 5×10⁵ for external) - Viscous forces dominate</li>
-                                <li><strong>Microfluidics and MEMS</strong> - Very small scale flows where Re << 1</li>
-                                <li><strong>High viscosity fluids</strong> - Oils, polymers, biological fluids</li>
-                                <li><strong>Creeping flows</strong> - Stokes flow regime (Re << 1)</li>
-                                <li><strong>Heat transfer in smooth channels</strong> - Predictable thermal boundary layers</li>
-                                <li><strong>Transition region analysis</strong> - Before turbulence onset</li>
-                                <li><strong>Benchmark validation</strong> - Exact solutions available (Poiseuille, Couette, Stokes)</li>
-                                <li><strong>Precise drag calculations</strong> - Accurate viscous drag prediction</li>
-                            </ul>
-                        </div>
-
-                        <!-- HIGHLIGHTED: When to Avoid -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid Laminar Flow (Critical Limitations)</h3>
-                            <ul style="color: #7f1d1d; font-weight: 500;">
-                                <li><strong>High Reynolds number flows</strong> (Re > 4,000 for pipes) - Flow will be turbulent</li>
-                                <li><strong>Industrial-scale applications</strong> - Most practical flows are turbulent</li>
-                                <li><strong>External flows over bodies</strong> at high Re - Boundary layer will transition</li>
-                                <li><strong>Mixing applications</strong> - Turbulence enhances mixing significantly</li>
-                                <li><strong>Heat transfer enhancement</strong> - Turbulence improves heat transfer rates</li>
-                                <li><strong>Rough surfaces</strong> - Surface roughness triggers transition to turbulence</li>
-                                <li><strong>High-speed flows</strong> - Compressibility and instabilities promote turbulence</li>
-                                <li><strong>Large computational domains</strong> - Expensive for high Re flows</li>
-                            </ul>
-                        </div>
-
-                        <h3>Setup Tips & Best Practices</h3>
-                        <ul>
-                            <li><strong>No-slip boundary conditions</strong> - Velocity = 0 at all solid walls</li>
-                            <li><strong>Adequate grid resolution</strong> - Resolve viscous boundary layers completely</li>
-                            <li><strong>Steady vs unsteady</strong> - Use steady for Re < critical, unsteady near transition</li>
-                            <li><strong>Monitor flow stability</strong> - Check for transition to turbulence</li>
-                            <li><strong>Validate against theory</strong> - Compare with analytical solutions when available</li>
-                            <li><strong>Convergence criteria</strong> - Tight residuals (< 1e-6) for viscous accuracy</li>
-                        </ul>
+                    
+                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
+                        <h4 style="color: #5b21b6;">🎯 Perfect When Right</h4>
+                        <p>When conditions are truly laminar, gives exact solution - no modeling uncertainty.</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Enhanced Equations with Detailed Explanations -->
-                    <div class="content-section" id="equations">
-                        <h2>
-                            <span>📐</span>
-                            Navier-Stokes Equations - Detailed Analysis
-                        </h2>
-                        
-                        <!-- Continuity Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Continuity Equation (Mass Conservation)</h3>
-                            <div class="equation-large katex-display">
-                                \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Mass conservation - same as inviscid flow</p>
-                                <p><strong>∂ρ/∂t:</strong> Rate of density change at fixed point</p>
-                                <p><strong>∇·(ρu):</strong> Net mass flux divergence</p>
-                                <p><strong>Incompressible form:</strong> ∇·u = 0 (when ρ = constant)</p>
-                            </div>
-                        </div>
-
-                        <!-- Momentum Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Momentum Equation (Newton's 2nd Law + Viscosity)</h3>
-                            <div class="equation-large katex-display">
-                                \frac{\partial (\rho \mathbf{u})}{\partial t} + \nabla \cdot (\rho \mathbf{u} \otimes \mathbf{u}) + \nabla p = \nabla \cdot \boldsymbol{\tau} + \rho \mathbf{f}
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Key Difference from Inviscid:</strong> Added viscous stress tensor ∇·τ</p>
-                                <p><strong>∂(ρu)/∂t:</strong> Local acceleration (momentum change rate)</p>
-                                <p><strong>∇·(ρu⊗u):</strong> Convective acceleration = ρu·∇u</p>
-                                <p><strong>∇p:</strong> Pressure gradient force</p>
-                                <p><strong>∇·τ:</strong> Viscous stress divergence = μ∇²u + (μ+λ)∇(∇·u) for Newtonian fluids</p>
-                                <p><strong>ρf:</strong> Body forces (gravity, etc.)</p>
-                                <p><strong>For incompressible Newtonian:</strong> ρ(∂u/∂t + u·∇u) = -∇p + μ∇²u + ρf</p>
-                            </div>
-                        </div>
-
-                        <!-- Energy Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(168,85,247,0.05), rgba(196,181,253,0.05)); border: 1px solid rgba(168,85,247,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Energy Equation (1st Law + Heat Conduction)</h3>
-                            <div class="equation-large katex-display">
-                                \frac{\partial E}{\partial t} + \nabla \cdot ((E + p) \mathbf{u}) = \nabla \cdot (k \nabla T) + \boldsymbol{\tau} : \nabla \mathbf{u} + \rho \mathbf{f} \cdot \mathbf{u}
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Key Additions from Inviscid:</strong> Heat conduction + viscous dissipation</p>
-                                <p><strong>∇·(k∇T):</strong> Heat conduction where k = thermal conductivity</p>
-                                <p><strong>τ:∇u:</strong> Viscous dissipation = τᵢⱼ(∂uᵢ/∂xⱼ) (always positive, irreversible)</p>
-                                <p><strong>Temperature form:</strong> ρcₚ(∂T/∂t + u·∇T) = k∇²T + Φ for constant properties</p>
-                                <p><strong>Φ:</strong> Viscous dissipation function = μ[(∂uᵢ/∂xⱼ + ∂uⱼ/∂xᵢ)]²</p>
-                            </div>
-                        </div>
-
-                        <!-- Viscous Stress Details -->
-                        <div style="background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(245,158,11,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Viscous Stress Tensor</h3>
-                            <div class="equation-large katex-display">
-                                \tau_{ij} = \mu \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right) + \lambda \delta_{ij} \frac{\partial u_k}{\partial x_k}
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Stress due to velocity gradients (deformation)</p>
-                                <p><strong>μ:</strong> Dynamic viscosity (shear viscosity)</p>
-                                <p><strong>λ:</strong> Second viscosity (bulk viscosity, often ≈ 0)</p>
-                                <p><strong>∂uᵢ/∂xⱼ + ∂uⱼ/∂xᵢ:</strong> Symmetric strain rate tensor</p>
-                                <p><strong>δᵢⱼ∇·u:</strong> Volumetric strain contribution</p>
-                                <p><strong>Newtonian assumption:</strong> Linear relationship between stress and strain rate</p>
-                            </div>
-                        </div>
+            <!-- Practical Applications -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <div class="section-title">Practical Applications</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🔬 Microfluidics</div>
+                        <div class="info-value">Lab-on-chip, micro-devices</div>
                     </div>
-
-                    <!-- Enhanced Variables -->
-                    <div class="content-section" id="variables">
-                        <h2>
-                            <span>🔤</span>
-                            Variables & Properties
-                        </h2>
-                        
-                        <div class="variables-grid">
-                            <div class="variable-item">
-                                <div class="variable-symbol">μ</div>
-                                <div class="variable-name">Dynamic Viscosity</div>
-                                <div class="variable-description">Resistance to shear deformation (Pa·s)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">ν</div>
-                                <div class="variable-name">Kinematic Viscosity</div>
-                                <div class="variable-description">ν = μ/ρ (m²/s)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">τ</div>
-                                <div class="variable-name">Viscous Stress</div>
-                                <div class="variable-description">Stress tensor due to velocity gradients</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">Re</div>
-                                <div class="variable-name">Reynolds Number</div>
-                                <div class="variable-description">Re = ρUL/μ = UL/ν</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">Pr</div>
-                                <div class="variable-name">Prandtl Number</div>
-                                <div class="variable-description">Pr = ν/α = μcₚ/k</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">Φ</div>
-                                <div class="variable-name">Viscous Dissipation</div>
-                                <div class="variable-description">Energy dissipation rate (W/m³)</div>
-                            </div>
-                        </div>
+                    <div class="info-item">
+                        <div class="info-label">🌡️ Precise Heat Transfer</div>
+                        <div class="info-value">Electronics cooling, thermal analysis</div>
                     </div>
-
-                    <!-- Enhanced Analogy -->
-                    <div class="content-section" id="analogy">
-                        <h2>
-                            <span>💡</span>
-                            Viscous Flow Analogy
-                        </h2>
-                        <p>Think of laminar flow as <strong>honey flowing smoothly in layers</strong>. Each layer slides past its neighbors in an orderly fashion, with friction between layers causing energy dissipation.</p>
-                        
-                        <p><strong>Viscous stress:</strong> Like friction between sliding layers - faster layers drag slower ones forward, slower layers hold back faster ones.</p>
-                        
-                        <p><strong>No-slip condition:</strong> Fluid "sticks" to solid walls - like honey clinging to a spoon surface.</p>
-                        
-                        <p><strong>Boundary layers:</strong> Velocity changes from zero at wall to free-stream value - like the transition zone when honey meets air.</p>
-                        
-                        <p><strong>Energy dissipation:</strong> Viscous friction converts kinetic energy to heat - why stirring honey warms it up.</p>
+                    <div class="info-item">
+                        <div class="info-label">🛢️ Viscous Fluids</div>
+                        <div class="info-value">Oils, polymers, high-viscosity processes</div>
                     </div>
-
-                    <!-- Flow Regimes -->
-                    <div class="content-section" id="regimes">
-                        <h2>
-                            <span>🌊</span>
-                            Flow Regimes & Transitions
-                        </h2>
-                        
-                        <table class="properties-table">
-                            <tr>
-                                <th>Flow Type</th>
-                                <th>Reynolds Number</th>
-                                <th>Characteristics</th>
-                                <th>Examples</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Creeping Flow</strong></td>
-                                <td>Re << 1</td>
-                                <td>Viscous forces dominate, no inertia</td>
-                                <td>Microfluidics, blood flow</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Laminar Pipe</strong></td>
-                                <td>Re < 2,300</td>
-                                <td>Smooth, predictable, parabolic profile</td>
-                                <td>Oil pipelines, IV tubes</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Laminar External</strong></td>
-                                <td>Re < 5×10⁵</td>
-                                <td>Smooth boundary layer, no separation</td>
-                                <td>Airfoil leading edge, small objects</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Transition Zone</strong></td>
-                                <td>2,300 < Re < 4,000</td>
-                                <td>Intermittent turbulence, unstable</td>
-                                <td>Pipe entrance, flow around cylinders</td>
-                            </tr>
-                        </table>
+                    <div class="info-item">
+                        <div class="info-label">📚 Validation</div>
+                        <div class="info-value">CFD verification, educational</div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Classical Solutions -->
-                    <div class="content-section" id="solutions">
-                        <h2>
-                            <span>📚</span>
-                            Classical Analytical Solutions
-                        </h2>
-                        
-                        <!-- Poiseuille Flow -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Poiseuille Flow (Pipe)</h4>
-                            <div class="equation-large katex-display">u(r) = \frac{\Delta p}{4\mu L}(R^2 - r^2)</div>
-                            <p style="font-size: 0.75rem; color: #64748b;">Parabolic velocity profile, maximum at centerline</p>
-                        </div>
-
-                        <!-- Couette Flow -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Couette Flow (Parallel Plates)</h4>
-                            <div class="equation-large katex-display">u(y) = U \frac{y}{h}</div>
-                            <p style="font-size: 0.75rem; color: #64748b;">Linear velocity profile between moving plates</p>
-                        </div>
-
-                        <!-- Stokes Flow -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Stokes Flow (Sphere)</h4>
-                            <div class="equation-large katex-display">F_D = 6\pi \mu R U</div>
-                            <p style="font-size: 0.75rem; color: #64748b;">Drag force on sphere in creeping flow (Re << 1)</p>
-                        </div>
-                    </div>
-
+            <!-- Mathematical Formulation -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🔢</div>
+                    <div class="section-title">Navier-Stokes Equations</div>
                 </div>
 
-                <!-- Enhanced Sidebar -->
-                <div class="sidebar">
-                    <h3>
-                        <span>🧭</span>
-                        Quick Navigation
-                    </h3>
-                    <ul>
-                        <li><a href="#applications">🛠️ Applications</a></li>
-                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
-                        <li><a href="#equations">📐 Equations</a></li>
-                        <li><a href="#variables">🔤 Variables</a></li>
-                        <li><a href="#analogy">💡 Analogy</a></li>
-                        <li><a href="#regimes">🌊 Flow Regimes</a></li>
-                        <li><a href="#solutions">📚 Solutions</a></li>
-                    </ul>
+                <div class="equation-box">
+                    <div class="equation-title">Continuity (Mass Conservation)</div>
+                    <div>$$\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0$$</div>
+                </div>
 
-                    <h3 style="margin-top: 1.5rem;">
-                        <span>🔗</span>
-                        Related Models
-                    </h3>
-                    <ul>
-                        <li><a href="inviscid.html">Inviscid Flow</a></li>
-                        <li><a href="k-epsilon.html">k-ε Standard</a></li>
-                        <li><a href="k-omega.html">k-ω Standard</a></li>
-                        <li><a href="../turbulence-models.html">← All Models</a></li>
-                    </ul>
+                <div class="equation-box">
+                    <div class="equation-title">Momentum Conservation</div>
+                    <div>$$\frac{\partial (\rho \mathbf{u})}{\partial t} + \nabla \cdot (\rho \mathbf{u} \mathbf{u}) = -\nabla p + \nabla \cdot \boldsymbol{\tau} + \rho \mathbf{g}$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Includes viscous stress tensor τ
+                    </p>
+                </div>
 
-                    <h3 style="margin-top: 1.5rem;">
-                        <span>📚</span>
-                        Model Info
-                    </h3>
-                    <ul>
-                        <li><span style="color: #3b82f6;">Type:</span> Viscous</li>
-                        <li><span style="color: #3b82f6;">Equations:</span> Navier-Stokes</li>
-                        <li><span style="color: #3b82f6;">Variables:</span> u, p, T</li>
-                        <li><span style="color: #3b82f6;">Cost:</span> Medium</li>
-                        <li><span style="color: #3b82f6; font-weight: 600;">Status:</span> Available</li>
-                    </ul>
+                <div class="equation-box">
+                    <div class="equation-title">Viscous Stress Tensor</div>
+                    <div>$$\boldsymbol{\tau} = \mu \left[\nabla \mathbf{u} + (\nabla \mathbf{u})^T - \frac{2}{3}(\nabla \cdot \mathbf{u})\mathbf{I}\right]$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Newtonian fluid viscous stress
+                    </p>
+                </div>
+            </div>
 
-                    <h3 style="margin-top: 1.5rem;">
-                        <span>⚙️</span>
-                        Key Parameters
-                    </h3>
-                    <ul>
-                        <li><span style="color: #3b82f6;">Re Critical:</span> 2,300 (pipe)</li>
-                        <li><span style="color: #3b82f6;">Grid:</span> y+ < 1 required</li>
-                        <li><span style="color: #3b82f6;">BC:</span> No-slip walls</li>
-                        <li><span style="color: #3b82f6;">Solver:</span> Coupled preferred</li>
+            <!-- Engineering Analogy -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🧠</div>
+                    <div class="section-title">Engineering Analogy</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>🍯 Honey Flow</h4>
+                    <p><strong>Laminar flow is like honey flowing smoothly:</strong></p>
+                    <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                        <li><strong>Smooth layers:</strong> "Honey flows in perfectly smooth, parallel layers"</li>
+                        <li><strong>No mixing:</strong> "Different layers don't mix - you can see streaks"</li>
+                        <li><strong>Predictable:</strong> "Flow pattern is completely predictable and stable"</li>
+                        <li><strong>Viscosity matters:</strong> "Thickness (viscosity) controls how fast it flows"</li>
+                        <li><strong>Perfect for small scales:</strong> "Works beautifully in small containers or slow speeds"</li>
                     </ul>
                 </div>
             </div>
 
+            <!-- Performance Comparison -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">⚖️</div>
+                    <div class="section-title">vs Other Models</div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Re Range</th>
+                            <th>Accuracy</th>
+                            <th>Speed</th>
+                            <th>Best Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(139,92,246,0.05);">
+                            <td><strong>Laminar</strong></td>
+                            <td>Re < 2,300</td>
+                            <td>Perfect</td>
+                            <td>Fast</td>
+                            <td>Low Re, microfluidics</td>
+                        </tr>
+                        <tr>
+                            <td>k-ε</td>
+                            <td>Re > 10,000</td>
+                            <td>Good</td>
+                            <td>Fast</td>
+                            <td>Industrial flows</td>
+                        </tr>
+                        <tr>
+                            <td>k-ω SST</td>
+                            <td>Re > 2,000</td>
+                            <td>Very Good</td>
+                            <td>Medium</td>
+                            <td>General purpose</td>
+                        </tr>
+                        <tr>
+                            <td>Transition SST</td>
+                            <td>Re: 1,000-10,000</td>
+                            <td>Excellent</td>
+                            <td>Slow</td>
+                            <td>Transition flows</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Compact Footer -->
-    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <p style="color: #64748b; font-size: 0.75rem;">
-                © 2024 CFD Reference | 
-                <a href="https://github.com/kuplulumert/fdapp" style="color: #3b82f6; text-decoration: none;">GitHub</a> |
-                <a href="../turbulence-models.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a>
-            </p>
+            Developed By Mert Küplülü
         </div>
     </footer>
 
     <script>
-        // Initialize KaTeX
-        document.addEventListener("DOMContentLoaded", function() {
-            const equations = document.querySelectorAll('.katex-display');
-            equations.forEach(eq => {
-                katex.render(eq.textContent, eq, {
-                    displayMode: true,
-                    throwOnError: false
-                });
-            });
-        });
+        // Smooth transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
 
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Add smooth transition to navigation tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
                 }
             });
         });
 
-        console.log('Laminar Flow Model page loaded - Enhanced compact design active');
+        // Add smooth transition to back link
+        document.querySelector('.back-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothTransition(this.href);
+        });
+
+        // KaTeX rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+
+        console.log('Laminar flow model page loaded with improved readability');
     </script>
 </body>
 </html>
