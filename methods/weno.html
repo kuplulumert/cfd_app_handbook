@@ -6,6 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta name="cache-buster" content="2024-weno-fixed">
     <title>WENO - Beko CFD AI Agent</title>
     
     <!-- KaTeX for math rendering -->
@@ -495,7 +496,7 @@
 
                     <div class="equation-box">
                         <div class="equation-title">Smoothness Indicator</div>
-                        <div>$$\beta_k = \sum_{l=1}^{r-1} \Delta x^{2l-1} \int_{x_{i-1/2}}^{x_{i+1/2}} \left(\frac{d^l}{dx^l} p_k(x)\right)^2 dx$$</div>
+                        <div>$$\beta_k = \sum_{l=1}^{r-1} \Delta x^{2l-1} \int_{x_{i-1/2}}^{x_{i+1/2}} \left(\frac{d^l p_k}{dx^l}\right)^2 dx$$</div>
                         <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
                             Measures local smoothness of each stencil
                         </p>
