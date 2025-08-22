@@ -152,65 +152,62 @@
             color: #718096;
         }
 
-        .decision-list {
-            list-style: none;
-            space-y: 0.75rem;
-        }
-
-        .decision-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
+        /* Decision Table Styling */
+        .decision-table {
+            width: 100%;
+            border-collapse: collapse;
             font-size: 0.875rem;
-            line-height: 1.4;
         }
 
-        .decision-icon {
-            flex-shrink: 0;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            margin-top: 0.125rem;
-        }
-
-        .use-card .decision-icon {
-            background: #10b981;
-        }
-
-        .avoid-card .decision-icon {
-            background: #f59e0b;
-        }
-
-        .decision-text {
-            color: #4a5568;
-        }
-
-        .decision-emphasis {
-            font-weight: 500;
-            color: #2d3748;
-        }
-
-        /* Summary Card */
-        .summary-card {
+        .decision-table thead tr {
             background: #f7fafc;
+        }
+
+        .decision-table th {
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 500;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .decision-table td {
+            padding: 0.75rem;
+            color: #4a5568;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        .decision-table td strong {
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
-        .summary-title {
-            font-size: 1rem;
+        .content-card.highlight {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .content-title {
+            font-size: 1.125rem;
             font-weight: 500;
             color: #2d3748;
             margin-bottom: 1rem;
         }
 
-        .summary-text {
+        .content-text {
             font-size: 0.875rem;
             color: #4a5568;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         /* Info Sections */
@@ -268,6 +265,120 @@
             margin-bottom: 1rem;
         }
 
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: #f7fafc;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 500;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            color: #4a5568;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .comparison-table tr.highlight {
+            background: #f7fafc;
+        }
+
+        .comparison-table td strong {
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        /* Highlight Boxes */
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .highlight-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #4a5568;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .highlight-item.success {
+            border-left-color: #10b981;
+        }
+
+        .highlight-item.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .highlight-item.info {
+            border-left-color: #3b82f6;
+        }
+
+        .highlight-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-text {
+            font-size: 0.875rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        /* Analogy Section */
+        .analogy-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .analogy-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .analogy-text {
+            font-size: 0.875rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .analogy-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .analogy-list li {
+            font-size: 0.875rem;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .analogy-list li strong {
+            color: #2d3748;
+            font-weight: 500;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -285,6 +396,10 @@
             
             .nav-tabs {
                 gap: 1rem;
+            }
+            
+            .highlight-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -329,141 +444,193 @@
                 <p class="model-subtitle">Industrial workhorse for high Reynolds number turbulent flows</p>
             </div>
 
-            <!-- Decision Cards -->
+            <!-- Industry-Focused Decision Tables -->
             <div class="decisions">
-                <div class="decision-card use-card">
+                <div class="decision-card">
                     <div class="decision-header">
-                        <div class="decision-title">When to Use</div>
-                        <div class="decision-subtitle">Ideal situations</div>
+                        <div class="decision-title">Use k-ε When</div>
+                        <div class="decision-subtitle">Industry Focus</div>
                     </div>
                     
-                    <ul class="decision-list">
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">High Re flows</span> (Re > 10,000) - fully turbulent
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Industrial equipment</span> - pumps, fans, HVAC systems
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Engineering accuracy</span> - ±10-20% sufficient
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Fast results</span> - tight deadlines, design iterations
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Far from walls</span> - y⁺ > 30 acceptable
-                            </div>
-                        </li>
-                    </ul>
+                    <table class="decision-table">
+                        <thead>
+                            <tr>
+                                <th>Situation</th>
+                                <th>Why It Works</th>
+                                <th>Advice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>High Re, fully turbulent flows (Re > 10,000)</strong></td>
+                                <td>k-ε is tuned for industrial turbulence</td>
+                                <td>Don't waste time resolving laminar/turbulent transitions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Far from walls (ducts, pipes, HVAC)</strong></td>
+                                <td>Wall functions are acceptable</td>
+                                <td>Keep y⁺ > 30 and avoid fine near-wall meshing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Common equipment (pumps, fans, HVAC, appliances)</strong></td>
+                                <td>Matches empirical data, widely validated</td>
+                                <td>Use it for design iterations and quick feasibility</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Engineering accuracy is enough (±10–20%)</strong></td>
+                                <td>Fast turnaround > precision</td>
+                                <td>Good for sizing, feasibility, or system-level trade-offs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tight deadlines / fast results needed</strong></td>
+                                <td>Robust and stable convergence</td>
+                                <td>Default choice when project delivery > research detail</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="decision-card avoid-card">
+                <div class="decision-card">
                     <div class="decision-header">
-                        <div class="decision-title">When to Avoid</div>
-                        <div class="decision-subtitle">Problem situations</div>
+                        <div class="decision-title">Avoid k-ε When</div>
+                        <div class="decision-subtitle">Industry Focus</div>
                     </div>
                     
-                    <ul class="decision-list">
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Low Re flows</span> (Re < 2,000) - use laminar
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Near-wall accuracy</span> - heat transfer critical
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Flow separation</span> - use k-ω SST instead
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">High precision</span> - <5% error needed
-                            </div>
-                        </li>
-                        <li class="decision-item">
-                            <div class="decision-icon"></div>
-                            <div class="decision-text">
-                                <span class="decision-emphasis">Rotating flows</span> - mixers, cyclones
-                            </div>
-                        </li>
-                    </ul>
+                    <table class="decision-table">
+                        <thead>
+                            <tr>
+                                <th>Situation</th>
+                                <th>Why It Fails</th>
+                                <th>Industry Advice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Low Re or transitional flows (Re < 2,000)</strong></td>
+                                <td>Assumes fully turbulent</td>
+                                <td>Use k-ω SST or transitional models</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Near-wall accuracy needed (heat transfer, fouling, thin films)</strong></td>
+                                <td>Wall functions break down</td>
+                                <td>Go for low-Re k-ε or k-ω SST</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flow separation expected (diffusers, curved ducts, aero surfaces)</strong></td>
+                                <td>Poor at predicting separation</td>
+                                <td>Use k-ω SST or hybrid RANS/LES</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Swirling or rotating flows (mixers, cyclones, turbines)</strong></td>
+                                <td>Weak in strong rotation</td>
+                                <td>Try RNG k-ε or Reynolds Stress Model</td>
+                            </tr>
+                            <tr>
+                                <td><strong>High precision required (<5% error, research cases)</strong></td>
+                                <td>Too crude for detailed studies</td>
+                                <td>LES, DES, or advanced RANS needed</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unsteady/time-dependent flows (pulsation, combustion, acoustics)</strong></td>
+                                <td>k-ε assumes steady averaging</td>
+                                <td>Use LES/DES if time resolution is critical</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Summary -->
-            <div class="summary-card">
-                <div class="summary-title">Bottom Line</div>
-                <div class="summary-text">
-                    Use k-ε as your default when speed, robustness, and "good-enough" accuracy matter more than precision. 
-                    Switch to k-ω SST when walls, separation, or transitional regions are critical. 
-                    Perfect for industrial applications where fast turnaround beats research-level detail.
+            <!-- Industry Takeaway -->
+            <div class="content-card highlight">
+                <div class="content-title">Industry Takeaway</div>
+                
+                <div class="highlight-grid">
+                    <div class="highlight-item success">
+                        <div class="highlight-title">Default Choice</div>
+                        <div class="highlight-text">Use standard k-ε as your default when speed, robustness, and "good-enough" accuracy are the priority.</div>
+                    </div>
+                    
+                    <div class="highlight-item warning">
+                        <div class="highlight-title">Upgrade When Needed</div>
+                        <div class="highlight-text">Switch to k-ω SST when walls, separation, or transitional regions matter.</div>
+                    </div>
+                    
+                    <div class="highlight-item info">
+                        <div class="highlight-title">High Fidelity</div>
+                        <div class="highlight-text">Go higher fidelity (LES, DES, RSM) only when precision is worth the cost.</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Applications -->
+            <!-- Practical Applications -->
             <div class="info-section">
-                <div class="section-title">Common Applications</div>
+                <div class="section-title">Practical Applications</div>
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label">HVAC Systems</div>
-                        <div class="info-value">Airflow in buildings, ductwork</div>
+                        <div class="info-label">Home Appliances</div>
+                        <div class="info-value">Refrigerators, ovens, HVAC systems</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Industrial Equipment</div>
-                        <div class="info-value">Pumps, fans, mixing tanks</div>
+                        <div class="info-value">Pumps, fans, heat exchangers</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Automotive</div>
-                        <div class="info-value">Engine cooling, HVAC design</div>
+                        <div class="info-label">Flow Systems</div>
+                        <div class="info-value">Pipes, ducts, mixing chambers</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Process Engineering</div>
-                        <div class="info-value">Chemical reactors, piping systems</div>
+                        <div class="info-label">Heat Transfer</div>
+                        <div class="info-value">Convection, cooling systems</div>
                     </div>
                 </div>
             </div>
 
             <!-- Transport Equations -->
             <div class="info-section">
-                <div class="section-title">Transport Equations</div>
+                <div class="section-title">Key Equations</div>
                 
                 <div class="equation-card">
                     <div class="equation-title">Turbulent Kinetic Energy (k)</div>
-                    <div>$$\frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \varepsilon + \frac{\partial}{\partial x_j}\left[(\nu + \frac{\nu_t}{\sigma_k})\frac{\partial k}{\partial x_j}\right]$$</div>
+                    <div>$$\frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \varepsilon + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right]$$</div>
                 </div>
 
                 <div class="equation-card">
                     <div class="equation-title">Dissipation Rate (ε)</div>
-                    <div>$$\frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} = C_{1\varepsilon} \frac{\varepsilon}{k} P_k - C_{2\varepsilon} \frac{\varepsilon^2}{k} + \frac{\partial}{\partial x_j}\left[(\nu + \frac{\nu_t}{\sigma_\varepsilon})\frac{\partial \varepsilon}{\partial x_j}\right]$$</div>
+                    <div>$$\frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} = C_{1\varepsilon} \frac{\varepsilon}{k} P_k - C_{2\varepsilon} \frac{\varepsilon^2}{k} + \frac{\partial}{\partial x_j}\left[\left(\nu + \frac{\nu_t}{\sigma_\varepsilon}\right) \frac{\partial \varepsilon}{\partial x_j}\right]$$</div>
+                </div>
+
+                <div class="equation-card">
+                    <div class="equation-title">Turbulent Viscosity</div>
+                    <div>$$\nu_t = C_\mu \frac{k^2}{\varepsilon}$$</div>
+                </div>
+            </div>
+
+            <!-- Engineering Analogy -->
+            <div class="info-section">
+                <div class="section-title">Engineering Analogy</div>
+                
+                <div class="analogy-card">
+                    <div class="analogy-title">Factory Production Line</div>
+                    <div class="analogy-text">
+                        <strong>k-ε is like managing a busy factory production line:</strong>
+                    </div>
+                    <ul class="analogy-list">
+                        <li><strong>k (energy):</strong> "How much activity/energy the workers have"</li>
+                        <li><strong>ε (dissipation):</strong> "How fast energy gets used up by friction"</li>
+                        <li><strong>Balance:</strong> "More energy input → more production, but also more energy loss"</li>
+                        <li><strong>Limitation:</strong> "Works great for standard operations, struggles with unusual situations"</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- Model Constants -->
             <div class="info-section">
-                <div class="section-title">Key Parameters</div>
+                <div class="section-title">Standard Constants</div>
                 <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Cμ</div>
+                        <div class="info-value">0.09</div>
+                    </div>
                     <div class="info-item">
                         <div class="info-label">C₁ε</div>
                         <div class="info-value">1.44</div>
@@ -471,10 +638,6 @@
                     <div class="info-item">
                         <div class="info-label">C₂ε</div>
                         <div class="info-value">1.92</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Cμ</div>
-                        <div class="info-value">0.09</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">σₖ</div>
@@ -489,6 +652,53 @@
                         <div class="info-value">30-300</div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Performance Comparison -->
+            <div class="info-section">
+                <div class="section-title">vs Other Models</div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Accuracy</th>
+                            <th>Speed</th>
+                            <th>Robustness</th>
+                            <th>Best Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>k-ε Standard</strong></td>
+                            <td>Good</td>
+                            <td>Fast</td>
+                            <td>Very High</td>
+                            <td>Industrial flows</td>
+                        </tr>
+                        <tr>
+                            <td>k-ω SST</td>
+                            <td>Better</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>Aerospace</td>
+                        </tr>
+                        <tr>
+                            <td>Laminar</td>
+                            <td>Perfect*</td>
+                            <td>Fastest</td>
+                            <td>High</td>
+                            <td>Re < 2300</td>
+                        </tr>
+                        <tr>
+                            <td>Reynolds Stress</td>
+                            <td>Best</td>
+                            <td>Slow</td>
+                            <td>Medium</td>
+                            <td>Research</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -511,7 +721,7 @@
             });
         });
 
-        console.log('k-epsilon minimalist design loaded');
+        console.log('k-epsilon complete minimalist design loaded');
     </script>
 </body>
 </html>
