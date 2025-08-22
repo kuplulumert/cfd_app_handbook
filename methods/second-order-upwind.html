@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Second Order Upwind - Beko CFD AI Agent</title>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(194,65,12,0.06), rgba(251,146,60,0.03));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(194,65,12,0.12);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+            animation: shimmer 0.6s ease-out;
+        }
+
+        .nav-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        @keyframes shimmer {
+            0% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
+            50% { box-shadow: 0 0 20px rgba(59,130,246,0.6), 0 0 30px rgba(59,130,246,0.3); }
+            100% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 6rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .sidebar h3 {
+            color: #3b82f6;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.25rem 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #3b82f6;
+        }
+
+        .sidebar a.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .model-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(59,130,246,0.1);
+        }
+
+        .model-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .model-icon-large {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 6px -1px rgba(59,130,246,0.1);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .highlight-box {
+            background: rgba(59,130,246,0.05);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box h4 {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .equation-box {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .equation-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .constants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .constant-item {
+            background: rgba(59,130,246,0.05);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .constant-name {
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 0.25rem;
+        }
+
+        .constant-value {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(59,130,246,0.05);
+            font-weight: 600;
+            color: #3b82f6;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .pros {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid #22c55e;
+        }
+
+        .cons {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid #ef4444;
+        }
+
+        .pros h4 {
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+
+        .cons h4 {
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            padding-left: 1.25rem;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
+                
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <a href="../home.html" class="nav-tab">🏠 Home</a>
+                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
+                    <a href="../turbulence-models.html" class="nav-tab">2. Turbulence Models</a>
+                    <a href="../methods.html" class="nav-tab active">3. Methods</a>
+                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#practical">Practical Applications</a></li>
+                    <li><a href="#guidance">CFD Guidance</a></li>
+                    <li><a href="#equations">Mathematical Formulation</a></li>
+                    <li><a href="#variables">Variables</a></li>
+                    <li><a href="#analogy">Analogy</a></li>
+                    <li><a href="#features">Key Features</a></li>
+                    <li><a href="#comparison">Comparison</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <a href="../methods.html" class="back-link">
+                    ← Back to Methods
+                </a>
+
+                <!-- Header -->
+                <div class="model-header">
+                    <div class="model-icon-large">↑²</div>
+                    <h1 class="model-title">Second Order Upwind</h1>
+                    <p class="model-subtitle">Industry Standard Discretization Scheme</p>
+                </div>
+
+                <!-- Practical Applications -->
+                <section id="practical" class="content-section">
+                    <h2 class="section-title">🎯 Practical Applications</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">🏭 Production Simulations</div>
+                            <div class="constant-value">Most widely used scheme in commercial CFD</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">⚖️ Balanced Performance</div>
+                            <div class="constant-value">Good compromise between accuracy and stability</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🎯 Engineering Analysis</div>
+                            <div class="constant-value">Standard choice for industrial applications</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🌊 General Purpose</div>
+                            <div class="constant-value">Suitable for most flow types and geometries</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CFD Guidance -->
+                <section id="guidance" class="content-section">
+                    <h2 class="section-title">⚙️ CFD Guidance</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>✅ When to Use Second Order Upwind:</h4>
+                        <ul>
+                            <li><strong>Production simulations</strong> - Standard choice for engineering analysis</li>
+                            <li><strong>General CFD applications</strong> - Most common discretization scheme</li>
+                            <li><strong>Good mesh quality</strong> - Reasonable aspect ratios and skewness</li>
+                            <li><strong>Balanced accuracy needs</strong> - Engineering-level precision required</li>
+                            <li><strong>Industrial applications</strong> - Heat exchangers, pumps, fans</li>
+                            <li><strong>Default starting point</strong> - When unsure which scheme to use</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>❌ When to Avoid Second Order Upwind:</h4>
+                        <ul>
+                            <li><strong>Very poor mesh quality</strong> - High skewness may cause instability</li>
+                            <li><strong>Research-level accuracy</strong> - Consider MUSCL, QUICK, or TVD schemes</li>
+                            <li><strong>Convergence difficulties</strong> - Drop back to First Order Upwind</li>
+                            <li><strong>Shock-dominated flows</strong> - Use shock-capturing schemes</li>
+                            <li><strong>Very low Reynolds numbers</strong> - Central difference may be better</li>
+                            <li><strong>DNS/LES applications</strong> - Higher-order schemes preferred</li>
+                        </ul>
+                    </div>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>✅ Advantages</h4>
+                            <ul>
+                                <li>Second-order spatial accuracy</li>
+                                <li>Good stability characteristics</li>
+                                <li>Industry standard and well-validated</li>
+                                <li>Reasonable computational cost</li>
+                                <li>Works well on most mesh types</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>⚠️ Limitations</h4>
+                            <ul>
+                                <li>Still some numerical diffusion</li>
+                                <li>Can be unstable on poor meshes</li>
+                                <li>Not optimal for research applications</li>
+                                <li>May require slope limiters</li>
+                                <li>Less accurate than modern schemes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mathematical Formulation -->
+                <section id="equations" class="content-section">
+                    <h2 class="section-title">🔢 Mathematical Formulation</h2>
+                    
+                    <div class="equation-box">
+                        <div class="equation-title">Taylor Series Expansion</div>
+                        <div>$$\phi_f = \phi_C + \frac{\partial \phi}{\partial x} \bigg|_C \Delta x_f + O(\Delta x^2)$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Second-order accurate extrapolation to face
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Gradient Calculation</div>
+                        <div>$$\frac{\partial \phi}{\partial x} \bigg|_C = \frac{\phi_C - \phi_{CC}}{\Delta x_{CC}}$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Gradient from current cell to upwind cell
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Final Second Order Formula</div>
+                        <div>$$\phi_f = \phi_C + \frac{\phi_C - \phi_{CC}}{2}$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Linear extrapolation using upwind gradient
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Truncation Error</div>
+                        <div>$$\text{Error} = O(\Delta x^2) + O(\Delta t)$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Second-order accurate in space, first-order in time
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Variables -->
+                <section id="variables" class="content-section">
+                    <h2 class="section-title">📊 Variables & Parameters</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">φ_f (-)</div>
+                            <div class="constant-value">Variable value at cell face (second-order)</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">φ_C (-)</div>
+                            <div class="constant-value">Variable value at current upwind cell</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">φ_CC (-)</div>
+                            <div class="constant-value">Variable value at cell upstream of C</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">∇φ|_C (-/m)</div>
+                            <div class="constant-value">Gradient at cell center C</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">Δx_f (m)</div>
+                            <div class="constant-value">Distance from cell center to face</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">Δx_CC (m)</div>
+                            <div class="constant-value">Distance between cell centers</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analogy -->
+                <section id="analogy" class="content-section">
+                    <h2 class="section-title">🧠 Engineering Analogy</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>📈 Stock Market Trend Analysis</h4>
+                        <p><strong>Second Order Upwind is like improved financial trend prediction:</strong></p>
+                        
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>First order (basic):</strong> "Stock price = yesterday's price" - simple but crude</li>
+                            <li><strong>Second order (improved):</strong> "Stock price = yesterday's price + trend" - considers recent direction</li>
+                            <li><strong>Trend calculation:</strong> Like looking at the slope between last two data points</li>
+                            <li><strong>Better prediction:</strong> More accurate than constant value, but still can overshoot</li>
+                        </ul>
+                        
+                        <p style="margin-top: 0.5rem;"><strong>The improvement:</strong> Like upgrading from "repeat last value" to "continue the trend" - much better accuracy with only slightly more complexity.</p>
+                    </div>
+                </section>
+
+                <!-- Key Features -->
+                <section id="features" class="content-section">
+                    <h2 class="section-title">⚙️ Key Features</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">📐 Second Order Accurate</div>
+                            <div class="constant-value">O(Δx²) truncation error in space</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🏭 Industry Standard</div>
+                            <div class="constant-value">Most common choice in commercial CFD</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">⚖️ Balanced Approach</div>
+                            <div class="constant-value">Good compromise accuracy vs stability</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🛡️ Generally Stable</div>
+                            <div class="constant-value">Robust on well-conditioned meshes</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">💻 Moderate Cost</div>
+                            <div class="constant-value">Reasonable computational overhead</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🔧 Widely Supported</div>
+                            <div class="constant-value">Available in all major CFD codes</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Comparison -->
+                <section id="comparison" class="content-section">
+                    <h2 class="section-title">⚖️ Comparison with Other Schemes</h2>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Scheme</th>
+                                <th>Accuracy</th>
+                                <th>Stability</th>
+                                <th>Numerical Diffusion</th>
+                                <th>Computational Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>First Order Upwind</td>
+                                <td>Low (1st order)</td>
+                                <td>Excellent</td>
+                                <td>Very High</td>
+                                <td>Very Low</td>
+                            </tr>
+                            <tr style="background: rgba(59,130,246,0.02);">
+                                <td><strong>Second Order Upwind</strong></td>
+                                <td>Medium (2nd order)</td>
+                                <td>Good</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>Central Difference</td>
+                                <td>High (2nd order)</td>
+                                <td>Poor</td>
+                                <td>Low</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>QUICK</td>
+                                <td>High (3rd order)</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>MUSCL</td>
+                                <td>High (2nd order)</td>
+                                <td>Good</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            Developed By Mert Küplülü
+        </div>
+    </footer>
+
+    <script>
+        // Smooth transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Add smooth transition to navigation tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
+            });
+        });
+
+        // Add smooth transition to back link
+        document.querySelector('.back-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothTransition(this.href);
+        });
+
+        // KaTeX rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+
+        console.log('Second Order Upwind discretization page loaded with smooth transitions');
+    </script>
+</body>
+</html>
