@@ -116,15 +116,15 @@
             font-weight: 400;
         }
 
-        /* Decision Cards */
-        .decisions {
+        /* Simple Decision Cards */
+        .simple-decisions {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
-        .decision-card {
+        .simple-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
@@ -132,22 +132,135 @@
             transition: box-shadow 0.2s ease;
         }
 
-        .decision-card:hover {
+        .simple-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        .decision-header {
+        .simple-header {
             margin-bottom: 1.5rem;
         }
 
-        .decision-title {
+        .simple-title {
             font-size: 1.125rem;
             font-weight: 500;
             color: #2d3748;
             margin-bottom: 0.25rem;
         }
 
-        .decision-subtitle {
+        .simple-subtitle {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        .simple-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .simple-icon {
+            flex-shrink: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            margin-top: 0.125rem;
+        }
+
+        .use-card .simple-icon {
+            background: #10b981;
+        }
+
+        .avoid-card .simple-icon {
+            background: #f59e0b;
+        }
+
+        .simple-text {
+            color: #4a5568;
+        }
+
+        .simple-emphasis {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .summary-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .summary-text {
+            font-size: 0.875rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+            margin: 4rem 0;
+        }
+
+        .detailed-section-title {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 2rem;
+        }
+
+        /* Detailed Decision Cards */
+        .detailed-decisions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .detailed-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .detailed-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .detailed-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .detailed-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+        }
+
+        .detailed-subtitle {
             font-size: 0.875rem;
             color: #718096;
         }
@@ -385,7 +498,8 @@
                 padding: 0 1rem;
             }
             
-            .decisions {
+            .simple-decisions,
+            .detailed-decisions {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
@@ -444,12 +558,132 @@
                 <p class="model-subtitle">Industrial workhorse for high Reynolds number turbulent flows</p>
             </div>
 
-            <!-- Industry-Focused Decision Tables -->
-            <div class="decisions">
-                <div class="decision-card">
-                    <div class="decision-header">
-                        <div class="decision-title">Use k-ε When</div>
-                        <div class="decision-subtitle">Industry Focus</div>
+            <!-- Simple Decision Cards (Quick Reference) -->
+            <div class="simple-decisions">
+                <div class="simple-card use-card">
+                    <div class="simple-header">
+                        <div class="simple-title">When to Use</div>
+                        <div class="simple-subtitle">Quick decisions</div>
+                    </div>
+                    
+                    <ul class="simple-list">
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">High Re flows</span> (Re > 10,000) - fully turbulent
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Refrigerator cooling</span> - internal air circulation
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Oven air flow</span> - convection heating analysis
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Engineering accuracy</span> - ±10-20% sufficient
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Fast results</span> - tight deadlines, design iterations
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="simple-card avoid-card">
+                    <div class="simple-header">
+                        <div class="simple-title">When to Avoid</div>
+                        <div class="simple-subtitle">Problem situations</div>
+                    </div>
+                    
+                    <ul class="simple-list">
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Low Re flows</span> (Re < 2,000) - use laminar
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Heat pump heat exchangers</span> - near-wall accuracy critical
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Washing machine drum</span> - complex rotating flow
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">High precision</span> - <5% error needed
+                            </div>
+                        </li>
+                        <li class="simple-item">
+                            <div class="simple-icon"></div>
+                            <div class="simple-text">
+                                <span class="simple-emphasis">Dishwasher spray arms</span> - flow separation expected
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="summary-card">
+                <div class="summary-title">Bottom Line for Home Appliances</div>
+                <div class="summary-text">
+                    Use k-ε as your default for most <strong>Beko appliance flows</strong> like refrigerator cooling systems, oven circulation, and HVAC ducting. 
+                    Switch to k-ω SST for heat pumps, washing machine drums, or any application where precise heat transfer matters. 
+                    Perfect for preliminary design and feasibility studies where fast turnaround beats research-level detail.
+                </div>
+            </div>
+
+            <!-- White Goods Applications -->
+            <div class="info-section">
+                <div class="section-title">Common White Goods Applications</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Refrigerators</div>
+                        <div class="info-value">Internal air circulation, cooling efficiency, compressor cooling</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ovens</div>
+                        <div class="info-value">Convection heating, air circulation, temperature uniformity</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">HVAC Systems</div>
+                        <div class="info-value">Ducting design, air distribution, fan performance</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Range Hoods</div>
+                        <div class="info-value">Exhaust flow, capture efficiency, fan sizing</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Divider -->
+            <hr class="section-divider">
+            <div class="detailed-section-title">Detailed Industry-Focused Analysis</div>
+
+            <!-- Detailed Decision Tables -->
+            <div class="detailed-decisions">
+                <div class="detailed-card">
+                    <div class="detailed-header">
+                        <div class="detailed-title">Use k-ε When</div>
+                        <div class="detailed-subtitle">Industry Focus</div>
                     </div>
                     
                     <table class="decision-table">
@@ -472,9 +706,14 @@
                                 <td>Keep y⁺ > 30 and avoid fine near-wall meshing</td>
                             </tr>
                             <tr>
-                                <td><strong>Common equipment (pumps, fans, HVAC, appliances)</strong></td>
-                                <td>Matches empirical data, widely validated</td>
-                                <td>Use it for design iterations and quick feasibility</td>
+                                <td><strong>Refrigerator evaporator cooling</strong></td>
+                                <td>Bulk air movement, not precision heat transfer</td>
+                                <td>Focus on overall circulation patterns</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Oven convection design</strong></td>
+                                <td>Air mixing and distribution assessment</td>
+                                <td>Use for fan sizing and placement optimization</td>
                             </tr>
                             <tr>
                                 <td><strong>Engineering accuracy is enough (±10–20%)</strong></td>
@@ -490,10 +729,10 @@
                     </table>
                 </div>
 
-                <div class="decision-card">
-                    <div class="decision-header">
-                        <div class="decision-title">Avoid k-ε When</div>
-                        <div class="decision-subtitle">Industry Focus</div>
+                <div class="detailed-card">
+                    <div class="detailed-header">
+                        <div class="detailed-title">Avoid k-ε When</div>
+                        <div class="detailed-subtitle">Industry Focus</div>
                     </div>
                     
                     <table class="decision-table">
@@ -506,34 +745,34 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td><strong>Heat pump evaporators/condensers</strong></td>
+                                <td>Near-wall heat transfer accuracy critical</td>
+                                <td>Use k-ω SST with y⁺ < 1 for precise heat transfer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Washing machine drum flow</strong></td>
+                                <td>Complex rotating, swirling flow patterns</td>
+                                <td>Use Reynolds Stress Model or k-ω SST</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dishwasher spray arms</strong></td>
+                                <td>Flow separation and complex jet interactions</td>
+                                <td>Use k-ω SST for better separation prediction</td>
+                            </tr>
+                            <tr>
                                 <td><strong>Low Re or transitional flows (Re < 2,000)</strong></td>
                                 <td>Assumes fully turbulent</td>
                                 <td>Use k-ω SST or transitional models</td>
                             </tr>
                             <tr>
-                                <td><strong>Near-wall accuracy needed (heat transfer, fouling, thin films)</strong></td>
-                                <td>Wall functions break down</td>
-                                <td>Go for low-Re k-ε or k-ω SST</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Flow separation expected (diffusers, curved ducts, aero surfaces)</strong></td>
-                                <td>Poor at predicting separation</td>
-                                <td>Use k-ω SST or hybrid RANS/LES</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Swirling or rotating flows (mixers, cyclones, turbines)</strong></td>
-                                <td>Weak in strong rotation</td>
-                                <td>Try RNG k-ε or Reynolds Stress Model</td>
+                                <td><strong>Microwave cavity flows</strong></td>
+                                <td>Low Reynolds number, complex geometry</td>
+                                <td>Consider laminar or low-Re models</td>
                             </tr>
                             <tr>
                                 <td><strong>High precision required (<5% error, research cases)</strong></td>
                                 <td>Too crude for detailed studies</td>
                                 <td>LES, DES, or advanced RANS needed</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Unsteady/time-dependent flows (pulsation, combustion, acoustics)</strong></td>
-                                <td>k-ε assumes steady averaging</td>
-                                <td>Use LES/DES if time resolution is critical</td>
                             </tr>
                         </tbody>
                     </table>
@@ -546,41 +785,18 @@
                 
                 <div class="highlight-grid">
                     <div class="highlight-item success">
-                        <div class="highlight-title">Default Choice</div>
-                        <div class="highlight-text">Use standard k-ε as your default when speed, robustness, and "good-enough" accuracy are the priority.</div>
+                        <div class="highlight-title">Default Choice for Appliances</div>
+                        <div class="highlight-text">Use standard k-ε as your default for Beko refrigerators, ovens, and HVAC systems when speed, robustness, and "good-enough" accuracy are the priority.</div>
                     </div>
                     
                     <div class="highlight-item warning">
-                        <div class="highlight-title">Upgrade When Needed</div>
-                        <div class="highlight-text">Switch to k-ω SST when walls, separation, or transitional regions matter.</div>
+                        <div class="highlight-title">Upgrade for Heat Transfer</div>
+                        <div class="highlight-text">Switch to k-ω SST for heat pumps, condensers, or any application where precise wall heat transfer matters.</div>
                     </div>
                     
                     <div class="highlight-item info">
-                        <div class="highlight-title">High Fidelity</div>
-                        <div class="highlight-text">Go higher fidelity (LES, DES, RSM) only when precision is worth the cost.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Practical Applications -->
-            <div class="info-section">
-                <div class="section-title">Practical Applications</div>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Home Appliances</div>
-                        <div class="info-value">Refrigerators, ovens, HVAC systems</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Industrial Equipment</div>
-                        <div class="info-value">Pumps, fans, heat exchangers</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Flow Systems</div>
-                        <div class="info-value">Pipes, ducts, mixing chambers</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Heat Transfer</div>
-                        <div class="info-value">Convection, cooling systems</div>
+                        <div class="highlight-title">High Fidelity for Complex Flows</div>
+                        <div class="highlight-text">Go higher fidelity (LES, DES, RSM) only for washing machines, complex rotating flows, or when precision is worth the cost.</div>
                     </div>
                 </div>
             </div>
@@ -610,15 +826,15 @@
                 <div class="section-title">Engineering Analogy</div>
                 
                 <div class="analogy-card">
-                    <div class="analogy-title">Factory Production Line</div>
+                    <div class="analogy-title">Refrigerator Compressor System</div>
                     <div class="analogy-text">
-                        <strong>k-ε is like managing a busy factory production line:</strong>
+                        <strong>k-ε is like managing a refrigerator's compressor and cooling system:</strong>
                     </div>
                     <ul class="analogy-list">
-                        <li><strong>k (energy):</strong> "How much activity/energy the workers have"</li>
-                        <li><strong>ε (dissipation):</strong> "How fast energy gets used up by friction"</li>
-                        <li><strong>Balance:</strong> "More energy input → more production, but also more energy loss"</li>
-                        <li><strong>Limitation:</strong> "Works great for standard operations, struggles with unusual situations"</li>
+                        <li><strong>k (energy):</strong> "How much cooling power the compressor provides"</li>
+                        <li><strong>ε (dissipation):</strong> "How fast cooling energy gets used up by heat loads"</li>
+                        <li><strong>Balance:</strong> "More cooling input → better performance, but also more energy consumption"</li>
+                        <li><strong>Limitation:</strong> "Works great for standard cooling, struggles with precision temperature control in specific zones"</li>
                     </ul>
                 </div>
             </div>
@@ -656,7 +872,7 @@
 
             <!-- Performance Comparison -->
             <div class="info-section">
-                <div class="section-title">vs Other Models</div>
+                <div class="section-title">vs Other Models for Home Appliances</div>
                 
                 <table class="comparison-table">
                     <thead>
@@ -664,8 +880,8 @@
                             <th>Model</th>
                             <th>Accuracy</th>
                             <th>Speed</th>
-                            <th>Robustness</th>
-                            <th>Best Use</th>
+                            <th>Best Appliance Use</th>
+                            <th>Example Application</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -673,29 +889,29 @@
                             <td><strong>k-ε Standard</strong></td>
                             <td>Good</td>
                             <td>Fast</td>
-                            <td>Very High</td>
-                            <td>Industrial flows</td>
+                            <td>Refrigerators, ovens, HVAC</td>
+                            <td>Fridge cooling circulation</td>
                         </tr>
                         <tr>
                             <td>k-ω SST</td>
                             <td>Better</td>
                             <td>Medium</td>
-                            <td>High</td>
-                            <td>Aerospace</td>
+                            <td>Heat pumps, condensers</td>
+                            <td>Heat pump evaporator design</td>
                         </tr>
                         <tr>
                             <td>Laminar</td>
                             <td>Perfect*</td>
                             <td>Fastest</td>
-                            <td>High</td>
-                            <td>Re < 2300</td>
+                            <td>Microwave cavities</td>
+                            <td>Low-speed microwave air flow</td>
                         </tr>
                         <tr>
                             <td>Reynolds Stress</td>
                             <td>Best</td>
                             <td>Slow</td>
-                            <td>Medium</td>
-                            <td>Research</td>
+                            <td>Washing machines</td>
+                            <td>Drum rotating flow analysis</td>
                         </tr>
                     </tbody>
                 </table>
@@ -721,7 +937,7 @@
             });
         });
 
-        console.log('k-epsilon complete minimalist design loaded');
+        console.log('k-epsilon enhanced with white goods applications loaded');
     </script>
 </body>
 </html>
