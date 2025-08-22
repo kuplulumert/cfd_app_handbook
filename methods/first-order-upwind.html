@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>PISO - Beko CFD AI Agent</title>
+    <title>First Order Upwind - Beko CFD AI Agent</title>
     
     <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -275,7 +275,7 @@
         .comparison-table td {
             padding: 0.75rem;
             text-align: left;
-            border-bottom: 1px solid rgba(194,65,12,0.12);
+            border-bottom: 1px solid rgba(59,130,246,0.1);
         }
 
         .comparison-table th {
@@ -376,7 +376,7 @@
                 <ul>
                     <li><a href="#practical">Practical Applications</a></li>
                     <li><a href="#guidance">CFD Guidance</a></li>
-                    <li><a href="#equations">Algorithm Steps</a></li>
+                    <li><a href="#equations">Mathematical Formulation</a></li>
                     <li><a href="#variables">Variables</a></li>
                     <li><a href="#analogy">Analogy</a></li>
                     <li><a href="#features">Key Features</a></li>
@@ -392,9 +392,9 @@
 
                 <!-- Header -->
                 <div class="model-header">
-                    <div class="model-icon-large">PISO</div>
-                    <h1 class="model-title">PISO</h1>
-                    <p class="model-subtitle">Pressure-Implicit with Splitting of Operators</p>
+                    <div class="model-icon-large">↑</div>
+                    <h1 class="model-title">First Order Upwind</h1>
+                    <p class="model-subtitle">Simple and Stable Discretization Scheme</p>
                 </div>
 
                 <!-- Practical Applications -->
@@ -403,20 +403,20 @@
                     
                     <div class="constants-grid">
                         <div class="constant-item">
-                            <div class="constant-name">🌊 Transient Flows</div>
-                            <div class="constant-value">Unsteady simulations, flow oscillations, vortex shedding</div>
+                            <div class="constant-name">🛡️ Robust Simulations</div>
+                            <div class="constant-value">Most stable scheme for difficult convergence cases</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">🎭 Dynamic Phenomena</div>
-                            <div class="constant-value">Startup transients, valve operations, pulsating flows</div>
+                            <div class="constant-name">🏗️ Initial Setup</div>
+                            <div class="constant-value">First-pass analysis and mesh validation</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">🔬 Research Applications</div>
-                            <div class="constant-value">DNS, LES simulations requiring high temporal accuracy</div>
+                            <div class="constant-name">📚 Educational Use</div>
+                            <div class="constant-value">Learning CFD principles and debugging</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">⚡ OpenFOAM Standard</div>
-                            <div class="constant-value">Default transient solver in OpenFOAM ecosystem</div>
+                            <div class="constant-name">⚡ Quick Results</div>
+                            <div class="constant-value">Fast convergence for preliminary studies</div>
                         </div>
                     </div>
                 </section>
@@ -426,26 +426,26 @@
                     <h2 class="section-title">⚙️ CFD Guidance</h2>
                     
                     <div class="highlight-box">
-                        <h4>✅ When to Use PISO:</h4>
+                        <h4>✅ When to Use First Order Upwind:</h4>
                         <ul>
-                            <li><strong>Transient simulations</strong> - Primary application domain</li>
-                            <li><strong>Small time steps</strong> - Δt requiring good temporal accuracy</li>
-                            <li><strong>Incompressible flows</strong> - Optimized for constant density</li>
-                            <li><strong>High-quality meshes</strong> - Low skewness, good aspect ratios</li>
-                            <li><strong>OpenFOAM users</strong> - Native implementation available</li>
-                            <li><strong>Research accuracy</strong> - DNS, LES, high-fidelity simulations</li>
+                            <li><strong>Initial simulations</strong> - First-pass analysis and setup validation</li>
+                            <li><strong>Convergence issues</strong> - When higher-order schemes fail to converge</li>
+                            <li><strong>Poor mesh quality</strong> - High skewness or aspect ratios</li>
+                            <li><strong>Complex geometries</strong> - Difficult cases requiring stability</li>
+                            <li><strong>Learning and debugging</strong> - Understanding flow physics</li>
+                            <li><strong>Preliminary studies</strong> - Quick trend analysis</li>
                         </ul>
                     </div>
 
                     <div class="highlight-box">
-                        <h4>❌ When to Avoid PISO:</h4>
+                        <h4>❌ When to Avoid First Order Upwind:</h4>
                         <ul>
-                            <li><strong>Steady-state problems</strong> - SIMPLE/SIMPLEC more efficient</li>
-                            <li><strong>Large time steps</strong> - Use PIMPLE for better stability</li>
-                            <li><strong>Poor mesh quality</strong> - High skewness can cause instability</li>
-                            <li><strong>Compressible flows</strong> - Density-based solvers preferred</li>
-                            <li><strong>Very low Reynolds numbers</strong> - Overkill for creeping flows</li>
-                            <li><strong>Limited computational resources</strong> - Higher memory usage</li>
+                            <li><strong>Final production results</strong> - Too diffusive for accurate results</li>
+                            <li><strong>Research applications</strong> - Insufficient accuracy for validation</li>
+                            <li><strong>Gradient-dependent flows</strong> - Boundary layers, shear flows</li>
+                            <li><strong>Swirl and rotation</strong> - Numerical diffusion destroys physics</li>
+                            <li><strong>Heat transfer studies</strong> - Temperature gradients smeared</li>
+                            <li><strong>Publication-quality work</strong> - Not acceptable for papers</li>
                         </ul>
                     </div>
 
@@ -453,61 +453,62 @@
                         <div class="pros">
                             <h4>✅ Advantages</h4>
                             <ul>
-                                <li>Excellent for transient flows</li>
-                                <li>High temporal accuracy</li>
-                                <li>Multiple pressure corrections</li>
-                                <li>No under-relaxation needed for momentum</li>
-                                <li>Well-suited for LES and DNS</li>
+                                <li>Extremely stable and robust</li>
+                                <li>Always converges if solution exists</li>
+                                <li>Simple implementation</li>
+                                <li>Bounded and conservative</li>
+                                <li>Works on any mesh quality</li>
                             </ul>
                         </div>
                         <div class="cons">
                             <h4>⚠️ Limitations</h4>
                             <ul>
-                                <li>Higher memory requirements</li>
-                                <li>More expensive per time step</li>
-                                <li>Sensitive to mesh quality</li>
-                                <li>Overkill for steady-state problems</li>
-                                <li>Requires smaller time steps</li>
+                                <li>Highly diffusive (numerical viscosity)</li>
+                                <li>Poor accuracy for gradients</li>
+                                <li>Smears sharp interfaces</li>
+                                <li>Not suitable for final results</li>
+                                <li>Can mask important physics</li>
                             </ul>
                         </div>
                     </div>
                 </section>
 
-                <!-- Algorithm Steps -->
+                <!-- Mathematical Formulation -->
                 <section id="equations" class="content-section">
-                    <h2 class="section-title">🔢 Algorithm Steps</h2>
+                    <h2 class="section-title">🔢 Mathematical Formulation</h2>
                     
                     <div class="equation-box">
-                        <div class="equation-title">Step 1: Momentum Predictor</div>
-                        <div>$$\frac{\partial \rho \mathbf{u}}{\partial t} + \nabla \cdot (\rho \mathbf{u} \mathbf{u}) = -\nabla p^n + \nabla \cdot \boldsymbol{\tau} + \rho \mathbf{g}$$</div>
+                        <div class="equation-title">General Convection Term</div>
+                        <div>$$\nabla \cdot (\rho \mathbf{u} \phi) \approx \sum_{faces} \rho_f (\mathbf{u} \cdot \mathbf{n})_f \phi_f A_f$$</div>
                         <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                            Solve momentum using pressure from previous time step (no under-relaxation)
+                            Discretization of convective flux over cell faces
                         </p>
                     </div>
 
                     <div class="equation-box">
-                        <div class="equation-title">Step 2: First Pressure Correction</div>
-                        <div>$$\nabla \cdot \left( \frac{1}{a_p} \nabla p'_1 \right) = \frac{1}{\Delta t} \nabla \cdot \mathbf{u}^*$$</div>
-                        <div>$$\mathbf{u}^{**} = \mathbf{u}^* - \frac{\Delta t}{a_p} \nabla p'_1$$</div>
+                        <div class="equation-title">First Order Upwind Formula</div>
+                        <div>$$\phi_f = \begin{cases} 
+                        \phi_C & \text{if } (\mathbf{u} \cdot \mathbf{n})_f > 0 \\
+                        \phi_F & \text{if } (\mathbf{u} \cdot \mathbf{n})_f < 0
+                        \end{cases}$$</div>
                         <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                            First pressure correction to improve mass conservation
+                            Face value taken from upwind (upstream) cell
                         </p>
                     </div>
 
                     <div class="equation-box">
-                        <div class="equation-title">Step 3: Second Pressure Correction</div>
-                        <div>$$\nabla \cdot \left( \frac{1}{a_p} \nabla p'_2 \right) = \frac{1}{\Delta t} \nabla \cdot \mathbf{u}^{**}$$</div>
-                        <div>$$\mathbf{u}^{n+1} = \mathbf{u}^{**} - \frac{\Delta t}{a_p} \nabla p'_2$$</div>
+                        <div class="equation-title">Numerical Diffusion</div>
+                        <div>$$\text{Numerical Viscosity} \propto \frac{|\mathbf{u}| \Delta x}{2}$$</div>
                         <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                            Second correction for enhanced accuracy (optional: more corrections possible)
+                            Artificial diffusion proportional to velocity and mesh size
                         </p>
                     </div>
 
                     <div class="equation-box">
-                        <div class="equation-title">Step 4: Final Pressure Update</div>
-                        <div>$$p^{n+1} = p^n + p'_1 + p'_2$$</div>
+                        <div class="equation-title">Truncation Error</div>
+                        <div>$$\text{Error} = O(\Delta x) + O(\Delta t)$$</div>
                         <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                            Sum all pressure corrections (typically 2-3 corrections used)
+                            First-order accurate in space and time
                         </p>
                     </div>
                 </section>
@@ -518,28 +519,28 @@
                     
                     <div class="constants-grid">
                         <div class="constant-item">
-                            <div class="constant-name">Δt (s)</div>
-                            <div class="constant-value">Time step size - critical for stability and accuracy</div>
+                            <div class="constant-name">φ_f (-)</div>
+                            <div class="constant-value">Variable value at cell face (interpolated)</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">p'₁, p'₂ (Pa)</div>
-                            <div class="constant-value">First and second pressure corrections</div>
+                            <div class="constant-name">φ_C (-)</div>
+                            <div class="constant-value">Variable value at upstream cell center</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">𝐮*, 𝐮** (m/s)</div>
-                            <div class="constant-value">Intermediate velocity fields after corrections</div>
+                            <div class="constant-name">φ_F (-)</div>
+                            <div class="constant-value">Variable value at downstream cell center</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">aₚ (kg/m³/s)</div>
-                            <div class="constant-value">Central coefficient from momentum discretization</div>
+                            <div class="constant-name">𝐮·𝐧 (m/s)</div>
+                            <div class="constant-value">Normal velocity component at face</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">n_correctors (-)</div>
-                            <div class="constant-value">Number of pressure corrections (typically 2-3)</div>
+                            <div class="constant-name">A_f (m²)</div>
+                            <div class="constant-value">Face area vector magnitude</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">CFL (-)</div>
-                            <div class="constant-value">Courant number for stability (CFL < 1 recommended)</div>
+                            <div class="constant-name">Δx (m)</div>
+                            <div class="constant-value">Characteristic mesh size</div>
                         </div>
                     </div>
                 </section>
@@ -549,17 +550,17 @@
                     <h2 class="section-title">🧠 Engineering Analogy</h2>
                     
                     <div class="highlight-box">
-                        <h4>🎯 Quality Control in Manufacturing</h4>
-                        <p><strong>PISO is like a multi-stage quality control process in a fast-moving production line:</strong></p>
+                        <h4>🚛 Highway Traffic Information</h4>
+                        <p><strong>First Order Upwind is like a simple traffic reporting system:</strong></p>
                         
                         <ul style="margin-top: 0.5rem;">
-                            <li><strong>Step 1 (Momentum):</strong> "Production line runs at predicted speed" - based on yesterday's pressure</li>
-                            <li><strong>Step 2 (1st Correction):</strong> "First quality inspector catches major issues" - fixes big pressure errors</li>
-                            <li><strong>Step 3 (2nd Correction):</strong> "Second inspector fine-tunes" - catches smaller remaining errors</li>
-                            <li><strong>Multiple Corrections:</strong> Like having multiple quality checkpoints for precision manufacturing</li>
+                            <li><strong>Upwind principle:</strong> "Traffic conditions come from where cars are coming from" - always look upstream</li>
+                            <li><strong>Simple but crude:</strong> Like reporting "busy" or "clear" without details - stable but imprecise</li>
+                            <li><strong>Numerical diffusion:</strong> Like information getting "blurred" as it travels - sharp traffic changes become gradual</li>
+                            <li><strong>Always works:</strong> Like a basic radio report - may not be accurate but never fails to give some information</li>
                         </ul>
                         
-                        <p style="margin-top: 0.5rem;"><strong>Time-accurate approach:</strong> Like ensuring each production batch meets exact timing requirements - more expensive but essential for precision products that change rapidly.</p>
+                        <p style="margin-top: 0.5rem;"><strong>The trade-off:</strong> Like choosing between a simple, always-working traffic app vs a detailed GPS - the simple one works everywhere but misses important details.</p>
                     </div>
                 </section>
 
@@ -569,81 +570,81 @@
                     
                     <div class="constants-grid">
                         <div class="constant-item">
-                            <div class="constant-name">🔄 Multiple Corrections</div>
-                            <div class="constant-value">2-3 pressure corrections per time step</div>
+                            <div class="constant-name">🛡️ Unconditionally Stable</div>
+                            <div class="constant-value">Never causes divergence or oscillations</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">⏰ Time-Accurate</div>
-                            <div class="constant-value">Optimized for transient flow physics</div>
+                            <div class="constant-name">📐 First Order Accurate</div>
+                            <div class="constant-value">O(Δx) truncation error in space</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">🚫 No Momentum Under-Relaxation</div>
-                            <div class="constant-value">Velocity equations solved without damping</div>
+                            <div class="constant-name">🌊 Highly Diffusive</div>
+                            <div class="constant-value">Significant numerical viscosity</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">🎯 High Accuracy</div>
-                            <div class="constant-value">Better temporal resolution than SIMPLE family</div>
+                            <div class="constant-name">⚡ Fast Convergence</div>
+                            <div class="constant-value">Robust convergence characteristics</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">🌊 Implicit Time Integration</div>
-                            <div class="constant-value">Stable for moderately large time steps</div>
+                            <div class="constant-name">🔒 Bounded Solution</div>
+                            <div class="constant-value">Satisfies boundedness principle</div>
                         </div>
                         <div class="constant-item">
-                            <div class="constant-name">🔧 OpenFOAM Native</div>
-                            <div class="constant-value">Extensively validated in open-source CFD</div>
+                            <div class="constant-name">💾 Low Memory</div>
+                            <div class="constant-value">Simple stencil, minimal storage</div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Comparison -->
                 <section id="comparison" class="content-section">
-                    <h2 class="section-title">⚖️ Comparison with Other Solvers</h2>
+                    <h2 class="section-title">⚖️ Comparison with Other Schemes</h2>
                     
                     <table class="comparison-table">
                         <thead>
                             <tr>
-                                <th>Solver</th>
-                                <th>Time Step Size</th>
-                                <th>Temporal Accuracy</th>
-                                <th>Memory Usage</th>
-                                <th>Best Application</th>
+                                <th>Scheme</th>
+                                <th>Accuracy</th>
+                                <th>Stability</th>
+                                <th>Numerical Diffusion</th>
+                                <th>Best Use Case</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>SIMPLE</td>
-                                <td>Large (pseudo-transient)</td>
-                                <td>Low</td>
-                                <td>Low</td>
-                                <td>Steady-state problems</td>
-                            </tr>
-                            <tr>
-                                <td>SIMPLEC</td>
-                                <td>Large (pseudo-transient)</td>
-                                <td>Low</td>
-                                <td>Low</td>
-                                <td>Improved steady-state</td>
-                            </tr>
                             <tr style="background: rgba(59,130,246,0.02);">
-                                <td><strong>PISO</strong></td>
-                                <td>Small (CFL < 1)</td>
-                                <td>High</td>
-                                <td>Medium</td>
-                                <td>True transient flows</td>
+                                <td><strong>First Order Upwind</strong></td>
+                                <td>Low (1st order)</td>
+                                <td>Excellent</td>
+                                <td>Very High</td>
+                                <td>Initial setup, debugging</td>
                             </tr>
                             <tr>
-                                <td>PIMPLE</td>
-                                <td>Medium-Large</td>
-                                <td>Medium-High</td>
+                                <td>Second Order Upwind</td>
+                                <td>Medium (2nd order)</td>
+                                <td>Good</td>
                                 <td>Medium</td>
-                                <td>Transient with large Δt</td>
+                                <td>Production simulations</td>
                             </tr>
                             <tr>
-                                <td>Coupled</td>
-                                <td>Variable</td>
-                                <td>High</td>
-                                <td>High</td>
-                                <td>Complex research problems</td>
+                                <td>Central Difference</td>
+                                <td>High (2nd order)</td>
+                                <td>Poor</td>
+                                <td>Low</td>
+                                <td>Structured grids only</td>
+                            </tr>
+                            <tr>
+                                <td>QUICK</td>
+                                <td>High (3rd order)</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                                <td>High-quality meshes</td>
+                            </tr>
+                            <tr>
+                                <td>MUSCL</td>
+                                <td>High (2nd order)</td>
+                                <td>Good</td>
+                                <td>Low</td>
+                                <td>General purpose</td>
                             </tr>
                         </tbody>
                     </table>
@@ -695,7 +696,7 @@
             });
         });
 
-        console.log('PISO solver method page loaded with smooth transitions');
+        console.log('First Order Upwind discretization page loaded with smooth transitions');
     </script>
 </body>
 </html>
