@@ -28,6 +28,31 @@
             color: #1e293b;
             line-height: 1.4;
             font-size: 14px;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page transition effect */
+        .page-transition {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease-out;
+        }
+
+        .page-transition.loaded {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .container {
@@ -117,6 +142,27 @@
             color: #3b82f6;
             border-color: #3b82f6;
             background: rgba(59,130,246,0.05);
+        }
+
+        /* Smooth tab transition */
+        .nav-tab {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
         }
 
         /* Compact Hero */
@@ -671,8 +717,47 @@
             });
         });
 
+        // Smooth page transitions
+        function smoothTransition(url) {
+            // Add exit animation
+            document.body.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-10px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Add smooth transitions to nav tabs
+        document.querySelectorAll('.nav-tab:not(.active)').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                smoothTransition(this.href);
+            });
+        });
+
+        // Page load animation with staggered table rows
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '1';
+            
+            // Stagger animation for table rows (exclude category headers)
+            const rows = document.querySelectorAll('.model-row:not([style*="border-top"])');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(20px)';
+                row.style.transition = 'all 0.4s ease-out';
+                
+                setTimeout(() => {
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 200 + (index * 50));
+            });
+        });
+
         // Console log for debugging
-        console.log('CFD Models loaded - Compact design active');
+        console.log('CFD Models loaded - Compact design active with smooth transitions');
     </script>
 </body>
 </html>

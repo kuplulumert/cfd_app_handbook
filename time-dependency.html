@@ -25,6 +25,31 @@
             background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
             font-size: 14px;
             min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page transition effect */
+        .page-transition {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease-out;
+        }
+
+        .page-transition.loaded {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .container {
@@ -114,6 +139,27 @@
             color: #3b82f6;
             border-color: #3b82f6;
             background: rgba(59,130,246,0.05);
+        }
+
+        /* Smooth tab transition */
+        .nav-tab {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
         }
 
         /* Hero */
@@ -456,20 +502,43 @@
     </footer>
 
     <script>
-        // Add hover effects
+        // Smooth page transitions
+        function smoothTransition(url) {
+            // Add exit animation
+            document.body.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-10px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Add smooth transitions to nav tabs
+        document.querySelectorAll('.nav-tab:not(.active)').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                smoothTransition(this.href);
+            });
+        });
+
+        // Add hover effects with smooth transitions
         document.querySelectorAll('.model-row').forEach(row => {
             row.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
                 this.style.background = 'rgba(59,130,246,0.04)';
                 this.style.transform = 'translateX(6px)';
                 this.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
             });
             
             row.addEventListener('mouseleave', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
                 // Reset to original background if it had highlighting
-                if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(16,185,129,0.02)')) {
-                    this.style.background = 'rgba(16,185,129,0.02)';
-                } else if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(239,68,68,0.02)')) {
-                    this.style.background = 'rgba(239,68,68,0.02)';
+                if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(16,185,129,0.025)')) {
+                    this.style.background = 'rgba(16,185,129,0.025)';
+                } else if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(239,68,68,0.025)')) {
+                    this.style.background = 'rgba(239,68,68,0.025)';
                 } else {
                     this.style.background = 'rgba(255,255,255,0.8)';
                 }
@@ -478,7 +547,25 @@
             });
         });
 
-        console.log('Time Dependency page loaded');
+        // Page load animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '1';
+            
+            // Stagger animation for table rows
+            const rows = document.querySelectorAll('.model-row');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(20px)';
+                row.style.transition = 'all 0.4s ease-out';
+                
+                setTimeout(() => {
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 200 + (index * 100));
+            });
+        });
+
+        console.log('Time Dependency page loaded with smooth transitions');
     </script>
 </body>
 </html>
