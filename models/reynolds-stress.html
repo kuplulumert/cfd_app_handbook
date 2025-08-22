@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reynolds Stress Model - Compact Guide v1.0</title>
+    <meta name="description" content="Reynolds Stress turbulence model explained compactly with transport equations and guidance.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.4;
+            color: #1e293b;
+            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Compact Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59,130,246,0.15);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(124,58,237,0.2);
+        }
+
+        .logo h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .back-button {
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.15);
+            background: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            background: rgba(59,130,246,0.05);
+        }
+
+        /* Compact Main Content */
+        .main-content {
+            padding: 1rem 0;
+        }
+
+        /* Compact Model Hero */
+        .model-hero {
+            text-align: center;
+            padding: 1.5rem 0 1rem 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 8px rgba(124,58,237,0.2);
+        }
+
+        .model-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .model-hero p {
+            font-size: 1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Compact Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-column {
+            min-width: 0;
+        }
+
+        .sidebar {
+            background: rgba(255,255,255,0.8);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 5rem;
+        }
+
+        /* Compact Sections */
+        .content-section {
+            background: rgba(255,255,255,0.8);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .content-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .content-section p {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Compact Equations */
+        .equation-large {
+            font-size: 1rem !important;
+            margin: 0.75rem 0 !important;
+        }
+
+        /* Compact Variables */
+        .variables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .variable-item {
+            background: rgba(248,250,252,0.8);
+            border: 1px solid rgba(59,130,246,0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+
+        .variable-symbol {
+            font-family: 'KaTeX_Math', 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #7c3aed;
+            margin-bottom: 0.25rem;
+        }
+
+        .variable-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.125rem;
+        }
+
+        .variable-description {
+            font-size: 0.625rem;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        /* Compact Sidebar */
+        .sidebar h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.375rem;
+        }
+
+        .sidebar a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0;
+        }
+
+        .sidebar a:hover {
+            color: #3b82f6;
+        }
+
+        /* Compact Lists */
+        .content-section ul {
+            margin: 0.75rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .content-section li {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        /* Properties Table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .properties-table th,
+        .properties-table td {
+            padding: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            text-align: left;
+        }
+
+        .properties-table th {
+            background: rgba(124,58,237,0.1);
+            color: #581c87;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .sidebar {
+                position: static;
+                order: -1;
+            }
+            
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .model-hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .model-hero p {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Compact Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">
+                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">τ</span>
+                    </div>
+                    <div>
+                        <h1>Reynolds Stress Model</h1>
+                        <p>Seven-Equation RANS</p>
+                    </div>
+                </a>
+                
+                <a href="../index.html" class="back-button">
+                    <span>←</span>
+                    <span>Back to Models</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Compact Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- NEW COMPACT DESIGN INDICATOR -->
+            <div style="background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
+                ✅ NEW: Reynolds Stress Model Available - Most Advanced RANS!
+            </div>
+
+            <!-- Compact Model Hero -->
+            <div class="model-hero">
+                <div class="model-badge">
+                    <span>τ</span>
+                    <span>Seven-Equation RANS Model</span>
+                </div>
+                
+                <h1>Reynolds Stress Model</h1>
+                <p>Seven-equation RANS model solving transport equations for all six Reynolds stress components plus dissipation rate</p>
+            </div>
+
+            <!-- Compact Content Grid -->
+            <div class="content-grid">
+                <div class="main-column">
+                    
+                    <!-- FIRST: Practical Applications -->
+                    <div class="content-section" id="applications">
+                        <h2>
+                            <span>🛠️</span>
+                            Practical Applications
+                        </h2>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
+                            <!-- Excellent Applications -->
+                            <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">🎯 Excellent For:</h4>
+                                <ul style="font-size: 0.75rem; color: #065f46; list-style: none; padding: 0;">
+                                    <li>• Complex 3D flows with anisotropy</li>
+                                    <li>• Rotating machinery (turbines, pumps)</li>
+                                    <li>• Swirling flows and cyclones</li>
+                                    <li>• Flows with strong streamline curvature</li>
+                                    <li>• Secondary flow predictions</li>
+                                    <li>• Research and validation studies</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Poor Applications -->
+                            <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Avoid For:</h4>
+                                <ul style="font-size: 0.75rem; color: #7f1d1d; list-style: none; padding: 0;">
+                                    <li>• Simple 2D flows</li>
+                                    <li>• Preliminary design studies</li>
+                                    <li>• Large-scale simulations</li>
+                                    <li>• Limited computational resources</li>
+                                    <li>• Quick engineering estimates</li>
+                                    <li>• Parametric studies</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced CFD Guidance -->
+                    <div class="content-section" id="guidance">
+                        <h2>
+                            <span>🎯</span>
+                            CFD Guidance - Reynolds Stress Model
+                        </h2>
+                        
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use Reynolds Stress Model (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>Complex 3D flows</strong> - When turbulence anisotropy is critical</li>
+                                <li><strong>Rotating machinery</strong> - Turbines, compressors, pumps with rotation effects</li>
+                                <li><strong>Swirling flows</strong> - Cyclones, combustors, inlet distortions</li>
+                                <li><strong>Strong streamline curvature</strong> - Curved ducts, bends, diffusers</li>
+                                <li><strong>Secondary flow predictions</strong> - Corner flows, duct flows</li>
+                                <li><strong>Research applications</strong> - When highest accuracy is needed</li>
+                                <li><strong>Validation studies</strong> - Benchmark cases for model development</li>
+                                <li><strong>Anisotropic turbulence</strong> - When eddy viscosity assumption fails</li>
+                            </ul>
+                        </div>
+
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid Reynolds Stress Model (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>Simple 2D flows</strong> - Overkill for flows where simpler models work</li>
+                                <li><strong>Preliminary design studies</strong> - Too expensive for initial analysis</li>
+                                <li><strong>Large-scale simulations</strong> - 7 equations = high computational cost</li>
+                                <li><strong>Limited computational resources</strong> - Memory and CPU intensive</li>
+                                <li><strong>Industrial routine analysis</strong> - k-ε or k-ω often sufficient</li>
+                                <li><strong>Convergence challenges</strong> - More difficult to converge than simpler models</li>
+                                <li><strong>Parametric studies</strong> - Too slow for design optimization</li>
+                                <li><strong>Unsteady flows</strong> - Very expensive for time-dependent simulations</li>
+                            </ul>
+                        </div>
+
+                        <h3>Setup Tips & Best Practices</h3>
+                        <ul>
+                            <li><strong>Grid requirements:</strong> Very fine grids needed, y+ < 1 essential</li>
+                            <li><strong>Initialization:</strong> Initialize all 6 stress components carefully</li>
+                            <li><strong>Convergence:</strong> Monitor all 7 equation residuals, use relaxation</li>
+                            <li><strong>Realizability:</strong> Use realizability constraints to avoid non-physical states</li>
+                            <li><strong>Wall treatment:</strong> Requires sophisticated near-wall modeling</li>
+                            <li><strong>Computational cost:</strong> 3-5x more expensive than k-ε</li>
+                        </ul>
+                    </div>
+
+                    <!-- Enhanced Equations -->
+                    <div class="content-section" id="equations">
+                        <h2>
+                            <span>📐</span>
+                            Reynolds Stress Transport Equations
+                        </h2>
+                        
+                        <!-- Reynolds Stress Transport -->
+                        <div style="background: linear-gradient(135deg, rgba(124,58,237,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(124,58,237,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #581c87; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Reynolds Stress Transport (6 equations)</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \overline{u_i' u_j'}}{\partial t} + U_k \frac{\partial \overline{u_i' u_j'}}{\partial x_k} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    P_{ij} + \Pi_{ij} - \varepsilon_{ij} + D_{ij}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Transport of each Reynolds stress component</p>
+                                <p><strong>Pᵢⱼ:</strong> Production by mean strain</p>
+                                <p><strong>Πᵢⱼ:</strong> Pressure-strain redistribution (modeled)</p>
+                                <p><strong>εᵢⱼ:</strong> Dissipation tensor (modeled)</p>
+                                <p><strong>Dᵢⱼ:</strong> Diffusion (modeled)</p>
+                            </div>
+                        </div>
+
+                        <!-- Dissipation Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(248,113,113,0.05)); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Dissipation Rate (ε) Equation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \varepsilon}{\partial t} + U_j \frac{\partial \varepsilon}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    C_{1\varepsilon} \frac{\varepsilon}{k} P_k - C_{2\varepsilon} \frac{\varepsilon^2}{k} + \text{diffusion}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Similar to k-ε dissipation equation</p>
+                                <p><strong>Used for:</strong> Length scale information</p>
+                                <p><strong>C₁ε = 1.44, C₂ε = 1.92:</strong> Standard constants</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Variables -->
+                    <div class="content-section" id="variables">
+                        <h2>
+                            <span>🔤</span>
+                            Variables & Components
+                        </h2>
+                        
+                        <div class="variables-grid">
+                            <div class="variable-item">
+                                <div class="variable-symbol">u'ᵢu'ⱼ</div>
+                                <div class="variable-name">Reynolds Stress Tensor</div>
+                                <div class="variable-description">6 independent components</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">ε</div>
+                                <div class="variable-name">Dissipation Rate</div>
+                                <div class="variable-description">Energy dissipation (m²/s³)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Pᵢⱼ</div>
+                                <div class="variable-name">Production Tensor</div>
+                                <div class="variable-description">Exact production terms</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Πᵢⱼ</div>
+                                <div class="variable-name">Pressure-Strain</div>
+                                <div class="variable-description">Redistribution mechanism</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Enhanced Sidebar -->
+                <div class="sidebar">
+                    <h3>
+                        <span>🧭</span>
+                        Quick Navigation
+                    </h3>
+                    <ul>
+                        <li><a href="#applications">🛠️ Applications</a></li>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
+                        <li><a href="#equations">📐 Equations</a></li>
+                        <li><a href="#variables">🔤 Variables</a></li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🔗</span>
+                        Related Models
+                    </h3>
+                    <ul>
+                        <li><a href="k-epsilon.html">k-ε Standard</a></li>
+                        <li><a href="k-omega.html">k-ω Standard</a></li>
+                        <li><a href="spalart-allmaras.html">Spalart-Allmaras</a></li>
+                        <li><a href="../index.html">← All Models</a></li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>📚</span>
+                        Model Info
+                    </h3>
+                    <ul>
+                        <li><span style="color: #7c3aed;">Type:</span> Seven-Equation RANS</li>
+                        <li><span style="color: #7c3aed;">Variables:</span> 6 stresses + ε</li>
+                        <li><span style="color: #7c3aed;">Equations:</span> 7 transport</li>
+                        <li><span style="color: #7c3aed;">Cost:</span> Very High</li>
+                        <li><span style="color: #7c3aed; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Compact Footer -->
+    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
+        <div class="container">
+            <p style="color: #64748b; font-size: 0.75rem;">
+                © 2024 CFD Reference | 
+                <a href="https://github.com/kuplulumert/fdapp" style="color: #3b82f6; text-decoration: none;">GitHub</a> |
+                <a href="../index.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize KaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            const equations = document.querySelectorAll('.katex-display');
+            equations.forEach(eq => {
+                katex.render(eq.textContent, eq, {
+                    displayMode: true,
+                    throwOnError: false
+                });
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        console.log('Reynolds Stress Model page loaded - Enhanced compact design active');
+    </script>
+</body>
+</html>
