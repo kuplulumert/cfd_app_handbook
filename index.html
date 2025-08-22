@@ -406,6 +406,13 @@
                     <td style="width: 10rem;">Class</td>
                 </tr>
 
+                <!-- FUNDAMENTAL MODELS -->
+                <tr style="background: rgba(16,185,129,0.03); border-top: 2px solid rgba(16,185,129,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #065f46; font-size: 0.8rem; background: rgba(16,185,129,0.06);">
+                        🔰 FUNDAMENTAL MODELS
+                    </td>
+                </tr>
+                
                 <!-- Inviscid Flow -->
                 <tr class="model-row" onclick="window.location.href='models/inviscid.html'">
                     <td style="text-align: center;">
@@ -420,43 +427,57 @@
                     </td>
                 </tr>
 
-                <!-- Laminar Flow -->
-                <tr class="model-row" onclick="window.location.href='models/laminar.html'">
+                <!-- VISCOUS MODELS -->
+                <tr style="background: rgba(59,130,246,0.03); border-top: 2px solid rgba(59,130,246,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #1e40af; font-size: 0.8rem; background: rgba(59,130,246,0.06);">
+                        🌊 VISCOUS MODELS
+                    </td>
+                </tr>
+
+                <!-- Laminar Flow (Most Used for Low Re) -->
+                <tr class="model-row" onclick="window.location.href='models/laminar.html'" style="background: rgba(59,130,246,0.02);">
                     <td style="text-align: center;">
-                        <div class="model-icon icon-fundamental">L</div>
+                        <div class="model-icon icon-fundamental">≈</div>
                     </td>
                     <td>
                         <a href="models/laminar.html" class="model-name">Laminar Flow</a>
                     </td>
-                    <td class="model-desc">Direct Navier-Stokes</td>
+                    <td class="model-desc">Navier-Stokes - viscous flow</td>
                     <td style="text-align: center;">
-                        <span class="class-tag tag-fundamental">Fundamental</span>
+                        <span class="class-tag tag-fundamental">Viscous</span>
+                    </td>
+                </tr>
+
+                <!-- RANS MODELS -->
+                <tr style="background: rgba(139,92,246,0.03); border-top: 2px solid rgba(139,92,246,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #6b21a8; font-size: 0.8rem; background: rgba(139,92,246,0.06);">
+                        ⚡ RANS MODELS
                     </td>
                 </tr>
 
                 <!-- Spalart-Allmaras -->
                 <tr class="model-row" onclick="window.location.href='models/spalart-allmaras.html'">
                     <td style="text-align: center;">
-                        <div class="model-icon icon-rans">SA</div>
+                        <div class="model-icon icon-transition">ν̃</div>
                     </td>
                     <td>
                         <a href="models/spalart-allmaras.html" class="model-name">Spalart-Allmaras</a>
                     </td>
                     <td class="model-desc">One-equation RANS</td>
                     <td style="text-align: center;">
-                        <span class="class-tag tag-rans">RANS (1-Eq)</span>
+                        <span class="class-tag tag-rans">RANS</span>
                     </td>
                 </tr>
 
-                <!-- k-epsilon Standard -->
-                <tr class="model-row" onclick="window.location.href='models/k-epsilon.html'">
+                <!-- k-epsilon Standard (Most Used Industrial) -->
+                <tr class="model-row" onclick="window.location.href='models/k-epsilon.html'" style="background: rgba(139,92,246,0.02);">
                     <td style="text-align: center;">
                         <div class="model-icon icon-rans">k-ε</div>
                     </td>
                     <td>
                         <a href="models/k-epsilon.html" class="model-name">k-ε Standard</a>
                     </td>
-                    <td class="model-desc">Two-equation RANS</td>
+                    <td class="model-desc">Two-equation RANS - Most Used Industrial</td>
                     <td style="text-align: center;">
                         <span class="class-tag tag-rans">RANS</span>
                     </td>
@@ -465,14 +486,49 @@
                 <!-- k-omega Standard -->
                 <tr class="model-row" onclick="window.location.href='models/k-omega.html'">
                     <td style="text-align: center;">
-                        <div class="model-icon icon-rans">k-ω</div>
+                        <div class="model-icon icon-advanced">k-ω</div>
                     </td>
                     <td>
                         <a href="models/k-omega.html" class="model-name">k-ω Standard</a>
                     </td>
                     <td class="model-desc">Two-equation RANS</td>
                     <td style="text-align: center;">
-                        <span class="class-tag tag-rans">RANS (2-Eq)</span>
+                        <span class="class-tag tag-rans">RANS</span>
+                    </td>
+                </tr>
+
+                <!-- k-omega SST (Industry Standard) -->
+                <tr class="model-row" onclick="window.location.href='models/k-omega-sst.html'" style="background: rgba(6,182,212,0.025);">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-rans">ω*</div>
+                    </td>
+                    <td>
+                        <a href="models/k-omega-sst.html" class="model-name">k-ω SST</a>
+                    </td>
+                    <td class="model-desc">Hybrid RANS - Industry Standard</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-rans">RANS</span>
+                    </td>
+                </tr>
+
+                <!-- Reynolds Stress -->
+                <tr class="model-row" onclick="window.location.href='models/reynolds-stress.html'">
+                    <td style="text-align: center;">
+                        <div class="model-icon icon-rans">τ</div>
+                    </td>
+                    <td>
+                        <a href="models/reynolds-stress.html" class="model-name">Reynolds Stress</a>
+                    </td>
+                    <td class="model-desc">Seven-equation RANS</td>
+                    <td style="text-align: center;">
+                        <span class="class-tag tag-rans">RANS</span>
+                    </td>
+                </tr>
+
+                <!-- TRANSITION MODELS -->
+                <tr style="background: rgba(245,158,11,0.03); border-top: 2px solid rgba(245,158,11,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #92400e; font-size: 0.8rem; background: rgba(245,158,11,0.06);">
+                        🔄 TRANSITION MODELS
                     </td>
                 </tr>
 
@@ -490,45 +546,24 @@
                     </td>
                 </tr>
 
-                <!-- Transition SST -->
-                <tr class="model-row" onclick="window.location.href='models/transition-sst.html'">
+                <!-- Transition SST (Industry Standard) -->
+                <tr class="model-row" onclick="window.location.href='models/transition-sst.html'" style="background: rgba(34,197,94,0.02);">
                     <td style="text-align: center;">
-                        <div class="model-icon icon-transition">γ-Re</div>
+                        <div class="model-icon icon-transition">γ</div>
                     </td>
                     <td>
                         <a href="models/transition-sst.html" class="model-name">Transition SST</a>
                     </td>
-                    <td class="model-desc">Four-equation transition</td>
+                    <td class="model-desc">Four-equation transition - Industry Standard</td>
                     <td style="text-align: center;">
                         <span class="class-tag tag-transition">Transition</span>
                     </td>
                 </tr>
 
-                <!-- k-omega SST -->
-                <tr class="model-row" onclick="window.location.href='models/k-omega-sst.html'">
-                    <td style="text-align: center;">
-                        <div class="model-icon icon-rans">SST</div>
-                    </td>
-                    <td>
-                        <a href="models/k-omega-sst.html" class="model-name">k-ω SST</a>
-                    </td>
-                    <td class="model-desc">Hybrid RANS</td>
-                    <td style="text-align: center;">
-                        <span class="class-tag tag-rans">RANS</span>
-                    </td>
-                </tr>
-
-                <!-- Reynolds Stress Model -->
-                <tr class="model-row" onclick="window.location.href='models/reynolds-stress.html'">
-                    <td style="text-align: center;">
-                        <div class="model-icon icon-rans">RSM</div>
-                    </td>
-                    <td>
-                        <a href="models/reynolds-stress.html" class="model-name">Reynolds Stress</a>
-                    </td>
-                    <td class="model-desc">Seven-equation RANS</td>
-                    <td style="text-align: center;">
-                        <span class="class-tag tag-rans">RANS</span>
+                <!-- ADVANCED MODELS -->
+                <tr style="background: rgba(239,68,68,0.03); border-top: 2px solid rgba(239,68,68,0.15);">
+                    <td colspan="4" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #7f1d1d; font-size: 0.8rem; background: rgba(239,68,68,0.06);">
+                        🚀 ADVANCED MODELS
                     </td>
                 </tr>
 
@@ -540,7 +575,7 @@
                     <td>
                         <a href="models/sas.html" class="model-name">Scale Adaptive</a>
                     </td>
-                    <td class="model-desc">Modified RANS</td>
+                    <td class="model-desc">Scale-adaptive RANS</td>
                     <td style="text-align: center;">
                         <span class="class-tag tag-advanced">Advanced</span>
                     </td>
@@ -568,7 +603,7 @@
                     <td>
                         <a href="models/les.html" class="model-name">Large Eddy Simulation</a>
                     </td>
-                    <td class="model-desc">Direct turbulence</td>
+                    <td class="model-desc">Direct turbulence resolution</td>
                     <td style="text-align: center;">
                         <span class="class-tag tag-advanced">Advanced</span>
                     </td>
