@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Central Difference - Beko CFD AI Agent</title>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(194,65,12,0.06), rgba(251,146,60,0.03));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(194,65,12,0.12);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+            animation: shimmer 0.6s ease-out;
+        }
+
+        .nav-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        @keyframes shimmer {
+            0% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
+            50% { box-shadow: 0 0 20px rgba(59,130,246,0.6), 0 0 30px rgba(59,130,246,0.3); }
+            100% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 6rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .sidebar h3 {
+            color: #3b82f6;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.25rem 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #3b82f6;
+        }
+
+        .sidebar a.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .model-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(59,130,246,0.1);
+        }
+
+        .model-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .model-icon-large {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 6px -1px rgba(59,130,246,0.1);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .highlight-box {
+            background: rgba(59,130,246,0.05);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box h4 {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .equation-box {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .equation-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .constants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .constant-item {
+            background: rgba(59,130,246,0.05);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .constant-name {
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 0.25rem;
+        }
+
+        .constant-value {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(59,130,246,0.05);
+            font-weight: 600;
+            color: #3b82f6;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .pros {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid #22c55e;
+        }
+
+        .cons {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid #ef4444;
+        }
+
+        .pros h4 {
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+
+        .cons h4 {
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            padding-left: 1.25rem;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
+                
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <a href="../home.html" class="nav-tab">🏠 Home</a>
+                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
+                    <a href="../turbulence-models.html" class="nav-tab">2. Turbulence Models</a>
+                    <a href="../methods.html" class="nav-tab active">3. Methods</a>
+                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#practical">Practical Applications</a></li>
+                    <li><a href="#guidance">CFD Guidance</a></li>
+                    <li><a href="#equations">Mathematical Formulation</a></li>
+                    <li><a href="#variables">Variables</a></li>
+                    <li><a href="#analogy">Analogy</a></li>
+                    <li><a href="#features">Key Features</a></li>
+                    <li><a href="#comparison">Comparison</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <a href="../methods.html" class="back-link">
+                    ← Back to Methods
+                </a>
+
+                <!-- Header -->
+                <div class="model-header">
+                    <div class="model-icon-large">⟷</div>
+                    <h1 class="model-title">Central Difference</h1>
+                    <p class="model-subtitle">Symmetric High-Accuracy Scheme</p>
+                </div>
+
+                <!-- Practical Applications -->
+                <section id="practical" class="content-section">
+                    <h2 class="section-title">🎯 Practical Applications</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">📐 Structured Grids</div>
+                            <div class="constant-value">Optimal for high-quality orthogonal meshes</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🔬 Research Applications</div>
+                            <div class="constant-value">DNS and high-fidelity simulations</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🌊 Low Reynolds Flows</div>
+                            <div class="constant-value">Viscous-dominated flows where diffusion is natural</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🎯 High Accuracy Needs</div>
+                            <div class="constant-value">When precision is more important than stability</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CFD Guidance -->
+                <section id="guidance" class="content-section">
+                    <h2 class="section-title">⚙️ CFD Guidance</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>✅ When to Use Central Difference:</h4>
+                        <ul>
+                            <li><strong>Structured orthogonal grids</strong> - High-quality regular meshes</li>
+                            <li><strong>Low Reynolds number flows</strong> - Re < 100, viscous-dominated</li>
+                            <li><strong>Research applications</strong> - DNS, high-fidelity validation</li>
+                            <li><strong>Symmetric problems</strong> - Natural symmetry in physics</li>
+                            <li><strong>Heat conduction dominated</strong> - Diffusion-heavy problems</li>
+                            <li><strong>Academic studies</strong> - When accuracy is paramount</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>❌ When to Avoid Central Difference:</h4>
+                        <ul>
+                            <li><strong>High Reynolds number flows</strong> - Re > 1000, convection-dominated</li>
+                            <li><strong>Unstructured meshes</strong> - Irregular or skewed grids</li>
+                            <li><strong>Industrial applications</strong> - Too unstable for production use</li>
+                            <li><strong>Sharp gradients</strong> - Boundary layers, shock waves</li>
+                            <li><strong>Poor mesh quality</strong> - Any mesh irregularities</li>
+                            <li><strong>Robust convergence needed</strong> - When stability is critical</li>
+                        </ul>
+                    </div>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>✅ Advantages</h4>
+                            <ul>
+                                <li>Highest accuracy (2nd order)</li>
+                                <li>Symmetric and conservative</li>
+                                <li>No numerical diffusion</li>
+                                <li>Preserves wave propagation</li>
+                                <li>Minimal computational cost</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>⚠️ Limitations</h4>
+                            <ul>
+                                <li>Highly unstable at high Pe</li>
+                                <li>Requires very fine meshes</li>
+                                <li>Can produce oscillations</li>
+                                <li>Limited to structured grids</li>
+                                <li>Not suitable for industry</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mathematical Formulation -->
+                <section id="equations" class="content-section">
+                    <h2 class="section-title">🔢 Mathematical Formulation</h2>
+                    
+                    <div class="equation-box">
+                        <div class="equation-title">Central Difference Formula</div>
+                        <div>$$\phi_f = \frac{\phi_C + \phi_F}{2}$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Simple arithmetic average of neighboring cells
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Gradient at Face</div>
+                        <div>$$\frac{\partial \phi}{\partial x} \bigg|_f = \frac{\phi_F - \phi_C}{\Delta x}$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Symmetric gradient calculation
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Peclet Number Limitation</div>
+                        <div>$$Pe = \frac{\rho |\mathbf{u}| \Delta x}{\mu} < 2$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Stability criterion for central difference
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Truncation Error</div>
+                        <div>$$\text{Error} = O(\Delta x^2) + O(\Delta t)$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Second-order accurate with no numerical diffusion
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Variables -->
+                <section id="variables" class="content-section">
+                    <h2 class="section-title">📊 Variables & Parameters</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">φ_f (-)</div>
+                            <div class="constant-value">Variable value at cell face (symmetric)</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">φ_C, φ_F (-)</div>
+                            <div class="constant-value">Variable values at neighboring cell centers</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">Pe (-)</div>
+                            <div class="constant-value">Peclet number - convection/diffusion ratio</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">Δx (m)</div>
+                            <div class="constant-value">Distance between cell centers</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">ρ (kg/m³)</div>
+                            <div class="constant-value">Fluid density</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">μ (Pa·s)</div>
+                            <div class="constant-value">Dynamic viscosity</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analogy -->
+                <section id="analogy" class="content-section">
+                    <h2 class="section-title">🧠 Engineering Analogy</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>⚖️ Precision Balance Scale</h4>
+                        <p><strong>Central Difference is like a high-precision balance scale:</strong></p>
+                        
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Perfect symmetry:</strong> "Take equal information from both sides" - mathematically elegant</li>
+                            <li><strong>High precision:</strong> Like a laboratory balance - extremely accurate under ideal conditions</li>
+                            <li><strong>Sensitivity to disturbance:</strong> Any vibration (numerical instability) ruins the measurement</li>
+                            <li><strong>Ideal conditions required:</strong> Needs perfect environment (structured mesh, low Pe)</li>
+                        </ul>
+                        
+                        <p style="margin-top: 0.5rem;"><strong>The trade-off:</strong> Like choosing between a precision lab scale vs a rugged field scale - perfect accuracy in ideal conditions vs reliable operation anywhere.</p>
+                    </div>
+                </section>
+
+                <!-- Key Features -->
+                <section id="features" class="content-section">
+                    <h2 class="section-title">⚙️ Key Features</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">🎯 Highest Accuracy</div>
+                            <div class="constant-value">No numerical diffusion, pure 2nd order</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">⚖️ Symmetric Treatment</div>
+                            <div class="constant-value">Equal weighting of upstream/downstream</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🌊 Conservative</div>
+                            <div class="constant-value">Preserves conservation properties</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">⚠️ Stability Limited</div>
+                            <div class="constant-value">Requires Pe < 2 for stability</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">📐 Structured Grid Only</div>
+                            <div class="constant-value">Best performance on orthogonal meshes</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🔬 Research Quality</div>
+                            <div class="constant-value">Preferred for high-fidelity studies</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Comparison -->
+                <section id="comparison" class="content-section">
+                    <h2 class="section-title">⚖️ Comparison with Other Schemes</h2>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Scheme</th>
+                                <th>Accuracy</th>
+                                <th>Stability</th>
+                                <th>Numerical Diffusion</th>
+                                <th>Mesh Requirements</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>First Order Upwind</td>
+                                <td>Low (1st order)</td>
+                                <td>Excellent</td>
+                                <td>Very High</td>
+                                <td>Any mesh</td>
+                            </tr>
+                            <tr>
+                                <td>Second Order Upwind</td>
+                                <td>Medium (2nd order)</td>
+                                <td>Good</td>
+                                <td>Medium</td>
+                                <td>Good quality</td>
+                            </tr>
+                            <tr style="background: rgba(59,130,246,0.02);">
+                                <td><strong>Central Difference</strong></td>
+                                <td>High (2nd order)</td>
+                                <td>Poor</td>
+                                <td>None</td>
+                                <td>Structured only</td>
+                            </tr>
+                            <tr>
+                                <td>QUICK</td>
+                                <td>High (3rd order)</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                                <td>High quality</td>
+                            </tr>
+                            <tr>
+                                <td>MUSCL</td>
+                                <td>High (2nd order)</td>
+                                <td>Good</td>
+                                <td>Low</td>
+                                <td>Any mesh</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            Developed By Mert Küplülü
+        </div>
+    </footer>
+
+    <script>
+        // Smooth transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Add smooth transition to navigation tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
+            });
+        });
+
+        // Add smooth transition to back link
+        document.querySelector('.back-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothTransition(this.href);
+        });
+
+        // KaTeX rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+
+        console.log('Central Difference discretization page loaded with smooth transitions');
+    </script>
+</body>
+</html>

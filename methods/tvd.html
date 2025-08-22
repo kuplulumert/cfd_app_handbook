@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>TVD - Beko CFD AI Agent</title>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(194,65,12,0.06), rgba(251,146,60,0.03));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(194,65,12,0.12);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+            animation: shimmer 0.6s ease-out;
+        }
+
+        .nav-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        @keyframes shimmer {
+            0% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
+            50% { box-shadow: 0 0 20px rgba(59,130,246,0.6), 0 0 30px rgba(59,130,246,0.3); }
+            100% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 6rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .sidebar h3 {
+            color: #3b82f6;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.25rem 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #3b82f6;
+        }
+
+        .sidebar a.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .model-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(59,130,246,0.1);
+        }
+
+        .model-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .model-icon-large {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 6px -1px rgba(59,130,246,0.1);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .highlight-box {
+            background: rgba(59,130,246,0.05);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box h4 {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .equation-box {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .equation-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .constants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .constant-item {
+            background: rgba(59,130,246,0.05);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .constant-name {
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 0.25rem;
+        }
+
+        .constant-value {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(59,130,246,0.05);
+            font-weight: 600;
+            color: #3b82f6;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .pros {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid #22c55e;
+        }
+
+        .cons {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid #ef4444;
+        }
+
+        .pros h4 {
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+
+        .cons h4 {
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            padding-left: 1.25rem;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
+                
+                <!-- Navigation Tabs -->
+                <div class="nav-tabs">
+                    <a href="../home.html" class="nav-tab">🏠 Home</a>
+                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
+                    <a href="../turbulence-models.html" class="nav-tab">2. Turbulence Models</a>
+                    <a href="../methods.html" class="nav-tab active">3. Methods</a>
+                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#practical">Practical Applications</a></li>
+                    <li><a href="#guidance">CFD Guidance</a></li>
+                    <li><a href="#equations">Mathematical Formulation</a></li>
+                    <li><a href="#variables">Variables</a></li>
+                    <li><a href="#analogy">Analogy</a></li>
+                    <li><a href="#features">Key Features</a></li>
+                    <li><a href="#comparison">Comparison</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <a href="../methods.html" class="back-link">
+                    ← Back to Methods
+                </a>
+
+                <!-- Header -->
+                <div class="model-header">
+                    <div class="model-icon-large">TVD</div>
+                    <h1 class="model-title">TVD</h1>
+                    <p class="model-subtitle">Total Variation Diminishing</p>
+                </div>
+
+                <!-- Practical Applications -->
+                <section id="practical" class="content-section">
+                    <h2 class="section-title">🎯 Practical Applications</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">⚡ Shock Capturing</div>
+                            <div class="constant-value">Compressible flows with discontinuities</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🔬 Advanced Research</div>
+                            <div class="constant-value">High-fidelity simulations requiring accuracy + stability</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🌊 Sharp Interfaces</div>
+                            <div class="constant-value">Multiphase flows with clear boundaries</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🎯 Critical Applications</div>
+                            <div class="constant-value">When both accuracy and monotonicity are essential</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CFD Guidance -->
+                <section id="guidance" class="content-section">
+                    <h2 class="section-title">⚙️ CFD Guidance</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>✅ When to Use TVD:</h4>
+                        <ul>
+                            <li><strong>Compressible flows</strong> - Shock waves and discontinuities</li>
+                            <li><strong>Multiphase applications</strong> - Sharp interface capturing</li>
+                            <li><strong>Research applications</strong> - High accuracy with stability</li>
+                            <li><strong>Critical simulations</strong> - When oscillations are unacceptable</li>
+                            <li><strong>Modern CFD codes</strong> - Advanced discretization available</li>
+                            <li><strong>Validation studies</strong> - Comparing with experimental data</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>❌ When to Avoid TVD:</h4>
+                        <ul>
+                            <li><strong>Simple incompressible flows</strong> - Overkill for basic applications</li>
+                            <li><strong>Educational purposes</strong> - Too complex for learning</li>
+                            <li><strong>Limited computational budget</strong> - Higher cost than standard schemes</li>
+                            <li><strong>Legacy CFD software</strong> - May not be available</li>
+                            <li><strong>Very smooth flows</strong> - Simpler schemes sufficient</li>
+                            <li><strong>Quick preliminary studies</strong> - Too sophisticated for initial analysis</li>
+                        </ul>
+                    </div>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>✅ Advantages</h4>
+                            <ul>
+                                <li>Prevents spurious oscillations</li>
+                                <li>High accuracy in smooth regions</li>
+                                <li>Excellent shock capturing</li>
+                                <li>Mathematically rigorous</li>
+                                <li>State-of-the-art performance</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>⚠️ Limitations</h4>
+                            <ul>
+                                <li>Complex implementation</li>
+                                <li>Higher computational cost</li>
+                                <li>Requires advanced CFD codes</li>
+                                <li>Overkill for simple problems</li>
+                                <li>Steep learning curve</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mathematical Formulation -->
+                <section id="equations" class="content-section">
+                    <h2 class="section-title">🔢 Mathematical Formulation</h2>
+                    
+                    <div class="equation-box">
+                        <div class="equation-title">TVD Condition</div>
+                        <div>$$TV(\phi^{n+1}) \leq TV(\phi^n)$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Total variation must not increase with time
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Total Variation Definition</div>
+                        <div>$$TV(\phi) = \sum_i |\phi_{i+1} - \phi_i|$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Sum of absolute differences between adjacent cells
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">TVD Limiter Function</div>
+                        <div>$$\phi_f = \phi_C + \frac{1}{2} \psi(r) (\phi_F - \phi_C)$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            With limiter satisfying TVD constraints
+                        </p>
+                    </div>
+
+                    <div class="equation-box">
+                        <div class="equation-title">Sweby's TVD Region</div>
+                        <div>$$0 \leq \psi(r) \leq \min(2r, 2)$$</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                            Constraints on limiter function for TVD property
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Variables -->
+                <section id="variables" class="content-section">
+                    <h2 class="section-title">📊 Variables & Parameters</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">TV(φ) (-)</div>
+                            <div class="constant-value">Total variation of variable φ</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">ψ(r) (-)</div>
+                            <div class="constant-value">TVD-compliant limiter function</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">r (-)</div>
+                            <div class="constant-value">Gradient ratio parameter</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">φᵢ (-)</div>
+                            <div class="constant-value">Variable at cell i</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">n, n+1 (-)</div>
+                            <div class="constant-value">Time level indices</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">Sweby Region (-)</div>
+                            <div class="constant-value">Allowable limiter function domain</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analogy -->
+                <section id="analogy" class="content-section">
+                    <h2 class="section-title">🧠 Engineering Analogy</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>🎚️ Audio System with Automatic Gain Control</h4>
+                        <p><strong>TVD is like a professional audio system with intelligent noise control:</strong></p>
+                        
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>No amplification of noise:</strong> "Never make static louder" - prevents spurious oscillations</li>
+                            <li><strong>Preserve signal quality:</strong> "Keep music clear and accurate" - maintains solution accuracy</li>
+                            <li><strong>Automatic limiting:</strong> "Reduce gain when feedback threatens" - slope limiters activate</li>
+                            <li><strong>Professional grade:</strong> Like studio equipment - sophisticated but delivers perfect results</li>
+                        </ul>
+                        
+                        <p style="margin-top: 0.5rem;"><strong>The guarantee:</strong> Like having an audio engineer ensuring your recording never gets worse, only better - mathematical guarantee against solution degradation.</p>
+                    </div>
+                </section>
+
+                <!-- Key Features -->
+                <section id="features" class="content-section">
+                    <h2 class="section-title">⚙️ Key Features</h2>
+                    
+                    <div class="constants-grid">
+                        <div class="constant-item">
+                            <div class="constant-name">📉 Variation Diminishing</div>
+                            <div class="constant-value">TV never increases with time</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🎯 High Accuracy</div>
+                            <div class="constant-value">Second-order in smooth regions</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🛡️ Oscillation Free</div>
+                            <div class="constant-value">Mathematically guaranteed monotonicity</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">⚡ Shock Capturing</div>
+                            <div class="constant-value">Handles discontinuities naturally</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🔬 Research Grade</div>
+                            <div class="constant-value">State-of-the-art numerical method</div>
+                        </div>
+                        <div class="constant-item">
+                            <div class="constant-name">🧮 Mathematical Rigor</div>
+                            <div class="constant-value">Theoretically proven properties</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Comparison -->
+                <section id="comparison" class="content-section">
+                    <h2 class="section-title">⚖️ Comparison with Other Schemes</h2>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Scheme</th>
+                                <th>TVD Property</th>
+                                <th>Shock Capturing</th>
+                                <th>Complexity</th>
+                                <th>Research Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>First Order Upwind</td>
+                                <td>Yes (trivially)</td>
+                                <td>Poor</td>
+                                <td>Low</td>
+                                <td>Debugging only</td>
+                            </tr>
+                            <tr>
+                                <td>Second Order Upwind</td>
+                                <td>No</td>
+                                <td>Poor</td>
+                                <td>Low</td>
+                                <td>Production CFD</td>
+                            </tr>
+                            <tr>
+                                <td>Central Difference</td>
+                                <td>No</td>
+                                <td>Very Poor</td>
+                                <td>Low</td>
+                                <td>Smooth flows only</td>
+                            </tr>
+                            <tr>
+                                <td>QUICK</td>
+                                <td>No</td>
+                                <td>Poor</td>
+                                <td>Medium</td>
+                                <td>Specialized</td>
+                            </tr>
+                            <tr>
+                                <td>MUSCL</td>
+                                <td>Yes</td>
+                                <td>Good</td>
+                                <td>Medium</td>
+                                <td>Modern standard</td>
+                            </tr>
+                            <tr style="background: rgba(59,130,246,0.02);">
+                                <td><strong>TVD</strong></td>
+                                <td>Yes (by design)</td>
+                                <td>Excellent</td>
+                                <td>High</td>
+                                <td>Advanced research</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            Developed By Mert Küplülü
+        </div>
+    </footer>
+
+    <script>
+        // Smooth transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Add smooth transition to navigation tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
+            });
+        });
+
+        // Add smooth transition to back link
+        document.querySelector('.back-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothTransition(this.href);
+        });
+
+        // KaTeX rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+
+        console.log('TVD discretization page loaded with smooth transitions');
+    </script>
+</body>
+</html>
