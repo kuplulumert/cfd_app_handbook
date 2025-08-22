@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spalart-Allmaras Model - Compact Guide v1.0</title>
+    <meta name="description" content="Spalart-Allmaras turbulence model explained compactly with transport equation and guidance.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.4;
+            color: #1e293b;
+            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Compact Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59,130,246,0.15);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.2);
+        }
+
+        .logo h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .back-button {
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.15);
+            background: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            background: rgba(59,130,246,0.05);
+        }
+
+        /* Compact Main Content */
+        .main-content {
+            padding: 1rem 0;
+        }
+
+        /* Compact Model Hero */
+        .model-hero {
+            text-align: center;
+            padding: 1.5rem 0 1rem 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.2);
+        }
+
+        .model-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .model-hero p {
+            font-size: 1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Compact Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-column {
+            min-width: 0;
+        }
+
+        .sidebar {
+            background: rgba(255,255,255,0.8);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 5rem;
+        }
+
+        /* Compact Sections */
+        .content-section {
+            background: rgba(255,255,255,0.8);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+
+        .content-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .content-section p {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Compact Equations */
+        .main-equations {
+            background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05));
+            border: 1px solid rgba(245,158,11,0.15);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .equation-large {
+            font-size: 1rem !important;
+            margin: 0.75rem 0 !important;
+        }
+
+        /* Compact Variables */
+        .variables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .variable-item {
+            background: rgba(248,250,252,0.8);
+            border: 1px solid rgba(59,130,246,0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+
+        .variable-symbol {
+            font-family: 'KaTeX_Math', 'Times New Roman', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f59e0b;
+            margin-bottom: 0.25rem;
+        }
+
+        .variable-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.125rem;
+        }
+
+        .variable-description {
+            font-size: 0.625rem;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        /* Compact Sidebar */
+        .sidebar h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.375rem;
+        }
+
+        .sidebar a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0;
+        }
+
+        .sidebar a:hover {
+            color: #3b82f6;
+        }
+
+        /* Compact Lists */
+        .content-section ul {
+            margin: 0.75rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .content-section li {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        /* Properties Table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .properties-table th,
+        .properties-table td {
+            padding: 0.5rem;
+            border: 1px solid rgba(59,130,246,0.1);
+            text-align: left;
+        }
+
+        .properties-table th {
+            background: rgba(245,158,11,0.1);
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .sidebar {
+                position: static;
+                order: -1;
+            }
+            
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .model-hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .model-hero p {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Compact Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">
+                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">ν̃</span>
+                    </div>
+                    <div>
+                        <h1>Spalart-Allmaras Model</h1>
+                        <p>One-Equation RANS</p>
+                    </div>
+                </a>
+                
+                <a href="../index.html" class="back-button">
+                    <span>←</span>
+                    <span>Back to Models</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Compact Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- NEW COMPACT DESIGN INDICATOR -->
+            <div style="background: linear-gradient(135deg, #f59e0b, #fbbf24); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
+                ✅ NEW: Spalart-Allmaras Model Available - Enhanced CFD Guidance!
+            </div>
+
+            <!-- Compact Model Hero -->
+            <div class="model-hero">
+                <div class="model-badge">
+                    <span>ν̃</span>
+                    <span>One-Equation RANS Model</span>
+                </div>
+                
+                <h1>Spalart-Allmaras Model</h1>
+                <p>One-equation RANS model solving transport equation for modified turbulent viscosity (ν̃)</p>
+            </div>
+
+            <!-- Compact Content Grid -->
+            <div class="content-grid">
+                <div class="main-column">
+                    
+                    <!-- FIRST: Enhanced CFD Guidance -->
+                    <div class="content-section" id="guidance">
+                        <h2>
+                            <span>🎯</span>
+                            CFD Guidance - Spalart-Allmaras Model
+                        </h2>
+                        
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use Spalart-Allmaras (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>Aerospace applications</strong> - Originally designed for aircraft and turbomachinery</li>
+                                <li><strong>External aerodynamics</strong> - Airfoils, wings, fuselages with attached boundary layers</li>
+                                <li><strong>Wall-bounded flows</strong> - Excellent near-wall behavior without wall functions</li>
+                                <li><strong>Adverse pressure gradient flows</strong> - Better than k-ε for separation prediction</li>
+                                <li><strong>Transitional flows</strong> - Can handle some laminar-turbulent transition effects</li>
+                                <li><strong>Computational efficiency</strong> - Only one additional transport equation</li>
+                                <li><strong>Robust convergence</strong> - Stable and reliable for complex geometries</li>
+                                <li><strong>Industrial CFD</strong> - Standard in commercial aerospace codes</li>
+                            </ul>
+                        </div>
+
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid Spalart-Allmaras (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>Free shear flows</strong> - Jets, mixing layers, wakes (not calibrated for these)</li>
+                                <li><strong>Decaying turbulence</strong> - Cannot handle turbulence decay properly</li>
+                                <li><strong>Flows with significant heat transfer</strong> - No thermal effects in original model</li>
+                                <li><strong>Rotating flows</strong> - Missing rotation/curvature corrections</li>
+                                <li><strong>Buoyancy-driven flows</strong> - No buoyancy terms in standard formulation</li>
+                                <li><strong>Massively separated flows</strong> - Limited accuracy in large separation regions</li>
+                                <li><strong>Combustion applications</strong> - Not designed for reacting flows</li>
+                                <li><strong>Multiphase flows</strong> - Single-phase model only</li>
+                            </ul>
+                        </div>
+
+                        <h3>Setup Tips & Best Practices</h3>
+                        <ul>
+                            <li><strong>Grid requirements:</strong> y+ < 1 at walls for accurate boundary layer resolution</li>
+                            <li><strong>Initialization:</strong> ν̃ = 3-5 × ν in freestream, ν̃ = 0 at walls</li>
+                            <li><strong>Boundary conditions:</strong> ν̃ = 0 at walls, specify ν̃ at inlets based on turbulence level</li>
+                            <li><strong>Convergence:</strong> Monitor ν̃ residuals (< 1e-4) and check for negative values</li>
+                            <li><strong>Trip terms:</strong> Use ft2 modification for transition prediction if needed</li>
+                            <li><strong>DES capability:</strong> Can be used as base for Detached Eddy Simulation</li>
+                        </ul>
+                    </div>
+
+                    <!-- Enhanced Equations with Detailed Explanations -->
+                    <div class="content-section" id="equations">
+                        <h2>
+                            <span>📐</span>
+                            Transport Equation - Detailed Analysis
+                        </h2>
+                        
+                        <!-- Main Transport Equation -->
+                        <div style="background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(245,158,11,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Modified Turbulent Viscosity (ν̃) Transport</h3>
+                            <div class="equation-large katex-display">
+                                \frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2 + \frac{1}{\sigma} \frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu})\frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma} \frac{\partial \tilde{\nu}}{\partial x_j} \frac{\partial \tilde{\nu}}{\partial x_j}
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Transport of modified turbulent viscosity</p>
+                                <p><strong>∂ν̃/∂t:</strong> Rate of change of modified viscosity at fixed point</p>
+                                <p><strong>uⱼ ∂ν̃/∂xⱼ:</strong> Convection of ν̃ by mean flow</p>
+                                <p><strong>cb1 S̃ ν̃:</strong> Production term, cb1 = 0.1355</p>
+                                <p><strong>-cw1 fw (ν̃/d)²:</strong> Destruction term near walls, cw1 = cb1/κ² + (1+cb2)/σ</p>
+                                <p><strong>Diffusion terms:</strong> Molecular + turbulent diffusion with cross-diffusion</p>
+                            </div>
+                        </div>
+
+                        <!-- Strain Rate Modification -->
+                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Modified Strain Rate</h3>
+                            <div class="equation-large katex-display">
+                                \tilde{S} = S + \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Strain rate modified for near-wall effects</p>
+                                <p><strong>S:</strong> Magnitude of strain rate tensor = √(2SᵢⱼSᵢⱼ)</p>
+                                <p><strong>κ = 0.41:</strong> von Kármán constant</p>
+                                <p><strong>d:</strong> Distance to nearest wall</p>
+                                <p><strong>fv2:</strong> Viscous damping function = 1 - χ/(1 + χfv1)</p>
+                            </div>
+                        </div>
+
+                        <!-- Turbulent Viscosity -->
+                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Turbulent Viscosity Relation</h3>
+                            <div class="equation-large katex-display">
+                                \mu_t = \rho \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Relates modified viscosity to actual turbulent viscosity</p>
+                                <p><strong>fv1:</strong> Viscous damping function, cv1 = 7.1</p>
+                                <p><strong>χ = ν̃/ν:</strong> Viscosity ratio</p>
+                                <p><strong>Near wall:</strong> χ → 0, fv1 → 0, μt → 0 (proper damping)</p>
+                                <p><strong>Far from wall:</strong> χ >> 1, fv1 → 1, μt ≈ ρν̃</p>
+                            </div>
+                        </div>
+
+                        <!-- Wall Destruction Function -->
+                        <div style="background: linear-gradient(135deg, rgba(168,85,247,0.05), rgba(196,181,253,0.05)); border: 1px solid rgba(168,85,247,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Wall Destruction Function</h3>
+                            <div class="equation-large katex-display">
+                                f_w = g \left[\frac{1 + c_{w3}^6}{g^6 + c_{w3}^6}\right]^{1/6}, \quad g = r + c_{w2}(r^6 - r)
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Controls destruction near walls</p>
+                                <p><strong>r = ν̃/(S̃κ²d²):</strong> Dimensionless parameter</p>
+                                <p><strong>cw2 = 0.3, cw3 = 2.0:</strong> Model constants</p>
+                                <p><strong>Purpose:</strong> Ensures proper boundary layer behavior</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Variables -->
+                    <div class="content-section" id="variables">
+                        <h2>
+                            <span>🔤</span>
+                            Variables & Functions
+                        </h2>
+                        
+                        <div class="variables-grid">
+                            <div class="variable-item">
+                                <div class="variable-symbol">ν̃</div>
+                                <div class="variable-name">Modified Turbulent Viscosity</div>
+                                <div class="variable-description">Working variable (m²/s)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">μₜ</div>
+                                <div class="variable-name">Turbulent Viscosity</div>
+                                <div class="variable-description">μₜ = ρν̃fᵥ₁</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">S̃</div>
+                                <div class="variable-name">Modified Strain Rate</div>
+                                <div class="variable-description">S̃ = S + (ν̃/κ²d²)fᵥ₂</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">d</div>
+                                <div class="variable-name">Wall Distance</div>
+                                <div class="variable-description">Distance to nearest wall (m)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">fᵥ₁</div>
+                                <div class="variable-name">Viscous Damping</div>
+                                <div class="variable-description">χ³/(χ³ + cᵥ₁³)</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">fₘ</div>
+                                <div class="variable-name">Wall Destruction</div>
+                                <div class="variable-description">Controls near-wall behavior</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Analogy -->
+                    <div class="content-section" id="analogy">
+                        <h2>
+                            <span>💡</span>
+                            Single Variable Analogy
+                        </h2>
+                        <p>Think of Spalart-Allmaras as a <strong>smart thermostat for turbulence</strong>. Instead of tracking multiple turbulence properties (like k-ε), it uses one "master control" (ν̃) that automatically adjusts based on local flow conditions.</p>
+                        
+                        <p><strong>Modified viscosity (ν̃):</strong> Like a temperature setting that gets produced where there's shear and destroyed near walls.</p>
+                        
+                        <p><strong>Damping functions:</strong> Like smart sensors that automatically reduce the "turbulence setting" near walls where viscous effects dominate.</p>
+                        
+                        <p><strong>Wall distance dependency:</strong> The closer to a wall, the more the model "knows" to reduce turbulent mixing - like dimming lights automatically near bedtime.</p>
+                        
+                        <p><strong>One-equation advantage:</strong> Simpler than k-ε but smarter than mixing length - like having one intelligent control instead of multiple manual dials.</p>
+                    </div>
+
+                    <!-- Model Constants -->
+                    <div class="content-section" id="constants">
+                        <h2>
+                            <span>📊</span>
+                            Model Constants & Functions
+                        </h2>
+                        
+                        <table class="properties-table">
+                            <tr>
+                                <th>Constant</th>
+                                <th>Value</th>
+                                <th>Physical Role</th>
+                                <th>Calibration Source</th>
+                            </tr>
+                            <tr>
+                                <td><strong>cb1</strong></td>
+                                <td>0.1355</td>
+                                <td>Production coefficient</td>
+                                <td>Flat plate boundary layer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cb2</strong></td>
+                                <td>0.622</td>
+                                <td>Cross-diffusion coefficient</td>
+                                <td>Homogeneous shear flow</td>
+                            </tr>
+                            <tr>
+                                <td><strong>σ</strong></td>
+                                <td>2/3</td>
+                                <td>Diffusion coefficient</td>
+                                <td>Free shear layer calibration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>κ</strong></td>
+                                <td>0.41</td>
+                                <td>von Kármán constant</td>
+                                <td>Log-law region</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cw1</strong></td>
+                                <td>cb1/κ² + (1+cb2)/σ</td>
+                                <td>Destruction coefficient</td>
+                                <td>Derived from other constants</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cw2</strong></td>
+                                <td>0.3</td>
+                                <td>Wall function parameter</td>
+                                <td>Near-wall calibration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cw3</strong></td>
+                                <td>2.0</td>
+                                <td>Wall function parameter</td>
+                                <td>Boundary layer optimization</td>
+                            </tr>
+                            <tr>
+                                <td><strong>cv1</strong></td>
+                                <td>7.1</td>
+                                <td>Viscous damping parameter</td>
+                                <td>Near-wall asymptotic behavior</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Advantages & Disadvantages -->
+                    <div class="content-section" id="comparison">
+                        <h2>
+                            <span>⚖️</span>
+                            Model Comparison
+                        </h2>
+                        
+                        <!-- Advantages -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages vs k-ε</h4>
+                            <ul style="font-size: 0.8rem; color: #065f46;">
+                                <li>Better near-wall treatment (no wall functions needed)</li>
+                                <li>More robust convergence properties</li>
+                                <li>Better adverse pressure gradient handling</li>
+                                <li>Lower computational cost (one equation vs two)</li>
+                                <li>Designed specifically for aerospace applications</li>
+                            </ul>
+                        </div>
+
+                        <!-- Disadvantages -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Disadvantages vs k-ε</h4>
+                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
+                                <li>Poor performance in free shear flows</li>
+                                <li>Cannot handle decaying turbulence</li>
+                                <li>More complex implementation (multiple functions)</li>
+                                <li>Less universal than k-ε (more specialized)</li>
+                                <li>Requires wall distance calculation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Enhanced Sidebar -->
+                <div class="sidebar">
+                    <h3>
+                        <span>🧭</span>
+                        Quick Navigation
+                    </h3>
+                    <ul>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
+                        <li><a href="#equations">📐 Equations</a></li>
+                        <li><a href="#variables">🔤 Variables</a></li>
+                        <li><a href="#analogy">💡 Analogy</a></li>
+                        <li><a href="#constants">📊 Constants</a></li>
+                        <li><a href="#comparison">⚖️ Comparison</a></li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🔗</span>
+                        Related Models
+                    </h3>
+                    <ul>
+                        <li><a href="k-epsilon.html">k-ε Standard</a></li>
+                        <li><a href="k-omega.html">k-ω Standard</a></li>
+                        <li><a href="laminar.html">Laminar Flow</a></li>
+                        <li><a href="../index.html">← All Models</a></li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>📚</span>
+                        Model Info
+                    </h3>
+                    <ul>
+                        <li><span style="color: #f59e0b;">Type:</span> One-Equation RANS</li>
+                        <li><span style="color: #f59e0b;">Variables:</span> ν̃ (modified viscosity)</li>
+                        <li><span style="color: #f59e0b;">Equations:</span> 1 transport + closures</li>
+                        <li><span style="color: #f59e0b;">Cost:</span> Medium-Low</li>
+                        <li><span style="color: #f59e0b; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>⚙️</span>
+                        Key Parameters
+                    </h3>
+                    <ul>
+                        <li><span style="color: #f59e0b;">Grid:</span> y+ < 1 at walls</li>
+                        <li><span style="color: #f59e0b;">BC:</span> ν̃ = 0 at walls</li>
+                        <li><span style="color: #f59e0b;">Init:</span> ν̃ = 3-5 × ν</li>
+                        <li><span style="color: #f59e0b;">Best for:</span> Aerospace</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;">
+                        <span>🏆</span>
+                        Validation Cases
+                    </h3>
+                    <ul>
+                        <li><span style="color: #f59e0b;">Flat plate:</span> Excellent</li>
+                        <li><span style="color: #f59e0b;">Airfoils:</span> Very good</li>
+                        <li><span style="color: #f59e0b;">Jets:</span> Poor</li>
+                        <li><span style="color: #f59e0b;">Separation:</span> Good</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Compact Footer -->
+    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
+        <div class="container">
+            <p style="color: #64748b; font-size: 0.75rem;">
+                © 2024 CFD Reference | 
+                <a href="https://github.com/kuplulumert/fdapp" style="color: #3b82f6; text-decoration: none;">GitHub</a> |
+                <a href="../index.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize KaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            const equations = document.querySelectorAll('.katex-display');
+            equations.forEach(eq => {
+                katex.render(eq.textContent, eq, {
+                    displayMode: true,
+                    throwOnError: false
+                });
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        console.log('Spalart-Allmaras Model page loaded - Enhanced compact design active');
+    </script>
+</body>
+</html>
