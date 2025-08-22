@@ -454,16 +454,27 @@
                         <!-- Main Transport Equation -->
                         <div style="background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(245,158,11,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
                             <h3 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Modified Turbulent Viscosity (ν̃) Transport</h3>
-                            <div class="equation-large katex-display">
-                                \frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2 + \frac{1}{\sigma} \frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu})\frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma} \frac{\partial \tilde{\nu}}{\partial x_j} \frac{\partial \tilde{\nu}}{\partial x_j}
+                            
+                            <!-- Break equation into multiple lines for better fit -->
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    c_{b1} \tilde{S} \tilde{\nu} - c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2
+                                </div>
+                                <div class="equation-large katex-display">
+                                    + \frac{1}{\sigma} \frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu})\frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma} \frac{\partial \tilde{\nu}}{\partial x_j} \frac{\partial \tilde{\nu}}{\partial x_j}
+                                </div>
                             </div>
+                            
                             <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
                                 <p><strong>Physical Meaning:</strong> Transport of modified turbulent viscosity</p>
-                                <p><strong>∂ν̃/∂t:</strong> Rate of change of modified viscosity at fixed point</p>
-                                <p><strong>uⱼ ∂ν̃/∂xⱼ:</strong> Convection of ν̃ by mean flow</p>
+                                <p><strong>∂ν̃/∂t + uⱼ ∂ν̃/∂xⱼ:</strong> Unsteady + convection terms (LHS)</p>
                                 <p><strong>cb1 S̃ ν̃:</strong> Production term, cb1 = 0.1355</p>
-                                <p><strong>-cw1 fw (ν̃/d)²:</strong> Destruction term near walls, cw1 = cb1/κ² + (1+cb2)/σ</p>
-                                <p><strong>Diffusion terms:</strong> Molecular + turbulent diffusion with cross-diffusion</p>
+                                <p><strong>-cw1 fw (ν̃/d)²:</strong> Destruction term near walls</p>
+                                <p><strong>1/σ ∂/∂xⱼ[(ν+ν̃) ∂ν̃/∂xⱼ]:</strong> Molecular + turbulent diffusion</p>
+                                <p><strong>cb2/σ (∂ν̃/∂xⱼ)²:</strong> Cross-diffusion term, cb2 = 0.622, σ = 2/3</p>
                             </div>
                         </div>
 
