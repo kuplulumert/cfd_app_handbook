@@ -700,12 +700,18 @@
 
         // KaTeX rendering
         document.addEventListener("DOMContentLoaded", function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: "$$", right: "$$", display: true},
-                    {left: "$", right: "$", display: false}
-                ]
-            });
+            console.log('DOM loaded, starting KaTeX rendering...');
+            try {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                });
+                console.log('KaTeX rendering completed successfully');
+            } catch (error) {
+                console.error('KaTeX rendering error:', error);
+            }
         });
 
         console.log('WENO discretization page loaded with smooth transitions');
