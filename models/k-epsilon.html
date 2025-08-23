@@ -616,7 +616,7 @@
                         <li class="simple-item">
                             <div class="simple-icon"></div>
                             <div class="simple-text">
-                                <span class="simple-emphasis">Heat pump heat exchangers</span> - near-wall accuracy critical
+                                <span class="simple-emphasis">Near-wall accuracy needed</span> - precise wall effects critical
                             </div>
                         </li>
                         <li class="simple-item">
@@ -643,10 +643,10 @@
 
             <!-- Summary -->
             <div class="summary-card">
-                <div class="summary-title">Bottom Line for Home Appliances</div>
+                <div class="summary-title">Bottom Line</div>
                 <div class="summary-text">
                     Use k-ε as your default for most <strong>Beko appliance flows</strong> like refrigerator cooling systems, oven circulation, and HVAC ducting. 
-                    Switch to k-ω SST for heat pumps, washing machine drums, or any application where precise heat transfer matters. 
+                    Switch to k-ω SST for washing machine drums, complex geometries, or any application where precise wall effects matter. 
                     Perfect for preliminary design and feasibility studies where fast turnaround beats research-level detail.
                 </div>
             </div>
@@ -745,9 +745,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Heat pump evaporators/condensers</strong></td>
-                                <td>Near-wall heat transfer accuracy critical</td>
-                                <td>Use k-ω SST with y⁺ < 1 for precise heat transfer</td>
+                                <td><strong>Near-wall accuracy needed (complex surfaces)</strong></td>
+                                <td>Wall functions break down near surfaces</td>
+                                <td>Use k-ω SST with y⁺ < 1 for precise wall effects</td>
                             </tr>
                             <tr>
                                 <td><strong>Washing machine drum flow</strong></td>
@@ -789,10 +789,10 @@
                         <div class="highlight-text">Use standard k-ε as your default for Beko refrigerators, ovens, and HVAC systems when speed, robustness, and "good-enough" accuracy are the priority.</div>
                     </div>
                     
-                    <div class="highlight-item warning">
-                        <div class="highlight-title">Upgrade for Heat Transfer</div>
-                        <div class="highlight-text">Switch to k-ω SST for heat pumps, condensers, or any application where precise wall heat transfer matters.</div>
-                    </div>
+                                         <div class="highlight-item warning">
+                         <div class="highlight-title">Upgrade for Precision</div>
+                         <div class="highlight-text">Switch to k-ω SST for complex geometries, near-wall effects, or any application where precise wall modeling matters.</div>
+                     </div>
                     
                     <div class="highlight-item info">
                         <div class="highlight-title">High Fidelity for Complex Flows</div>
@@ -892,13 +892,13 @@
                             <td>Refrigerators, ovens, HVAC</td>
                             <td>Fridge cooling circulation</td>
                         </tr>
-                        <tr>
-                            <td>k-ω SST</td>
-                            <td>Better</td>
-                            <td>Medium</td>
-                            <td>Heat pumps, condensers</td>
-                            <td>Heat pump evaporator design</td>
-                        </tr>
+                                                 <tr>
+                             <td>k-ω SST</td>
+                             <td>Better</td>
+                             <td>Medium</td>
+                             <td>Complex geometries, near-wall flows</td>
+                             <td>Precise surface modeling</td>
+                         </tr>
                         <tr>
                             <td>Laminar</td>
                             <td>Perfect*</td>
