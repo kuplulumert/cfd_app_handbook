@@ -148,6 +148,224 @@
             font-weight: 500;
         }
 
+        /* Content Tabs */
+        .content-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(139,92,246,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 2px solid rgba(139,92,246,0.2);
+            border-radius: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .content-tab:hover {
+            background: rgba(139,92,246,0.05);
+            border-color: rgba(139,92,246,0.3);
+            color: #8b5cf6;
+        }
+
+        .content-tab.active {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-color: #8b5cf6;
+            color: white;
+            box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Industry Guide Styles */
+        .industry-guide {
+            max-width: none;
+        }
+
+        .guide-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .guide-section h3 {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(139,92,246,0.1);
+        }
+
+        .guide-section h4 {
+            color: #4f46e5;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .guide-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s ease;
+        }
+
+        .guide-item:hover {
+            background: rgba(139,92,246,0.03);
+        }
+
+        .guide-bullet {
+            color: #8b5cf6;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+        }
+
+        .guide-text {
+            color: #4b5563;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .guide-emphasis {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(139,92,246,0.03);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #8b5cf6;
+        }
+
+        /* Academy Guide Styles */
+        .academy-guide {
+            max-width: none;
+        }
+
+        .theory-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(139,92,246,0.15);
+        }
+
+        .theory-section h3 {
+            color: #1e293b;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid rgba(139,92,246,0.2);
+        }
+
+        .theory-section h4 {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .equation-container {
+            background: linear-gradient(135deg, rgba(248,250,252,0.9), rgba(241,245,249,0.8));
+            border: 2px solid rgba(139,92,246,0.15);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(139,92,246,0.05);
+        }
+
+        .equation-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        .math-block {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin: 0.5rem 0;
+        }
+
+        .definition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-item {
+            background: rgba(139,92,246,0.05);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .definition-term {
+            font-weight: 700;
+            color: #8b5cf6;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .definition-desc {
+            color: #4b5563;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .physical-meaning {
+            background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(5,150,105,0.03));
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .physical-meaning h4 {
+            color: #065f46;
+            margin-bottom: 0.75rem;
+        }
+
         /* Quick Decision Cards */
         .quick-decisions {
             display: grid;
@@ -699,7 +917,26 @@
             });
         });
 
-        console.log('k-omega model page loaded with improved readability');
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.content-tab').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        console.log('k-omega model page loaded with comprehensive tabbed interface');
     </script>
 </body>
 </html>
