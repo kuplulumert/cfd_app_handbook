@@ -577,124 +577,281 @@
             <div id="academy" class="tab-content">
                 <div class="academy-guide">
                     
+                    <!-- Historical Context and Development -->
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #2563eb;">
+                        <h3>Historical Context and Development</h3>
+                        <p class="guide-text">The k-ε model was developed by Launder and Spalding (1972-1974) based on earlier work by Jones and Launder (1971). It represents the first complete closure for the Reynolds-Averaged Navier-Stokes equations using the eddy viscosity hypothesis.</p>
+                        
+                        <h4>Timeline and Evolution:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1925:</strong> Prandtl introduces mixing length concept</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1945:</strong> Kolmogorov proposes k-ε model foundation</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1971:</strong> Jones & Launder develop early two-equation models</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1974:</strong> Launder & Spalding establish standard k-ε model</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1992:</strong> Yakhot & Orszag introduce RNG k-ε variant</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1995:</strong> Shih et al. develop Realizable k-ε model</span>
+                            </li>
+                        </ul>
+                    </div>
+
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
-                        <h3>Mathematical Foundation</h3>
-                        <p class="guide-text">The k-ε model is a two-equation Reynolds-Averaged Navier-Stokes (RANS) turbulence model that solves transport equations for turbulent kinetic energy (k) and its dissipation rate (ε).</p>
+                        <h3>Mathematical Foundation and Derivation</h3>
+                        <p class="guide-text">The k-ε model emerges from the exact Reynolds stress transport equations through systematic modeling approximations. Starting from the incompressible Navier-Stokes equations:</p>
                         
-                        <h4>Turbulent Kinetic Energy Transport Equation:</h4>
+                        <h4>Reynolds-Averaged Navier-Stokes Equations:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial \rho}{\partial t} + \frac{\partial(\rho \overline{u_i})}{\partial x_i} = 0$$
+                            $$\frac{\partial(\rho \overline{u_i})}{\partial t} + \frac{\partial(\rho \overline{u_i u_j})}{\partial x_j} = -\frac{\partial \overline{p}}{\partial x_i} + \frac{\partial}{\partial x_j}\left[\mu\left(\frac{\partial \overline{u_i}}{\partial x_j} + \frac{\partial \overline{u_j}}{\partial x_i}\right) - \rho\overline{u_i'u_j'}\right]$$
+                        </div>
+                        
+                        <h4>Exact Reynolds Stress Transport Equation:</h4>
+                        <div class="equation-block">
+                            $$\frac{D(\rho\overline{u_i'u_j'})}{Dt} = P_{ij} + \Phi_{ij} - \epsilon_{ij} + D_{ij}^T + D_{ij}^L + D_{ij}^M$$
+                        </div>
+                        <p class="guide-text">Where P<sub>ij</sub> = Production, Φ<sub>ij</sub> = Pressure-strain, ε<sub>ij</sub> = Dissipation, D<sub>ij</sub> = Diffusion terms</p>
+                        
+                        <h4>Turbulent Kinetic Energy Transport Equation (k = ½τ<sub>ii</sub>):</h4>
                         <div class="equation-block">
                             $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right] + G_k + G_b - \rho\epsilon - Y_M$$
                         </div>
                         
-                        <h4>Dissipation Rate Transport Equation:</h4>
+                        <h4>Dissipation Rate Transport Equation (Modeled):</h4>
                         <div class="equation-block">
                             $$\frac{\partial(\rho \epsilon)}{\partial t} + \frac{\partial(\rho \epsilon u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_\epsilon}\right) \frac{\partial \epsilon}{\partial x_j}\right] + C_{1\epsilon}\frac{\epsilon}{k}(G_k + C_{3\epsilon}G_b) - C_{2\epsilon}\rho\frac{\epsilon^2}{k}$$
                         </div>
                         
-                        <h4>Turbulent Viscosity (Boussinesq Approximation):</h4>
+                        <h4>Turbulent Viscosity (Dimensional Analysis + Kolmogorov Hypothesis):</h4>
                         <div class="equation-block">
-                            $$\mu_t = \rho C_\mu \frac{k^2}{\epsilon}$$
+                            $$\mu_t = \rho C_\mu \frac{k^2}{\epsilon}, \quad \text{where } C_\mu = f\left(\frac{k^2/\epsilon^2}{S^2}\right) \approx 0.09$$
+                        </div>
+                        
+                        <h4>Derivation of ε-equation Structure:</h4>
+                        <p class="guide-text">The ε-equation is not exact but follows from dimensional analysis and the requirement that:</p>
+                        <div class="equation-block">
+                            $$\epsilon \sim \frac{k^{3/2}}{\ell}, \quad \text{where } \ell \text{ is integral length scale}$$
                         </div>
                     </div>
 
-                    <!-- Term Definitions -->
+                    <!-- Enhanced Term Definitions -->
                     <div class="guide-section guide-strengths">
-                        <h3>Term Definitions and Physical Meaning</h3>
+                        <h3>Comprehensive Term Definitions and Physical Meaning</h3>
                         <div class="term-definitions">
                             <div class="term-item">
                                 <strong>k:</strong> Turbulent kinetic energy per unit mass [m²/s²]
                                 $$k = \frac{1}{2}\overline{u_i'u_i'} = \frac{1}{2}(\overline{u'^2} + \overline{v'^2} + \overline{w'^2})$$
+                                <p class="guide-text"><em>Physical meaning:</em> Represents the average kinetic energy contained in turbulent fluctuations. In isotropic turbulence, k scales with mean square velocity fluctuations.</p>
                             </div>
                             <div class="term-item">
                                 <strong>ε:</strong> Turbulent dissipation rate [m²/s³]
-                                $$\epsilon = \nu \overline{\frac{\partial u_i'}{\partial x_j}\frac{\partial u_i'}{\partial x_j}}$$
+                                $$\epsilon = \nu \overline{\frac{\partial u_i'}{\partial x_j}\frac{\partial u_i'}{\partial x_j}} = 2\nu \overline{s_{ij}'s_{ij}'}$$
+                                <p class="guide-text"><em>Physical meaning:</em> Rate at which turbulent kinetic energy is converted to internal energy through viscous action at the smallest scales (Kolmogorov microscale).</p>
                             </div>
                             <div class="term-item">
                                 <strong>μₜ:</strong> Turbulent (eddy) viscosity [kg/m·s]
+                                $$\mu_t = \rho C_\mu \frac{k^2}{\epsilon} = \rho \nu_t$$
+                                <p class="guide-text"><em>Physical meaning:</em> Represents enhanced momentum transport due to turbulent mixing. Typically 10²-10⁵ times larger than molecular viscosity in high-Re flows.</p>
                             </div>
                             <div class="term-item">
-                                <strong>Gₖ:</strong> Generation of turbulent kinetic energy due to mean velocity gradients
-                                $$G_k = -\rho \overline{u_i'u_j'} \frac{\partial u_j}{\partial x_i} = \mu_t S^2$$
+                                <strong>Gₖ:</strong> Shear production of turbulent kinetic energy
+                                $$G_k = -\rho \overline{u_i'u_j'} \frac{\partial u_j}{\partial x_i} = \mu_t S^2 = \mu_t \left(2\overline{S_{ij}S_{ij}}\right)$$
+                                <p class="guide-text"><em>Physical meaning:</em> Energy transfer from mean flow to turbulent fluctuations through Reynolds stress work. Always positive (energy source).</p>
                             </div>
                             <div class="term-item">
-                                <strong>Gᵦ:</strong> Generation of turbulent kinetic energy due to buoyancy
-                                $$G_b = \beta g_i \frac{\mu_t}{Pr_t} \frac{\partial T}{\partial x_i}$$
+                                <strong>Gᵦ:</strong> Buoyant production/destruction of turbulent kinetic energy
+                                $$G_b = \beta g_i \frac{\mu_t}{Pr_t} \frac{\partial T}{\partial x_i}, \quad \beta = -\frac{1}{\rho}\left(\frac{\partial \rho}{\partial T}\right)_p$$
+                                <p class="guide-text"><em>Physical meaning:</em> G<sub>b</sub> > 0 for unstable stratification (buoyancy enhances turbulence), G<sub>b</sub> < 0 for stable stratification (buoyancy suppresses turbulence).</p>
                             </div>
                             <div class="term-item">
                                 <strong>S:</strong> Magnitude of mean strain rate tensor
-                                $$S = \sqrt{2S_{ij}S_{ij}}, \quad S_{ij} = \frac{1}{2}\left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right)$$
+                                $$S = \sqrt{2S_{ij}S_{ij}}, \quad S_{ij} = \frac{1}{2}\left(\frac{\partial \overline{u_i}}{\partial x_j} + \frac{\partial \overline{u_j}}{\partial x_i}\right)$$
+                                <p class="guide-text"><em>Physical meaning:</em> Measure of mean flow deformation rate. In simple shear flow, S = |∂u/∂y|.</p>
                             </div>
                             <div class="term-item">
-                                <strong>Yₘ:</strong> Contribution of fluctuating dilatation in compressible turbulence
+                                <strong>Yₘ:</strong> Dilatation dissipation in compressible flows
+                                $$Y_M = 2\rho \epsilon M_t^2, \quad M_t = \sqrt{\frac{k}{a^2}}$$
+                                <p class="guide-text"><em>Physical meaning:</em> Additional dissipation due to compressibility effects. Becomes significant when turbulent Mach number M<sub>t</sub> > 0.25.</p>
+                            </div>
+                            <div class="term-item">
+                                <strong>C₃ε:</strong> Buoyancy coupling parameter
+                                $$C_{3\epsilon} = \tanh\left|\frac{v}{u}\right|$$
+                                <p class="guide-text"><em>Physical meaning:</em> Accounts for principal flow direction in stratified flows. Ranges from 0 (horizontal flow) to 1 (vertical flow).</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Model Constants -->
+                    <!-- Advanced Turbulent Scales -->
+                    <div class="guide-section" style="background: #f0fdf4; border-left: 4px solid #16a34a;">
+                        <h3>Turbulent Scales and Energy Cascade</h3>
+                        
+                        <h4>Kolmogorov Microscales (Dissipation Scales):</h4>
+                        <div class="equation-block">
+                            $$\eta = \left(\frac{\nu^3}{\epsilon}\right)^{1/4}, \quad \tau_\eta = \left(\frac{\nu}{\epsilon}\right)^{1/2}, \quad u_\eta = (\nu\epsilon)^{1/4}$$
+                        </div>
+                        <p class="guide-text">Where η = length scale, τ<sub>η</sub> = time scale, u<sub>η</sub> = velocity scale at which viscous dissipation occurs.</p>
+                        
+                        <h4>Integral Scales (Energy-Containing Scales):</h4>
+                        <div class="equation-block">
+                            $$\ell_t = C_\mu^{3/4}\frac{k^{3/2}}{\epsilon}, \quad \tau_t = \frac{k}{\epsilon}, \quad u_t = \sqrt{k}$$
+                        </div>
+                        
+                        <h4>Taylor Microscale (Inertial Subrange):</h4>
+                        <div class="equation-block">
+                            $$\lambda = \sqrt{\frac{15\nu k}{\epsilon}}, \quad Re_\lambda = \frac{u_t \lambda}{\nu} = \sqrt{15Re_t}$$
+                        </div>
+                        
+                        <h4>Scale Separation and Reynolds Number:</h4>
+                        <div class="equation-block">
+                            $$Re_t = \frac{k^2}{\nu\epsilon}, \quad \frac{\ell_t}{\eta} \sim Re_t^{3/4}, \quad \frac{\tau_t}{\tau_\eta} \sim Re_t^{1/2}$$
+                        </div>
+                        <p class="guide-text">For the k-ε model to be valid, Re<sub>t</sub> >> 1 (typically Re<sub>t</sub> > 200) is required for clear scale separation.</p>
+                    </div>
+
+                    <!-- Enhanced Model Constants -->
                     <div class="guide-section guide-limitations">
-                        <h3>Standard Model Constants</h3>
+                        <h3>Model Constants: Derivation and Physical Significance</h3>
                         <div class="constants-table">
                             <div class="equation-block">
                                 $$C_\mu = 0.09, \quad C_{1\epsilon} = 1.44, \quad C_{2\epsilon} = 1.92$$
                                 $$\sigma_k = 1.0, \quad \sigma_\epsilon = 1.3, \quad C_{3\epsilon} = \tanh\left|\frac{v}{u}\right|$$
                             </div>
                         </div>
-                        <p class="guide-text">These constants were determined through extensive calibration against canonical flows including:</p>
+                        
+                        <h4>Physical Basis for Constants:</h4>
+                        <div class="term-item">
+                            <strong>C<sub>μ</sub> = 0.09:</strong> Derived from log-law requirements in equilibrium boundary layers
+                            $$C_\mu = \left(\kappa^2\sqrt{C_{2\epsilon} - C_{1\epsilon}}\right)^{-1} = \left(0.41^2\sqrt{1.92-1.44}\right)^{-1} \approx 0.09$$
+                        </div>
+                        <div class="term-item">
+                            <strong>C<sub>1ε</sub> = 1.44:</strong> Ensures correct behavior in homogeneous shear flows
+                            $$C_{1\epsilon} = 1 + \frac{2}{3}A_1^{(h)} = 1 + \frac{2}{3}(0.66) \approx 1.44$$
+                        </div>
+                        <div class="term-item">
+                            <strong>C<sub>2ε</sub> = 1.92:</strong> Controls dissipation rate in isotropic turbulence decay
+                            $$C_{2\epsilon} = C_{1\epsilon} + \frac{\kappa^2}{\sqrt{C_\mu}} = 1.44 + \frac{0.41^2}{\sqrt{0.09}} \approx 1.92$$
+                        </div>
+                        <div class="term-item">
+                            <strong>σ<sub>k</sub> = 1.0, σ<sub>ε</sub> = 1.3:</strong> Turbulent Prandtl numbers for k and ε transport
+                            <p class="guide-text">Based on analogy with heat transfer and calibration against boundary layer data.</p>
+                        </div>
+                        
+                        <h4>Calibration Database (Historical Validation):</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text">Homogeneous shear flows</span>
+                                <span class="guide-text"><strong>Homogeneous shear flows:</strong> P<sub>k</sub>/ε ≈ 1.8 (equilibrium ratio)</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text">Boundary layer flows</span>
+                                <span class="guide-text"><strong>Boundary layer flows:</strong> Skin friction coefficient C<sub>f</sub> predictions</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text">Free shear flows (jets, mixing layers)</span>
+                                <span class="guide-text"><strong>Free jets:</strong> Spreading rate β = 0.094 (experimental: 0.094 ± 0.008)</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text">Isotropic turbulence decay</span>
+                                <span class="guide-text"><strong>Mixing layers:</strong> Growth rate δ<sub>ω</sub>/x ≈ 0.18</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Isotropic decay:</strong> k/k<sub>0</sub> = (t/t<sub>0</sub>)<sup>-n</sup>, n = 1.3</span>
                             </li>
                         </ul>
+                        
+                        <h4>Realizability Constraints:</h4>
+                        <div class="equation-block">
+                            $$\overline{u_i'u_j'}\overline{u_i'u_j'} \geq 0, \quad \overline{u_i'u_i'} \geq 0, \quad -\frac{1}{2}\overline{u_i'u_i'} \leq \overline{u_i'u_j'} \leq \frac{1}{2}\overline{u_i'u_i'}$$
+                        </div>
+                        <p class="guide-text">Standard k-ε model can violate these constraints in strained flows, leading to unphysical results.</p>
                     </div>
 
-                    <!-- Theoretical Background -->
+                    <!-- Enhanced Theoretical Background -->
                     <div class="guide-section guide-use-cases">
-                        <h3>Theoretical Background and Assumptions</h3>
+                        <h3>Advanced Theoretical Framework and Assumptions</h3>
                         
-                        <h4>Reynolds Decomposition:</h4>
+                        <h4>Reynolds Decomposition and Averaging Operations:</h4>
                         <div class="equation-block">
-                            $$u_i = \overline{u_i} + u_i', \quad p = \overline{p} + p'$$
+                            $$u_i(x,t) = \overline{u_i}(x) + u_i'(x,t), \quad p(x,t) = \overline{p}(x) + p'(x,t)$$
                         </div>
-                        <p class="guide-text">Where overbar denotes time-averaged quantities and prime denotes fluctuating components.</p>
-                        
-                        <h4>Boussinesq Hypothesis:</h4>
+                        <p class="guide-text">Where overbar denotes ensemble/time-averaged quantities and prime denotes fluctuating components. For stationary turbulence:</p>
                         <div class="equation-block">
-                            $$-\rho\overline{u_i'u_j'} = \mu_t \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right) - \frac{2}{3}\left(\rho k + \mu_t \frac{\partial u_k}{\partial x_k}\right)\delta_{ij}$$
+                            $$\overline{u_i} = \lim_{T \to \infty} \frac{1}{T} \int_0^T u_i(x,t) dt, \quad \overline{u_i'} = 0$$
                         </div>
                         
-                        <h4>Key Assumptions:</h4>
+                        <h4>Generalized Boussinesq Hypothesis with Anisotropy:</h4>
+                        <div class="equation-block">
+                            $$-\rho\overline{u_i'u_j'} = \mu_t \left(\frac{\partial \overline{u_i}}{\partial x_j} + \frac{\partial \overline{u_j}}{\partial x_i}\right) - \frac{2}{3}\left(\rho k + \mu_t \frac{\partial \overline{u_k}}{\partial x_k}\right)\delta_{ij}$$
+                        </div>
+                        <p class="guide-text">This assumes that Reynolds stresses align with mean strain rate (isotropic turbulent viscosity assumption).</p>
+                        
+                        <h4>Anisotropy Tensor and Model Limitations:</h4>
+                        <div class="equation-block">
+                            $$a_{ij} = \frac{\overline{u_i'u_j'}}{2k} - \frac{1}{3}\delta_{ij}, \quad \sum_{i} a_{ii} = 0$$
+                        </div>
+                        <p class="guide-text">For isotropic turbulence, a<sub>ij</sub> = 0. The k-ε model assumes local isotropy, which fails in:</p>
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Isotropic turbulent viscosity:</strong> μₜ is scalar (not tensor)</span>
+                                <span class="guide-text">Strongly strained flows (a<sub>11</sub> - a<sub>22</sub> ≠ 0)</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Local equilibrium:</strong> Production ≈ Dissipation in the logarithmic layer</span>
+                                <span class="guide-text">Flows with streamline curvature</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>High Reynolds number:</strong> Molecular viscosity << Turbulent viscosity</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Fully developed turbulence:</strong> No transitional or relaminarization effects</span>
+                                <span class="guide-text">Rotating reference frames</span>
                             </li>
                         </ul>
+                        
+                        <h4>Critical Assumptions and Validity Range:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Gradient diffusion hypothesis:</strong> ∇(turbulent transport) ∝ ∇(transported quantity)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Local equilibrium hypothesis:</strong> P<sub>k</sub> ≈ ε in logarithmic layer (∂P<sub>k</sub>/∂t ≈ ∂ε/∂t ≈ 0)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>High Reynolds number:</strong> Re<sub>t</sub> = k²/(νε) >> 1, typically Re<sub>t</sub> > 200</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Turbulent time scale assumption:</strong> τ<sub>t</sub> = k/ε represents characteristic eddy turnover time</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Kolmogorov hypothesis:</strong> Small scales are isotropic and universal</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Modeling Approximations in ε-Equation:</h4>
+                        <p class="guide-text">The ε-equation is entirely modeled (not exact) based on:</p>
+                        <div class="equation-block">
+                            $$\frac{D\epsilon}{Dt} \sim \frac{\epsilon}{k}P_k - \frac{\epsilon^2}{k} + \text{diffusion terms}$$
+                        </div>
+                        <p class="guide-text">This structure ensures dimensional consistency and proper asymptotic behavior in simple flows.</p>
                     </div>
 
                     <!-- Wall Treatment -->
@@ -768,31 +925,117 @@
                         </div>
                     </div>
 
-                    <!-- Numerical Implementation -->
-                    <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
-                        <h3>Numerical Implementation Considerations</h3>
+                    <!-- Advanced Model Variants and Improvements -->
+                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
+                        <h3>Advanced Model Variants and Modern Improvements</h3>
                         
-                        <h4>Discretization Requirements:</h4>
+                        <h4>RNG k-ε Model (Yakhot & Orszag, 1992):</h4>
+                        <p class="guide-text">Based on renormalization group theory, provides systematic derivation of model constants:</p>
+                        <div class="equation-block">
+                            $$C_\mu = 0.0845, \quad C_{1\epsilon} = 1.42, \quad C_{2\epsilon} = 1.68$$
+                            $$\sigma_k = \sigma_\epsilon = 0.7179$$
+                        </div>
+                        <div class="equation-block">
+                            $$C_{2\epsilon}^* = C_{2\epsilon} + \frac{C_\mu \eta^3 (1-\eta/\eta_0)}{1 + \beta\eta^3}, \quad \eta = S\frac{k}{\epsilon}, \quad \eta_0 = 4.38, \quad \beta = 0.012$$
+                        </div>
+                        
+                        <h4>Realizable k-ε Model (Shih et al., 1995):</h4>
+                        <p class="guide-text">Ensures realizability conditions are satisfied, prevents unphysical normal stresses:</p>
+                        <div class="equation-block">
+                            $$C_\mu = \frac{1}{A_0 + A_s \frac{kU^*}{\epsilon}}, \quad U^* = \sqrt{S_{ij}S_{ij} + \tilde{\Omega}_{ij}\tilde{\Omega}_{ij}}$$
+                        </div>
+                        <div class="equation-block">
+                            $$A_0 = 4.04, \quad A_s = \sqrt{6}\cos\phi, \quad \phi = \frac{1}{3}\arccos(\sqrt{6}W), \quad W = \frac{S_{ij}S_{jk}S_{ki}}{S^3}$$
+                        </div>
+                        
+                        <h4>Low-Reynolds Number Extensions:</h4>
+                        <p class="guide-text">Launder-Sharma (1974) and Abe-Kondoh-Nagano (1994) modifications for near-wall integration:</p>
+                        <div class="equation-block">
+                            $$C_\mu = C_\mu^* f_\mu, \quad f_\mu = \exp\left(-\frac{3.4}{(1+Re_t/50)^2}\right), \quad Re_t = \frac{k^2}{\nu\epsilon}$$
+                        </div>
+                        
+                        <h4>Rotation and Curvature Corrections:</h4>
+                        <div class="equation-block">
+                            $$C_\mu = C_\mu^* f_r, \quad f_r = \max\left[0, \frac{1-0.03\sqrt{\Omega k/\epsilon}}{1+0.23\sqrt{\Omega k/\epsilon}}\right]$$
+                        </div>
+                        <p class="guide-text">Where Ω is the magnitude of mean rotation rate tensor.</p>
+                    </div>
+
+                    <!-- Advanced Numerical Implementation -->
+                    <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
+                        <h3>Advanced Numerical Implementation and Stability</h3>
+                        
+                        <h4>Source Term Linearization for Stability:</h4>
+                        <div class="equation-block">
+                            $$S_k = G_k - \rho\epsilon \rightarrow S_k = G_k - \rho\frac{\epsilon}{k}k = G_k - S_k^{impl} k$$
+                        </div>
+                        <div class="equation-block">
+                            $$S_\epsilon = C_{1\epsilon}\frac{\epsilon}{k}G_k - C_{2\epsilon}\rho\frac{\epsilon^2}{k} \rightarrow C_{1\epsilon}\frac{\epsilon}{k}G_k - C_{2\epsilon}\rho\frac{\epsilon}{k}\epsilon$$
+                        </div>
+                        
+                        <h4>Realizability-Preserving Discretization:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Convection schemes:</strong> Second-order upwind minimum for accuracy</span>
+                                <span class="guide-text"><strong>Production limiter:</strong> P<sub>k</sub> = min(P<sub>k</sub>, 10ρε) to prevent excessive production</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>k and ε coupling:</strong> Solve simultaneously or with under-relaxation</span>
+                                <span class="guide-text"><strong>Lower bounds:</strong> k<sub>min</sub> = 10⁻¹⁰ m²/s², ε<sub>min</sub> = 10⁻¹⁰ m²/s³</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Positivity:</strong> Ensure k, ε > 0 through clipping or source linearization</span>
+                                <span class="guide-text"><strong>Time scale limiting:</strong> τ<sub>t</sub> = max(k/ε, C_τ√(ν/ε)), C_τ ≈ 6</span>
                             </li>
                         </ul>
                         
-                        <h4>Convergence Criteria:</h4>
-                        <div class="equation-block">
-                            $$\text{Residuals: } R_k, R_\epsilon < 10^{-4} \text{ (minimum)}$$
-                            $$\text{Monitor: } \int \frac{\partial k}{\partial t} \, dV \rightarrow 0$$
+                        <h4>Advanced Discretization Schemes:</h4>
+                        <div class="term-item">
+                            <strong>QUICK scheme for convection:</strong> Third-order accuracy, reduces numerical diffusion
+                            $$\phi_f = \phi_P + \frac{r}{2}(\phi_E - \phi_P) - \frac{1-r}{8}(\phi_{EE} - 3\phi_E + 3\phi_P - \phi_W)$$
                         </div>
+                        <div class="term-item">
+                            <strong>Central differencing with deferred correction:</strong> 
+                            $$\nabla\phi|_f = \nabla\phi|_f^{CD} + \psi[\nabla\phi|_f^{HO} - \nabla\phi|_f^{CD}]$$
+                        </div>
+                        
+                        <h4>Convergence Acceleration Techniques:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Multigrid methods:</strong> V-cycles for elliptic pressure equation</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Algebraic multigrid (AMG):</strong> For unstructured grids</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Block-coupled solvers:</strong> Solve momentum-k-ε simultaneously</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Advanced Convergence Criteria:</h4>
+                        <div class="equation-block">
+                            $$\text{Scaled residuals: } \frac{|\sum_P a_P \phi_P - \sum_{nb} a_{nb} \phi_{nb} - S_P|}{\sum_P |a_P \phi_P|} < 10^{-4}$$
+                            $$\text{Mass imbalance: } \frac{|\dot{m}_{in} - \dot{m}_{out}|}{|\dot{m}_{in}|} < 10^{-3}$$
+                        </div>
+                        
+                        <h4>Mesh Quality Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Aspect ratio:</strong> AR < 100 in boundary layer regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Skewness:</strong> < 0.95 for tetrahedral cells</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Growth ratio:</strong> < 1.3 between adjacent cells</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
