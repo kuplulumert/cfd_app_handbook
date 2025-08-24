@@ -148,6 +148,224 @@
             font-weight: 500;
         }
 
+        /* Content Tabs */
+        .content-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(139,92,246,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 2px solid rgba(139,92,246,0.2);
+            border-radius: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .content-tab:hover {
+            background: rgba(139,92,246,0.05);
+            border-color: rgba(139,92,246,0.3);
+            color: #8b5cf6;
+        }
+
+        .content-tab.active {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-color: #8b5cf6;
+            color: white;
+            box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Industry Guide Styles */
+        .industry-guide {
+            max-width: none;
+        }
+
+        .guide-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .guide-section h3 {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(139,92,246,0.1);
+        }
+
+        .guide-section h4 {
+            color: #4f46e5;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .guide-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s ease;
+        }
+
+        .guide-item:hover {
+            background: rgba(139,92,246,0.03);
+        }
+
+        .guide-bullet {
+            color: #8b5cf6;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+        }
+
+        .guide-text {
+            color: #4b5563;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .guide-emphasis {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(139,92,246,0.03);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #8b5cf6;
+        }
+
+        /* Academy Guide Styles */
+        .academy-guide {
+            max-width: none;
+        }
+
+        .theory-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(139,92,246,0.15);
+        }
+
+        .theory-section h3 {
+            color: #1e293b;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid rgba(139,92,246,0.2);
+        }
+
+        .theory-section h4 {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .equation-container {
+            background: linear-gradient(135deg, rgba(248,250,252,0.9), rgba(241,245,249,0.8));
+            border: 2px solid rgba(139,92,246,0.15);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(139,92,246,0.05);
+        }
+
+        .equation-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        .math-block {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin: 0.5rem 0;
+        }
+
+        .definition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-item {
+            background: rgba(139,92,246,0.05);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .definition-term {
+            font-weight: 700;
+            color: #8b5cf6;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .definition-desc {
+            color: #4b5563;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .physical-meaning {
+            background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(5,150,105,0.03));
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .physical-meaning h4 {
+            color: #065f46;
+            margin-bottom: 0.75rem;
+        }
+
         /* Quick Decision Cards */
         .quick-decisions {
             display: grid;
@@ -383,7 +601,14 @@
                 <p class="page-subtitle">One-equation RANS model - Aerospace legacy model for external aerodynamics</p>
             </div>
 
-            <!-- INDUSTRY-FOCUSED DECISION TABLES -->
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+            </div>
+
+            <!-- Industry Guide Tab Content -->
+            <div id="industry" class="tab-content active">
             <div class="quick-decisions">
                 <div class="decision-card use-it">
                     <div class="decision-header">
@@ -625,6 +850,375 @@
                     </tbody>
                 </table>
             </div>
+                </div>
+            </div>
+
+            <!-- Academy Guide Tab Content -->
+            <div id="academy" class="tab-content">
+                <div class="academy-guide">
+                    <div class="theory-section">
+                        <h3>Historical Context & Development</h3>
+                        
+                        <h4>Development Timeline</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1992:</strong> Philippe Spalart and Steven Allmaras develop one-equation turbulence model at NASA Langley Research Center.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1994:</strong> Original S-A model published, designed specifically for aerospace applications and external aerodynamics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>1990s-2000s:</strong> Widespread adoption in aerospace industry, becomes standard for aircraft and missile design.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>2000s-Present:</strong> Various modifications (S-A-neg, S-A-RC, S-A-BC) developed for specific applications, though k-ω SST gains popularity.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Design Philosophy</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Single equation simplicity:</strong> Avoid complexity of two-equation models while maintaining reasonable accuracy.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Aerospace focus:</strong> Optimized for external aerodynamics, boundary layers, and mild separation.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Lower memory requirements and simpler implementation than k-ε or k-ω models.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Wall integration:</strong> Designed to integrate to the wall without wall functions, suitable for y⁺ ≈ 1.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>Mathematical Foundation & Transport Equation</h3>
+                        
+                        <h4>Modified Turbulent Viscosity Transport</h4>
+                        <div class="equation-container">
+                            <div class="equation-title">Spalart-Allmaras Transport Equation</div>
+                            <div class="math-block">
+                                $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = P + D - Y$$
+                            </div>
+                        </div>
+
+                        <div class="equation-container">
+                            <div class="equation-title">Complete Form with All Terms</div>
+                            <div class="math-block">
+                                $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - \left[c_{w1} f_w - \frac{c_{b1}}{\kappa^2} f_{t2}\right] \left(\frac{\tilde{\nu}}{d}\right)^2$$
+                            </div>
+                            <div class="math-block">
+                                $$+ \frac{1}{\sigma}\frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma}\left(\frac{\partial \tilde{\nu}}{\partial x_j}\right)^2$$
+                            </div>
+                        </div>
+
+                        <div class="physical-meaning">
+                            <h4>Physical Interpretation</h4>
+                            <p><strong>Modified turbulent viscosity ν̃:</strong> Related to but not identical to turbulent viscosity. Near walls, ν̃ ≈ νₜ. In the freestream, ν̃ can exceed νₜ significantly.</p>
+                            <p><strong>Single equation approach:</strong> Avoids length scale equation (like ε or ω) by using distance to nearest wall as the length scale.</p>
+                        </div>
+
+                        <h4>Individual Term Definitions</h4>
+                        <div class="definition-grid">
+                            <div class="definition-item">
+                                <div class="definition-term">Production Term: $c_{b1} \tilde{S} \tilde{\nu}$</div>
+                                <div class="definition-desc">
+                                    $\tilde{S} = S + \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}$ is modified strain rate.
+                                    $S = \sqrt{2\Omega_{ij}\Omega_{ij}}$ is magnitude of vorticity tensor.
+                                    Generates turbulent viscosity in regions of high strain.
+                                </div>
+                            </div>
+                            
+                            <div class="definition-item">
+                                <div class="definition-term">Destruction Term: $c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2$</div>
+                                <div class="definition-desc">
+                                    $f_w = g \left[\frac{1 + c_{w3}^6}{g^6 + c_{w3}^6}\right]^{1/6}$ where $g = r + c_{w2}(r^6 - r)$
+                                    $r = \min\left(\frac{\tilde{\nu}}{\tilde{S}\kappa^2 d^2}, 10\right)$ is strain rate parameter.
+                                    Destroys turbulent viscosity, preventing excessive buildup.
+                                </div>
+                            </div>
+                            
+                            <div class="definition-item">
+                                <div class="definition-term">Diffusion: $\frac{1}{\sigma}\frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right]$</div>
+                                <div class="definition-desc">
+                                    Molecular and turbulent diffusion of modified turbulent viscosity.
+                                    σ = 2/3 is turbulent Prandtl number for ν̃ equation.
+                                </div>
+                            </div>
+                            
+                            <div class="definition-item">
+                                <div class="definition-term">Cross-Diffusion: $\frac{c_{b2}}{\sigma}\left(\frac{\partial \tilde{\nu}}{\partial x_j}\right)^2$</div>
+                                <div class="definition-desc">
+                                    Additional diffusion term proportional to gradient magnitude.
+                                    $c_{b2} = 0.622$ enhances numerical stability and accuracy.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>Turbulent Viscosity Calculation & Damping Functions</h3>
+                        
+                        <h4>Turbulent Viscosity Relation</h4>
+                        <div class="equation-container">
+                            <div class="equation-title">Viscosity Calculation</div>
+                            <div class="math-block">
+                                $$\nu_t = \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}$$
+                            </div>
+                        </div>
+
+                        <div class="physical-meaning">
+                            <h4>Damping Function Behavior</h4>
+                            <p><strong>Near wall (χ → 0):</strong> $f_{v1} → 0$, ensuring νₜ → 0 at the wall.</p>
+                            <p><strong>Away from wall (χ >> 1):</strong> $f_{v1} → 1$, so νₜ ≈ ν̃ in turbulent regions.</p>
+                            <p><strong>Transition region:</strong> Smooth transition ensures proper near-wall behavior without wall functions.</p>
+                        </div>
+
+                        <h4>Additional Damping Functions</h4>
+                        <div class="definition-grid">
+                            <div class="definition-item">
+                                <div class="definition-term">$f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}$</div>
+                                <div class="definition-desc">Modifies strain rate in production term to improve performance in adverse pressure gradients.</div>
+                            </div>
+                            
+                            <div class="definition-item">
+                                <div class="definition-term">$f_{t2} = c_{t3} \exp(-c_{t4} \chi^2)$</div>
+                                <div class="definition-desc">Trip function term (usually zero in practical applications) for transition modeling.</div>
+                            </div>
+                        </div>
+
+                        <h4>Model Constants</h4>
+                        <div class="definition-grid">
+                            <div class="definition-item">
+                                <div class="definition-term">$c_{b1} = 0.1355$</div>
+                                <div class="definition-desc">Production coefficient</div>
+                            </div>
+                            <div class="definition-item">
+                                <div class="definition-term">$c_{b2} = 0.622$</div>
+                                <div class="definition-desc">Cross-diffusion coefficient</div>
+                            </div>
+                            <div class="definition-item">
+                                <div class="definition-term">$c_{w1} = \frac{c_{b1}}{\kappa^2} + \frac{1 + c_{b2}}{\sigma}$</div>
+                                <div class="definition-desc">Destruction coefficient (≈ 3.239)</div>
+                            </div>
+                            <div class="definition-item">
+                                <div class="definition-term">$c_{w2} = 0.3, c_{w3} = 2.0$</div>
+                                <div class="definition-desc">Destruction function parameters</div>
+                            </div>
+                            <div class="definition-item">
+                                <div class="definition-term">$c_{v1} = 7.1$</div>
+                                <div class="definition-desc">Viscosity damping parameter</div>
+                            </div>
+                            <div class="definition-item">
+                                <div class="definition-term">$\kappa = 0.41, \sigma = 2/3$</div>
+                                <div class="definition-desc">von Kármán constant and Prandtl number</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>Advanced Theoretical Framework & Assumptions</h3>
+                        
+                        <h4>Fundamental Assumptions</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Single length scale:</strong> Wall distance d provides length scale, eliminating need for separate length scale equation.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Boussinesq hypothesis:</strong> Maintains linear stress-strain relation with single turbulent viscosity.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Attached flow focus:</strong> Optimized for boundary layers and mildly separated flows, not free shear flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>High Reynolds number:</strong> Assumes turbulent flow, though near-wall treatment handles viscous effects.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Limitations and Modeling Compromises</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Geometric dependence:</strong> Requires wall distance calculation, complicating implementation in complex geometries.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Free shear flow weakness:</strong> Not calibrated for jets, mixing layers, or free turbulence.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Rotation effects:</strong> No built-in rotation or curvature corrections compared to more advanced models.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Scalar transport:</strong> Limited thermal modeling capabilities compared to k-ε family models.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>Wall Treatment & Boundary Conditions</h3>
+                        
+                        <h4>Wall Boundary Conditions</h4>
+                        <div class="equation-container">
+                            <div class="equation-title">Wall Conditions</div>
+                            <div class="math-block">
+                                $$\tilde{\nu}_{wall} = 0, \quad \nu_t = \tilde{\nu} f_{v1} → 0 \text{ as } \chi → 0$$
+                            </div>
+                        </div>
+
+                        <div class="physical-meaning">
+                            <h4>No-Slip Implementation</h4>
+                            <p>The S-A model naturally satisfies no-slip conditions through the damping function $f_{v1}$. As ν̃ → 0 at the wall, χ → 0, and consequently νₜ → 0, ensuring proper wall treatment without explicit wall functions.</p>
+                        </div>
+
+                        <h4>Mesh Requirements</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>y⁺ ≈ 1:</strong> First cell should be in viscous sublayer for optimal accuracy.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Wall function alternative:</strong> Can use wall functions for y⁺ > 30, though less accurate than integration to wall.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Smooth growth:</strong> Boundary layer mesh should have smooth growth from wall to avoid numerical issues.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Far-Field Boundary Conditions</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Freestream specification:</strong> ν̃ = 0.1ν to 1.0ν in freestream (low values for external flows).</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Inlet conditions:</strong> Specify ν̃ based on expected turbulence level or empirical correlations.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Outlet conditions:</strong> Zero-gradient or convective boundary conditions for ν̃.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>Model Variants & Improvements</h3>
+                        
+                        <h4>Spalart-Allmaras Negative (S-A-neg)</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Negative viscosity handling:</strong> Allows ν̃ to become negative in separated regions, improving robustness.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Enhanced separation:</strong> Better prediction of flow separation and reattachment.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Modified destruction:</strong> Different destruction term formulation for negative ν̃ values.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Rotation and Curvature Correction (S-A-RC)</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Rotation effects:</strong> Includes corrections for system rotation and streamline curvature.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Production modification:</strong> Rotation function multiplies production term based on local rotation rate.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Improved accuracy:</strong> Better performance in rotating machinery and highly curved flows.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Boundary Condition Variant (S-A-BC)</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Modified wall condition:</strong> Alternative wall boundary condition implementation.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Enhanced robustness:</strong> Improved numerical stability in some flow configurations.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>Numerical Implementation & Solution Strategies</h3>
+                        
+                        <h4>Discretization Considerations</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Convection schemes:</strong> Second-order upwind recommended for ν̃ equation to balance accuracy and stability.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Source term treatment:</strong> Implicit treatment of destruction term prevents negative ν̃ in standard model.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Wall distance:</strong> Accurate and efficient wall distance calculation crucial for model performance.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Convergence Characteristics</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Single equation advantage:</strong> Generally converges faster than two-equation models.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Under-relaxation:</strong> Typical ν̃ under-relaxation factors: 0.7-1.0 depending on problem complexity.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Initialization:</strong> Initialize ν̃ field based on freestream conditions and expected boundary layer thickness.</span>
+                            </li>
+                        </ul>
+
+                        <h4>Advanced Implementation Features</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Adaptive wall distance:</strong> Efficient algorithms for wall distance computation in complex geometries.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Limiter functions:</strong> Prevent excessive production in stagnation regions and highly strained flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-bullet">•</span>
+                                <span class="guide-text"><strong>Compressibility corrections:</strong> Extensions for high-speed compressible flows in aerospace applications.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -671,7 +1265,26 @@
             });
         });
 
-        console.log('Spalart-Allmaras model page loaded with improved readability');
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.content-tab').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        console.log('Spalart-Allmaras model page loaded with comprehensive tabbed interface');
     </script>
 </body>
 </html>
