@@ -659,6 +659,319 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Academic Perspective -->
+            <div class="content-section" style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(134,239,172,0.05)); border: 2px solid #22c55e;">
+                <div class="section-header">
+                    <div class="section-icon">🎓</div>
+                    <div class="section-title">Academic Perspective</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="highlight-box" style="background: rgba(34,197,94,0.05); border-left: 4px solid #22c55e;">
+                        <h4 style="color: #166534;">📚 Theoretical Foundation</h4>
+                        <p>Represents the limit of high Reynolds number flows where viscous forces become negligible compared to inertial forces. Fundamental for understanding fluid mechanics principles.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(59,130,246,0.05); border-left: 4px solid #3b82f6;">
+                        <h4 style="color: #1e40af;">🔬 Research Applications</h4>
+                        <p>Essential for studying shock wave physics, compressible flow theory, and developing analytical solutions for validation of more complex models.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
+                        <h4 style="color: #5b21b6;">🧮 Mathematical Elegance</h4>
+                        <p>Euler equations represent conservation laws in their purest form - ideal for teaching fundamental CFD concepts and numerical method development.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Use Cases -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🚀</div>
+                    <div class="section-title">Advanced Use Cases</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🛸 Hypersonic Vehicles</div>
+                        <div class="info-value">Re-entry vehicles, scramjets, shock-shock interactions</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💥 Blast Wave Analysis</div>
+                        <div class="info-value">Explosions, shock propagation, pressure wave dynamics</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🌪️ Meteorological Applications</div>
+                        <div class="info-value">Atmospheric shocks, sonic booms, weather patterns</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔬 Fundamental Research</div>
+                        <div class="info-value">Shock tube experiments, gas dynamics research</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📡 Antenna Design</div>
+                        <div class="info-value">Electromagnetic-flow coupling, high-speed platform effects</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎯 Ballistics</div>
+                        <div class="info-value">Projectile aerodynamics, muzzle blast analysis</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Guide -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">⚙️</div>
+                    <div class="section-title">Implementation Guide</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h4 style="color: #8b5cf6; margin-bottom: 1rem;">🔧 Numerical Considerations</h4>
+                        <div class="info-item" style="margin-bottom: 1rem;">
+                            <div class="info-label">Shock Capturing</div>
+                            <div class="info-value">Use high-resolution schemes (WENO, TVD) for sharp discontinuities</div>
+                        </div>
+                        <div class="info-item" style="margin-bottom: 1rem;">
+                            <div class="info-label">Time Integration</div>
+                            <div class="info-value">Explicit schemes with CFL stability limits (CFL ≤ 1.0)</div>
+                        </div>
+                        <div class="info-item" style="margin-bottom: 1rem;">
+                            <div class="info-label">Artificial Viscosity</div>
+                            <div class="info-value">May be needed for shock stability and preventing oscillations</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Mesh Requirements</div>
+                            <div class="info-value">No boundary layer refinement - uniform or shock-adapted</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #8b5cf6; margin-bottom: 1rem;">🎯 Boundary Conditions</h4>
+                        <div class="info-item" style="margin-bottom: 1rem;">
+                            <div class="info-label">Wall Conditions</div>
+                            <div class="info-value">Slip condition: ∂u/∂n = 0, no temperature condition</div>
+                        </div>
+                        <div class="info-item" style="margin-bottom: 1rem;">
+                            <div class="info-label">Inlet/Outlet</div>
+                            <div class="info-value">Characteristic-based: specify primitive variables based on Mach</div>
+                        </div>
+                        <div class="info-item" style="margin-bottom: 1rem;">
+                            <div class="info-label">Far-field</div>
+                            <div class="info-value">Non-reflecting boundaries to avoid spurious reflections</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Symmetry</div>
+                            <div class="info-value">Perfect symmetry conditions - ideal for reducing domain size</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industry Decision Matrix -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">📊</div>
+                    <div class="section-title">Industry Decision Matrix</div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Flow Regime</th>
+                            <th>Mach Number</th>
+                            <th>Inviscid Applicability</th>
+                            <th>Industry Recommendation</th>
+                            <th>Typical Applications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(34,197,94,0.1);">
+                            <td><strong>Hypersonic</strong></td>
+                            <td>Ma > 5</td>
+                            <td>Excellent</td>
+                            <td>Primary analysis tool</td>
+                            <td>Re-entry vehicles, scramjets</td>
+                        </tr>
+                        <tr style="background: rgba(34,197,94,0.1);">
+                            <td><strong>Supersonic</strong></td>
+                            <td>1 < Ma < 5</td>
+                            <td>Very Good</td>
+                            <td>Conceptual design phase</td>
+                            <td>Military aircraft, rockets</td>
+                        </tr>
+                        <tr style="background: rgba(245,158,11,0.1);">
+                            <td><strong>Transonic</strong></td>
+                            <td>0.8 < Ma < 1.2</td>
+                            <td>Limited</td>
+                            <td>Shock location only</td>
+                            <td>Civil aircraft (preliminary)</td>
+                        </tr>
+                        <tr style="background: rgba(239,68,68,0.1);">
+                            <td><strong>Subsonic High</strong></td>
+                            <td>0.3 < Ma < 0.8</td>
+                            <td>Poor</td>
+                            <td>Far-field only</td>
+                            <td>Limited industrial use</td>
+                        </tr>
+                        <tr style="background: rgba(239,68,68,0.1);">
+                            <td><strong>Subsonic Low</strong></td>
+                            <td>Ma < 0.3</td>
+                            <td>Unsuitable</td>
+                            <td>Never use</td>
+                            <td>None - use viscous models</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Validation and Verification -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">✅</div>
+                    <div class="section-title">Validation & Verification</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h4 style="color: #8b5cf6; margin-bottom: 1rem;">📐 Analytical Benchmarks</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem; background: rgba(139,92,246,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #8b5cf6;">
+                                <strong>Prandtl-Meyer Expansion:</strong> Supersonic flow around corners
+                            </li>
+                            <li style="padding: 0.5rem; background: rgba(139,92,246,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #8b5cf6;">
+                                <strong>Oblique Shock Relations:</strong> Shock wave angle and pressure ratios
+                            </li>
+                            <li style="padding: 0.5rem; background: rgba(139,92,246,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #8b5cf6;">
+                                <strong>Isentropic Flow Relations:</strong> Nozzle flow properties
+                            </li>
+                            <li style="padding: 0.5rem; background: rgba(139,92,246,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #8b5cf6;">
+                                <strong>Shock Tube Problems:</strong> Riemann solutions for moving shocks
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #8b5cf6; margin-bottom: 1rem;">🧪 Experimental Validation</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem; background: rgba(34,197,94,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #22c55e;">
+                                <strong>Pressure Coefficients:</strong> Compare surface pressure distributions
+                            </li>
+                            <li style="padding: 0.5rem; background: rgba(34,197,94,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #22c55e;">
+                                <strong>Shock Angles:</strong> Validate shock wave positions and angles
+                            </li>
+                            <li style="padding: 0.5rem; background: rgba(34,197,94,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #22c55e;">
+                                <strong>Flow Visualization:</strong> Schlieren and shadowgraph comparisons
+                            </li>
+                            <li style="padding: 0.5rem; background: rgba(34,197,94,0.05); margin: 0.5rem 0; border-radius: 0.5rem; border-left: 4px solid #22c55e;">
+                                <strong>Wind Tunnel Data:</strong> High-speed test data for validation
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Pitfalls -->
+            <div class="content-section" style="background: rgba(239,68,68,0.05); border: 2px solid #ef4444;">
+                <div class="section-header">
+                    <div class="section-icon">⚠️</div>
+                    <div class="section-title">Common Pitfalls & Solutions</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="highlight-box" style="background: rgba(239,68,68,0.05); border-left: 4px solid #ef4444;">
+                        <h4 style="color: #dc2626;">❌ Pitfall: Using for Drag Prediction</h4>
+                        <p><strong>Problem:</strong> Inviscid models cannot predict skin friction drag</p>
+                        <p><strong>Solution:</strong> Use only for pressure drag components or preliminary shape optimization</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(239,68,68,0.05); border-left: 4px solid #ef4444;">
+                        <h4 style="color: #dc2626;">❌ Pitfall: Low-Speed Applications</h4>
+                        <p><strong>Problem:</strong> Viscous effects dominate at low Mach numbers</p>
+                        <p><strong>Solution:</strong> Only use for Ma > 0.3, prefer viscous models otherwise</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(239,68,68,0.05); border-left: 4px solid #ef4444;">
+                        <h4 style="color: #dc2626;">❌ Pitfall: Numerical Oscillations</h4>
+                        <p><strong>Problem:</strong> Shock waves can cause spurious oscillations</p>
+                        <p><strong>Solution:</strong> Use appropriate shock-capturing schemes (WENO, TVD)</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(239,68,68,0.05); border-left: 4px solid #ef4444;">
+                        <h4 style="color: #dc2626;">❌ Pitfall: Heat Transfer Analysis</h4>
+                        <p><strong>Problem:</strong> No thermal boundary layer resolution</p>
+                        <p><strong>Solution:</strong> Must include viscous effects for any heat transfer prediction</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Optimization Tips -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">⚡</div>
+                    <div class="section-title">Performance Optimization</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🚀 Mesh Strategy</div>
+                        <div class="info-value">Shock-aligned grids, adaptive refinement near discontinuities</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⏱️ Time Stepping</div>
+                        <div class="info-value">Local time stepping for steady problems, explicit schemes</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💾 Memory Usage</div>
+                        <div class="info-value">Significantly lower than viscous models - larger domains possible</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔄 Convergence</div>
+                        <div class="info-value">Fast convergence to steady state, monitor shock positions</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎯 Parallelization</div>
+                        <div class="info-value">Excellent parallel efficiency - scales well with cores</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📊 Post-Processing</div>
+                        <div class="info-value">Focus on pressure, density, Mach number distributions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Recommendations -->
+            <div class="content-section" style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(196,181,253,0.05)); border: 2px solid #8b5cf6;">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <div class="section-title">Final Recommendations</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div class="highlight-box" style="background: rgba(34,197,94,0.05); border-left: 4px solid #22c55e;">
+                        <h4 style="color: #166534;">🚀 For Aerospace Industry</h4>
+                        <p>Essential first step in supersonic vehicle design. Use for initial configuration studies, then follow with viscous analysis for detailed design.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(59,130,246,0.05); border-left: 4px solid #3b82f6;">
+                        <h4 style="color: #1e40af;">🎓 For Academic Research</h4>
+                        <p>Perfect for developing and validating numerical methods. Provides clean test cases for algorithm development and verification.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(245,158,11,0.05); border-left: 4px solid #f59e0b;">
+                        <h4 style="color: #92400e;">⚡ For Quick Analysis</h4>
+                        <p>When you need fast results for design space exploration or preliminary assessments. Speed advantage is unmatched.</p>
+                    </div>
+                    
+                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
+                        <h4 style="color: #5b21b6;">🔬 For Understanding Physics</h4>
+                        <p>Best model for learning fundamental compressible flow phenomena without viscous complexity. Educational goldmine.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
