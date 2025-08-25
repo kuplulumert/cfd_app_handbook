@@ -6,8 +6,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="4.0">
-    <meta name="last-modified" content="2024-12-19-sst-enhanced">
     <title>Inviscid Flow - Beko CFD AI Agent</title>
     
     <!-- KaTeX for math rendering -->
@@ -358,13 +356,15 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="../index.html" class="logo">Beko CFD</a>
+                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
                 
                 <!-- Navigation Tabs -->
                 <div class="nav-tabs">
-                    <a href="../home.html" class="nav-tab">Home</a>
-                    <a href="../methods.html" class="nav-tab">Methods</a>
-                    <a href="../turbulence-models.html" class="nav-tab active">Models</a>
+                    <a href="../home.html" class="nav-tab">🏠 Home</a>
+                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
+                    <a href="../turbulence-models.html" class="nav-tab active">2. Turbulence Models</a>
+                    <a href="../methods.html" class="nav-tab">3. Methods</a>
+                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
                 </div>
             </div>
         </div>
@@ -539,10 +539,10 @@
                 </div>
 
                 <div class="equation-box">
-                    <div class="equation-title">Euler Equations (Inviscid)</div>
+                    <div class="equation-title">Continuity Equation</div>
                     <div>$$\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0$$</div>
                     <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                        Continuity equation - mass conservation
+                        Mass conservation - no source/sink terms
                     </p>
                 </div>
 
@@ -561,31 +561,47 @@
                         No viscous dissipation or heat conduction
                     </p>
                 </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Equation of State</div>
+                    <div>$$p = \rho R T \quad \text{or} \quad p = (\gamma - 1) \rho e$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Closes the system - relates pressure, density, and temperature
+                    </p>
+                </div>
             </div>
 
             <!-- Key Assumptions -->
             <div class="content-section">
                 <div class="section-header">
-                    <div class="section-icon">📋</div>
+                    <div class="section-icon">📊</div>
                     <div class="section-title">Key Assumptions</div>
                 </div>
                 
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label">🚫 No Viscosity</div>
-                        <div class="info-value">μ = 0, no friction forces</div>
+                        <div class="info-label">μ = 0</div>
+                        <div class="info-value">No viscosity</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">🚫 No Heat Conduction</div>
-                        <div class="info-value">k = 0, no thermal diffusion</div>
+                        <div class="info-label">k = 0</div>
+                        <div class="info-value">No heat conduction</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">✅ Slip Conditions</div>
-                        <div class="info-value">Flow can slip along walls</div>
+                        <div class="info-label">Slip BC</div>
+                        <div class="info-value">Flow slips along walls</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">✅ Pressure Forces</div>
-                        <div class="info-value">Only pressure and inertial forces</div>
+                        <div class="info-label">High Re</div>
+                        <div class="info-value">Inertial >> Viscous forces</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">No Separation</div>
+                        <div class="info-value">Cannot predict flow separation</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Pressure Only</div>
+                        <div class="info-value">Only pressure drag, no skin friction</div>
                     </div>
                 </div>
             </div>
@@ -643,7 +659,7 @@
                             <td>Low Re flows</td>
                         </tr>
                         <tr>
-                            <td>k-ε</td>
+                            <td>k-ε Standard</td>
                             <td>Medium</td>
                             <td>Good</td>
                             <td>Turbulent</td>
@@ -659,62 +675,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- Academic Perspective -->
-            <div class="content-section" style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(134,239,172,0.05)); border: 2px solid #22c55e;">
-                <div class="section-header">
-                    <div class="section-icon">🎓</div>
-                    <div class="section-title">Academic Perspective</div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-                    <div class="highlight-box" style="background: rgba(34,197,94,0.05); border-left: 4px solid #22c55e;">
-                        <h4 style="color: #166534;">📚 Theoretical Foundation</h4>
-                        <p>Represents the limit of high Reynolds number flows where viscous forces become negligible compared to inertial forces. Fundamental for understanding fluid mechanics principles.</p>
-                    </div>
-                    
-                    <div class="highlight-box" style="background: rgba(59,130,246,0.05); border-left: 4px solid #3b82f6;">
-                        <h4 style="color: #1e40af;">🔬 Research Applications</h4>
-                        <p>Essential for studying shock wave physics, compressible flow theory, and developing analytical solutions for validation of more complex models.</p>
-                    </div>
-                    
-                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
-                        <h4 style="color: #5b21b6;">🧮 Mathematical Elegance</h4>
-                        <p>Euler equations represent conservation laws in their purest form - ideal for teaching fundamental CFD concepts and numerical method development.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Final Recommendations -->
-            <div class="content-section" style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(196,181,253,0.05)); border: 2px solid #8b5cf6;">
-                <div class="section-header">
-                    <div class="section-icon">🎯</div>
-                    <div class="section-title">Final Recommendations</div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                    <div class="highlight-box" style="background: rgba(34,197,94,0.05); border-left: 4px solid #22c55e;">
-                        <h4 style="color: #166534;">🚀 For Aerospace Industry</h4>
-                        <p>Essential first step in supersonic vehicle design. Use for initial configuration studies, then follow with viscous analysis for detailed design.</p>
-                    </div>
-                    
-                    <div class="highlight-box" style="background: rgba(59,130,246,0.05); border-left: 4px solid #3b82f6;">
-                        <h4 style="color: #1e40af;">🎓 For Academic Research</h4>
-                        <p>Perfect for developing and validating numerical methods. Provides clean test cases for algorithm development and verification.</p>
-                    </div>
-                    
-                    <div class="highlight-box" style="background: rgba(245,158,11,0.05); border-left: 4px solid #f59e0b;">
-                        <h4 style="color: #92400e;">⚡ For Quick Analysis</h4>
-                        <p>When you need fast results for design space exploration or preliminary assessments. Speed advantage is unmatched.</p>
-                    </div>
-                    
-                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
-                        <h4 style="color: #5b21b6;">🔬 For Understanding Physics</h4>
-                        <p>Best model for learning fundamental compressible flow phenomena without viscous complexity. Educational goldmine.</p>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -725,8 +685,33 @@
         </div>
     </footer>
 
-    <!-- Math rendering -->
     <script>
+        // Smooth transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Add smooth transition to navigation tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
+            });
+        });
+
+        // Add smooth transition to back link
+        document.querySelector('.back-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothTransition(this.href);
+        });
+
+        // KaTeX rendering
         document.addEventListener("DOMContentLoaded", function() {
             renderMathInElement(document.body, {
                 delimiters: [
@@ -735,8 +720,8 @@
                 ]
             });
         });
-        
-        console.log('Inviscid flow model page loaded with modern SST-style design - v4.0');
+
+        console.log('Inviscid flow model page loaded with master theme');
     </script>
 </body>
 </html>
