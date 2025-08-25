@@ -447,54 +447,207 @@
             <div id="industry" class="tab-content active">
                 <div class="industry-guide">
                     
-                    <!-- Model Overview -->
-                    <div class="guide-section guide-overview">
-                        <h3>1. Model Overview</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Viscous flow model solving full Navier-Stokes equations without turbulence modeling.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Assumes smooth, ordered flow with parallel streamlines (no chaotic mixing).</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Valid for low Reynolds number flows where viscous forces dominate inertial forces.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Provides exact solution when flow conditions are truly laminar.</span>
-                            </li>
-                        </ul>
+                    <!-- Interactive Reynolds Number Calculator -->
+                    <div class="guide-section" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-left: 4px solid #10b981; margin-bottom: 3rem;">
+                        <h3 style="color: #065f46; margin-bottom: 1.5rem;">🧮 Reynolds Number Calculator & Flow Regime Predictor</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                            <div>
+                                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                    <h4 style="color: #047857; margin-bottom: 1rem;">Input Parameters</h4>
+                                    <div style="display: grid; gap: 1rem;">
+                                        <div>
+                                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Velocity (m/s):</label>
+                                            <input type="number" id="velocity" placeholder="e.g., 0.1" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem;" oninput="calculateReynolds()">
+                                        </div>
+                                        <div>
+                                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Length Scale (m):</label>
+                                            <input type="number" id="length" placeholder="e.g., 0.01" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem;" oninput="calculateReynolds()">
+                                        </div>
+                                        <div>
+                                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Kinematic Viscosity (m²/s):</label>
+                                            <select id="viscosity" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem;" onchange="calculateReynolds()">
+                                                <option value="1.5e-5">Air (20°C): 1.5×10⁻⁵</option>
+                                                <option value="1.0e-6">Water (20°C): 1.0×10⁻⁶</option>
+                                                <option value="1.0e-4">Oil (typical): 1.0×10⁻⁴</option>
+                                                <option value="custom">Custom value...</option>
+                                            </select>
+                                            <input type="number" id="customViscosity" placeholder="Enter custom value" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem; margin-top: 0.5rem; display: none;" oninput="calculateReynolds()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                    <h4 style="color: #047857; margin-bottom: 1rem;">Results & Recommendation</h4>
+                                    <div id="reynolds-result" style="text-align: center; padding: 1rem;">
+                                        <div style="font-size: 2rem; font-weight: 700; color: #6b7280; margin-bottom: 0.5rem;">Re = ?</div>
+                                        <div style="color: #6b7280;">Enter parameters above</div>
+                                    </div>
+                                    <div id="flow-regime" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center; font-weight: 600; display: none;">
+                                    </div>
+                                    <div id="model-recommendation" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center; display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Key Advantages -->
+                    <!-- Visual Flow Regime Chart -->
+                    <div class="guide-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-left: 4px solid #0ea5e9; margin-bottom: 3rem;">
+                        <h3 style="color: #0c4a6e; margin-bottom: 1.5rem;">📊 Flow Regime Chart & Critical Reynolds Numbers</h3>
+                        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                                <div style="text-align: center; padding: 1.5rem; background: #fef3c7; border-radius: 10px; border: 2px solid #f59e0b;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🟢</div>
+                                    <div style="font-weight: 700; color: #92400e; margin-bottom: 0.5rem;">LAMINAR</div>
+                                    <div style="font-size: 1.25rem; font-weight: 600; color: #92400e;">Re < 2,300</div>
+                                    <div style="font-size: 0.875rem; color: #78716c; margin-top: 0.5rem;">Smooth, predictable flow</div>
+                                </div>
+                                <div style="text-align: center; padding: 1.5rem; background: #fed7d7; border-radius: 10px; border: 2px solid #f56565;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🟡</div>
+                                    <div style="font-weight: 700; color: #c53030; margin-bottom: 0.5rem;">TRANSITION</div>
+                                    <div style="font-size: 1.25rem; font-weight: 600; color: #c53030;">2,300 < Re < 4,000</div>
+                                    <div style="font-size: 0.875rem; color: #78716c; margin-top: 0.5rem;">Unpredictable regime</div>
+                                </div>
+                                <div style="text-align: center; padding: 1.5rem; background: #fee2e2; border-radius: 10px; border: 2px solid #ef4444;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔴</div>
+                                    <div style="font-weight: 700; color: #dc2626; margin-bottom: 0.5rem;">TURBULENT</div>
+                                    <div style="font-size: 1.25rem; font-weight: 600; color: #dc2626;">Re > 4,000</div>
+                                    <div style="font-size: 0.875rem; color: #78716c; margin-top: 0.5rem;">Chaotic mixing</div>
+                                </div>
+                            </div>
+                            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                                <h4 style="color: #1e40af; margin-bottom: 1rem;">💡 Critical Reynolds Numbers by Geometry</h4>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
+                                        <span>🚰 Circular Pipe:</span> <strong>Re < 2,300</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
+                                        <span>📐 Parallel Plates:</span> <strong>Re < 1,400</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
+                                        <span>🏠 Flat Plate:</span> <strong>Re < 500,000</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
+                                        <span>⭕ Sphere:</span> <strong>Re < 250,000</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Overview with Icons -->
+                    <div class="guide-section guide-overview">
+                        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                            <span style="background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 0.5rem; border-radius: 8px; font-size: 1.25rem;">🌊</span>
+                            1. Laminar Flow Model Overview
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2rem;">📏</span>
+                                    <h4 style="color: #047857; margin: 0;">Mathematical Foundation</h4>
+                                </div>
+                                <p style="color: #4a5568; line-height: 1.6;">Solves full Navier-Stokes equations with viscous terms. No turbulence modeling required - direct solution of fundamental fluid mechanics equations.</p>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2rem;">🎯</span>
+                                    <h4 style="color: #047857; margin: 0;">Flow Characteristics</h4>
+                                </div>
+                                <p style="color: #4a5568; line-height: 1.6;">Smooth, ordered flow with parallel streamlines. No chaotic mixing - fluid layers slide past each other without cross-stream momentum transfer.</p>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2rem;">⚖️</span>
+                                    <h4 style="color: #047857; margin: 0;">Force Balance</h4>
+                                </div>
+                                <p style="color: #4a5568; line-height: 1.6;">Viscous forces dominate inertial forces (low Re). Molecular-level momentum transport controls flow behavior and provides natural flow stability.</p>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2rem;">🎲</span>
+                                    <h4 style="color: #047857; margin: 0;">Exact Solutions</h4>
+                                </div>
+                                <p style="color: #4a5568; line-height: 1.6;">When conditions are truly laminar, provides mathematically exact solution limited only by numerical precision. No modeling uncertainty.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Advantages with Performance Metrics -->
                     <div class="guide-section guide-strengths">
-                        <h3>2. Key Advantages</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Exact accuracy:</strong> When flow is truly laminar, provides mathematically exact solution.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Heat transfer precision:</strong> Excellent prediction of thermal boundary layers and wall heat transfer.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Computational efficiency:</strong> No turbulence modeling overhead, faster than RANS models.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Analytical validation:</strong> Many classical solutions available for verification.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Mesh efficiency:</strong> Good convergence with moderate mesh resolution.</span>
-                            </li>
-                        </ul>
+                        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                            <span style="background: linear-gradient(135deg, #10b981, #34d399); color: white; padding: 0.5rem; border-radius: 8px; font-size: 1.25rem;">✨</span>
+                            2. Key Advantages & Performance Metrics
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem;">
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🎯</span>
+                                    <h4 style="color: #065f46; margin: 0;">Exact Accuracy</h4>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">When flow is truly laminar, provides mathematically exact solution limited only by numerical precision.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Accuracy: ±0.1-1%</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">vs ±5-15% for turbulence models</div>
+                                </div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🌡️</span>
+                                    <h4 style="color: #065f46; margin: 0;">Heat Transfer Precision</h4>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Excellent prediction of thermal boundary layers and wall heat transfer coefficients.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Nusselt number: ±2-5%</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Perfect for electronics cooling</div>
+                                </div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">⚡</span>
+                                    <h4 style="color: #065f46; margin: 0;">Computational Speed</h4>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">No turbulence modeling overhead - fastest viscous flow solution method.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">30-50% faster than RANS</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Lower memory requirements</div>
+                                </div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">📐</span>
+                                    <h4 style="color: #065f46; margin: 0;">Analytical Validation</h4>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Extensive classical solutions available for code verification and validation.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Poiseuille, Couette, Blasius</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Exact analytical benchmarks</div>
+                                </div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🎛️</span>
+                                    <h4 style="color: #065f46; margin: 0;">Mesh Efficiency</h4>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Excellent convergence behavior with moderate mesh resolution requirements.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Stable convergence</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">No turbulence model instabilities</div>
+                                </div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🔬</span>
+                                    <h4 style="color: #065f46; margin: 0;">Physical Insight</h4>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Direct solution reveals fundamental flow physics without modeling approximations.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Pure physics</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">No empirical constants</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Reynolds Number Limitations -->
@@ -522,25 +675,123 @@
 
                     <!-- Beko Appliance Applications -->
                     <div class="guide-section guide-use-cases">
-                        <h3>4. Beko Appliance Applications</h3>
+                        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                            <span style="background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 0.5rem; border-radius: 8px; font-size: 1.25rem;">🏭</span>
+                            4. Beko Appliance Applications & Reynolds Number Ranges
+                        </h3>
                         
-                        <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Microfluidics & Sensors:</span> Small-scale flow devices, lab-on-chip components in smart appliances</span>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem;">
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2.5rem;">🔬</span>
+                                    <div>
+                                        <h4 style="color: #065f46; margin: 0;">Microfluidics & Sensors</h4>
+                                        <div style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 0.1 - 100</div>
+                                    </div>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Small-scale flow devices, lab-on-chip components in smart appliances, precise fluid control systems.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Perfect Application ✅</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Small scales ensure laminar conditions</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2.5rem;">🌡️</span>
+                                    <div>
+                                        <h4 style="color: #065f46; margin: 0;">Electronics Cooling</h4>
+                                        <div style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 10 - 1,000</div>
+                                    </div>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Natural convection cooling in control circuits, low-velocity cooling flows, precise thermal management.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Excellent Choice ✅</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">High heat transfer accuracy needed</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 1.5rem; border-radius: 12px; border: 2px solid #f59e0b;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2.5rem;">🛢️</span>
+                                    <div>
+                                        <h4 style="color: #92400e; margin: 0;">Viscous Fluid Processing</h4>
+                                        <div style="background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 1 - 500</div>
+                                    </div>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Thick lubricants, oil flows in compressors, high-viscosity fluid processing systems.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                                    <div style="font-weight: 600; color: #b45309;">Good Application ⚠️</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Verify Reynolds number first</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2.5rem;">🎯</span>
+                                    <div>
+                                        <h4 style="color: #065f46; margin: 0;">Thermal Analysis</h4>
+                                        <div style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 0.1 - 2,000</div>
+                                    </div>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Precise heat transfer in thin films, coatings, interfaces, and thermal barrier analysis.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                                    <div style="font-weight: 600; color: #047857;">Best Choice ✅</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">When thermal precision is critical</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: linear-gradient(135deg, #f0f9ff, #dbeafe); padding: 1.5rem; border-radius: 12px; border: 2px solid #3b82f6;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2.5rem;">🚀</span>
+                                    <div>
+                                        <h4 style="color: #1e40af; margin: 0;">Startup Conditions</h4>
+                                        <div style="background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: Variable</div>
+                                    </div>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">Initial flow development before turbulence onset, transient analysis during appliance startup.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                                    <div style="font-weight: 600; color: #1e40af;">Transient Use 🔄</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">May transition to turbulent</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: linear-gradient(135d, #f3e8ff, #e9d5ff); padding: 1.5rem; border-radius: 12px; border: 2px solid #8b5cf6;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 2.5rem;">🔍</span>
+                                    <div>
+                                        <h4 style="color: #6b21a8; margin: 0;">Component Validation</h4>
+                                        <div style="background: #8b5cf6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: Controlled</div>
+                                    </div>
+                                </div>
+                                <p style="color: #374151; margin-bottom: 1rem;">CFD verification against analytical solutions, code validation, research and development.</p>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #8b5cf6;">
+                                    <div style="font-weight: 600; color: #6b21a8;">Research Tool 🔬</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Exact solutions available</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Electronics Cooling:</span> Natural convection cooling in control circuits, low-velocity cooling flows</span>
-                        </div>
-                        <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Viscous Fluid Processing:</span> Thick lubricants, oil flows in compressors</span>
-                        </div>
-                        <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Thermal Analysis:</span> Precise heat transfer in thin films, coatings, and interfaces</span>
-                        </div>
-                        <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Startup Conditions:</span> Initial flow development before turbulence onset</span>
-                        </div>
-                        <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Component Validation:</span> CFD verification against analytical solutions</span>
+                        
+                        <!-- Quick Application Guide -->
+                        <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 2rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid #64748b;">
+                            <h4 style="color: #334155; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">💡</span>
+                                Quick Application Decision Guide
+                            </h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                    <div style="font-weight: 600; color: #059669; margin-bottom: 0.5rem;">✅ Use Laminar When:</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Re < 2,000 AND accuracy is critical</div>
+                                </div>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                    <div style="font-weight: 600; color: #dc2626; margin-bottom: 0.5rem;">❌ Avoid When:</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Re > 4,000 OR mixing is important</div>
+                                </div>
+                                <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                    <div style="font-weight: 600; color: #f59e0b; margin-bottom: 0.5rem;">⚠️ Check Carefully:</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">2,000 < Re < 4,000 (transition zone)</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1229,6 +1480,85 @@
             event.target.classList.add('active');
         }
         
+        // Reynolds Number Calculator
+        function calculateReynolds() {
+            const velocity = parseFloat(document.getElementById('velocity').value);
+            const length = parseFloat(document.getElementById('length').value);
+            const viscositySelect = document.getElementById('viscosity').value;
+            let viscosity;
+            
+            if (viscositySelect === 'custom') {
+                document.getElementById('customViscosity').style.display = 'block';
+                viscosity = parseFloat(document.getElementById('customViscosity').value);
+            } else {
+                document.getElementById('customViscosity').style.display = 'none';
+                viscosity = parseFloat(viscositySelect);
+            }
+            
+            if (velocity && length && viscosity) {
+                const reynolds = (velocity * length) / viscosity;
+                const resultDiv = document.getElementById('reynolds-result');
+                const regimeDiv = document.getElementById('flow-regime');
+                const recommendationDiv = document.getElementById('model-recommendation');
+                
+                // Display Reynolds number
+                resultDiv.innerHTML = `
+                    <div style="font-size: 2rem; font-weight: 700; color: #047857; margin-bottom: 0.5rem;">
+                        Re = ${reynolds.toExponential(2)}
+                    </div>
+                    <div style="color: #6b7280;">Reynolds Number</div>
+                `;
+                
+                // Determine flow regime and recommendation
+                regimeDiv.style.display = 'block';
+                recommendationDiv.style.display = 'block';
+                
+                if (reynolds < 2300) {
+                    regimeDiv.innerHTML = '🟢 LAMINAR FLOW';
+                    regimeDiv.style.background = '#dcfce7';
+                    regimeDiv.style.color = '#166534';
+                    regimeDiv.style.border = '2px solid #22c55e';
+                    
+                    recommendationDiv.innerHTML = '✅ USE LAMINAR MODEL<br><span style="font-size: 0.875rem; font-weight: normal;">Perfect choice - exact accuracy expected</span>';
+                    recommendationDiv.style.background = '#dcfce7';
+                    recommendationDiv.style.color = '#166534';
+                    recommendationDiv.style.border = '2px solid #22c55e';
+                } else if (reynolds < 4000) {
+                    regimeDiv.innerHTML = '🟡 TRANSITION ZONE';
+                    regimeDiv.style.background = '#fef3c7';
+                    regimeDiv.style.color = '#92400e';
+                    regimeDiv.style.border = '2px solid #f59e0b';
+                    
+                    recommendationDiv.innerHTML = '⚠️ USE TRANSITION MODEL<br><span style="font-size: 0.875rem; font-weight: normal;">Flow may be laminar or turbulent</span>';
+                    recommendationDiv.style.background = '#fef3c7';
+                    recommendationDiv.style.color = '#92400e';
+                    recommendationDiv.style.border = '2px solid #f59e0b';
+                } else {
+                    regimeDiv.innerHTML = '🔴 TURBULENT FLOW';
+                    regimeDiv.style.background = '#fee2e2';
+                    regimeDiv.style.color = '#dc2626';
+                    regimeDiv.style.border = '2px solid #ef4444';
+                    
+                    recommendationDiv.innerHTML = '❌ DO NOT USE LAMINAR<br><span style="font-size: 0.875rem; font-weight: normal;">Use k-ε or k-ω SST instead</span>';
+                    recommendationDiv.style.background = '#fee2e2';
+                    recommendationDiv.style.color = '#dc2626';
+                    recommendationDiv.style.border = '2px solid #ef4444';
+                }
+            }
+        }
+        
+        // Viscosity selector handler
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('viscosity').addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    document.getElementById('customViscosity').style.display = 'block';
+                } else {
+                    document.getElementById('customViscosity').style.display = 'none';
+                }
+                calculateReynolds();
+            });
+        });
+
         // KaTeX rendering
         document.addEventListener("DOMContentLoaded", function() {
             renderMathInElement(document.body, {
