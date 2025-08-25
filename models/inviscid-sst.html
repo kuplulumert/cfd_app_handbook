@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Inviscid SST - Beko CFD AI Agent</title>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139,92,246,0.12);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+        }
+
+        .nav-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .model-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 6px -1px rgba(16,185,129,0.2);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(139,92,246,0.08);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(16,185,129,0.1);
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        /* Equation Boxes */
+        .equation-box {
+            background: rgba(248, 250, 252, 0.9);
+            border: 2px solid rgba(16,185,129,0.15);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .equation-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .info-item {
+            padding: 1rem;
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(16,185,129,0.1);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #10b981;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            color: #374151;
+            font-size: 0.875rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: rgba(16,185,129,0.04);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #10b981;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .highlight-box ul {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .highlight-box li {
+            margin: 0.25rem 0;
+            color: #374151;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(16,185,129,0.02);
+        }
+
+        /* Pros/Cons Lists */
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .pros, .cons {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .pros {
+            background: rgba(34,197,94,0.05);
+            border: 1px solid rgba(34,197,94,0.2);
+        }
+
+        .cons {
+            background: rgba(239,68,68,0.05);
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+
+        .pros h4 {
+            color: #15803d;
+            margin-bottom: 0.75rem;
+        }
+
+        .cons h4 {
+            color: #dc2626;
+            margin-bottom: 0.75rem;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pros li, .cons li {
+            padding: 0.25rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .pros li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .cons li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">Beko CFD</a>
+                <div class="nav-tabs">
+                    <a href="../home.html" class="nav-tab">Home</a>
+                    <a href="../methods.html" class="nav-tab">Methods</a>
+                    <a href="../turbulence-models.html" class="nav-tab active">Models</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <a href="../turbulence-models.html" class="back-link">
+                ← Back to Turbulence Models
+            </a>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="model-icon">I-SST</div>
+                <h1 class="page-title">Inviscid SST</h1>
+                <p class="page-subtitle">SST-Inspired Pseudo-Turbulent Model for Enhanced Inviscid Flow Analysis</p>
+            </div>
+
+            <!-- Model Overview -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <div class="section-title">Model Overview</div>
+                </div>
+                
+                <p style="font-size: 1.125rem; margin-bottom: 1rem;">
+                    The <strong>Inviscid SST</strong> model applies the mathematical elegance and blending concepts of the k-ω SST turbulence model to inviscid flow analysis. Instead of turbulent quantities, it tracks pseudo-turbulent variables that capture flow acceleration, pressure gradients, and shock characteristics.
+                </p>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🧮 Complexity</div>
+                        <div class="info-value">Medium - More than Euler, less than RANS</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⚡ Speed</div>
+                        <div class="info-value">Fast - Inviscid base with enhanced physics</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎯 Best For</div>
+                        <div class="info-value">High-speed flows, shock detection, design optimization</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📊 Equations</div>
+                        <div class="info-value">5 PDEs (Euler + 2 pseudo-turbulent)</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="background: rgba(16,185,129,0.05); border-left: 4px solid #10b981;">
+                    <h4 style="color: #059669;">💡 Core Innovation</h4>
+                    <p>Combines inviscid efficiency with SST's adaptive blending philosophy to enhance flow feature detection and analysis without viscous computational overhead.</p>
+                </div>
+            </div>
+
+            <!-- When to Use -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <div class="section-title">When to Use</div>
+                </div>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Perfect For</h4>
+                        <ul>
+                            <li>High-speed/supersonic flows</li>
+                            <li>Shock wave analysis and detection</li>
+                            <li>Design space exploration</li>
+                            <li>Flow feature identification</li>
+                            <li>Pressure gradient characterization</li>
+                            <li>Acceleration-sensitive regions</li>
+                            <li>Conceptual design phases</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>❌ Avoid When</h4>
+                        <ul>
+                            <li>Viscous effects are critical</li>
+                            <li>Boundary layer analysis needed</li>
+                            <li>Heat transfer is important</li>
+                            <li>Low Reynolds number flows</li>
+                            <li>Separation prediction required</li>
+                            <li>Wall-bounded flows</li>
+                            <li>Final design validation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="background: rgba(16,185,129,0.05); border-left: 4px solid #10b981;">
+                    <h4 style="color: #059669;">🚀 Unique Advantage</h4>
+                    <p>Provides enhanced flow insight beyond basic Euler equations while maintaining inviscid computational efficiency - ideal for high-speed flow analysis and design optimization.</p>
+                </div>
+            </div>
+
+            <!-- Practical Applications -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <div class="section-title">Practical Applications</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🚀 Aerospace Design</div>
+                        <div class="info-value">Supersonic aircraft, missile analysis, nozzle optimization</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🌪️ Shock Analysis</div>
+                        <div class="info-value">Shock detection, wave patterns, compression studies</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📐 Design Optimization</div>
+                        <div class="info-value">Shape optimization, flow feature targeting, rapid iteration</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔬 Research & Development</div>
+                        <div class="info-value">Flow physics understanding, computational experiments</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematical Formulation -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🔢</div>
+                    <div class="section-title">Mathematical Formulation</div>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Base Euler Equations</div>
+                    <div>$$\frac{\partial \mathbf{U}}{\partial t} + \nabla \cdot \mathbf{F}(\mathbf{U}) = \mathbf{S}$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Where $\mathbf{U} = [\rho, \rho \mathbf{u}, \rho E]^T$ and $\mathbf{S}$ includes pseudo-turbulent source terms
+                    </p>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Pseudo-Turbulent Kinetic Energy (κ)</div>
+                    <div>$$\frac{\partial \kappa}{\partial t} + \mathbf{u} \cdot \nabla \kappa = P_\kappa - \beta^* \kappa \varpi + \nabla \cdot [(\alpha_\kappa + \sigma_\kappa \nu_p) \nabla \kappa]$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        $\kappa$ represents flow acceleration intensity and pressure gradient magnitude
+                    </p>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Pseudo-Dissipation Rate (ϖ)</div>
+                    <div>$$\frac{\partial \varpi}{\partial t} + \mathbf{u} \cdot \nabla \varpi = \alpha \frac{\varpi}{\kappa} P_\kappa - \beta \varpi^2 + \nabla \cdot [(\alpha_\varpi + \sigma_\varpi \nu_p) \nabla \varpi] + 2(1-F_1)\frac{\rho}{\sigma_{\varpi 2} \varpi}\nabla \kappa \cdot \nabla \varpi$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        $\varpi$ characterizes the rate of flow feature dissipation - includes SST cross-diffusion term
+                    </p>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Pseudo-Turbulent Production</div>
+                    <div>$$P_\kappa = \nu_p \left|\frac{\partial \mathbf{u}}{\partial \mathbf{x}}\right|^2 + C_p \frac{|\nabla p|^2}{\rho^2 c^2} + C_s \left(\frac{|\nabla \rho|}{\rho}\right)^2$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Production from velocity gradients, pressure gradients, and density gradients (shocks)
+                    </p>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Blending Function (SST-Inspired)</div>
+                    <div>$$F_1 = \tanh\left[\min\left(\max\left(\frac{\sqrt{\kappa}}{\beta^* \varpi \delta}, \frac{500 c}{\delta^2 \varpi}\right), \frac{4\rho \kappa}{\sigma_{\varpi 2} D_{\varpi}^+ \delta^2}\right)^4\right]$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Blends between shock-adapted (near discontinuities) and acceleration-adapted (smooth regions) formulations
+                    </p>
+                </div>
+
+                <div class="equation-box">
+                    <div class="equation-title">Pseudo-Viscosity</div>
+                    <div>$$\nu_p = \frac{a_1 \kappa}{\max(a_1 \varpi, |\mathbf{\Omega}| F_2)} \cdot \left(1 + C_{shock} \frac{|\nabla \rho|}{\rho}\right)$$</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
+                        Pseudo-viscosity for enhanced shock capturing and flow feature resolution
+                    </p>
+                </div>
+            </div>
+
+            <!-- Model Constants -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">📊</div>
+                    <div class="section-title">Model Constants</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">β*</div>
+                        <div class="info-value">0.09 (inherited from SST)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">a₁</div>
+                        <div class="info-value">0.31 (SST-based)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">σ_κ₁</div>
+                        <div class="info-value">0.85 (adapted for inviscid)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">σ_ϖ₁</div>
+                        <div class="info-value">0.5 (near discontinuities)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">σ_κ₂</div>
+                        <div class="info-value">1.0 (smooth regions)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">σ_ϖ₂</div>
+                        <div class="info-value">0.856 (freestream)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">C_p</div>
+                        <div class="info-value">0.5 (pressure gradient weight)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">C_s</div>
+                        <div class="info-value">2.0 (shock detection weight)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">C_shock</div>
+                        <div class="info-value">1.5 (shock enhancement)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Engineering Analogy -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🧠</div>
+                    <div class="section-title">Engineering Analogy</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>🔬 Enhanced Flow Sensor Network</h4>
+                    <p><strong>Inviscid SST is like installing advanced sensors on a frictionless race track:</strong></p>
+                    <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                        <li><strong>Base track:</strong> "Still frictionless (inviscid) but now instrumented"</li>
+                        <li><strong>Smart sensors:</strong> "κ and ϖ detect acceleration, pressure changes, and impacts"</li>
+                        <li><strong>Adaptive sensitivity:</strong> "Blending function adjusts sensor sensitivity to local conditions"</li>
+                        <li><strong>Enhanced awareness:</strong> "Provides detailed flow insight without adding friction"</li>
+                        <li><strong>Design optimization:</strong> "Perfect for optimizing track design and understanding flow patterns"</li>
+                        <li><strong>Still not reality:</strong> "Enhanced analysis tool, but real racing still needs friction models"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Physical Interpretation -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">🔬</div>
+                    <div class="section-title">Physical Interpretation</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">κ (Pseudo-TKE)</div>
+                        <div class="info-value">Acceleration intensity, flow unsteadiness, pressure gradient magnitude</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ϖ (Pseudo-ω)</div>
+                        <div class="info-value">Feature dissipation rate, flow smoothing, shock spreading</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">F₁ Blending</div>
+                        <div class="info-value">Switches between shock-adapted and smooth-flow formulations</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ν_p</div>
+                        <div class="info-value">Pseudo-viscosity for shock capturing and numerical stability</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>⚡ Key Benefits</h4>
+                    <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                        <li><strong>Enhanced shock detection:</strong> Automatically identifies and characterizes shock waves</li>
+                        <li><strong>Pressure gradient tracking:</strong> Quantifies adverse/favorable pressure gradients</li>
+                        <li><strong>Flow acceleration mapping:</strong> Identifies regions of strong acceleration/deceleration</li>
+                        <li><strong>Adaptive resolution:</strong> Automatically adjusts numerical treatment based on flow conditions</li>
+                        <li><strong>Design optimization:</strong> Provides rich flow field data for shape optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Performance Comparison -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">⚖️</div>
+                    <div class="section-title">vs Other Models</div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Speed</th>
+                            <th>Flow Insight</th>
+                            <th>Shock Detection</th>
+                            <th>Best Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(16,185,129,0.05);">
+                            <td><strong>Inviscid SST</strong></td>
+                            <td>Fast+</td>
+                            <td>Enhanced</td>
+                            <td>Excellent</td>
+                            <td>High-speed design, analysis</td>
+                        </tr>
+                        <tr>
+                            <td>Standard Inviscid</td>
+                            <td>Fastest</td>
+                            <td>Basic</td>
+                            <td>Limited</td>
+                            <td>Simple conceptual analysis</td>
+                        </tr>
+                        <tr>
+                            <td>k-ω SST</td>
+                            <td>Medium</td>
+                            <td>Excellent</td>
+                            <td>Good</td>
+                            <td>Viscous turbulent flows</td>
+                        </tr>
+                        <tr>
+                            <td>Laminar</td>
+                            <td>Fast</td>
+                            <td>Good</td>
+                            <td>Fair</td>
+                            <td>Low Re, viscous flows</td>
+                        </tr>
+                        <tr>
+                            <td>LES</td>
+                            <td>Slow</td>
+                            <td>Excellent</td>
+                            <td>Excellent</td>
+                            <td>High-fidelity research</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Implementation Notes -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">⚙️</div>
+                    <div class="section-title">Implementation Notes</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🔢 Numerical Scheme</div>
+                        <div class="info-value">Coupled implicit, upwind for pseudo-turbulent transport</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎯 Initialization</div>
+                        <div class="info-value">κ = 1e-6, ϖ = 1e-3 (low background values)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔧 Convergence</div>
+                        <div class="info-value">Monitor κ and ϖ residuals alongside standard Euler residuals</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📊 Post-Processing</div>
+                        <div class="info-value">High κ regions indicate shocks/strong acceleration zones</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>💡 Practical Tips</h4>
+                    <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                        <li><strong>Mesh requirements:</strong> Similar to inviscid Euler - no boundary layer refinement needed</li>
+                        <li><strong>Boundary conditions:</strong> Zero gradient for κ and ϖ at walls (slip condition maintained)</li>
+                        <li><strong>CFL considerations:</strong> Pseudo-turbulent transport may require slightly lower CFL than pure Euler</li>
+                        <li><strong>Validation approach:</strong> Compare Euler solution, then analyze κ/ϖ distributions for flow insights</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon">📋</div>
+                    <div class="section-title">Summary</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p style="font-size: 1.125rem; margin-bottom: 1rem;">
+                        <strong>Inviscid SST</strong> represents an innovative approach to inviscid flow analysis, applying the proven mathematical framework of k-ω SST to track pseudo-turbulent quantities that reveal flow physics beyond basic Euler equations.
+                    </p>
+                    <p>
+                        This model maintains computational efficiency while providing enhanced insight into flow acceleration, pressure gradients, and shock characteristics - making it ideal for high-speed flow analysis and aerodynamic design optimization.
+                    </p>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">✅ Advantages</div>
+                        <div class="info-value">Enhanced flow insight, automatic shock detection, SST mathematical elegance</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⚠️ Limitations</div>
+                        <div class="info-value">Still inviscid, no viscous effects, conceptual model</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎯 Perfect For</div>
+                        <div class="info-value">Supersonic design, shock analysis, flow optimization</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🚫 Avoid For</div>
+                        <div class="info-value">Boundary layers, separation, low-speed viscous flows</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Math rendering -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
