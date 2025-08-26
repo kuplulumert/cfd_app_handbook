@@ -157,123 +157,130 @@
             display: block;
         }
 
-        /* Minimalist Premium Industry Guide Styles */
+        /* Professional Premium Industry Guide Styles */
         .industry-guide {
             width: 100%;
-            background: #ffffff;
-            padding: 4rem 0;
+            background: #fafbfc;
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
         }
 
         .guide-section {
-            margin-bottom: 4rem;
+            margin-bottom: 3.5rem;
             background: #ffffff;
-            border: none;
-            border-radius: 0;
-            padding: 0;
-            box-shadow: none;
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             transition: all 0.2s ease;
             position: relative;
         }
 
-        .guide-section::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background: var(--accent-color);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .guide-section:hover::before {
-            opacity: 1;
+        .guide-section:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
         }
 
         .guide-section h3 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 1.75rem;
-            font-weight: 300;
-            color: #1a1a1a;
-            margin-bottom: 2rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e5e5e5;
-            letter-spacing: -0.05em;
-            line-height: 1.2;
-            position: relative;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 1.75rem;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .guide-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 40px;
-            height: 1px;
+        .guide-section h3::before {
+            content: var(--section-number);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
             background: var(--accent-color);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
         }
 
         .guide-overview {
-            --accent-color: #2563eb;
+            --accent-color: #3b82f6;
+            --section-number: "01";
         }
 
         .guide-strengths {
-            --accent-color: #059669;
+            --accent-color: #10b981;
+            --section-number: "02";
         }
 
         .guide-limitations {
-            --accent-color: #dc2626;
+            --accent-color: #f59e0b;
+            --section-number: "03";
         }
 
         .guide-use-cases {
-            --accent-color: #7c3aed;
+            --accent-color: #8b5cf6;
+            --section-number: "04";
         }
 
         .guide-avoid {
-            --accent-color: #ea580c;
+            --accent-color: #ef4444;
+            --section-number: "06";
         }
 
         .guide-tips {
-            --accent-color: #0891b2;
+            --accent-color: #06b6d4;
+            --section-number: "07";
         }
 
         .guide-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            padding-left: 1rem;
+            counter-reset: guide-counter;
         }
 
         .guide-item {
             display: flex;
             align-items: flex-start;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            font-size: 1.0625rem;
-            line-height: 1.7;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
             font-weight: 400;
-            color: #4a4a4a;
-            transition: all 0.2s ease;
+            color: #374151;
             position: relative;
+            counter-increment: guide-counter;
         }
 
         .guide-item:last-child {
             margin-bottom: 0;
         }
 
-        .guide-item:hover {
-            color: #1a1a1a;
-            padding-left: 0.5rem;
+        .guide-bullet {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
         }
 
-        .guide-bullet {
-            color: var(--accent-color);
-            font-weight: 400;
-            flex-shrink: 0;
-            font-size: 1.5rem;
-            margin-top: -0.25rem;
-            line-height: 1;
+        .guide-bullet::before {
+            content: counter(guide-counter);
         }
 
         .guide-text {
@@ -283,61 +290,69 @@
 
         .guide-emphasis {
             font-weight: 600;
-            color: #1a1a1a;
+            color: #111827;
         }
 
         .use-case-item {
-            display: block;
-            margin-bottom: 1.5rem;
-            font-size: 1.0625rem;
-            line-height: 1.7;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
             font-weight: 400;
-            color: #4a4a4a;
-            padding-left: 2rem;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .use-case-item:hover {
-            color: #1a1a1a;
-            padding-left: 2.5rem;
+            color: #374151;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
         }
 
         .use-case-item::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--accent-color);
-            font-weight: 400;
-            font-size: 1.25rem;
+            content: "✓";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 3px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
         }
 
         .avoid-item {
-            display: block;
-            margin-bottom: 1.5rem;
-            font-size: 1.0625rem;
-            line-height: 1.7;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
             font-weight: 400;
-            color: #4a4a4a;
-            padding-left: 2rem;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .avoid-item:hover {
-            color: #1a1a1a;
-            padding-left: 2.5rem;
+            color: #374151;
+            padding: 0.75rem;
+            background: #fef2f2;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
         }
 
         .avoid-item::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--accent-color);
-            font-weight: 400;
-            font-size: 1.25rem;
+            content: "✕";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 3px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
         }
 
         /* Academy Guide Styles */
@@ -353,13 +368,13 @@
         }
 
         .industry-guide h4 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             font-size: 1.125rem;
-            font-weight: 500;
-            color: #1a1a1a;
-            margin: 3rem 0 1.5rem 0;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
+            font-weight: 600;
+            color: #111827;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
         }
 
         .equation-block {
