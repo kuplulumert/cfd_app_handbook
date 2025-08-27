@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Large Eddy Simulation - Compact Guide v1.0</title>
+    <meta name="description" content="LES model explained compactly with guidance.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.4; color: #1e293b; background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%); font-size: 14px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
+        .header { background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03)); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(59,130,246,0.15); padding: 0.75rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 10px rgba(0,0,0,0.04); }
+        .header-content { display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
+        .logo-icon { width: 2rem; height: 2rem; background: linear-gradient(135deg, #dc2626, #ef4444); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(220,38,38,0.2); }
+        .logo h1 { font-size: 1rem; font-weight: 600; color: #1e293b; }
+        .logo p { font-size: 0.75rem; color: #64748b; font-style: italic; }
+        .back-button { color: #64748b; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(59,130,246,0.15); background: rgba(255,255,255,0.8); font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .back-button:hover { color: #3b82f6; border-color: #3b82f6; background: rgba(59,130,246,0.05); }
+        .main-content { padding: 1rem 0; }
+        .model-hero { text-align: center; padding: 1.5rem 0 1rem 0; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9)); border-radius: 0.75rem; margin-bottom: 1.5rem; border: 1px solid rgba(59,130,246,0.1); }
+        .model-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #dc2626, #ef4444); color: white; padding: 0.375rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(220,38,38,0.2); }
+        .model-hero h1 { font-size: 2rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; line-height: 1.2; }
+        .model-hero p { font-size: 1rem; color: #64748b; max-width: 600px; margin: 0 auto; }
+        .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .main-column { min-width: 0; }
+        .sidebar { background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1rem; border: 1px solid rgba(59,130,246,0.1); height: fit-content; position: sticky; top: 5rem; }
+        .content-section { background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid rgba(59,130,246,0.1); }
+        .content-section h2 { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .content-section ul { margin: 0.75rem 0; padding-left: 1.25rem; }
+        .content-section li { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; line-height: 1.4; }
+        .equation-large { font-size: 1rem !important; margin: 0.75rem 0 !important; }
+        .variables-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+        .variable-item { background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; }
+        .variable-symbol { font-family: 'KaTeX_Math', 'Times New Roman', serif; font-size: 1rem; font-weight: 600; color: #dc2626; margin-bottom: 0.25rem; }
+        .variable-name { font-size: 0.75rem; font-weight: 600; color: #1e293b; margin-bottom: 0.125rem; }
+        .variable-description { font-size: 0.625rem; color: #64748b; line-height: 1.3; }
+        .properties-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin: 0.75rem 0; }
+        .properties-table th, .properties-table td { padding: 0.5rem; border: 1px solid rgba(59,130,246,0.1); text-align: left; }
+        .properties-table th { background: rgba(220,38,38,0.1); color: #7f1d1d; font-weight: 600; }
+        .sidebar h3 { font-size: 1rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .sidebar ul { list-style: none; margin-bottom: 1rem; }
+        .sidebar li { margin-bottom: 0.375rem; }
+        .sidebar a { color: #64748b; text-decoration: none; font-size: 0.75rem; transition: color 0.2s ease; display: flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0; }
+        .sidebar a:hover { color: #3b82f6; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; gap: 1rem; } .sidebar { position: static; order: -1; } .container { padding: 0 0.75rem; } .model-hero h1 { font-size: 1.5rem; } .model-hero p { font-size: 0.875rem; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../turbulence-models.html" class="logo">
+                    <div class="logo-icon">
+                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">LES</span>
+                    </div>
+                    <div>
+                        <h1>Large Eddy Simulation</h1>
+                        <p>Advanced CFD</p>
+                    </div>
+                </a>
+                <a href="../turbulence-models.html" class="back-button"><span>←</span><span>Back to Models</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            
+            <div style="background: linear-gradient(135deg, #dc2626, #ef4444); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
+                ✅ NEW: Large Eddy Simulation Available - Most Advanced!
+            </div>
+
+            <div class="model-hero">
+                <div class="model-badge">
+                    <span>LES</span>
+                    <span>Advanced CFD Method</span>
+                </div>
+                <h1>Large Eddy Simulation</h1>
+                <p>Resolves large turbulent eddies directly while modeling only the smallest scales</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="main-column">
+                    
+                    <!-- FIRST: Practical Applications -->
+                    <div class="content-section" id="applications">
+                        <h2><span>🛠️</span> Practical Applications</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
+                            <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">🎯 Excellent For:</h4>
+                                <ul style="font-size: 0.75rem; color: #065f46; list-style: none; padding: 0;">
+                                    <li>• Research and development</li>
+                                    <li>• Complex unsteady flows</li>
+                                    <li>• Mixing and combustion</li>
+                                    <li>• Acoustics and noise prediction</li>
+                                    <li>• Heat transfer with unsteadiness</li>
+                                    <li>• Validation of RANS models</li>
+                                    <li>• Fundamental turbulence research</li>
+                                </ul>
+                            </div>
+                            <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Limitations:</h4>
+                                <ul style="font-size: 0.75rem; color: #7f1d1d; list-style: none; padding: 0;">
+                                    <li>• Extremely high computational cost</li>
+                                    <li>• Very fine grids required</li>
+                                    <li>• Long simulation times</li>
+                                    <li>• Expert knowledge required</li>
+                                    <li>• Massive data storage needs</li>
+                                    <li>• Wall modeling challenges</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced CFD Guidance -->
+                    <div class="content-section" id="guidance">
+                        <h2>
+                            <span>🎯</span>
+                            CFD Guidance - Large Eddy Simulation
+                        </h2>
+                        
+                        <!-- HIGHLIGHTED: When to Use -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use LES (Critical Applications)</h3>
+                            <ul style="color: #065f46; font-weight: 500;">
+                                <li><strong>Research and development</strong> - When highest accuracy is essential</li>
+                                <li><strong>Complex unsteady flows</strong> - Turbulent flows with strong unsteadiness</li>
+                                <li><strong>Mixing and combustion</strong> - Large-scale mixing structures critical</li>
+                                <li><strong>Acoustics and noise prediction</strong> - Unsteady pressure fluctuations important</li>
+                                <li><strong>Heat transfer with unsteadiness</strong> - Time-dependent thermal effects</li>
+                                <li><strong>RANS model validation</strong> - Benchmark data for model development</li>
+                                <li><strong>Fundamental turbulence research</strong> - Understanding turbulence physics</li>
+                                <li><strong>High-fidelity simulations</strong> - When cost is secondary to accuracy</li>
+                            </ul>
+                        </div>
+
+                        <!-- HIGHLIGHTED: When to Avoid -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid LES (Critical Limitations)</h3>
+                            <ul style="color: #7f1d1d; font-weight: 500;">
+                                <li><strong>Industrial routine analysis</strong> - Prohibitively expensive for everyday engineering</li>
+                                <li><strong>Limited computational resources</strong> - Requires supercomputing-level resources</li>
+                                <li><strong>Preliminary design studies</strong> - Massive overkill for initial analysis</li>
+                                <li><strong>Simple engineering flows</strong> - RANS sufficient for most practical applications</li>
+                                <li><strong>Parametric optimization</strong> - Too slow for design space exploration</li>
+                                <li><strong>High Reynolds number wall flows</strong> - Wall modeling becomes prohibitive</li>
+                                <li><strong>Steady flow applications</strong> - Time-averaged results often sufficient</li>
+                                <li><strong>Budget/time constraints</strong> - Requires massive computational investment</li>
+                            </ul>
+                        </div>
+
+                        <h3>Setup Tips & Best Practices</h3>
+                        <ul>
+                            <li><strong>Grid requirements:</strong> Very fine grids, Δ+ < 100 in wall units</li>
+                            <li><strong>Time stepping:</strong> Very small time steps, CFL < 0.5</li>
+                            <li><strong>Wall treatment:</strong> Wall-resolved LES or sophisticated wall models</li>
+                            <li><strong>Simulation time:</strong> Extremely long runs for statistical convergence</li>
+                            <li><strong>Subgrid model:</strong> Choose appropriate SGS model (Smagorinsky, Dynamic, etc.)</li>
+                            <li><strong>Post-processing:</strong> Extensive statistical analysis of unsteady data</li>
+                        </ul>
+                    </div>
+
+                    <!-- Enhanced Equations with Detailed Explanations -->
+                    <div class="content-section" id="equations">
+                        <h2>
+                            <span>📐</span>
+                            LES Equations - Detailed Analysis
+                        </h2>
+                        
+                        <!-- Filtered Navier-Stokes -->
+                        <div style="background: linear-gradient(135deg, rgba(220,38,38,0.05), rgba(239,68,68,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Filtered Navier-Stokes Equations</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \frac{\partial \bar{u}_i}{\partial t} + \frac{\partial (\bar{u}_i \bar{u}_j)}{\partial x_j} =
+                                </div>
+                                <div class="equation-large katex-display">
+                                    -\frac{1}{\rho} \frac{\partial \bar{p}}{\partial x_i} + \nu \frac{\partial^2 \bar{u}_i}{\partial x_j^2} - \frac{\partial \tau_{ij}^{SGS}}{\partial x_j}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Navier-Stokes equations for resolved (large) scales</p>
+                                <p><strong>ūᵢ:</strong> Grid-filtered velocity (resolved large eddies)</p>
+                                <p><strong>∂ūᵢ/∂t + ∂(ūᵢūⱼ)/∂xⱼ:</strong> Unsteady + convection of resolved scales</p>
+                                <p><strong>-∇p̄/ρ:</strong> Filtered pressure gradient</p>
+                                <p><strong>ν∇²ūᵢ:</strong> Molecular viscosity (same as DNS)</p>
+                                <p><strong>-∂τᵢⱼˢᴳˢ/∂xⱼ:</strong> Subgrid stress divergence (requires modeling)</p>
+                            </div>
+                        </div>
+
+                        <!-- Subgrid Stress -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(248,113,113,0.05)); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Subgrid Scale Stress Tensor</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \tau_{ij}^{SGS} = \overline{u_i u_j} - \bar{u}_i \bar{u}_j
+                                </div>
+                                <div class="equation-large katex-display">
+                                    \tau_{ij}^{SGS} = -2 \nu_t^{SGS} \bar{S}_{ij} + \frac{1}{3} \delta_{ij} \tau_{kk}^{SGS}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Stress from unresolved (subgrid) scales</p>
+                                <p><strong>uᵢuⱼ - ūᵢūⱼ:</strong> Difference between actual and resolved velocity products</p>
+                                <p><strong>νₜˢᴳˢ:</strong> Subgrid turbulent viscosity (much smaller than RANS)</p>
+                                <p><strong>S̄ᵢⱼ:</strong> Resolved strain rate tensor</p>
+                                <p><strong>Key difference from RANS:</strong> Only models smallest unresolved scales</p>
+                            </div>
+                        </div>
+
+                        <!-- Smagorinsky Model -->
+                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Smagorinsky Subgrid Model</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \nu_t^{SGS} = (C_s \Delta)^2 |\bar{S}|
+                                </div>
+                                <div class="equation-large katex-display">
+                                    |\bar{S}| = \sqrt{2 \bar{S}_{ij} \bar{S}_{ij}}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Simplest subgrid scale model</p>
+                                <p><strong>Cs ≈ 0.1-0.2:</strong> Smagorinsky constant</p>
+                                <p><strong>Δ:</strong> Filter width (grid scale)</p>
+                                <p><strong>|S̄|:</strong> Magnitude of resolved strain rate</p>
+                                <p><strong>Assumption:</strong> Subgrid viscosity proportional to resolved strain</p>
+                            </div>
+                        </div>
+
+                        <!-- Filter Operation -->
+                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
+                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Spatial Filtering Operation</h3>
+                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
+                                <div class="equation-large katex-display">
+                                    \bar{u}(x) = \int G(x, x') u(x') dx'
+                                </div>
+                                <div class="equation-large katex-display">
+                                    \Delta = (\Delta x \Delta y \Delta z)^{1/3}
+                                </div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
+                                <p><strong>Physical Meaning:</strong> Separates large and small scales</p>
+                                <p><strong>ū(x):</strong> Filtered (resolved) velocity field</p>
+                                <p><strong>G(x,x'):</strong> Filter kernel (often implicit grid filter)</p>
+                                <p><strong>Δ:</strong> Filter width (typically grid scale)</p>
+                                <p><strong>Result:</strong> Large eddies resolved, small eddies modeled</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Variables -->
+                    <div class="content-section" id="variables">
+                        <h2>
+                            <span>🔤</span>
+                            Variables & LES Parameters
+                        </h2>
+                        
+                        <div class="variables-grid">
+                            <div class="variable-item">
+                                <div class="variable-symbol">ūᵢ</div>
+                                <div class="variable-name">Filtered Velocity</div>
+                                <div class="variable-description">Resolved large-scale velocity</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">p̄</div>
+                                <div class="variable-name">Filtered Pressure</div>
+                                <div class="variable-description">Resolved pressure field</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">τᵢⱼˢᴳˢ</div>
+                                <div class="variable-name">Subgrid Stress</div>
+                                <div class="variable-description">Unresolved scale effects</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">νₜˢᴳˢ</div>
+                                <div class="variable-name">Subgrid Viscosity</div>
+                                <div class="variable-description">Much smaller than RANS νₜ</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Δ</div>
+                                <div class="variable-name">Filter Width</div>
+                                <div class="variable-description">Grid scale, LES cutoff</div>
+                            </div>
+                            
+                            <div class="variable-item">
+                                <div class="variable-symbol">Cs</div>
+                                <div class="variable-name">Smagorinsky Constant</div>
+                                <div class="variable-description">SGS model parameter</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Analogy -->
+                    <div class="content-section" id="analogy">
+                        <h2>
+                            <span>💡</span>
+                            Large Eddy Resolution Analogy
+                        </h2>
+                        <p>Think of LES as <strong>filming a crowd with a high-resolution camera</strong> - you can see every individual person and their movements (large eddies), but the camera can't capture every detail of their facial expressions (small eddies).</p>
+                        
+                        <p><strong>Resolved large eddies:</strong> Like clearly seeing each person in the crowd - their walking patterns, interactions, and group behaviors are all captured in real time.</p>
+                        
+                        <p><strong>Subgrid small eddies:</strong> Like the facial expressions and finger movements you can't quite see - they're there and they matter, but the camera resolution isn't fine enough to capture them.</p>
+                        
+                        <p><strong>Subgrid model:</strong> Like making educated guesses about what the facial expressions probably are based on body language - a simple model for the unresolved details.</p>
+                        
+                        <p><strong>Filter width (Δ):</strong> Like the camera's resolution limit - determines what size details you can capture vs what needs to be estimated.</p>
+                        
+                        <p><strong>Computational cost:</strong> Like needing a very expensive camera and massive storage - the price of seeing almost everything in real time.</p>
+                    </div>
+
+                    <!-- Subgrid Models -->
+                    <div class="content-section" id="subgrid">
+                        <h2>
+                            <span>🔧</span>
+                            Subgrid Scale Models
+                        </h2>
+                        
+                        <!-- Smagorinsky -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Smagorinsky Model</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">νₜˢᴳˢ = (CsΔ)²|S̄|. Simple, robust, widely used. Requires wall damping functions. Cs ≈ 0.1-0.2.</p>
+                        </div>
+
+                        <!-- Dynamic -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Dynamic Smagorinsky</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Cs computed dynamically based on local flow conditions. No wall damping needed. More accurate but computationally expensive.</p>
+                        </div>
+
+                        <!-- Wall-Adapting -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(245,158,11,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">Wall-Adapting Local Eddy (WALE)</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Automatically reduces to zero at walls. Good for complex geometries. Based on strain rate tensor invariants.</p>
+                        </div>
+                    </div>
+
+                    <!-- LES Features -->
+                    <div class="content-section" id="features">
+                        <h2>
+                            <span>🚀</span>
+                            LES Key Features
+                        </h2>
+                        
+                        <!-- Direct Resolution -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(220,38,38,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">Direct Large Eddy Resolution</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Directly computes 80-90% of turbulent kinetic energy. Only models the smallest, most isotropic scales where simple models work well.</p>
+                        </div>
+
+                        <!-- Unsteady Physics -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(239,68,68,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #dc2626; font-weight: 600; margin-bottom: 0.5rem;">Unsteady Physics Capture</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Captures inherently unsteady phenomena like vortex shedding, mixing, acoustics, and heat transfer fluctuations that RANS cannot predict.</p>
+                        </div>
+
+                        <!-- Highest Fidelity -->
+                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">Highest CFD Fidelity</h4>
+                            <p style="font-size: 0.8rem; color: #64748b;">Most accurate practical CFD method. Only Direct Numerical Simulation (DNS) is more accurate, but DNS is prohibitively expensive for engineering applications.</p>
+                        </div>
+                    </div>
+
+                    <!-- Advantages & Disadvantages -->
+                    <div class="content-section" id="comparison">
+                        <h2>
+                            <span>⚖️</span>
+                            LES vs All Other Methods
+                        </h2>
+                        
+                        <!-- Advantages -->
+                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages over All RANS Methods</h4>
+                            <ul style="font-size: 0.8rem; color: #065f46;">
+                                <li><strong>Highest practical accuracy:</strong> Resolves 80-90% of turbulent energy</li>
+                                <li><strong>Captures unsteady physics:</strong> Vortex shedding, mixing, acoustics</li>
+                                <li><strong>No turbulence modeling assumptions:</strong> Minimal modeling of smallest scales only</li>
+                                <li><strong>Research-quality results:</strong> Benchmark data for model development</li>
+                                <li><strong>Complex flow capability:</strong> Handles any flow type with sufficient resolution</li>
+                                <li><strong>Time-dependent phenomena:</strong> Natural prediction of unsteady effects</li>
+                                <li><strong>Physical insight:</strong> Reveals turbulence structure and dynamics</li>
+                            </ul>
+                        </div>
+
+                        <!-- Disadvantages -->
+                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
+                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Disadvantages vs All Methods</h4>
+                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
+                                <li><strong>Extreme computational cost:</strong> 100-1000x more expensive than RANS</li>
+                                <li><strong>Massive grid requirements:</strong> Millions to billions of cells needed</li>
+                                <li><strong>Very long simulation times:</strong> Months of computation for complex cases</li>
+                                <li><strong>Huge data storage:</strong> Terabytes of unsteady data</li>
+                                <li><strong>Expert knowledge required:</strong> Deep understanding of turbulence and numerics</li>
+                                <li><strong>Wall modeling challenges:</strong> Near-wall resolution or complex wall models</li>
+                                <li><strong>Statistical convergence:</strong> Very long runs for meaningful averages</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sidebar">
+                    <h3><span>🧭</span> Quick Navigation</h3>
+                    <ul>
+                        <li><a href="#applications">🛠️ Applications</a></li>
+                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
+                        <li><a href="#equations">📐 Equations</a></li>
+                        <li><a href="#variables">🔤 Variables</a></li>
+                        <li><a href="#analogy">💡 Analogy</a></li>
+                        <li><a href="#subgrid">🔧 Subgrid Models</a></li>
+                        <li><a href="#features">🚀 Features</a></li>
+                        <li><a href="#comparison">⚖️ Comparison</a></li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 1.5rem;"><span>🔗</span> Related Methods</h3>
+                    <ul>
+                        <li><a href="des.html">Detached Eddy Simulation</a></li>
+                        <li><a href="sas.html">Scale Adaptive Simulation</a></li>
+                        <li><a href="k-omega-sst.html">k-ω SST (for comparison)</a></li>
+                        <li><a href="../turbulence-models.html">← All Models</a></li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 1.5rem;"><span>📚</span> Method Info</h3>
+                    <ul>
+                        <li><span style="color: #dc2626;">Type:</span> Large Eddy Simulation</li>
+                        <li><span style="color: #dc2626;">Variables:</span> ūᵢ, p̄, τˢᴳˢ</li>
+                        <li><span style="color: #dc2626;">Equations:</span> Filtered N-S</li>
+                        <li><span style="color: #dc2626;">Cost:</span> Extreme</li>
+                        <li><span style="color: #dc2626; font-weight: 600;">Status:</span> Available</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;"><span>⚙️</span> Key Requirements</h3>
+                    <ul>
+                        <li><span style="color: #dc2626;">Grid:</span> Very fine (Δ+ < 100)</li>
+                        <li><span style="color: #dc2626;">Time:</span> Very small steps</li>
+                        <li><span style="color: #dc2626;">Resources:</span> Supercomputing</li>
+                        <li><span style="color: #dc2626;">Best for:</span> Research</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;"><span>🏆</span> Accuracy Level</h3>
+                    <ul>
+                        <li><span style="color: #dc2626;">Turbulent energy:</span> 80-90% resolved</li>
+                        <li><span style="color: #dc2626;">Unsteady capture:</span> Excellent</li>
+                        <li><span style="color: #dc2626;">Physics fidelity:</span> Highest practical</li>
+                        <li><span style="color: #dc2626;">vs DNS:</span> 1000x cheaper</li>
+                    </ul>
+
+                    <h3 style="margin-top: 1.5rem;"><span>💰</span> Cost Analysis</h3>
+                    <ul>
+                        <li><span style="color: #dc2626;">vs RANS:</span> 100-1000x more</li>
+                        <li><span style="color: #dc2626;">Grid cells:</span> Millions-Billions</li>
+                        <li><span style="color: #dc2626;">Time:</span> Weeks-Months</li>
+                        <li><span style="color: #dc2626;">Storage:</span> Terabytes</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
+        <div class="container">
+            <p style="color: #64748b; font-size: 0.75rem;">© 2024 CFD Reference | <a href="../turbulence-models.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize KaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            const equations = document.querySelectorAll('.katex-display');
+            equations.forEach(eq => {
+                katex.render(eq.textContent, eq, {
+                    displayMode: true,
+                    throwOnError: false
+                });
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        console.log('Large Eddy Simulation page loaded - Enhanced compact design active');
+    </script>
+</body>
+</html>
