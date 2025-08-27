@@ -29,8 +29,8 @@
         }
 
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
             padding: 0 2rem;
         }
 
@@ -96,6 +96,47 @@
             padding: 3rem 0;
         }
 
+        /* Content Tabs */
+        .content-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .content-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #718096;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .content-tab:hover {
+            color: #2d3748;
+            background: #f7fafc;
+        }
+
+        .content-tab.active {
+            color: #8b5cf6;
+            border-bottom-color: #8b5cf6;
+            background: #f3f4f6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         /* Page Header */
         .page-header {
             text-align: center;
@@ -157,32 +198,228 @@
             display: block;
         }
 
-        /* Industry Guide Styles */
+        /* Sigma Professional Industry Guide Styles */
         .industry-guide {
-            max-width: 800px;
+            width: 100%;
+            background: #fafbfc;
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
         }
 
         .guide-section {
-            margin-bottom: 2rem;
+            margin-bottom: 3.5rem;
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1.5rem;
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .guide-section:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
         }
 
         .guide-section h3 {
-            font-size: 1.25rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 1.375rem;
             font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 1.75rem;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+
+        .guide-section h3::before {
+            content: "";
+            width: 4px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .industry-guide h4 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: -0.01em;
         }
 
         .guide-overview {
-            background: #fef2f2;
-            border-left: 4px solid #dc2626;
+            --accent-color: #3b82f6;
+        }
+
+        .guide-strengths {
+            --accent-color: #10b981;
+        }
+
+        .guide-limitations {
+            --accent-color: #f59e0b;
+        }
+
+        .guide-use-cases {
+            --accent-color: #8b5cf6;
+        }
+
+        .guide-choice {
+            --accent-color: #3b82f6;
+            --section-number: "5";
+        }
+
+        .guide-avoid {
+            --accent-color: #ef4444;
+        }
+
+        .guide-tips {
+            --accent-color: #06b6d4;
+        }
+
+        .guide-performance {
+            --accent-color: #10b981;
+            --section-number: "8";
+        }
+
+        .guide-pitfalls {
+            --accent-color: #f59e0b;
+            --section-number: "9";
+        }
+
+        /* Academy Guide Styles */
+        .academy-guide {
+            width: 100%;
+            background: #ffffff;
+            padding: 2rem 0;
+        }
+
+        .academy-guide h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        /* Mathematical and Technical Elements */
+        .equation-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1rem;
+            overflow-x: auto;
+        }
+
+        .term-definitions {
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            background: #f8f9fa;
+            border-left: 3px solid var(--accent-color);
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .term-item strong {
+            color: var(--accent-color);
+            font-size: 1.05rem;
+        }
+
+        .constants-table {
+            margin: 1.5rem 0;
+        }
+
+        /* List Styles */
+        .guide-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.25rem 0;
+            counter-reset: guide-counter;
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            counter-increment: guide-counter;
+        }
+
+        .guide-bullet {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .guide-bullet::before {
+            content: counter(guide-counter);
+        }
+
+        .guide-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #374151;
+            flex: 1;
+        }
+
+        .guide-emphasis {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Use Case and Avoid Items */
+        .use-case-item, .avoid-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .use-case-item h4, .avoid-item h4 {
+            color: var(--accent-color);
+            margin: 0 0 0.75rem 0;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .industry-guide, .academy-guide {
+                padding: 1.5rem;
+            }
+
+            .guide-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .guide-section h3 {
+                font-size: 1.25rem;
+            }
         }
 
         .guide-strengths {
@@ -261,17 +498,7 @@
             font-size: 0.9rem;
         }
 
-        /* Academy Guide Styles */
-        .academy-guide {
-            max-width: 900px;
-        }
 
-        .academy-guide h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin: 1.5rem 0 0.75rem 0;
-        }
 
         .equation-block {
             background: #f8f9fa;
@@ -452,20 +679,20 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Inviscid flow model solving Euler equations with zero viscosity (μ = 0).</span>
+                                <span class="guide-bullet"></span>
+                                <span class="guide-text"><strong>Inviscid flow model</strong> solving Euler equations with zero viscosity (μ = 0).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Fundamental theoretical model representing ideal fluid behavior.</span>
+                                <span class="guide-bullet"></span>
+                                <span class="guide-text"><strong>Fundamental theoretical model</strong> representing ideal fluid behavior.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Fastest CFD solution method, perfect for preliminary analysis.</span>
+                                <span class="guide-bullet"></span>
+                                <span class="guide-text"><strong>Fastest CFD solution</strong> method, perfect for preliminary analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Captures pressure-driven flows and compressibility effects.</span>
+                                <span class="guide-bullet"></span>
+                                <span class="guide-text"><strong>Captures pressure-driven flows</strong> and compressibility effects.</span>
                             </li>
                         </ul>
                     </div>
@@ -736,8 +963,8 @@
                 <div class="academy-guide">
                     
                     <!-- Historical Context and Development -->
-                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #dc2626;">
-                        <h3>Historical Context and Development</h3>
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #3b82f6;">
+                        <h3>1. Historical Context and Development</h3>
                         <p class="guide-text">Inviscid flow theory represents the foundation of fluid mechanics, developed through centuries of mathematical and physical insights. The Euler equations, governing inviscid flow, predate viscous flow understanding by over a century.</p>
                         
                         <h4>Timeline and Evolution:</h4>
@@ -775,7 +1002,7 @@
 
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
-                        <h3>Mathematical Foundation and Euler Equations</h3>
+                        <h3>2. Mathematical Foundation and Euler Equations</h3>
                         <p class="guide-text">The Euler equations represent conservation of mass, momentum, and energy for an inviscid, non-heat-conducting fluid. They form a hyperbolic system of partial differential equations.</p>
                         
                         <h4>Conservative Form of Euler Equations:</h4>
@@ -811,7 +1038,7 @@
 
                     <!-- Term Definitions and Physical Meaning -->
                     <div class="guide-section guide-strengths">
-                        <h3>Comprehensive Term Definitions and Physical Meaning</h3>
+                        <h3>3. Comprehensive Term Definitions and Physical Meaning</h3>
                         <div class="term-definitions">
                             <div class="term-item">
                                 <strong>ρ:</strong> Fluid density [kg/m³]
@@ -858,7 +1085,7 @@
 
                     <!-- Wave Theory and Characteristics -->
                     <div class="guide-section" style="background: #f0fdf4; border-left: 4px solid #16a34a;">
-                        <h3>Wave Theory and Characteristic Analysis</h3>
+                        <h3>4. Wave Theory and Characteristic Analysis</h3>
                         
                         <h4>Characteristic Speeds and Eigenvalues:</h4>
                         <p class="guide-text">The Euler equations form a hyperbolic system with real eigenvalues representing wave speeds:</p>
@@ -897,7 +1124,7 @@
 
                     <!-- Shock Wave Theory -->
                     <div class="guide-section guide-limitations">
-                        <h3>Shock Wave Theory and Rankine-Hugoniot Relations</h3>
+                        <h3>5. Shock Wave Theory and Rankine-Hugoniot Relations</h3>
                         
                         <h4>Conservation Across Normal Shock Waves:</h4>
                         <div class="equation-block">
@@ -940,7 +1167,7 @@
 
                     <!-- Potential Flow Theory -->
                     <div class="guide-section guide-use-cases">
-                        <h3>Potential Flow Theory and Special Cases</h3>
+                        <h3>6. Potential Flow Theory and Special Cases</h3>
                         
                         <h4>Irrotational Flow Assumption:</h4>
                         <p class="guide-text">For irrotational inviscid flow, velocity derives from a scalar potential:</p>
@@ -986,7 +1213,7 @@
 
                     <!-- Boundary Conditions and Well-Posed Problems -->
                     <div class="guide-section guide-avoid">
-                        <h3>Boundary Conditions and Mathematical Well-Posedness</h3>
+                        <h3>7. Advanced Numerical Methods and Modern Developments</h3>
                         
                         <h4>Solid Wall Boundary Conditions:</h4>
                         <div class="equation-block">
@@ -1029,7 +1256,7 @@
 
                     <!-- Numerical Methods for Inviscid Flow -->
                     <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
-                        <h3>Numerical Methods and Modern Algorithms</h3>
+
                         
                         <h4>Finite Volume Formulation:</h4>
                         <div class="equation-block">
@@ -1091,7 +1318,7 @@
 
                     <!-- Advanced Applications and Modern Developments -->
                     <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
-                        <h3>Advanced Applications and Modern Developments</h3>
+
                         
                         <h4>Adaptive Mesh Refinement (AMR):</h4>
                         <p class="guide-text">Automatic mesh refinement near shocks and other discontinuities:</p>
