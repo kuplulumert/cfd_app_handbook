@@ -1312,57 +1312,20 @@
                             $$\mathbf{U}_h = \sum_{k=1}^N \hat{\mathbf{U}}_k \phi_k(x), \quad \phi_k \text{ (basis functions)}$$
                         </div>
                         
-                        <h4>Immersed Boundary Methods:</h4>
-                        <p class="guide-text">Handling complex geometries without body-fitted grids:</p>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Cut-cell methods:</strong> Exact representation of solid boundaries</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Ghost cell methods:</strong> Extrapolation for boundary conditions</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Penalty methods:</strong> Forcing terms to enforce boundary conditions</span>
-                            </li>
-                        </ul>
+                        <h4>Immersed Boundary Methods and Complex Geometry Handling</h4>
+                        <p class="guide-text">Modern inviscid flow simulation increasingly employs immersed boundary methods to handle complex geometries without requiring body-fitted computational grids. Cut-cell methods provide exact representation of solid boundaries by precisely cutting computational cells at the boundary interface, maintaining geometric accuracy while preserving conservation properties. Ghost cell methods utilize extrapolation techniques to enforce boundary conditions on regular Cartesian grids, simplifying mesh generation while maintaining solution accuracy.</p>
                         
-                        <h4>Modern Computational Challenges:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Hypersonic flows:</strong> Real gas effects, chemical reactions, radiation</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Multiphase flows:</strong> Interface tracking/capturing methods</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Magnetohydrodynamics:</strong> Plasma flows with electromagnetic effects</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>GPU acceleration:</strong> Massively parallel implementations</span>
-                            </li>
-                        </ul>
+                        <p class="guide-text">Penalty methods implement forcing terms within the governing equations to enforce boundary conditions, offering flexibility in boundary treatment while maintaining computational efficiency. These approaches have revolutionized computational fluid dynamics by enabling rapid mesh generation for complex geometries while maintaining the computational advantages of structured grids.</p>
                         
-                        <h4>Validation and Verification:</h4>
-                        <div class="term-item">
-                            <strong>Method of Manufactured Solutions (MMS):</strong>
-                            <p class="guide-text">Construct exact solution, verify convergence order</p>
-                        </div>
-                        <div class="term-item">
-                            <strong>Standard test cases:</strong>
-                            <ul class="guide-list">
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Sod shock tube problem</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Supersonic flow over wedge</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Blast wave problems</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Double Mach reflection</span></li>
-                            </ul>
-                        </div>
+                        <h4>Contemporary Computational Challenges and Advanced Applications</h4>
+                        <p class="guide-text">Modern inviscid flow simulation addresses increasingly complex physical phenomena that extend beyond classical gas dynamics. Hypersonic flows require consideration of real gas effects, chemical reactions, and radiation heat transfer, demanding sophisticated models that account for thermochemical non-equilibrium and energy exchange mechanisms.</p>
+                        
+                        <p class="guide-text">Multiphase flow applications employ interface tracking and capturing methods to simulate phenomena such as bubble dynamics and shock-droplet interactions. Magnetohydrodynamics extends inviscid flow theory to plasma flows with electromagnetic effects, requiring solution of coupled fluid and Maxwell equations. The advent of GPU acceleration has enabled massively parallel implementations that dramatically reduce computational time for large-scale simulations, making previously intractable problems accessible to engineering analysis.</p>
+                        
+                        <h4>Validation, Verification, and Quality Assurance</h4>
+                        <p class="guide-text">Rigorous validation and verification protocols ensure the reliability of inviscid flow simulation results. The Method of Manufactured Solutions (MMS) provides a systematic approach to code verification by constructing analytical solutions that test numerical implementation accuracy and convergence behavior. This technique enables precise quantification of discretization errors and verification of theoretical convergence rates.</p>
+                        
+                        <p class="guide-text">Standard test cases form the foundation of inviscid flow code validation, including canonical problems such as the Sod shock tube, supersonic flow over wedges, blast wave propagation, and double Mach reflection phenomena. These benchmark problems provide well-documented reference solutions against which new implementations and methodologies can be rigorously assessed, ensuring the continued advancement of computational inviscid flow capabilities.</p>
                     </div>
                 </div>
             </div>

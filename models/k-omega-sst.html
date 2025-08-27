@@ -1123,63 +1123,29 @@
                         </div>
                         <p class="guide-text">Implicit treatment of destruction terms ensures numerical stability.</p>
                         
-                        <h4>Blending Function Evaluation Strategies:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall distance computation:</strong> Efficient algorithms for complex geometries</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Gradient limiters:</strong> Prevent excessive gradients in F₁, F₂ calculation</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Smoothing techniques:</strong> Ensure continuous blending across domain</span>
-                            </li>
-                        </ul>
+                        <h4>Blending Function Evaluation and Computational Considerations</h4>
+                        <p class="guide-text">The evaluation of blending functions F₁ and F₂ requires careful numerical treatment to ensure robust performance across diverse computational domains. Wall distance computation presents the primary computational challenge, particularly for complex geometries where efficient algorithms such as fast marching methods or Eikonal solvers are essential to maintain reasonable computational overhead while ensuring accuracy near geometric singularities.</p>
                         
-                        <h4>Advanced Discretization for ω Equation:</h4>
+                        <p class="guide-text">Gradient limiters play a crucial role in preventing excessive gradients during F₁ and F₂ calculation, which can lead to numerical instabilities or convergence difficulties. Smoothing techniques are employed to ensure continuous blending behavior across the computational domain, preventing artificial discontinuities that could compromise solution quality or convergence characteristics.</p>
+                        
+                        <h4>Cross-Diffusion Term Treatment and ω Equation Stability</h4>
                         <div class="equation-block">
                             $$\text{Cross-diffusion term: } 2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
                         </div>
-                        <p class="guide-text">Requires careful treatment to maintain positivity and avoid division by zero.</p>
+                        <p class="guide-text">The cross-diffusion term represents a unique numerical challenge in SST model implementation, requiring careful treatment to maintain positivity and avoid division by zero operations. Advanced discretization schemes must ensure that the term's contribution remains physically meaningful while maintaining numerical stability, particularly in regions where ω approaches zero or exhibits sharp gradients.</p>
                         
-                        <h4>Convergence Strategies and Monitoring:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Coupled k-ω solving:</strong> Improved convergence over segregated approach</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Residual monitoring:</strong> Both scaled and absolute residuals < 10⁻⁵</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Integral monitoring:</strong> Mass flow, pressure drop, heat transfer coefficients</span>
-                            </li>
-                        </ul>
+                        <h4>Advanced Solution Strategies and Convergence Enhancement</h4>
+                        <p class="guide-text">Contemporary CFD solvers implement sophisticated solution strategies to enhance SST model convergence characteristics. Coupled k-ω solving demonstrates superior convergence behavior compared to segregated approaches, particularly for flows with strong coupling between the turbulent variables. This approach treats the k and ω equations as a coupled system, reducing the iteration count required for convergence and improving overall robustness.</p>
                         
-                        <h4>Mesh Quality Specifications:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>y⁺ < 1:</strong> First cell height for wall integration</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Aspect ratio < 1000:</strong> In near-wall regions</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Skewness < 0.9:</strong> For accurate gradient computation</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall normal resolution:</strong> Minimum 15-20 cells in boundary layer</span>
-                            </li>
-                        </ul>
+                        <p class="guide-text">Comprehensive monitoring strategies encompass both scaled and absolute residuals, typically requiring convergence criteria below 10⁻⁵ for engineering accuracy. Additionally, integral monitoring of key flow quantities including mass flow rates, pressure drops, and heat transfer coefficients provides essential verification of solution convergence beyond simple residual criteria.</p>
+                        
+                        <h4>Mesh Quality Requirements and Computational Grid Considerations</h4>
+                        <p class="guide-text">The SST model's near-wall integration capability places stringent requirements on computational mesh quality. First cell height must satisfy y⁺ < 1 for accurate wall integration, requiring careful mesh design to achieve this criterion while maintaining reasonable cell counts. Near-wall regions should maintain aspect ratios below 1000 to preserve gradient accuracy, while overall mesh skewness should remain below 0.9 to ensure accurate gradient computation throughout the domain.</p>
+                        
+                        <p class="guide-text">Wall-normal resolution requires a minimum of 15-20 cells within the boundary layer to capture the near-wall physics accurately. The mesh distribution should follow geometric progression away from the wall, with growth ratios typically limited to 1.2 in the near-wall region to maintain solution accuracy and numerical stability.</p>
+                        
+                        <h4>Implementation Robustness and Numerical Stability</h4>
+                        <p class="guide-text">Production-grade SST implementations incorporate multiple robustness enhancements including production limiting to prevent non-physical turbulence generation in stagnation regions, realizability constraints to maintain positive definiteness of turbulent quantities, and adaptive under-relaxation strategies that automatically adjust based on local convergence behavior. These features ensure reliable performance across the wide range of flow conditions encountered in engineering applications.</p>
                     </div>
                 </div>
             </div>
