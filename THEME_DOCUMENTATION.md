@@ -454,17 +454,44 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 #### Enhanced Visual Design
 - **Academic Aesthetics**: Clean design with subtle shadows and professional typography
 - **Inline Text Numbers**: Numbers merged directly into text content for seamless reading
-- **Professional Typography**: Clean system fonts with subtle accent indicators
+- **Optimized Typography**: Improved line spacing, text alignment, and readability
+- **Proper Text Flow**: Justified text with optimal line height (1.7) for long content
+- **Hierarchical Spacing**: Progressive margins for headers and sections
 - **Subtle Cards**: Minimal shadows, rounded corners, and smooth transitions
 - **Pale Color Palette**: Extremely subtle background tints for section organization
-- **Full Width Layout**: Both guides use complete screen width for maximum content space
+- **Full Width Layout**: Both guides use complete screen width with proper padding
 
 #### Visual Styling for Academy Guide
 ```css
         .academy-guide {
             width: 100%;
             background: #ffffff;
-            padding: 0;
+            padding: 2rem 3rem;
+            line-height: 1.6;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         /* Academy Guide - Academic bullet formatting */
