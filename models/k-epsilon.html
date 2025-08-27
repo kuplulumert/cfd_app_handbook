@@ -195,66 +195,42 @@
             gap: 0.75rem;
         }
 
-        .guide-section h3::before {
-            content: var(--section-number);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            background: #2c3e50;
-            color: #ecf0f1;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            flex-shrink: 0;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            letter-spacing: 0.5px;
-        }
+
 
         .guide-overview {
             --accent-color: #3b82f6;
-            --section-number: "01";
         }
 
         .guide-strengths {
             --accent-color: #10b981;
-            --section-number: "02";
         }
 
         .guide-limitations {
             --accent-color: #f59e0b;
-            --section-number: "03";
         }
 
         .guide-use-cases {
             --accent-color: #8b5cf6;
-            --section-number: "04";
         }
 
         .guide-avoid {
             --accent-color: #ef4444;
-            --section-number: "06";
         }
 
         .guide-tips {
             --accent-color: #06b6d4;
-            --section-number: "07";
         }
 
         .guide-performance {
             --accent-color: #10b981;
-            --section-number: "08";
         }
 
         .guide-pitfalls {
             --accent-color: #f59e0b;
-            --section-number: "09";
         }
 
         .guide-choice {
             --accent-color: #3b82f6;
-            --section-number: "05";
         }
 
         .guide-list {
@@ -308,6 +284,11 @@
         .guide-emphasis {
             font-weight: 600;
             color: #111827;
+        }
+
+        .academic-highlight {
+            color: #8B4513;
+            font-weight: 500;
         }
 
         .use-case-item {
@@ -578,19 +559,19 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Two-equation RANS model</strong> solving for turbulent kinetic energy (k) and dissipation rate (ε).</span>
+                                <span class="guide-text"><span class="academic-highlight">Two-equation RANS model</span> solving for turbulent kinetic energy (k) and dissipation rate (ε).</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>First complete turbulence closure</strong>, developed by Launder & Spalding (1974).</span>
+                                <span class="guide-text"><span class="academic-highlight">First complete turbulence closure</span>, developed by Launder & Spalding (1974).</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Most widely validated</strong> and used model in industrial CFD applications.</span>
+                                <span class="guide-text"><span class="academic-highlight">Most widely validated</span> and used model in industrial CFD applications.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text">Optimized for <strong>high Reynolds number</strong>, fully developed turbulent flows.</span>
+                                <span class="guide-text">Optimized for <span class="academic-highlight">high Reynolds number</span>, fully developed turbulent flows.</span>
                             </li>
                         </ul>
                     </div>
@@ -601,23 +582,23 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Computational efficiency:</strong> Lowest cost among two-equation models, <strong>40-50% faster than SST</strong>.</span>
+                                <span class="guide-text"><span class="academic-highlight">Computational efficiency:</span> Lowest cost among two-equation models, <span class="academic-highlight">40-50% faster than SST</span>.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Robust convergence:</strong> Stable and reliable across <strong>wide range of flow conditions</strong>.</span>
+                                <span class="guide-text"><span class="academic-highlight">Robust convergence:</span> Stable and reliable across <span class="academic-highlight">wide range of flow conditions</span>.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Universal availability:</strong> Implemented in <strong>every commercial CFD solver</strong> with consistent formulation.</span>
+                                <span class="guide-text"><span class="academic-highlight">Universal availability:</span> Implemented in <span class="academic-highlight">every commercial CFD solver</span> with consistent formulation.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Extensive validation:</strong> <strong>50+ years</strong> of validation data across diverse industrial applications.</span>
+                                <span class="guide-text"><span class="academic-highlight">Extensive validation:</span> <span class="academic-highlight">50+ years</span> of validation data across diverse industrial applications.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Mesh flexibility:</strong> Works with <strong>coarser meshes</strong> due to wall function approach.</span>
+                                <span class="guide-text"><span class="academic-highlight">Mesh flexibility:</span> Works with <span class="academic-highlight">coarser meshes</span> due to wall function approach.</span>
                             </li>
                         </ul>
                     </div>
@@ -628,19 +609,19 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Mesh requirements:</strong> <strong>y⁺ > 30</strong> for wall functions, coarser near-wall mesh acceptable.</span>
+                                <span class="guide-text"><span class="academic-highlight">Mesh requirements:</span> <span class="academic-highlight">y⁺ > 30</span> for wall functions, coarser near-wall mesh acceptable.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall treatment limitation:</strong> <strong>Cannot integrate to wall</strong>, requires empirical wall functions.</span>
+                                <span class="guide-text"><span class="academic-highlight">Wall treatment limitation:</span> <span class="academic-highlight">Cannot integrate to wall</span>, requires empirical wall functions.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Reynolds number limitation:</strong> <strong>Re > 10,000</strong> for validity, poor for transitional flows.</span>
+                                <span class="guide-text"><span class="academic-highlight">Reynolds number limitation:</span> <span class="academic-highlight">Re > 10,000</span> for validity, poor for transitional flows.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Separation issues:</strong> <strong>Over-predicts attached flow</strong>, <strong>under-predicts separation</strong>.</span>
+                                <span class="guide-text"><span class="academic-highlight">Separation issues:</span> <span class="academic-highlight">Over-predicts attached flow</span>, <span class="academic-highlight">under-predicts separation</span>.</span>
                             </li>
                         </ul>
                     </div>
@@ -675,23 +656,23 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Time-critical projects:</strong> <strong>Fast turnaround</strong> required for design iterations and parametric studies.</span>
+                                <span class="guide-text"><span class="academic-highlight">Time-critical projects:</span> <span class="academic-highlight">Fast turnaround</span> required for design iterations and parametric studies.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>High Reynolds flows:</strong> <strong>Re > 50,000</strong>, fully developed turbulence dominates.</span>
+                                <span class="guide-text"><span class="academic-highlight">High Reynolds flows:</span> <span class="academic-highlight">Re > 50,000</span>, fully developed turbulence dominates.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Simple geometries:</strong> Straight ducts, channels, basic heat exchangers.</span>
+                                <span class="guide-text"><span class="academic-highlight">Simple geometries:</span> Straight ducts, channels, basic heat exchangers.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Engineering accuracy acceptable:</strong> <strong>±15-20% error margins</strong> sufficient for design decisions.</span>
+                                <span class="guide-text"><span class="academic-highlight">Engineering accuracy acceptable:</span> <span class="academic-highlight">±15-20% error margins</span> sufficient for design decisions.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Limited computational resources:</strong> Quick studies on standard workstation hardware.</span>
+                                <span class="guide-text"><span class="academic-highlight">Limited computational resources:</span> Quick studies on standard workstation hardware.</span>
                             </li>
                         </ul>
                     </div>
@@ -709,7 +690,7 @@
                             <span class="guide-text"><span class="guide-emphasis">Swirling flows:</span> Cyclones, tangential inlets, rotating machinery</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Low Reynolds number flows:</span> <strong>Re < 10,000</strong>, laminar-turbulent transition</span>
+                            <span class="guide-text"><span class="academic-highlight">Low Reynolds number flows:</span> <span class="academic-highlight">Re < 10,000</span>, laminar-turbulent transition</span>
                         </div>
                         <div class="avoid-item">
                             <span class="guide-text"><span class="guide-emphasis">Impingement flows:</span> Jet impingement, complex wall interactions</span>
@@ -727,19 +708,19 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>y⁺ > 30:</strong> Essential for wall function validity (optimal range: <strong>30-300</strong>).</span>
+                                <span class="guide-text"><span class="academic-highlight">y⁺ > 30:</span> Essential for wall function validity (optimal range: <span class="academic-highlight">30-300</span>).</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.3</strong> acceptable, more forgiving than SST model.</span>
+                                <span class="guide-text"><span class="academic-highlight">Growth ratio:</span> <span class="academic-highlight">< 1.3</span> acceptable, more forgiving than SST model.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Aspect ratio:</strong> <strong>< 100</strong> in boundary layer regions sufficient.</span>
+                                <span class="guide-text"><span class="academic-highlight">Aspect ratio:</span> <span class="academic-highlight">< 100</span> in boundary layer regions sufficient.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall normal cells:</strong> <strong>5-10 cells</strong> sufficient due to wall function approach.</span>
+                                <span class="guide-text"><span class="academic-highlight">Wall normal cells:</span> <span class="academic-highlight">5-10 cells</span> sufficient due to wall function approach.</span>
                             </li>
                         </ul>
                         
@@ -747,15 +728,15 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Discretization:</strong> First-order upwind for stability, second-order for accuracy.</span>
+                                <span class="guide-text"><span class="academic-highlight">Discretization:</span> First-order upwind for stability, second-order for accuracy.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁴</strong> typically sufficient for engineering accuracy.</span>
+                                <span class="guide-text"><span class="academic-highlight">Convergence:</span> Residuals <span class="academic-highlight">< 10⁻⁴</span> typically sufficient for engineering accuracy.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Under-relaxation:</strong> k: <strong>0.8</strong>, ε: <strong>0.8</strong> (more aggressive than SST).</span>
+                                <span class="guide-text"><span class="academic-highlight">Under-relaxation:</span> k: <span class="academic-highlight">0.8</span>, ε: <span class="academic-highlight">0.8</span> (more aggressive than SST).</span>
                             </li>
                         </ul>
                         
@@ -763,15 +744,15 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Inlet turbulence:</strong> I = <strong>1-10%</strong>, ℓ = <strong>0.07 × hydraulic diameter</strong> for internal flows.</span>
+                                <span class="guide-text"><span class="academic-highlight">Inlet turbulence:</span> I = <span class="academic-highlight">1-10%</span>, ℓ = <span class="academic-highlight">0.07 × hydraulic diameter</span> for internal flows.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall conditions:</strong> Standard wall functions, no-slip velocity condition.</span>
+                                <span class="guide-text"><span class="academic-highlight">Wall conditions:</span> Standard wall functions, no-slip velocity condition.</span>
                             </li>
                             <li class="guide-item">
                                 <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Outlet conditions:</strong> Zero gradient for k and ε typically adequate.</span>
+                                <span class="guide-text"><span class="academic-highlight">Outlet conditions:</span> Zero gradient for k and ε typically adequate.</span>
                             </li>
                         </ul>
                     </div>
