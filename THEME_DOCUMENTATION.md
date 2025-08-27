@@ -92,11 +92,11 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-seri
 ### Interactive Elements
 
 #### Numbered Bullets
-- **Design**: Simple rectangles with neutral gray background
-- **Color**: `#6b7280` (gray) with hover state `#4b5563`
-- **Size**: `1.5rem × 1.5rem`
+- **Format**: Simple text numbers with period (1., 2., 3.)
+- **Color**: `#6b7280` (gray) for understated appearance
 - **Auto-numbering**: CSS counters for systematic organization
-- **Font**: `0.75rem` with `500` weight
+- **Font**: `0.9rem` with `600` weight
+- **Spacing**: Right margin for proper text alignment
 
 #### Use Case Items
 ```css
@@ -453,7 +453,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 
 #### Enhanced Visual Design
 - **Academic Aesthetics**: Clean design with subtle shadows and professional typography
-- **Simple Bullets**: Neutral gray rectangular bullets with minimal styling
+- **Text-Based Bullets**: Simple numbered text format (1., 2., 3.) for minimal distraction
 - **Professional Typography**: Clean system fonts with subtle accent indicators
 - **Subtle Cards**: Minimal shadows, rounded corners, and smooth transitions
 - **Pale Color Palette**: Extremely subtle background tints for section organization

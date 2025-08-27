@@ -275,27 +275,17 @@
         }
 
         .guide-bullet {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 1.5rem;
-            height: 1.5rem;
-            background: #6b7280;
-            color: white;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 600;
             flex-shrink: 0;
             margin-top: 0.125rem;
-            transition: all 0.2s ease;
+            margin-right: 0.5rem;
+            min-width: 1.5rem;
         }
 
         .guide-bullet::before {
-            content: counter(guide-counter);
-        }
-
-        .guide-item:hover .guide-bullet {
-            background: #4b5563;
+            content: counter(guide-counter) ".";
         }
 
         /* Academy Guide - Academic bullet formatting */
