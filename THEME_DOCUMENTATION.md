@@ -92,10 +92,11 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-seri
 ### Interactive Elements
 
 #### Numbered Bullets
-- **Design**: Rounded squares with section accent colors
+- **Design**: Simple rectangles with neutral gray background
+- **Color**: `#6b7280` (gray) with hover state `#4b5563`
 - **Size**: `1.5rem × 1.5rem`
 - **Auto-numbering**: CSS counters for systematic organization
-- **Font**: `0.75rem` with `600` weight
+- **Font**: `0.75rem` with `500` weight
 
 #### Use Case Items
 ```css
@@ -452,17 +453,20 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 
 #### Enhanced Visual Design
 - **Academic Aesthetics**: Clean design with subtle shadows and professional typography
-- **Refined Bullets**: Circular numbered bullets with gentle shadows and hover effects
+- **Simple Bullets**: Neutral gray rectangular bullets with minimal styling
 - **Professional Typography**: Clean system fonts with subtle accent indicators
 - **Subtle Cards**: Minimal shadows, rounded corners, and smooth transitions
 - **Pale Color Palette**: Extremely subtle background tints for section organization
+- **Centered Text Layout**: Academy Guide content centered with optimal reading width
 
 #### Visual Styling for Academy Guide
 ```css
         .academy-guide {
             width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
             background: #ffffff;
-            padding: 2rem 0;
+            padding: 2rem;
         }
 
         /* Academy Guide - Academic bullet formatting */
