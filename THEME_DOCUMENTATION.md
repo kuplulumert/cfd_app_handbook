@@ -343,7 +343,7 @@ The systematic 9-section information architecture for practical implementation (
 
 ### Academy Guide Sections (7 Sections)
 
-The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers, written as flowing paragraphs without bullet points):
+The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers, using academic bullet points where appropriate for clear organization):
 
 #### **Historical Context and Development**
 - Timeline of model evolution and key contributors
@@ -458,9 +458,18 @@ The systematic 7-section theoretical and mathematical structure for advanced use
             padding: 2rem 0;
         }
 
-        /* Academy Guide - No bullets, paragraph format only */
-        .academy-guide .guide-list {
-            display: none; /* Academy content should be paragraphs, not lists */
+        /* Academy Guide - Academic bullet formatting */
+        .academy-guide .guide-bullet {
+            background: #374151;
+            color: white;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 8px;
+        }
+
+        .academy-guide .guide-bullet::before {
+            content: "";
         }
 
         .equation-block {
