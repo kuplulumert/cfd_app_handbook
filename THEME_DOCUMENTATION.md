@@ -185,6 +185,152 @@ Technical terms, values, and important concepts are highlighted using `<strong>`
 - **Performance**: Minimal CSS footprint
 - **Scalability**: rem-based sizing for accessibility
 
+## Content Information Architecture
+
+### Standard Section Outline (9-Section Structure)
+
+The Sigma Professional theme follows a systematic 9-section information architecture for technical model documentation:
+
+#### 1. **Model Overview** (Blue `#3b82f6`)
+- Model type and classification
+- Historical development and creators
+- Primary characteristics and validation status
+- Target Reynolds number ranges
+
+**Content Pattern:**
+- **Technical Classification**: "Two-equation RANS model"
+- **Historical Context**: "First complete turbulence closure"
+- **Industry Status**: "Most widely validated"
+- **Application Scope**: "High Reynolds number flows"
+
+#### 2. **Key Advantages** (Green `#10b981`)
+- Computational efficiency metrics
+- Convergence characteristics
+- Software availability
+- Validation history
+- Mesh requirements flexibility
+
+**Content Pattern:**
+- **Performance Metrics**: "40-50% faster than SST"
+- **Reliability Factors**: "Wide range of flow conditions"
+- **Industry Adoption**: "Every commercial CFD solver"
+- **Proven Track Record**: "50+ years of validation"
+
+#### 3. **Computational Requirements** (Amber `#f59e0b`)
+- Mesh specifications and limitations
+- Wall treatment requirements
+- Reynolds number constraints
+- Known accuracy issues
+
+**Content Pattern:**
+- **Mesh Constraints**: "y⁺ > 30 for wall functions"
+- **Physical Limitations**: "Cannot integrate to wall"
+- **Validity Ranges**: "Re > 10,000 for validity"
+- **Prediction Issues**: "Over-predicts/under-predicts"
+
+#### 4. **Application Use Cases** (Purple `#8b5cf6`)
+- Specific appliance applications
+- Industry implementations
+- Geometric considerations
+- Scale of applications
+
+**Content Pattern:**
+- **Appliance Types**: "Refrigerators & Freezers", "Ovens & Cooktops"
+- **System Scale**: "Large-Scale Systems", "Early Design Studies"
+- **Application Context**: Internal air circulation, heat exchangers
+
+#### 5. **Selection Criteria** (Blue `#3b82f6`)
+- When to choose over alternatives
+- Project requirements matching
+- Resource considerations
+- Accuracy expectations
+
+**Content Pattern:**
+- **Project Constraints**: "Time-critical projects", "Fast turnaround"
+- **Flow Characteristics**: "High Reynolds flows", "Re > 50,000"
+- **Geometry Types**: "Simple geometries"
+- **Accuracy Requirements**: "±15-20% error margins"
+
+#### 6. **Limitations & Avoid Cases** (Red `#ef4444`)
+- Unsuitable applications
+- Physical phenomena limitations
+- Flow type restrictions
+- Accuracy concerns
+
+**Content Pattern:**
+- **Flow Restrictions**: "Low Reynolds number flows", "Re < 10,000"
+- **Physical Limitations**: "Wall-bounded flows requiring accuracy"
+- **Complex Phenomena**: "Separation-dominated flows", "Swirling flows"
+
+#### 7. **Setup Guidelines** (Cyan `#06b6d4`)
+- Mesh requirements with specific values
+- Solver settings and parameters
+- Boundary condition specifications
+- Convergence criteria
+
+**Content Pattern:**
+- **Mesh Requirements**: "y⁺ > 30", "30-300 optimal range", "< 1.3 growth ratio"
+- **Solver Settings**: "< 10⁻⁴ convergence", "0.8 under-relaxation"
+- **Boundary Conditions**: "1-10% turbulence intensity", "0.07 × hydraulic diameter"
+
+#### 8. **Performance Expectations** (Green `#10b981`)
+- Accuracy levels for different phenomena
+- Computational performance metrics
+- Comparison with other models
+- Resource requirements
+
+**Content Pattern:**
+- **Accuracy Ranges**: "±10-15% for simple flows", "±20-30% for complex"
+- **Performance Gains**: "60-70% fewer mesh cells", "30-40% lower memory"
+- **Convergence Rates**: "50-70% fewer iterations"
+
+#### 9. **Common Pitfalls** (Amber `#f59e0b`)
+- Mesh-related issues and solutions
+- Physical modeling problems
+- Boundary condition mistakes
+- Troubleshooting guidance
+
+**Content Pattern:**
+- **Problem-Solution Format**: "Problem: y⁺ < 30 causing breakdown. Solution: Coarsen mesh"
+- **Categorized Issues**: Mesh-Related, Physical Modeling, Boundary Conditions
+- **Preventive Guidance**: Best practices to avoid common mistakes
+
+### Content Highlighting Strategy
+
+#### Technical Parameters (Always Bold)
+- **Numerical Values**: `y⁺ > 30`, `Re > 10,000`, `±15-20%`
+- **Model Names**: `k-ε Standard`, `k-ω SST`
+- **Performance Metrics**: `40-50% faster`, `50+ years`
+- **Physical Constraints**: `Cannot integrate to wall`
+
+#### Category Headers (Bold + Colon)
+- **Specification Types**: `Mesh requirements:`, `Wall conditions:`
+- **Performance Areas**: `Computational efficiency:`, `vs SST:`
+- **Problem Categories**: `Mesh-Related Issues:`, `Physical Modeling:`
+
+#### Quantitative Ranges (Bold)
+- **Acceptable Ranges**: `30-300`, `1-10%`, `< 1.3`
+- **Threshold Values**: `> 30`, `< 10⁻⁴`, `> 50,000`
+- **Error Margins**: `±10-15%`, `±20-30%`
+
+### Information Density Guidelines
+
+#### Section Length Standards
+- **Overview**: 4 concise bullet points
+- **Advantages**: 5 key benefits with metrics
+- **Requirements**: 4 major constraints
+- **Applications**: 6-8 specific use cases
+- **Selection**: 5 decision criteria
+- **Limitations**: 6 avoid scenarios
+- **Setup**: 3 subsections (Mesh, Solver, Boundary)
+- **Performance**: 2 subsections (Accuracy, Computational)
+- **Pitfalls**: 3 categories with solutions
+
+#### Content Granularity
+- **High-level**: Section overview and classification
+- **Mid-level**: Specific parameters and ranges
+- **Detailed**: Implementation guidance and troubleshooting
+
 ## Usage Examples
 
 ### Section Implementation
@@ -203,6 +349,34 @@ Technical terms, values, and important concepts are highlighted using `<strong>`
 ### Content Highlighting
 ```html
 <span class="guide-text"><strong>Mesh requirements:</strong> <strong>y⁺ > 30</strong> for wall functions, coarser near-wall mesh acceptable.</span>
+```
+
+### Complete Section Example
+```html
+<!-- Setup Guidelines Section -->
+<div class="guide-section guide-tips">
+    <h3>7. Setup and Mesh Guidelines</h3>
+    
+    <h4>Mesh Requirements:</h4>
+    <ul class="guide-list">
+        <li class="guide-item">
+            <span class="guide-bullet">•</span>
+            <span class="guide-text"><strong>y⁺ > 30:</strong> Essential for wall function validity (optimal range: <strong>30-300</strong>).</span>
+        </li>
+        <li class="guide-item">
+            <span class="guide-bullet">•</span>
+            <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.3</strong> acceptable, more forgiving than SST model.</span>
+        </li>
+    </ul>
+    
+    <h4>Solver Settings:</h4>
+    <ul class="guide-list">
+        <li class="guide-item">
+            <span class="guide-bullet">•</span>
+            <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁴</strong> typically sufficient for engineering accuracy.</span>
+        </li>
+    </ul>
+</div>
 ```
 
 ## Theme Benefits

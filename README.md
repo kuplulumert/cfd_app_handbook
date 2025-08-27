@@ -80,6 +80,27 @@ For complete theme specifications, see [`THEME_DOCUMENTATION.md`](./THEME_DOCUME
 - **Setup Guidelines**: Mesh, solver, and boundary conditions
 - **Performance Data**: Accuracy levels and computational costs
 
+## 📋 Standard Information Architecture
+
+The Sigma Professional theme follows a systematic **9-section structure** for technical model documentation:
+
+### Industry Guide Sections (1-9)
+1. **Model Overview** - Classification, history, validation status
+2. **Key Advantages** - Performance metrics, reliability, industry adoption
+3. **Computational Requirements** - Mesh constraints, limitations, validity ranges
+4. **Application Use Cases** - Specific appliances, industry implementations
+5. **Selection Criteria** - When to choose, project constraints, accuracy needs
+6. **Limitations & Avoid Cases** - Flow restrictions, unsuitable applications
+7. **Setup Guidelines** - Mesh requirements, solver settings, boundary conditions
+8. **Performance Expectations** - Accuracy ranges, computational metrics
+9. **Common Pitfalls** - Problem-solution format, troubleshooting guidance
+
+### Content Highlighting Standards
+- **Technical Parameters**: `y⁺ > 30`, `Re > 10,000`, `±15-20%` (always bold)
+- **Category Headers**: `Mesh requirements:`, `Computational efficiency:` (bold + colon)
+- **Performance Metrics**: `40-50% faster`, `50+ years` (bold)
+- **Physical Constraints**: `Cannot integrate to wall` (bold)
+
 ## 📊 Design Philosophy
 
 ### Professional Standards
