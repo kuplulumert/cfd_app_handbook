@@ -88,7 +88,7 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 - **Industry Guide Tab**: Practical implementation and usage guidelines (9 sections)
 - **Academy Guide Tab**: Theoretical foundation and mathematical derivation (7 sections)
 
-### Industry Guide Sections (1-9)
+### Industry Guide Sections (1-9) - WITH NUMBERED HEADERS
 1. **Model Overview** - Classification, history, validation status
 2. **Key Advantages** - Performance metrics, reliability, industry adoption
 3. **Computational Requirements** - Mesh constraints, limitations, validity ranges
@@ -99,14 +99,14 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 8. **Performance Expectations** - Accuracy ranges, computational metrics
 9. **Common Pitfalls** - Problem-solution format, troubleshooting guidance
 
-### Academy Guide Sections (1-7)
-1. **Historical Context and Development** - Timeline, contributors, evolution
-2. **Mathematical Foundation** - Complete derivations, RANS equations
-3. **Term Definitions** - Physical meaning, variables, parameters
-4. **Turbulent Scales Theory** - Kolmogorov scales, energy cascade
-5. **Model Constants** - Derivation, physical significance, validation
-6. **Theoretical Framework** - Assumptions, limitations, Reynolds stress
-7. **Advanced Variants** - Modern improvements, research developments
+### Academy Guide Sections (7 Sections) - WITHOUT NUMBERED HEADERS
+- **Historical Context and Development** - Timeline, contributors, evolution
+- **Mathematical Foundation** - Complete derivations, RANS equations
+- **Term Definitions** - Physical meaning, variables, parameters
+- **Turbulent Scales Theory** - Kolmogorov scales, energy cascade
+- **Model Constants** - Derivation, physical significance, validation
+- **Theoretical Framework** - Assumptions, limitations, Reynolds stress
+- **Advanced Variants** - Modern improvements, research developments
 
 ### Content Highlighting Standards
 

@@ -199,7 +199,7 @@ Theoretical foundation and mathematical derivation for researchers and advanced 
 
 ### Industry Guide Sections (1-9)
 
-The systematic 9-section information architecture for practical implementation:
+The systematic 9-section information architecture for practical implementation (with numbered headers):
 
 #### 1. **Model Overview** (Blue `#3b82f6`)
 - Model type and classification
@@ -341,11 +341,11 @@ The systematic 9-section information architecture for practical implementation:
 - **Mid-level**: Specific parameters and ranges
 - **Detailed**: Implementation guidance and troubleshooting
 
-### Academy Guide Sections (1-7)
+### Academy Guide Sections (7 Sections)
 
-The systematic 7-section theoretical and mathematical structure for advanced users:
+The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers):
 
-#### 1. **Historical Context and Development**
+#### **Historical Context and Development**
 - Timeline of model evolution and key contributors
 - Theoretical breakthroughs and publications
 - Evolution from earlier models
@@ -357,7 +357,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Theoretical Milestones**: Major developments in turbulence modeling
 - **Modern Evolution**: Recent improvements and variants
 
-#### 2. **Mathematical Foundation and Complete Derivation**
+#### **Mathematical Foundation and Complete Derivation**
 - Reynolds-Averaged Navier-Stokes equations
 - Exact transport equations and modeling assumptions
 - Dimensional analysis and closure requirements
@@ -369,7 +369,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Dimensional Analysis**: Physical reasoning for model structure
 - **Closure Approximations**: Assumptions and their justifications
 
-#### 3. **Comprehensive Term Definitions and Physical Meaning**
+#### **Comprehensive Term Definitions and Physical Meaning**
 - Detailed explanation of all variables and parameters
 - Physical interpretation of mathematical terms
 - Scale relationships and turbulent quantities
@@ -381,7 +381,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Scale Relationships**: Connection between different turbulent scales
 - **Practical Significance**: How variables affect flow behavior
 
-#### 4. **Turbulent Scales and Energy Cascade Theory**
+#### **Turbulent Scales and Energy Cascade Theory**
 - Kolmogorov microscales and universal behavior
 - Integral scales and energy-containing eddies
 - Taylor microscale and inertial subrange
@@ -393,7 +393,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Universal Laws**: -5/3 energy spectrum, Kolmogorov constants
 - **Practical Implications**: Mesh requirements and model validity
 
-#### 5. **Model Constants: Derivation and Physical Significance**
+#### **Model Constants: Derivation and Physical Significance**
 - Detailed derivation of all model constants
 - Physical reasoning and experimental calibration
 - Relationships between constants
@@ -405,7 +405,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Physical Basis**: Experimental observations and theoretical constraints
 - **Validation Cases**: Specific flows used for calibration
 
-#### 6. **Advanced Theoretical Framework and Fundamental Assumptions**
+#### **Advanced Theoretical Framework and Fundamental Assumptions**
 - Reynolds decomposition and statistical framework
 - Exact Reynolds stress transport equations
 - Boussinesq approximation implications
@@ -417,7 +417,7 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Key Assumptions**: Local equilibrium, gradient diffusion, isotropy
 - **Limitation Analysis**: Where and why the model fails
 
-#### 7. **Advanced Model Variants and Modern Improvements**
+#### **Advanced Model Variants and Modern Improvements**
 - Low Reynolds number modifications
 - Compressibility corrections
 - Rotation and curvature effects
