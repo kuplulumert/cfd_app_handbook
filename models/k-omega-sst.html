@@ -904,9 +904,9 @@
                         <p class="guide-text">This term eliminates k-ω model's sensitivity to freestream ω values by transforming k-ω into k-ε formulation away from walls.</p>
                     </div>
 
-                    <!-- Enhanced Term Definitions -->
+                    <!-- Comprehensive Term Definitions and Physical Meaning -->
                     <div class="guide-section guide-strengths">
-                        <h3>Comprehensive Term Definitions and Physical Meaning</h3>
+                        <h3>3. Comprehensive Term Definitions and Physical Meaning</h3>
                         <div class="term-definitions">
                             <div class="term-item">
                                 <strong>ω:</strong> Specific dissipation rate [1/s]
@@ -941,9 +941,33 @@
                         </div>
                     </div>
 
-                    <!-- Advanced Model Constants and Blending -->
+                    <!-- Turbulent Scales and Energy Cascade Theory -->
                     <div class="guide-section guide-limitations">
-                        <h3>Model Constants: Blending and Physical Significance</h3>
+                        <h3>4. Turbulent Scales and SST Scale-Resolving Behavior</h3>
+                        <p class="guide-text">The SST model's hybrid formulation provides scale-appropriate behavior from viscous sublayer to outer boundary layer region.</p>
+                        
+                        <h4>Near-Wall Scale Resolution (k-ω region):</h4>
+                        <div class="equation-block">
+                            $$y^+ = \frac{y u_\tau}{\nu} < 1, \quad \text{viscous sublayer integration}$$
+                        </div>
+                        <p class="guide-text">Direct integration to wall without wall functions, resolving viscous length scale.</p>
+                        
+                        <h4>Outer Layer Scale Behavior (k-ε transformation):</h4>
+                        <div class="equation-block">
+                            $$\ell_t = \frac{\sqrt{k}}{\omega} \rightarrow \frac{k^{3/2}}{\epsilon}, \quad \text{turbulent length scale transition}$$
+                        </div>
+                        <p class="guide-text">Automatic transition to k-ε length scale formulation in freestream regions.</p>
+                        
+                        <h4>Shear Layer Scale Limitation:</h4>
+                        <div class="equation-block">
+                            $$\tau_{wall} \propto \rho k, \quad \text{Bradshaw's constraint on Reynolds stress}$$
+                        </div>
+                        <p class="guide-text">Ensures proper scaling of turbulent stresses in adverse pressure gradient boundary layers.</p>
+                    </div>
+
+                    <!-- Model Constants: Derivation and Physical Significance -->
+                    <div class="guide-section guide-use-cases">
+                        <h3>5. Model Constants: Blending and Physical Significance</h3>
                         
                         <h4>Blended Constants (φ = F₁φ₁ + (1-F₁)φ₂):</h4>
                         <div class="constants-table">
@@ -996,9 +1020,9 @@
                         </ul>
                     </div>
 
-                    <!-- Advanced Theoretical Framework -->
-                    <div class="guide-section guide-use-cases">
-                        <h3>Advanced Theoretical Framework and Innovations</h3>
+                    <!-- Advanced Theoretical Framework and Fundamental Assumptions -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. Advanced Theoretical Framework and Fundamental Assumptions</h3>
                         
                         <h4>Bradshaw's Assumption and Shear Stress Limitation:</h4>
                         <div class="equation-block">
@@ -1044,9 +1068,9 @@
                         <p class="guide-text">This transformation is achieved through the cross-diffusion term, ensuring freestream independence.</p>
                     </div>
 
-                    <!-- Wall Treatment and Near-Wall Physics -->
-                    <div class="guide-section guide-avoid">
-                        <h3>Advanced Wall Treatment and Near-Wall Physics</h3>
+                    <!-- Advanced Model Variants and Modern Improvements -->
+                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
+                        <h3>7. Advanced Model Variants and Modern Improvements</h3>
                         
                         <h4>Viscous Sublayer Integration:</h4>
                         <p class="guide-text">The SST model resolves the complete boundary layer structure:</p>
