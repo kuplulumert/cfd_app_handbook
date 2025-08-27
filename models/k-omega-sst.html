@@ -843,18 +843,20 @@
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The k-ω SST (Shear Stress Transport) model was developed by Florian Menter (1994) to combine the best features of k-ω and k-ε formulations while addressing their individual limitations.</p>
+                        <p class="guide-text">The k-ω Shear Stress Transport (SST) model represents a significant advancement in Reynolds-Averaged Navier-Stokes (RANS) turbulence modeling, introduced by Menter (1994) to address fundamental limitations inherent in existing two-equation closure schemes. The model's development emerged from a systematic analysis of the complementary strengths and weaknesses exhibited by the k-ω and k-ε model formulations.</p>
                         
-                        <h4>Timeline and Evolution:</h4>
-                        <p class="guide-text">The development of the SST model represents a systematic evolution in turbulence modeling spanning over two decades. In <strong>1988</strong>, Wilcox developed the k-ω model, which demonstrated superior near-wall behavior compared to k-ε formulations but suffered from excessive sensitivity to freestream ω values. This limitation was clearly identified by <strong>Menter in 1993</strong>, who recognized that the k-ω model's performance degraded significantly when freestream ω values were not properly specified.</p>
+                        <h4>Theoretical Evolution and Motivation:</h4>
+                        <p class="guide-text">The theoretical foundation for the SST model originated with Wilcox's (1988) introduction of the k-ω formulation, which demonstrated superior near-wall predictive capabilities compared to the widely-adopted k-ε model of Launder and Spalding (1974). However, subsequent investigations by Menter (1992, 1993) identified a critical deficiency in the k-ω model's sensitivity to freestream boundary conditions, particularly the specification of the specific dissipation rate ω in regions removed from solid boundaries.</p>
                         
-                        <p class="guide-text">The breakthrough came in <strong>1994</strong> when Menter introduced the BSL (Baseline) k-ω model, which incorporated a blending function to seamlessly transition between k-ω and k-ε formulations. The same year saw the development of the complete SST model with its characteristic shear stress limiter. Subsequent refinements included the <strong>SST-2003</strong> version with improved corner flow prediction capabilities, and the <strong>SST-V variant in 2009</strong> featuring vorticity source terms for enhanced rotation effects modeling.</p>
+                        <p class="guide-text">Menter's seminal contribution (1994) introduced the concept of model hybridization through a sophisticated blending function methodology. The Baseline (BSL) k-ω model served as the preliminary framework, incorporating automatic transformation between k-ω and k-ε formulations based on the local flow field characteristics. The complete SST formulation extended this concept by implementing Bradshaw's assumption (1967) regarding the limitation of Reynolds shear stress in adverse pressure gradient boundary layers, thereby addressing the k-ω model's tendency to overpredict separation in such flows.</p>
+                        
+                        <p class="guide-text">Contemporary developments have further refined the SST framework. The SST-2003 variant (Menter et al., 2003) incorporated modifications to address corner flow stagnation point anomalies, while the SST-V formulation (Langtry and Menter, 2009) introduced vorticity-sensitive source terms to enhance predictive accuracy in rotating reference frames and flows with significant streamline curvature effects.</p>
                     </div>
 
                     <!-- Mathematical Foundation and Derivation -->
                     <div class="guide-section guide-overview">
                         <h3>Mathematical Foundation and Hybrid Formulation</h3>
-                        <p class="guide-text">The SST model employs a blending function F₁ to seamlessly transition between k-ω formulation near walls and k-ε behavior in the outer region.</p>
+                        <p class="guide-text">The SST model constitutes a sophisticated hybrid turbulence closure that exploits the complementary advantages of the k-ω and k-ε formulations through a spatially-varying blending methodology. The fundamental approach employs a blending function F₁ that ensures asymptotically correct near-wall behavior while maintaining freestream independence in the outer flow regions, thereby addressing the primary deficiencies of both parent models.</p>
                         
                         <h4>Turbulent Kinetic Energy Transport Equation:</h4>
                         <div class="equation-block">
@@ -977,10 +979,12 @@
                             <p class="guide-text">Based on experimental observation that shear stress correlates with turbulent kinetic energy.</p>
                         </div>
                         
-                        <h4>Model Validation and Calibration Database:</h4>
-                        <p class="guide-text">The SST model has been extensively validated against fundamental flow configurations that test specific aspects of the model's hybrid formulation. <strong>Flat plate boundary layers</strong> provide zero pressure gradient validation, confirming the model's ability to predict canonical attached flows. <strong>Adverse pressure gradient flows</strong> from the ERCOFTAC database demonstrate the model's superior performance in separating boundary layers compared to standard k-ε models.</p>
+                        <h4>Validation Framework and Calibration Database:</h4>
+                        <p class="guide-text">The SST model's predictive capabilities have been systematically evaluated against an extensive database of canonical flow configurations, each designed to isolate and assess specific aspects of the hybrid formulation's theoretical framework. The validation methodology encompasses both fundamental flows and complex engineering applications, establishing the model's range of applicability and quantifying associated uncertainties.</p>
                         
-                        <p class="guide-text"><strong>Airfoil flows</strong> using NACA series at various angles of attack validate the model's transition prediction and separated flow behavior. <strong>Backward-facing step</strong> configurations test separation and reattachment prediction capabilities, while <strong>free jets and mixing layers</strong> verify the model's freestream independence - a critical improvement over the original k-ω formulation.</p>
+                        <p class="guide-text">Zero pressure gradient flat plate boundary layers serve as the primary validation case for attached flow prediction, providing verification of the model's asymptotic near-wall behavior and skin friction coefficient accuracy. The ERCOFTAC adverse pressure gradient database (Savill, 1993) demonstrates the model's enhanced predictive capability for separating boundary layers, where the SST formulation exhibits substantially improved performance relative to standard k-ε closures, particularly in the accurate prediction of separation onset and recovery characteristics.</p>
+                        
+                        <p class="guide-text">Aerodynamic validation encompasses NACA airfoil series at various angles of attack, establishing the model's reliability for external flow applications with inherent pressure gradient variations. The backward-facing step configuration (Driver and Seegmiller, 1985) provides a stringent test of separation and reattachment physics, while canonical free shear flows including jets and mixing layers verify the critical freestream independence property that distinguishes the SST formulation from the original k-ω model limitations.</p>
                     </div>
 
                     <!-- Advanced Theoretical Framework and Fundamental Assumptions -->

@@ -439,9 +439,16 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 
 #### Content Organization
 - **Term Definitions**: Highlighted definition blocks with mathematical expressions
-- **Historical Timeline**: Chronological development presentation
-- **Validation Database**: Structured experimental evidence
+- **Historical Timeline**: Chronological development presentation with proper citations
+- **Validation Database**: Structured experimental evidence with references
 - **Advanced Topics**: Progressive complexity from basic to research-level
+
+#### Academic Writing Standards
+- **Formal Tone**: Sophisticated technical language appropriate for scholarly publication
+- **Proper Citations**: Author-year format (e.g., "Menter, 1994" or "Launder and Spalding, 1974")
+- **Technical Precision**: Exact terminology and mathematical rigor
+- **Contextual Framework**: Each development placed within broader theoretical context
+- **Objective Analysis**: Balanced presentation of capabilities and limitations
 
 #### Visual Styling for Academy Guide
 ```css
@@ -546,8 +553,10 @@ The systematic 7-section theoretical and mathematical structure for advanced use
         $$\frac{\partial \rho}{\partial t} + \frac{\partial(\rho \overline{u_i})}{\partial x_i} = 0$$
     </div>
     
-    <h4>Historical Development:</h4>
-    <p class="guide-text">The theoretical foundations emerged through decades of systematic development, beginning with <strong>Prandtl's mixing length concept in 1925</strong>, which established the eddy viscosity hypothesis. This was followed by <strong>Kolmogorov's dimensional analysis in 1942</strong>, providing the theoretical basis for the k-ε structure. The complete model formulation was achieved by <strong>Launder and Spalding in 1974</strong>, who established the standard constants through extensive calibration against experimental data.</p>
+    <h4>Theoretical Evolution and Mathematical Development:</h4>
+    <p class="guide-text">The theoretical foundations of the k-ε model emerged through systematic development spanning five decades of turbulence research. Prandtl's seminal introduction of the mixing length hypothesis (1925) established the conceptual framework for eddy viscosity modeling, providing the first quantitative approach to turbulent momentum transport. This foundational work was subsequently extended by Kolmogorov's dimensional analysis (1942), which provided the theoretical basis for the k-ε structure through his universal equilibrium theory and the identification of characteristic velocity and length scales in high Reynolds number turbulence.</p>
+    
+    <p class="guide-text">The complete two-equation formulation was achieved through the pioneering work of Launder and Spalding (1972-1974), who synthesized previous theoretical developments into a comprehensive closure scheme. Their systematic calibration against experimental databases established the standard model constants and demonstrated the model's applicability across a wide range of engineering flows, thereby establishing the k-ε formulation as the foundation of modern industrial computational fluid dynamics.</p>
     
     <div class="term-definitions">
         <div class="term-item">
