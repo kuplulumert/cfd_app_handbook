@@ -343,7 +343,7 @@ The systematic 9-section information architecture for practical implementation (
 
 ### Academy Guide Sections (7 Sections)
 
-The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers, simple bullet points instead of numbered lists):
+The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers, written as flowing paragraphs without bullet points):
 
 #### **Historical Context and Development**
 - Timeline of model evolution and key contributors
@@ -451,17 +451,9 @@ The systematic 7-section theoretical and mathematical structure for advanced use
             padding: 2rem 0;
         }
 
-        /* Academy Guide - Simple bullets instead of numbers */
-        .academy-guide .guide-bullet {
-            background: #6b7280;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-top: 6px;
-        }
-
-        .academy-guide .guide-bullet::before {
-            content: "";
+        /* Academy Guide - No bullets, paragraph format only */
+        .academy-guide .guide-list {
+            display: none; /* Academy content should be paragraphs, not lists */
         }
 
         .equation-block {
@@ -553,6 +545,9 @@ The systematic 7-section theoretical and mathematical structure for advanced use
     <div class="equation-block">
         $$\frac{\partial \rho}{\partial t} + \frac{\partial(\rho \overline{u_i})}{\partial x_i} = 0$$
     </div>
+    
+    <h4>Historical Development:</h4>
+    <p class="guide-text">The theoretical foundations emerged through decades of systematic development, beginning with <strong>Prandtl's mixing length concept in 1925</strong>, which established the eddy viscosity hypothesis. This was followed by <strong>Kolmogorov's dimensional analysis in 1942</strong>, providing the theoretical basis for the k-ε structure. The complete model formulation was achieved by <strong>Launder and Spalding in 1974</strong>, who established the standard constants through extensive calibration against experimental data.</p>
     
     <div class="term-definitions">
         <div class="term-item">

@@ -99,7 +99,7 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 8. **Performance Expectations** - Accuracy ranges, computational metrics
 9. **Common Pitfalls** - Problem-solution format, troubleshooting guidance
 
-### Academy Guide Sections (7 Sections) - WITHOUT NUMBERED HEADERS OR BULLETS
+### Academy Guide Sections (7 Sections) - FLOWING PARAGRAPHS WITHOUT BULLETS
 - **Historical Context and Development** - Timeline, contributors, evolution
 - **Mathematical Foundation** - Complete derivations, RANS equations
 - **Term Definitions** - Physical meaning, variables, parameters
@@ -108,7 +108,7 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 - **Theoretical Framework** - Assumptions, limitations, Reynolds stress
 - **Advanced Variants** - Modern improvements, research developments
 
-**Note:** Academy Guide uses simple bullet points (•) instead of numbered bullets (1, 2, 3...)
+**Note:** Academy Guide content is written as flowing paragraphs with no bullet points or numbered lists
 
 ### Content Highlighting Standards
 

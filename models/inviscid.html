@@ -375,17 +375,9 @@
             content: counter(guide-counter);
         }
 
-        /* Academy Guide - Use simple bullets instead of numbers */
-        .academy-guide .guide-bullet {
-            background: #6b7280;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-top: 6px;
-        }
-
-        .academy-guide .guide-bullet::before {
-            content: "";
+        /* Academy Guide - No bullets, paragraph format only */
+        .academy-guide .guide-list {
+            display: none; /* Academy content should be paragraphs, not lists */
         }
 
         .guide-text {
@@ -981,36 +973,11 @@
                         <p class="guide-text">Inviscid flow theory represents the foundation of fluid mechanics, developed through centuries of mathematical and physical insights. The Euler equations, governing inviscid flow, predate viscous flow understanding by over a century.</p>
                         
                         <h4>Timeline and Evolution:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1738:</strong> Daniel Bernoulli develops energy conservation principle for ideal fluids</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1755:</strong> Leonhard Euler formulates the Euler equations for inviscid flow</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1823:</strong> Cauchy develops rigorous mathematical foundation for continuum mechanics</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1904:</strong> Prandtl introduces boundary layer theory, linking inviscid and viscous flows</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1950s:</strong> Von Neumann develops numerical methods for shock waves</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1960s:</strong> Godunov introduces conservative finite difference schemes for Euler equations</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1980s:</strong> Modern high-resolution methods enable accurate shock capturing</span>
-                            </li>
-                        </ul>
+                        <p class="guide-text">The theoretical foundations of inviscid flow emerged through centuries of mathematical development, beginning with <strong>Daniel Bernoulli's energy conservation principle for ideal fluids in 1738</strong>. This was followed by <strong>Leonhard Euler's formulation of the Euler equations in 1755</strong>, which established the mathematical framework for inviscid flow analysis that remains fundamental today.</p>
+                        
+                        <p class="guide-text">The mathematical rigor was enhanced by <strong>Cauchy's development of continuum mechanics foundations in 1823</strong>. A crucial breakthrough came with <strong>Prandtl's introduction of boundary layer theory in 1904</strong>, which elegantly linked inviscid and viscous flows, showing how inviscid theory applies in the outer flow region.</p>
+                        
+                        <p class="guide-text">The computational era began in the <strong>1950s with Von Neumann's numerical methods for shock waves</strong>, followed by <strong>Godunov's conservative finite difference schemes for Euler equations in the 1960s</strong>. The <strong>1980s brought modern high-resolution methods</strong> that enabled accurate shock capturing, making inviscid flow simulation a practical tool for engineering design.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->

@@ -274,17 +274,9 @@
             content: counter(guide-counter);
         }
 
-        /* Academy Guide - Use simple bullets instead of numbers */
-        .academy-guide .guide-bullet {
-            background: #6b7280;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-top: 6px;
-        }
-
-        .academy-guide .guide-bullet::before {
-            content: "";
+        /* Academy Guide - No bullets, paragraph format only */
+        .academy-guide .guide-list {
+            display: none; /* Academy content should be paragraphs, not lists */
         }
 
         .guide-text {
@@ -854,32 +846,9 @@
                         <p class="guide-text">The k-ω SST (Shear Stress Transport) model was developed by Florian Menter (1994) to combine the best features of k-ω and k-ε formulations while addressing their individual limitations.</p>
                         
                         <h4>Timeline and Evolution:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1988:</strong> Wilcox develops k-ω model with superior near-wall behavior</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1993:</strong> Menter identifies k-ω freestream sensitivity issues</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1994:</strong> Menter introduces BSL (Baseline) k-ω model</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1994:</strong> SST model development with shear stress limiter</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>2003:</strong> SST-2003 version with improved corner flow prediction</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>2009:</strong> SST-V with vorticity source term for better rotation effects</span>
-                            </li>
-                        </ul>
+                        <p class="guide-text">The development of the SST model represents a systematic evolution in turbulence modeling spanning over two decades. In <strong>1988</strong>, Wilcox developed the k-ω model, which demonstrated superior near-wall behavior compared to k-ε formulations but suffered from excessive sensitivity to freestream ω values. This limitation was clearly identified by <strong>Menter in 1993</strong>, who recognized that the k-ω model's performance degraded significantly when freestream ω values were not properly specified.</p>
+                        
+                        <p class="guide-text">The breakthrough came in <strong>1994</strong> when Menter introduced the BSL (Baseline) k-ω model, which incorporated a blending function to seamlessly transition between k-ω and k-ε formulations. The same year saw the development of the complete SST model with its characteristic shear stress limiter. Subsequent refinements included the <strong>SST-2003</strong> version with improved corner flow prediction capabilities, and the <strong>SST-V variant in 2009</strong> featuring vorticity source terms for enhanced rotation effects modeling.</p>
                     </div>
 
                     <!-- Mathematical Foundation and Derivation -->
@@ -1009,28 +978,9 @@
                         </div>
                         
                         <h4>Model Validation and Calibration Database:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Flat plate boundary layers:</strong> Zero pressure gradient validation</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Adverse pressure gradient flows:</strong> ERCOFTAC database</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Airfoil flows:</strong> NACA series validation at various angles of attack</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Backward-facing step:</strong> Separation and reattachment prediction</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Free jets and mixing layers:</strong> Freestream independence verification</span>
-                            </li>
-                        </ul>
+                        <p class="guide-text">The SST model has been extensively validated against fundamental flow configurations that test specific aspects of the model's hybrid formulation. <strong>Flat plate boundary layers</strong> provide zero pressure gradient validation, confirming the model's ability to predict canonical attached flows. <strong>Adverse pressure gradient flows</strong> from the ERCOFTAC database demonstrate the model's superior performance in separating boundary layers compared to standard k-ε models.</p>
+                        
+                        <p class="guide-text"><strong>Airfoil flows</strong> using NACA series at various angles of attack validate the model's transition prediction and separated flow behavior. <strong>Backward-facing step</strong> configurations test separation and reattachment prediction capabilities, while <strong>free jets and mixing layers</strong> verify the model's freestream independence - a critical improvement over the original k-ω formulation.</p>
                     </div>
 
                     <!-- Advanced Theoretical Framework and Fundamental Assumptions -->
