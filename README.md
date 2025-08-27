@@ -108,7 +108,7 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 - **Theoretical Framework** - Assumptions, limitations, Reynolds stress
 - **Advanced Variants** - Modern improvements, research developments
 
-**Note:** Academy Guide content follows professional academic format with formal scholarly writing, proper citations (Author, Year), and sophisticated technical language appropriate for research documentation
+**Note:** Academy Guide content uses clean academic format with flowing paragraphs, no bullets, clear explanations, and professional technical language suitable for research documentation
 
 ### Content Highlighting Standards
 
