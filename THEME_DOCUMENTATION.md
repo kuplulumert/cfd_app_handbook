@@ -24,14 +24,14 @@ The Sigma Professional theme is a sophisticated, clean design system specificall
 - **Emphasis Text**: `#111827` (Near black for emphasized content)
 
 #### Accent Colors (Section-specific)
-- **Overview**: `#3b82f6` (Professional Blue)
-- **Strengths**: `#10b981` (Success Green)
-- **Limitations**: `#f59e0b` (Warning Amber)
-- **Use Cases**: `#8b5cf6` (Premium Purple)
-- **Avoid**: `#ef4444` (Alert Red)
-- **Tips/Guidelines**: `#06b6d4` (Info Cyan)
-- **Performance**: `#10b981` (Success Green)
-- **Pitfalls**: `#f59e0b` (Warning Amber)
+- **Overview**: `#3b82f6` (Professional Blue) with pale background `#f8faff`
+- **Strengths**: `#10b981` (Success Green) with pale background `#f0fdf4`
+- **Limitations**: `#f59e0b` (Warning Amber) with pale background `#fffbeb`
+- **Use Cases**: `#8b5cf6` (Premium Purple) with pale background `#faf5ff`
+- **Avoid**: `#ef4444` (Alert Red) with pale background `#fef2f2`
+- **Tips/Guidelines**: `#06b6d4` (Info Cyan) with pale background `#f0fdfa`
+- **Performance**: `#10b981` (Success Green) with pale background `#f0fdf4`
+- **Pitfalls**: `#f59e0b` (Warning Amber) with pale background `#fffbeb`
 - **Choice**: `#3b82f6` (Professional Blue)
 
 #### Utility Colors
@@ -451,11 +451,11 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Balanced Coverage**: Both theoretical foundations and practical implications
 
 #### Enhanced Visual Design
-- **Academic Aesthetics**: Professional gradients, shadows, and typography
-- **Sophisticated Bullets**: Gradient circles with improved shadows and hover effects
-- **Premium Typography**: Serif fonts for academic headers with accent indicators
-- **Elevated Cards**: Multi-layer shadows, rounded corners, and smooth transitions
-- **Professional Color Palette**: Subtle gradients and color-coded section organization
+- **Academic Aesthetics**: Clean design with subtle shadows and professional typography
+- **Refined Bullets**: Circular numbered bullets with gentle shadows and hover effects
+- **Professional Typography**: Clean system fonts with subtle accent indicators
+- **Subtle Cards**: Minimal shadows, rounded corners, and smooth transitions
+- **Pale Color Palette**: Extremely subtle background tints for section organization
 
 #### Visual Styling for Academy Guide
 ```css
