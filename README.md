@@ -86,7 +86,7 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 
 ### Dual-Tab System Structure
 - **Industry Guide Tab**: Practical implementation and usage guidelines (9 sections)
-- **Academy Guide Tab**: Theoretical foundation and mathematical derivation (7 sections)
+- **Academy Guide Tab**: Enhanced theoretical foundation and comprehensive mathematical analysis (7 sections) following k-ε model excellence standards
 
 ### Industry Guide Sections (1-9) - WITH NUMBERED HEADERS
 1. **Model Overview** - Classification, history, validation status
@@ -99,14 +99,14 @@ The Sigma Professional theme employs a comprehensive **dual-tab system** for tec
 8. **Performance Expectations** - Accuracy ranges, computational metrics
 9. **Common Pitfalls** - Problem-solution format, troubleshooting guidance
 
-### Academy Guide Sections (7 Sections) - FLOWING PARAGRAPHS WITHOUT BULLETS
-- **Historical Context and Development** - Timeline, contributors, evolution
-- **Mathematical Foundation** - Complete derivations, RANS equations
-- **Term Definitions** - Physical meaning, variables, parameters
-- **Turbulent Scales Theory** - Kolmogorov scales, energy cascade
-- **Model Constants** - Derivation, physical significance, validation
-- **Theoretical Framework** - Assumptions, limitations, Reynolds stress
-- **Advanced Variants** - Modern improvements, research developments
+### Academy Guide Sections (7 Sections) - ENHANCED COMPREHENSIVE ANALYSIS
+- **Historical Context and Development** - Detailed timeline, key contributors, and theoretical evolution
+- **Mathematical Foundation and Complete Derivation** - Theory, equations, and comprehensive term definitions
+- **Turbulent Scales and Energy Cascade Theory** - Kolmogorov analysis, scale separation, and energy spectrum
+- **Model Constants: Derivation and Physical Significance** - Complete mathematical derivation with calibration database
+- **Model Validation and Experimental Database** - Comprehensive test cases and accuracy assessment
+- **Advanced Numerical Implementation and Best Practices** - Computational optimization and modern techniques
+- **Current Research Directions and Modern Developments** - Recent advances and future prospects
 
 **Note:** Academy Guide content uses clean academic format with flowing paragraphs and academic bullet points where appropriate for clear organization, following scholarly writing standards
 

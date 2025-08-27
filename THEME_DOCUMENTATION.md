@@ -195,8 +195,8 @@ The Sigma Professional theme employs a comprehensive dual-tab system for technic
 #### **Industry Guide Tab** (9-Section Structure)
 Practical implementation and usage guidelines for engineering teams.
 
-#### **Academy Guide Tab** (7-Section Structure)  
-Theoretical foundation and mathematical derivation for researchers and advanced users.
+#### **Academy Guide Tab** (Enhanced 7-Section Structure)  
+Comprehensive theoretical foundation and mathematical derivation with detailed analysis, following k-ε model excellence standards.
 
 ### Industry Guide Sections (1-9)
 
@@ -359,10 +359,11 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Modern Evolution**: Recent improvements and variants
 
 #### **Mathematical Foundation and Complete Derivation**
-- Reynolds-Averaged Navier-Stokes equations
-- Exact transport equations and modeling assumptions
-- Dimensional analysis and closure requirements
-- Boussinesq eddy viscosity hypothesis
+- Reynolds-Averaged Navier-Stokes equations with complete derivation
+- Exact transport equations and systematic modeling approximations
+- Dimensional analysis, closure requirements, and realizability constraints
+- Boussinesq eddy viscosity hypothesis and physical interpretation
+- Detailed term definitions with physical meaning and mathematical expressions
 
 **Content Pattern:**
 - **Exact Equations**: Complete mathematical formulations with KaTeX rendering
@@ -383,10 +384,11 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Practical Significance**: How variables affect flow behavior
 
 #### **Turbulent Scales and Energy Cascade Theory**
-- Kolmogorov microscales and universal behavior
-- Integral scales and energy-containing eddies
-- Taylor microscale and inertial subrange
-- Reynolds number requirements and scale separation
+- Kolmogorov microscales (universal dissipation scales) with complete mathematical analysis
+- Integral scales (energy-containing scales) and characteristic parameters
+- Taylor microscale and inertial subrange behavior with energy spectrum analysis
+- Scale separation requirements and Reynolds number dependencies for model validity
+- Energy cascade theory and Kolmogorov hypothesis with mathematical foundations
 
 **Content Pattern:**
 - **Scale Definitions**: Mathematical expressions for length, time, velocity scales
@@ -395,10 +397,11 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 - **Practical Implications**: Mesh requirements and model validity
 
 #### **Model Constants: Derivation and Physical Significance**
-- Detailed derivation of all model constants
-- Physical reasoning and experimental calibration
-- Relationships between constants
-- Historical validation database
+- Comprehensive derivation of all model constants with mathematical steps
+- Physical reasoning, experimental calibration, and theoretical constraints
+- Inter-relationships between constants and consistency requirements
+- Historical calibration database with specific test cases and contributors
+- Sensitivity analysis and uncertainty quantification
 
 **Content Pattern:**
 - **Constant Values**: Cμ = 0.09, C1ε = 1.44, etc.
