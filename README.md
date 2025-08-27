@@ -82,7 +82,11 @@ For complete theme specifications, see [`THEME_DOCUMENTATION.md`](./THEME_DOCUME
 
 ## 📋 Standard Information Architecture
 
-The Sigma Professional theme follows a systematic **9-section structure** for technical model documentation:
+The Sigma Professional theme employs a comprehensive **dual-tab system** for technical model documentation:
+
+### Dual-Tab System Structure
+- **Industry Guide Tab**: Practical implementation and usage guidelines (9 sections)
+- **Academy Guide Tab**: Theoretical foundation and mathematical derivation (7 sections)
 
 ### Industry Guide Sections (1-9)
 1. **Model Overview** - Classification, history, validation status
@@ -95,11 +99,28 @@ The Sigma Professional theme follows a systematic **9-section structure** for te
 8. **Performance Expectations** - Accuracy ranges, computational metrics
 9. **Common Pitfalls** - Problem-solution format, troubleshooting guidance
 
+### Academy Guide Sections (1-7)
+1. **Historical Context and Development** - Timeline, contributors, evolution
+2. **Mathematical Foundation** - Complete derivations, RANS equations
+3. **Term Definitions** - Physical meaning, variables, parameters
+4. **Turbulent Scales Theory** - Kolmogorov scales, energy cascade
+5. **Model Constants** - Derivation, physical significance, validation
+6. **Theoretical Framework** - Assumptions, limitations, Reynolds stress
+7. **Advanced Variants** - Modern improvements, research developments
+
 ### Content Highlighting Standards
+
+#### Industry Guide
 - **Technical Parameters**: `y⁺ > 30`, `Re > 10,000`, `±15-20%` (always bold)
 - **Category Headers**: `Mesh requirements:`, `Computational efficiency:` (bold + colon)
 - **Performance Metrics**: `40-50% faster`, `50+ years` (bold)
 - **Physical Constraints**: `Cannot integrate to wall` (bold)
+
+#### Academy Guide
+- **Mathematical Expressions**: Professional KaTeX rendering
+- **Variable Definitions**: Highlighted term blocks with equations
+- **Historical Timeline**: Chronological development format
+- **Physical Meaning**: Italicized explanatory text
 
 ## 📊 Design Philosophy
 

@@ -187,9 +187,19 @@ Technical terms, values, and important concepts are highlighted using `<strong>`
 
 ## Content Information Architecture
 
-### Standard Section Outline (9-Section Structure)
+### Dual-Tab System Structure
 
-The Sigma Professional theme follows a systematic 9-section information architecture for technical model documentation:
+The Sigma Professional theme employs a comprehensive dual-tab system for technical model documentation:
+
+#### **Industry Guide Tab** (9-Section Structure)
+Practical implementation and usage guidelines for engineering teams.
+
+#### **Academy Guide Tab** (7-Section Structure)  
+Theoretical foundation and mathematical derivation for researchers and advanced users.
+
+### Industry Guide Sections (1-9)
+
+The systematic 9-section information architecture for practical implementation:
 
 #### 1. **Model Overview** (Blue `#3b82f6`)
 - Model type and classification
@@ -331,9 +341,183 @@ The Sigma Professional theme follows a systematic 9-section information architec
 - **Mid-level**: Specific parameters and ranges
 - **Detailed**: Implementation guidance and troubleshooting
 
+### Academy Guide Sections (1-7)
+
+The systematic 7-section theoretical and mathematical structure for advanced users:
+
+#### 1. **Historical Context and Development**
+- Timeline of model evolution and key contributors
+- Theoretical breakthroughs and publications
+- Evolution from earlier models
+- Modern variants and improvements
+
+**Content Pattern:**
+- **Timeline Format**: "1925: Prandtl introduces mixing length", "1974: Launder & Spalding"
+- **Key Contributors**: Names, institutions, and contributions
+- **Theoretical Milestones**: Major developments in turbulence modeling
+- **Modern Evolution**: Recent improvements and variants
+
+#### 2. **Mathematical Foundation and Complete Derivation**
+- Reynolds-Averaged Navier-Stokes equations
+- Exact transport equations and modeling assumptions
+- Dimensional analysis and closure requirements
+- Boussinesq eddy viscosity hypothesis
+
+**Content Pattern:**
+- **Exact Equations**: Complete mathematical formulations with KaTeX rendering
+- **Modeling Steps**: Systematic derivation process
+- **Dimensional Analysis**: Physical reasoning for model structure
+- **Closure Approximations**: Assumptions and their justifications
+
+#### 3. **Comprehensive Term Definitions and Physical Meaning**
+- Detailed explanation of all variables and parameters
+- Physical interpretation of mathematical terms
+- Scale relationships and turbulent quantities
+- Units and dimensional considerations
+
+**Content Pattern:**
+- **Variable Definitions**: k, ε, ω, μt with mathematical expressions
+- **Physical Meaning**: Real-world interpretation of mathematical terms
+- **Scale Relationships**: Connection between different turbulent scales
+- **Practical Significance**: How variables affect flow behavior
+
+#### 4. **Turbulent Scales and Energy Cascade Theory**
+- Kolmogorov microscales and universal behavior
+- Integral scales and energy-containing eddies
+- Taylor microscale and inertial subrange
+- Reynolds number requirements and scale separation
+
+**Content Pattern:**
+- **Scale Definitions**: Mathematical expressions for length, time, velocity scales
+- **Energy Cascade**: Physical process and mathematical representation
+- **Universal Laws**: -5/3 energy spectrum, Kolmogorov constants
+- **Practical Implications**: Mesh requirements and model validity
+
+#### 5. **Model Constants: Derivation and Physical Significance**
+- Detailed derivation of all model constants
+- Physical reasoning and experimental calibration
+- Relationships between constants
+- Historical validation database
+
+**Content Pattern:**
+- **Constant Values**: Cμ = 0.09, C1ε = 1.44, etc.
+- **Derivation Process**: Mathematical steps to determine values
+- **Physical Basis**: Experimental observations and theoretical constraints
+- **Validation Cases**: Specific flows used for calibration
+
+#### 6. **Advanced Theoretical Framework and Fundamental Assumptions**
+- Reynolds decomposition and statistical framework
+- Exact Reynolds stress transport equations
+- Boussinesq approximation implications
+- Anisotropy tensor analysis and model limitations
+
+**Content Pattern:**
+- **Statistical Framework**: Ensemble averaging and turbulence decomposition
+- **Exact Equations**: Complete Reynolds stress transport without approximations
+- **Key Assumptions**: Local equilibrium, gradient diffusion, isotropy
+- **Limitation Analysis**: Where and why the model fails
+
+#### 7. **Advanced Model Variants and Modern Improvements**
+- Low Reynolds number modifications
+- Compressibility corrections
+- Rotation and curvature effects
+- Modern extensions and research developments
+
+**Content Pattern:**
+- **Variant Classifications**: RNG, Realizable, Low-Re modifications
+- **Enhancement Mechanisms**: Mathematical modifications and their purpose
+- **Application Ranges**: When to use specific variants
+- **Research Frontiers**: Current developments and future directions
+
+### Academy Guide Design Elements
+
+#### Mathematical Presentation
+- **KaTeX Integration**: Professional mathematical rendering
+- **Equation Blocks**: Centered, highlighted mathematical expressions
+- **Numbered Equations**: Sequential referencing system
+- **Symbol Definitions**: Clear notation and units
+
+#### Content Organization
+- **Term Definitions**: Highlighted definition blocks with mathematical expressions
+- **Historical Timeline**: Chronological development presentation
+- **Validation Database**: Structured experimental evidence
+- **Advanced Topics**: Progressive complexity from basic to research-level
+
+#### Visual Styling for Academy Guide
+```css
+.academy-guide {
+    width: 100%;
+    background: #ffffff;
+    padding: 2rem 0;
+}
+
+.equation-block {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    font-size: 1rem;
+    overflow-x: auto;
+}
+
+.term-item {
+    background: #f8f9fa;
+    border-left: 3px solid var(--accent-color);
+    padding: 1rem;
+    margin: 0.75rem 0;
+    border-radius: 0 6px 6px 0;
+}
+
+.term-item strong {
+    color: var(--accent-color);
+    font-size: 1.05rem;
+}
+```
+
+### Content Depth Guidelines
+
+#### Academy vs Industry Guide Differences
+- **Industry Guide**: Practical values, setup procedures, troubleshooting
+- **Academy Guide**: Mathematical derivations, theoretical background, research insights
+
+#### Mathematical Rigor Levels
+- **Basic Level**: Fundamental equations and simple derivations
+- **Intermediate Level**: Complete mathematical development
+- **Advanced Level**: Research-grade theoretical analysis
+
+#### Content Balance
+- **Mathematical Content**: 60% equations, derivations, theory
+- **Practical Context**: 40% physical interpretation, applications
+- **Historical Perspective**: 10% development timeline, contributors
+
 ## Usage Examples
 
-### Section Implementation
+### Dual-Tab System Implementation
+```html
+<!-- Content Tabs -->
+<div class="content-tabs">
+    <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
+    <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+</div>
+
+<!-- Industry Guide Tab Content -->
+<div id="industry" class="tab-content active">
+    <div class="industry-guide">
+        <!-- Industry Guide Sections -->
+    </div>
+</div>
+
+<!-- Academy Guide Tab Content -->
+<div id="academy" class="tab-content">
+    <div class="academy-guide">
+        <!-- Academy Guide Sections -->
+    </div>
+</div>
+```
+
+### Industry Guide Section Implementation
 ```html
 <div class="guide-section guide-overview">
     <h3>1. Model Overview</h3>
@@ -346,12 +530,41 @@ The Sigma Professional theme follows a systematic 9-section information architec
 </div>
 ```
 
-### Content Highlighting
+### Academy Guide Section Implementation
 ```html
-<span class="guide-text"><strong>Mesh requirements:</strong> <strong>y⁺ > 30</strong> for wall functions, coarser near-wall mesh acceptable.</span>
+<div class="guide-section guide-overview">
+    <h3>Mathematical Foundation and Complete Derivation</h3>
+    <p class="guide-text">The k-ε model emerges from the exact Reynolds stress transport equations through systematic modeling approximations.</p>
+    
+    <h4>Reynolds-Averaged Navier-Stokes Equations:</h4>
+    <div class="equation-block">
+        $$\frac{\partial \rho}{\partial t} + \frac{\partial(\rho \overline{u_i})}{\partial x_i} = 0$$
+    </div>
+    
+    <div class="term-definitions">
+        <div class="term-item">
+            <strong>k:</strong> Turbulent kinetic energy per unit mass [m²/s²]
+            $$k = \frac{1}{2}\overline{u_i'u_i'}$$
+            <p class="guide-text"><em>Physical meaning:</em> Represents the average kinetic energy contained in turbulent fluctuations.</p>
+        </div>
+    </div>
+</div>
 ```
 
-### Complete Section Example
+### Content Highlighting Standards
+```html
+<!-- Industry Guide Highlighting -->
+<span class="guide-text"><strong>Mesh requirements:</strong> <strong>y⁺ > 30</strong> for wall functions, coarser near-wall mesh acceptable.</span>
+
+<!-- Academy Guide Mathematical Terms -->
+<div class="term-item">
+    <strong>μₜ:</strong> Turbulent (eddy) viscosity [kg/m·s]
+    $$\mu_t = \rho C_\mu \frac{k^2}{\epsilon}$$
+    <p class="guide-text"><em>Physical meaning:</em> Enhanced momentum transport due to turbulent mixing.</p>
+</div>
+```
+
+### Complete Industry Guide Section Example
 ```html
 <!-- Setup Guidelines Section -->
 <div class="guide-section guide-tips">
@@ -379,6 +592,50 @@ The Sigma Professional theme follows a systematic 9-section information architec
 </div>
 ```
 
+### Complete Academy Guide Section Example
+```html
+<!-- Historical Context Section -->
+<div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #3b82f6;">
+    <h3>Historical Context and Development</h3>
+    <p class="guide-text">The k-ε model represents a milestone in turbulence modeling, being the first complete closure for the Reynolds-Averaged Navier-Stokes equations.</p>
+    
+    <h4>Timeline and Evolution:</h4>
+    <ul class="guide-list">
+        <li class="guide-item">
+            <span class="guide-bullet">•</span>
+            <span class="guide-text"><strong>1925:</strong> Prandtl introduces mixing length concept</span>
+        </li>
+        <li class="guide-item">
+            <span class="guide-bullet">•</span>
+            <span class="guide-text"><strong>1974:</strong> Launder & Spalding finalize standard k-ε model constants</span>
+        </li>
+    </ul>
+</div>
+```
+
+### Mathematical Expression Templates
+```html
+<!-- Equation Block -->
+<div class="equation-block">
+    $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_i)}{\partial x_i} = G_k - \rho\epsilon + \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right]$$
+</div>
+
+<!-- Term Definition -->
+<div class="term-item">
+    <strong>Gₖ:</strong> Shear production of turbulent kinetic energy [kg/m³·s³]
+    $$G_k = \mu_t S^2 = \mu_t \left(2\overline{S_{ij}S_{ij}}\right)$$
+    <p class="guide-text"><em>Physical meaning:</em> Energy transfer from mean flow to turbulent fluctuations through Reynolds stress work.</p>
+</div>
+
+<!-- Constants Table -->
+<div class="constants-table">
+    <div class="equation-block">
+        $$C_\mu = 0.09, \quad C_{1\epsilon} = 1.44, \quad C_{2\epsilon} = 1.92$$
+        $$\sigma_k = 1.0, \quad \sigma_\epsilon = 1.3$$
+    </div>
+</div>
+```
+
 ## Theme Benefits
 
 ### For Technical Documentation
@@ -387,13 +644,30 @@ The Sigma Professional theme follows a systematic 9-section information architec
 ✅ **Clear Hierarchy**: Easy identification of important parameters  
 ✅ **Modern Aesthetics**: Contemporary design without being trendy  
 ✅ **Information Architecture**: Systematic organization of complex content  
+✅ **Dual-Purpose Design**: Serves both practical and theoretical needs
 
-### For Engineering Teams
+### For Engineering Teams (Industry Guide)
 ✅ **Quick Reference**: Bold technical values stand out  
 ✅ **Systematic Navigation**: Numbered sections and clear structure  
 ✅ **Professional Presentation**: Suitable for client presentations  
 ✅ **Reduced Cognitive Load**: Clean design reduces mental fatigue  
 ✅ **Cross-Platform Consistency**: Works across all devices and browsers  
+✅ **Implementation Focus**: Practical guidelines for immediate use
+
+### For Researchers and Academia (Academy Guide)
+✅ **Mathematical Precision**: Professional equation rendering with KaTeX  
+✅ **Theoretical Depth**: Complete derivations and physical foundations  
+✅ **Historical Context**: Timeline of model development and evolution  
+✅ **Research Quality**: Publication-ready mathematical presentation  
+✅ **Educational Value**: Progressive complexity from basic to advanced  
+✅ **Reference Standards**: Comprehensive variable definitions and units
+
+### For Multi-Audience Documentation
+✅ **Content Separation**: Clear distinction between practical and theoretical  
+✅ **Progressive Disclosure**: Users can choose their level of detail  
+✅ **Unified Design**: Consistent visual language across both tabs  
+✅ **Flexible Navigation**: Easy switching between implementation and theory  
+✅ **Comprehensive Coverage**: From basic usage to research-level analysis  
 
 ## Customization Options
 
