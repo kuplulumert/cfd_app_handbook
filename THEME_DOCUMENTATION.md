@@ -343,7 +343,7 @@ The systematic 9-section information architecture for practical implementation (
 
 ### Academy Guide Sections (7 Sections)
 
-The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers):
+The systematic 7-section theoretical and mathematical structure for advanced users (headers WITHOUT numbers, simple bullet points instead of numbered lists):
 
 #### **Historical Context and Development**
 - Timeline of model evolution and key contributors
@@ -445,36 +445,49 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 
 #### Visual Styling for Academy Guide
 ```css
-.academy-guide {
-    width: 100%;
-    background: #ffffff;
-    padding: 2rem 0;
-}
+        .academy-guide {
+            width: 100%;
+            background: #ffffff;
+            padding: 2rem 0;
+        }
 
-.equation-block {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    padding: 1rem;
-    margin: 1rem 0;
-    text-align: center;
-    font-size: 1rem;
-    overflow-x: auto;
-}
+        /* Academy Guide - Simple bullets instead of numbers */
+        .academy-guide .guide-bullet {
+            background: #6b7280;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
 
-.term-item {
-    background: #f8f9fa;
-    border-left: 3px solid var(--accent-color);
-    padding: 1rem;
-    margin: 0.75rem 0;
-    border-radius: 0 6px 6px 0;
-}
+        .academy-guide .guide-bullet::before {
+            content: "";
+        }
 
-.term-item strong {
-    color: var(--accent-color);
-    font-size: 1.05rem;
-}
-```
+        .equation-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1rem;
+            overflow-x: auto;
+        }
+
+        .term-item {
+            background: #f8f9fa;
+            border-left: 3px solid var(--accent-color);
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .term-item strong {
+            color: var(--accent-color);
+            font-size: 1.05rem;
+        }
+        ```
 
 ### Content Depth Guidelines
 

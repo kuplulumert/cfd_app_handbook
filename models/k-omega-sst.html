@@ -274,6 +274,19 @@
             content: counter(guide-counter);
         }
 
+        /* Academy Guide - Use simple bullets instead of numbers */
+        .academy-guide .guide-bullet {
+            background: #6b7280;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+
+        .academy-guide .guide-bullet::before {
+            content: "";
+        }
+
         .guide-text {
             color: inherit;
             font-weight: inherit;
