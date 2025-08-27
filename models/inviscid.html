@@ -315,10 +315,8 @@
         /* Academy Guide Styles */
         .academy-guide {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
             background: #ffffff;
-            padding: 2rem;
+            padding: 0;
         }
 
         .academy-guide h4 {
@@ -377,18 +375,10 @@
             counter-increment: guide-counter;
         }
 
-        .guide-bullet {
+        .industry-guide .guide-text::before {
+            content: counter(guide-counter) ". ";
             color: #6b7280;
-            font-size: 0.9rem;
             font-weight: 600;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-            margin-right: 0.5rem;
-            min-width: 1.5rem;
-        }
-
-        .guide-bullet::before {
-            content: counter(guide-counter) ".";
         }
 
         /* Academy Guide - Academic bullet formatting */
@@ -709,19 +699,19 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Inviscid flow model</strong> solving Euler equations with zero viscosity (μ = 0).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Fundamental theoretical model</strong> representing ideal fluid behavior.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Fastest CFD solution</strong> method, perfect for preliminary analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Captures pressure-driven flows</strong> and compressibility effects.</span>
                             </li>
                         </ul>
@@ -732,23 +722,23 @@
                         <h3>2. Key Advantages</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Computational speed:</strong> Fastest CFD method, 5-10x faster than turbulent models.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Conceptual insights:</strong> Reveals fundamental flow physics without viscous complexity.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High-speed accuracy:</strong> Excellent for supersonic and hypersonic flow analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mesh simplicity:</strong> No boundary layer resolution required, coarse meshes acceptable.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Analytical validation:</strong> Many analytical solutions available for verification.</span>
                             </li>
                         </ul>
@@ -759,19 +749,19 @@
                         <h3>3. Fundamental Limitations</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>No wall effects:</strong> Cannot predict skin friction, heat transfer, or boundary layers.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>No viscous drag:</strong> Only pressure drag captured, missing significant drag component.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Slip boundary conditions:</strong> Flow slides along walls, unrealistic for most applications.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>No flow separation:</strong> Cannot predict viscous separation phenomena.</span>
                             </li>
                         </ul>
@@ -806,23 +796,23 @@
                         <h3>5. When to Use Inviscid Flow</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Preliminary design:</strong> Quick flow field analysis in early design stages.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High-speed flows:</strong> Mach number > 0.3, where inertial forces dominate.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Far-field analysis:</strong> Flow behavior away from walls and viscous regions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shock wave studies:</strong> Supersonic flow phenomena and wave propagation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Code verification:</strong> Comparing CFD codes against analytical solutions.</span>
                             </li>
                         </ul>
@@ -858,19 +848,19 @@
                         <h4>Mesh Requirements:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Coarse meshes acceptable:</strong> No boundary layer resolution needed.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Focus on geometry:</strong> Ensure accurate representation of key geometric features.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shock capturing:</strong> Refine mesh in regions expecting shock waves.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Growth ratio:</strong> < 1.5 acceptable, more forgiving than viscous models.</span>
                             </li>
                         </ul>
@@ -878,15 +868,15 @@
                         <h4>Boundary Conditions:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall conditions:</strong> Slip walls (zero normal velocity, free tangential flow).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Inlet/outlet:</strong> Specify pressure, density, velocity based on flow regime.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Symmetry:</strong> Use symmetry boundaries to reduce computational domain.</span>
                             </li>
                         </ul>
@@ -894,15 +884,15 @@
                         <h4>Solver Settings:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flux schemes:</strong> Roe, AUSM, or Godunov schemes for shock capturing.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Limiters:</strong> Use flux limiters for high-speed flows to prevent oscillations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Time stepping:</strong> Explicit schemes often sufficient for steady-state problems.</span>
                             </li>
                         </ul>
@@ -915,19 +905,19 @@
                         <h4>Accuracy Levels:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pressure fields:</strong> Excellent for high-speed flows, poor for low-speed viscous-dominated flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Velocity patterns:</strong> Good for core flow regions, unrealistic near walls.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shock waves:</strong> Very accurate for shock location and strength.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flow patterns:</strong> Qualitative guidance for preliminary design.</span>
                             </li>
                         </ul>
@@ -935,15 +925,15 @@
                         <h4>Computational Performance:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Solution speed:</strong> 5-10x faster than RANS models, 50-100x faster than LES.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Memory usage:</strong> Minimal due to coarse mesh requirements.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Convergence:</strong> Typically very fast convergence for well-posed problems.</span>
                             </li>
                         </ul>
@@ -956,15 +946,15 @@
                         <h4>Successful Applications:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Design space exploration:</strong> Rapid evaluation of multiple design concepts.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flow visualization:</strong> Understanding fundamental flow patterns and streamlines.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Compressible flow analysis:</strong> High-speed phenomena in specialized equipment.</span>
                             </li>
                         </ul>
@@ -972,15 +962,15 @@
                         <h4>Common Pitfalls:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pitfall:</strong> Using for drag prediction. <strong>Solution:</strong> Always follow with viscous analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pitfall:</strong> Applying to internal flows. <strong>Solution:</strong> Use only for external flow far-field.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pitfall:</strong> Expecting realistic wall behavior. <strong>Solution:</strong> Focus on core flow physics only.</span>
                             </li>
                         </ul>
@@ -1113,15 +1103,15 @@
                         <h4>Domain of Dependence and Influence:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Subsonic flow (M < 1):</strong> Information propagates in all directions, elliptic character</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Supersonic flow (M > 1):</strong> Information propagates only downstream, hyperbolic character</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Sonic flow (M = 1):</strong> Transition regime, parabolic character</span>
                             </li>
                         </ul>
@@ -1152,19 +1142,19 @@
                         <h4>Shock Wave Properties:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Thickness:</strong> Few mean free paths (~10⁻⁷ m in air), effectively discontinuous</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Entropy increase:</strong> Δs > 0, irreversible process despite inviscid equations</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Information barrier:</strong> No information propagates upstream through shock</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Weak shock limit:</strong> M₁ → 1⁺, relations approach acoustic wave theory</span>
                             </li>
                         </ul>
@@ -1229,19 +1219,19 @@
                         <h4>Far-Field Boundary Conditions:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Subsonic inflow:</strong> Specify 4 variables (ρ, u, v, T), pressure extrapolated</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Subsonic outflow:</strong> Specify 1 variable (typically pressure), others extrapolated</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Supersonic inflow:</strong> Specify all 5 variables (ρ, u, v, w, T)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Supersonic outflow:</strong> All variables extrapolated from interior</span>
                             </li>
                         </ul>
@@ -1297,19 +1287,19 @@
                         <h4>Time Integration Schemes:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Explicit Runge-Kutta:</strong> RK2, RK3, RK4 for time-accurate solutions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Implicit schemes:</strong> Better stability for steady-state convergence</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Local time stepping:</strong> Accelerates convergence to steady state</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Multigrid:</strong> Full Approximation Storage (FAS) for nonlinear systems</span>
                             </li>
                         </ul>
@@ -1354,23 +1344,23 @@
                         
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Sod shock tube:</strong> One-dimensional Riemann problem with exact analytical solution</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Supersonic wedge flow:</strong> Oblique shock relations and flow deflection validation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Blast wave problems:</strong> Strong shock propagation and rarefaction wave interactions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Double Mach reflection:</strong> Complex shock-shock interaction phenomena</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Forward-facing step:</strong> Shock diffraction and vortex formation assessment</span>
                             </li>
                         </ul>

@@ -276,18 +276,10 @@
             margin-bottom: 0;
         }
 
-        .guide-bullet {
+        .industry-guide .guide-text::before {
+            content: counter(guide-counter) ". ";
             color: #6b7280;
-            font-size: 0.9rem;
             font-weight: 600;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-            margin-right: 0.5rem;
-            min-width: 1.5rem;
-        }
-
-        .guide-bullet::before {
-            content: counter(guide-counter) ".";
         }
 
         /* Academy Guide - Academic bullet formatting */
@@ -381,9 +373,7 @@
         /* Academy Guide Styles */
         .academy-guide {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
         }
 
         .academy-guide h4 {
@@ -586,19 +576,19 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Two-equation RANS model</strong> solving for turbulent kinetic energy (k) and dissipation rate (ε).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>First complete turbulence closure</strong>, developed by Launder & Spalding (1974).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Most widely validated</strong> and used model in industrial CFD applications.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text">Optimized for <strong>high Reynolds number</strong>, fully developed turbulent flows.</span>
                             </li>
                         </ul>
@@ -609,23 +599,23 @@
                         <h3>2. Key Advantages</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Computational efficiency:</strong> Lowest cost among two-equation models, <strong>40-50% faster than SST</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Robust convergence:</strong> Stable and reliable across <strong>wide range of flow conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Universal availability:</strong> Implemented in <strong>every commercial CFD solver</strong> with consistent formulation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Extensive validation:</strong> <strong>50+ years</strong> of validation data across diverse industrial applications.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mesh flexibility:</strong> Works with <strong>coarser meshes</strong> due to wall function approach.</span>
                             </li>
                         </ul>
@@ -636,19 +626,19 @@
                         <h3>3. Computational Requirements</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mesh requirements:</strong> <strong>y⁺ > 30</strong> for wall functions, coarser near-wall mesh acceptable.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall treatment limitation:</strong> <strong>Cannot integrate to wall</strong>, requires empirical wall functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Reynolds number limitation:</strong> <strong>Re > 10,000</strong> for validity, poor for transitional flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Separation issues:</strong> <strong>Over-predicts attached flow</strong>, <strong>under-predicts separation</strong>.</span>
                             </li>
                         </ul>
@@ -683,23 +673,23 @@
                         <h3>5. When to Choose k-ε Over SST</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Time-critical projects:</strong> <strong>Fast turnaround</strong> required for design iterations and parametric studies.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High Reynolds flows:</strong> <strong>Re > 50,000</strong>, fully developed turbulence dominates.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Simple geometries:</strong> Straight ducts, channels, basic heat exchangers.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Engineering accuracy acceptable:</strong> <strong>±15-20% error margins</strong> sufficient for design decisions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Limited computational resources:</strong> Quick studies on standard workstation hardware.</span>
                             </li>
                         </ul>
@@ -735,19 +725,19 @@
                         <h4>Mesh Requirements:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>y⁺ > 30:</strong> Essential for wall function validity (optimal range: <strong>30-300</strong>).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.3</strong> acceptable, more forgiving than SST model.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Aspect ratio:</strong> <strong>< 100</strong> in boundary layer regions sufficient.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall normal cells:</strong> <strong>5-10 cells</strong> sufficient due to wall function approach.</span>
                             </li>
                         </ul>
@@ -755,15 +745,15 @@
                         <h4>Solver Settings:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Discretization:</strong> First-order upwind for stability, second-order for accuracy.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁴</strong> typically sufficient for engineering accuracy.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Under-relaxation:</strong> k: <strong>0.8</strong>, ε: <strong>0.8</strong> (more aggressive than SST).</span>
                             </li>
                         </ul>
@@ -771,15 +761,15 @@
                         <h4>Boundary Conditions:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Inlet turbulence:</strong> I = <strong>1-10%</strong>, ℓ = <strong>0.07 × hydraulic diameter</strong> for internal flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall conditions:</strong> Standard wall functions, no-slip velocity condition.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Outlet conditions:</strong> Zero gradient for k and ε typically adequate.</span>
                             </li>
                         </ul>
@@ -792,19 +782,19 @@
                         <h4>Accuracy Levels:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pressure drop:</strong> ±10-15% for simple internal flows, ±20-30% for complex geometries.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Heat transfer:</strong> ±15-25% for attached flows, poor for separation zones.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flow patterns:</strong> Reliable for attached flows, qualitative for separated regions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mixing prediction:</strong> Adequate for high-Re jets and far-field mixing.</span>
                             </li>
                         </ul>
@@ -812,15 +802,15 @@
                         <h4>Computational Performance:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>vs SST:</strong> 40-50% faster solution time, 60-70% fewer mesh cells required.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Memory usage:</strong> 30-40% lower due to coarser mesh and simpler wall treatment.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Convergence rate:</strong> Typically converges in 50-70% fewer iterations than SST.</span>
                             </li>
                         </ul>
@@ -833,11 +823,11 @@
                         <h4>Mesh-Related Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> y⁺ < 30 causing wall function breakdown. <strong>Solution:</strong> Coarsen near-wall mesh or use enhanced wall treatment.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> Insufficient resolution in shear layers. <strong>Solution:</strong> Refine mesh in mixing regions.</span>
                             </li>
                         </ul>
@@ -845,11 +835,11 @@
                         <h4>Physical Modeling Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> Poor separation prediction. <strong>Solution:</strong> Consider SST or RSM models for critical separation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> Jet spreading rate over-prediction. <strong>Solution:</strong> Use RNG or Realizable k-ε variants.</span>
                             </li>
                         </ul>
@@ -857,11 +847,11 @@
                         <h4>Boundary Condition Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> Inlet turbulence specification uncertainty. <strong>Solution:</strong> Use turbulence intensity I = 5% and length scale ℓ = 0.07D as default.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> Backflow at outlets causing instability. <strong>Solution:</strong> Move outlet boundary downstream or specify turbulence values.</span>
                             </li>
                         </ul>
@@ -881,31 +871,31 @@
                         <h4>Timeline and Evolution:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1925:</strong> Prandtl introduces mixing length concept</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1945:</strong> Kolmogorov proposes k-ε framework foundations</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1967:</strong> Harlow & Nakayama develop first k-ε implementation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1971:</strong> Jones & Launder establish two-equation modeling principles</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1974:</strong> Launder & Spalding finalize standard k-ε model constants</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1992:</strong> Yakhot & Orszag introduce RNG k-ε variant using renormalization group theory</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>1995:</strong> Shih et al. develop Realizable k-ε ensuring mathematical realizability</span>
                             </li>
                         </ul>
@@ -1069,23 +1059,23 @@
                         <h4>Historical Calibration Database:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Homogeneous shear flows:</strong> P<sub>k</sub>/ε = 1.8 ± 0.1 (equilibrium ratio)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Free jets:</strong> Spreading rate β = 0.094 (exp: 0.086 ± 0.008)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mixing layers:</strong> Growth rate δ<sub>ω</sub>/x = 0.18 (exp: 0.16 ± 0.02)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Boundary layers:</strong> Skin friction C<sub>f</sub> predictions within ±5%</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Isotropic decay:</strong> k/k₀ = (t/t₀)<sup>-1.3</sup> (Comte-Bellot & Corrsin data)</span>
                             </li>
                         </ul>
@@ -1116,10 +1106,10 @@
                         </div>
                         <p class="guide-text">Where:</p>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">P<sub>ij</sub> = Production by mean flow gradients</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Φ<sub>ij</sub> = Pressure-strain redistribution</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">ε<sub>ij</sub> = Viscous dissipation tensor</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">D<sub>ij</sub> = Diffusion terms (turbulent, molecular, mean convection)</span></li>
+                            <li class="guide-item"><span class="guide-text">P<sub>ij</sub> = Production by mean flow gradients</span></li>
+                            <li class="guide-item"><span class="guide-text">Φ<sub>ij</sub> = Pressure-strain redistribution</span></li>
+                            <li class="guide-item"><span class="guide-text">ε<sub>ij</sub> = Viscous dissipation tensor</span></li>
+                            <li class="guide-item"><span class="guide-text">D<sub>ij</sub> = Diffusion terms (turbulent, molecular, mean convection)</span></li>
                         </ul>
                         
                         <h4>Boussinesq Approximation and Its Implications:</h4>
@@ -1128,9 +1118,9 @@
                         </div>
                         <p class="guide-text">This assumes:</p>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Turbulent stresses align with mean strain rate (isotropic eddy viscosity)</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Principal axes of stress and strain tensors coincide</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Local equilibrium between production and dissipation</span></li>
+                            <li class="guide-item"><span class="guide-text">Turbulent stresses align with mean strain rate (isotropic eddy viscosity)</span></li>
+                            <li class="guide-item"><span class="guide-text">Principal axes of stress and strain tensors coincide</span></li>
+                            <li class="guide-item"><span class="guide-text">Local equilibrium between production and dissipation</span></li>
                         </ul>
                         
                         <h4>Anisotropy Tensor Analysis:</h4>
@@ -1139,32 +1129,32 @@
                         </div>
                         <p class="guide-text">For isotropic turbulence, a<sub>ij</sub> = 0. The k-ε model assumes local isotropy, which fails in:</p>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Strongly strained flows (∂u/∂y >> ∂v/∂x)</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Flows with streamline curvature or rotation</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Impingement regions with strong normal strain</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Secondary flows in non-circular ducts</span></li>
+                            <li class="guide-item"><span class="guide-text">Strongly strained flows (∂u/∂y >> ∂v/∂x)</span></li>
+                            <li class="guide-item"><span class="guide-text">Flows with streamline curvature or rotation</span></li>
+                            <li class="guide-item"><span class="guide-text">Impingement regions with strong normal strain</span></li>
+                            <li class="guide-item"><span class="guide-text">Secondary flows in non-circular ducts</span></li>
                         </ul>
                         
                         <h4>Critical Model Assumptions and Validity Limits:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High Reynolds number hypothesis:</strong> Re<sub>t</sub> = k²/(νε) >> 1, viscous effects negligible away from walls</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Local equilibrium assumption:</strong> P<sub>k</sub> ≈ ε in attached boundary layers (∂P<sub>k</sub>/∂t ≈ ∂ε/∂t ≈ 0)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Gradient diffusion hypothesis:</strong> Turbulent transport ∝ gradient of transported quantity</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Isotropic dissipation assumption:</strong> ε<sub>ij</sub> = (2/3)ε δ<sub>ij</sub>, small scales are isotropic</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Kolmogorov time scale assumption:</strong> τ<sub>t</sub> = k/ε represents characteristic eddy turnover time</span>
                             </li>
                         </ul>
@@ -1176,9 +1166,9 @@
                         </div>
                         <p class="guide-text">Where τ<sub>t</sub> = k/ε is the turbulent time scale. This structure ensures:</p>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Dimensional consistency [ε] = L²T⁻³</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Proper asymptotic behavior in simple flows</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Correct scaling with turbulent time scale</span></li>
+                            <li class="guide-item"><span class="guide-text">Dimensional consistency [ε] = L²T⁻³</span></li>
+                            <li class="guide-item"><span class="guide-text">Proper asymptotic behavior in simple flows</span></li>
+                            <li class="guide-item"><span class="guide-text">Correct scaling with turbulent time scale</span></li>
                         </ul>
                     </div>
 
@@ -1206,19 +1196,19 @@
                         <h4>Wall Function Implementation:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>y⁺ range:</strong> 30 < y⁺ < 300 for logarithmic law validity</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall shear stress:</strong> τ<sub>w</sub> = ρu<sub>τ</sub>²  computed from log-law</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>ε at wall-adjacent cell:</strong> ε<sub>P</sub> = u<sub>τ</sub>³/(κy<sub>P</sub>)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>k boundary condition:</strong> ∂k/∂n = 0 at wall</span>
                             </li>
                         </ul>
@@ -1235,19 +1225,19 @@
                         <h4>Wall Function Limitations and Failure Modes:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Adverse pressure gradients:</strong> Log-law breakdown, poor separation prediction</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Heat/mass transfer:</strong> Thermal boundary layer not resolved, poor Nusselt number predictions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Low Reynolds number flows:</strong> y⁺ < 30 requirement violated</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Rough walls:</strong> Modified B constant needed, geometry-dependent</span>
                             </li>
                         </ul>
@@ -1331,19 +1321,19 @@
                         <h4>Realizability-Preserving Numerical Techniques:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Production limiter:</strong> P<sub>k</sub> = min(P<sub>k</sub>, 10ρε) prevents excessive production in stagnation regions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Lower bounds:</strong> k<sub>min</sub> = 10⁻¹⁰ m²/s², ε<sub>min</sub> = 10⁻¹⁰ m²/s³ prevent division by zero</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Time scale limiting:</strong> τ<sub>t</sub> = max(k/ε, C<sub>τ</sub>√(ν/ε)), C<sub>τ</sub> ≈ 6 prevents unrealistic time scales</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Viscosity ratio limiting:</strong> μ<sub>t</sub>/μ < 10⁵ prevents excessive eddy viscosity</span>
                             </li>
                         </ul>
@@ -1363,19 +1353,19 @@
                         <h4>Convergence Acceleration and Monitoring:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Multigrid methods:</strong> V-cycles and W-cycles for elliptic pressure correction equation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Algebraic multigrid (AMG):</strong> For unstructured grids and complex geometries</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Block-coupled solvers:</strong> Solve momentum-k-ε equations simultaneously for better coupling</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Adaptive under-relaxation:</strong> Automatic adjustment based on convergence behavior</span>
                             </li>
                         </ul>
@@ -1394,23 +1384,23 @@
                         <h4>Mesh Quality Specifications for k-ε Model:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>y⁺ requirements:</strong> 30 < y⁺ < 300 for standard wall functions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Aspect ratio:</strong> AR < 100 in boundary layer, AR < 1000 acceptable in core flow</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Skewness:</strong> < 0.95 for tetrahedral cells, < 0.85 for high-quality solutions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Growth ratio:</strong> < 1.3 between adjacent cells, < 1.2 in high gradient regions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Minimum angle:</strong> > 10° for triangular faces, > 20° preferred</span>
                             </li>
                         </ul>
@@ -1418,15 +1408,15 @@
                         <h4>Solution Strategy and Best Practices:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Initialization:</strong> k = 1.5(UI)², ε = C<sub>μ</sub><sup>3/4</sup>k<sup>3/2</sup>/ℓ where I = turbulence intensity, ℓ = length scale</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Solution sequence:</strong> First-order → second-order, coupled pressure-velocity, then turbulence equations</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Monitoring:</strong> Track residuals, mass balance, and integrated engineering quantities</span>
                             </li>
                         </ul>

@@ -274,18 +274,10 @@
             margin-bottom: 0;
         }
 
-        .guide-bullet {
+        .industry-guide .guide-text::before {
+            content: counter(guide-counter) ". ";
             color: #6b7280;
-            font-size: 0.9rem;
             font-weight: 600;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-            margin-right: 0.5rem;
-            min-width: 1.5rem;
-        }
-
-        .guide-bullet::before {
-            content: counter(guide-counter) ".";
         }
 
         /* Academy Guide - Academic bullet formatting */
@@ -377,9 +369,7 @@
         /* Academy Guide Styles */
         .academy-guide {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
         }
 
         .academy-guide h4 {
@@ -597,19 +587,19 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Advanced hybrid model</strong> switching between k-ω (near walls) and k-ε (freestream) formulations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Resolves boundary layer</strong> from wall to edge without wall functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Industry gold standard</strong> for complex flows with separation and adverse pressure gradients.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Built-in shear stress limiter</strong> prevents overprediction in strained flows.</span>
                             </li>
                         </ul>
@@ -620,23 +610,23 @@
                         <h3>2. Key Advantages</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Exceptional near-wall accuracy:</strong> Direct integration to wall surface (<strong>y⁺ < 1</strong>).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Separation prediction:</strong> <strong>Superior performance</strong> in adverse pressure gradients.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Freestream independence:</strong> Eliminates k-ω model's <strong>sensitivity to inlet conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Robust convergence:</strong> Stable across <strong>wide range of flow conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Heat transfer accuracy:</strong> Reliable prediction of <strong>wall heat transfer coefficients</strong>.</span>
                             </li>
                         </ul>
@@ -647,19 +637,19 @@
                         <h3>3. Computational Requirements</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mesh requirements:</strong> Fine near-wall mesh with <strong>y⁺ < 1</strong> for optimal accuracy.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Computational cost:</strong> <strong>20-30% higher than k-ε</strong> due to additional equation complexity.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Memory usage:</strong> Additional storage for <strong>blending functions and wall distance</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Convergence time:</strong> May require <strong>more iterations</strong> due to near-wall coupling.</span>
                             </li>
                         </ul>
@@ -694,23 +684,23 @@
                         <h3>5. When to Choose SST Over k-ε</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall-bounded flows:</strong> When accurate <strong>wall shear stress and heat transfer</strong> are critical.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Separation-prone flows:</strong> Diffusers, airfoils at high angles, curved channels.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pressure-driven flows:</strong> Where <strong>adverse pressure gradients</strong> dominate.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mixed flow types:</strong> Combination of attached and separated flow regions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High accuracy requirements:</strong> When <strong>±5% accuracy</strong> is needed vs <strong>±15% for k-ε</strong>.</span>
                             </li>
                         </ul>
@@ -743,19 +733,19 @@
                         <h4>Mesh Requirements:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>y⁺ < 1:</strong> Essential for accurate wall treatment (target <strong>y⁺ ≈ 0.5</strong>).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum <strong>15-20 cells</strong> across boundary layer.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.2</strong> in near-wall region, <strong>< 1.3</strong> elsewhere.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Aspect ratio:</strong> <strong>< 1000</strong> in boundary layer regions acceptable.</span>
                             </li>
                         </ul>
@@ -763,15 +753,15 @@
                         <h4>Solver Settings:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Discretization:</strong> <strong>Second-order upwind</strong> minimum for all equations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁵</strong>, monitor integrated quantities.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Under-relaxation:</strong> k: <strong>0.6</strong>, ω: <strong>0.6</strong>, reduce if convergence issues.</span>
                             </li>
                         </ul>
@@ -779,15 +769,15 @@
                         <h4>Advanced Options:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Curvature correction:</strong> Enable for vacuum cleaners and highly curved flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Production limiter:</strong> Usually enabled by default, prevents unrealistic production.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Low-Re corrections:</strong> Consider for transitional flows or very fine meshes.</span>
                             </li>
                         </ul>
@@ -800,19 +790,19 @@
                         <h4>Accuracy Levels:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall shear stress:</strong> <strong>±3-5%</strong> for attached flows, <strong>±5-10%</strong> for separated flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Heat transfer:</strong> <strong>±5-8%</strong> for most engineering applications.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pressure drop:</strong> <strong>±5-10%</strong> depending on geometry complexity.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Separation point:</strong> <strong>±10-15%</strong> for airfoil-type flows.</span>
                             </li>
                         </ul>
@@ -820,15 +810,15 @@
                         <h4>Computational Overhead:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>vs k-ε:</strong> <strong>20-30% longer</strong> solution time, <strong>2-3x finer mesh</strong> required.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Memory:</strong> <strong>15-20% higher</strong> due to additional variables and functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>ROI:</strong> Justifiable when <strong>wall effects or separation</strong> are critical to design.</span>
                             </li>
                         </ul>
@@ -841,11 +831,11 @@
                         <h4>Mesh-Related Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> <strong>y⁺ > 5</strong> causing poor wall treatment. <strong>Solution:</strong> Refine near-wall mesh.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> <strong>Excessive aspect ratios</strong> causing convergence issues. <strong>Solution:</strong> Improve mesh quality.</span>
                             </li>
                         </ul>
@@ -853,11 +843,11 @@
                         <h4>Convergence Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> <strong>ω equation diverging</strong>. <strong>Solution:</strong> Reduce under-relaxation, check inlet ω values.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> <strong>Oscillating residuals</strong>. <strong>Solution:</strong> Enable production limiter, check mesh quality.</span>
                             </li>
                         </ul>
@@ -865,11 +855,11 @@
                         <h4>Physical Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> <strong>Overpredicted separation</strong>. <strong>Solution:</strong> Check curvature correction, consider transition model.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Problem:</strong> <strong>Poor swirl prediction</strong>. <strong>Solution:</strong> Consider Reynolds stress model instead.</span>
                             </li>
                         </ul>
@@ -1041,15 +1031,15 @@
                         <p class="guide-text">The SST model maintains physical realizability through several mechanisms:</p>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Production limiting:</strong> P̃_k prevents excessive k production</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shear stress limiting:</strong> Prevents unrealistic Reynolds stress levels</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Positive definiteness:</strong> All transport coefficients remain positive</span>
                             </li>
                         </ul>
@@ -1093,19 +1083,19 @@
                         <h4>Mesh Requirements for Accurate Wall Treatment:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>y⁺ < 1:</strong> Recommended for optimal accuracy</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>y⁺ < 2:</strong> Acceptable for engineering accuracy</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Minimum 10-15 points:</strong> In boundary layer for resolution</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Growth ratio < 1.2:</strong> In near-wall region</span>
                             </li>
                         </ul>
@@ -1185,23 +1175,23 @@
                         
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Near-wall spacing:</strong> First cell height must satisfy y⁺ < 1 for accurate wall integration</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Aspect ratio control:</strong> Maintain ratios below 1000 in near-wall regions for gradient accuracy</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Orthogonality:</strong> Overall mesh skewness should remain below 0.9 for accurate computations</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum 15-20 cells within the boundary layer</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet"></span>
+                                
                                 <span class="guide-text"><strong>Growth rate:</strong> Geometric progression with ratios limited to 1.2 in near-wall regions</span>
                             </li>
                         </ul>

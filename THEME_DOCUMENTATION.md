@@ -91,12 +91,12 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-seri
 
 ### Interactive Elements
 
-#### Numbered Bullets
-- **Format**: Simple text numbers with period (1., 2., 3.)
+#### Inline Numbering
+- **Format**: Numbers merged into text content ("1. Advanced hybrid model...")
 - **Color**: `#6b7280` (gray) for understated appearance
-- **Auto-numbering**: CSS counters for systematic organization
-- **Font**: `0.9rem` with `600` weight
-- **Spacing**: Right margin for proper text alignment
+- **Auto-numbering**: CSS counters with ::before pseudo-element
+- **Font**: `600` weight for subtle emphasis
+- **Integration**: Seamless part of text flow without separate elements
 
 #### Use Case Items
 ```css
@@ -453,20 +453,18 @@ The systematic 7-section theoretical and mathematical structure for advanced use
 
 #### Enhanced Visual Design
 - **Academic Aesthetics**: Clean design with subtle shadows and professional typography
-- **Text-Based Bullets**: Simple numbered text format (1., 2., 3.) for minimal distraction
+- **Inline Text Numbers**: Numbers merged directly into text content for seamless reading
 - **Professional Typography**: Clean system fonts with subtle accent indicators
 - **Subtle Cards**: Minimal shadows, rounded corners, and smooth transitions
 - **Pale Color Palette**: Extremely subtle background tints for section organization
-- **Centered Text Layout**: Academy Guide content centered with optimal reading width
+- **Full Width Layout**: Both guides use complete screen width for maximum content space
 
 #### Visual Styling for Academy Guide
 ```css
         .academy-guide {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
             background: #ffffff;
-            padding: 2rem;
+            padding: 0;
         }
 
         /* Academy Guide - Academic bullet formatting */
