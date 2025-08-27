@@ -639,52 +639,43 @@
                         </ul>
                     </div>
 
-                    <!-- Key Advantages -->
+                    <!-- Key Strengths -->
                     <div class="guide-section guide-strengths">
-                        <h3>2. Key Advantages</h3>
+                        <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Exceptional near-wall accuracy:</strong> Direct integration to wall surface (<strong>y⁺ < 1</strong>).</span>
+                                <span class="guide-text"><strong>Anisotropic turbulence:</strong> Directly computes all six Reynolds stress components without isotropic assumptions.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Separation prediction:</strong> <strong>Superior performance</strong> in adverse pressure gradients.</span>
+                                <span class="guide-text"><strong>Complex flow accuracy:</strong> <strong>Superior performance</strong> in flows with strong streamline curvature, swirl, and rotation.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Freestream independence:</strong> Eliminates k-ω model's <strong>sensitivity to inlet conditions</strong>.</span>
+                                <span class="guide-text"><strong>No eddy viscosity limitation:</strong> Eliminates Boussinesq approximation constraints for <strong>highly anisotropic flows</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Robust convergence:</strong> Stable across <strong>wide range of flow conditions</strong>.</span>
+                                <span class="guide-text"><strong>Secondary flow prediction:</strong> Captures <strong>corner flows, duct flows</strong> with secondary circulation patterns.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Heat transfer accuracy:</strong> Reliable prediction of <strong>wall heat transfer coefficients</strong>.</span>
+                                <span class="guide-text"><strong>Research capabilities:</strong> Provides detailed insight into <strong>turbulence structure and physics</strong>.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Computational Requirements -->
+                    <!-- Limitations -->
                     <div class="guide-section guide-limitations">
-                        <h3>3. Computational Requirements</h3>
+                        <h3>3. Limitations</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Mesh requirements:</strong> Fine near-wall mesh with <strong>y⁺ < 1</strong> for optimal accuracy.</span>
+                                <span class="guide-text"><strong>Computational cost:</strong> <strong>3-4x higher than two-equation models</strong> due to seven transport equations.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Computational cost:</strong> <strong>20-30% higher than k-ε</strong> due to additional equation complexity.</span>
+                                <span class="guide-text"><strong>Memory requirements:</strong> <strong>Significant storage</strong> for six Reynolds stress components plus dissipation rate.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Memory usage:</strong> Additional storage for <strong>blending functions and wall distance</strong>.</span>
+                                <span class="guide-text"><strong>Convergence challenges:</strong> More difficult convergence due to <strong>equation coupling and stiffness</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Convergence time:</strong> May require <strong>more iterations</strong> due to near-wall coupling.</span>
+                                <span class="guide-text"><strong>Numerical stability:</strong> Requires careful <strong>under-relaxation and initialization</strong> for stable solutions.</span>
                             </li>
                         </ul>
                     </div>
@@ -908,7 +899,7 @@
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The k-ω SST (Shear Stress Transport) model was developed by Florian Menter in 1994 to combine the best features of k-ω and k-ε formulations while addressing their individual limitations.</p>
+                        <p class="guide-text">The Reynolds Stress Model represents the most advanced level of turbulence closure within the RANS framework, developed from the exact Reynolds stress transport equations without the limitations of the Boussinesq eddy viscosity assumption.</p>
                         
                         <h4>Timeline and Evolution</h4>
                         <p class="guide-text">The development of the SST model represents a systematic evolution in turbulence modeling. In 1988, Wilcox developed the k-ω model, which demonstrated superior near-wall behavior compared to k-ε formulations but suffered from excessive sensitivity to freestream ω values. This limitation was identified by Menter in 1993, who recognized that the k-ω model's performance degraded significantly when freestream ω values were not properly specified.</p>
