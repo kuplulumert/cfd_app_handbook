@@ -14,6 +14,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     
     <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -21,20 +22,13 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.5;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
             color: #2d3748;
-            background: #ffffff;
-            min-height: 100vh;
+            background-color: #f7fafc;
         }
 
-        .container {
-            width: 100%;
-            margin: 0;
-            padding: 0 2rem;
-        }
-
-        /* Header */
+        /* Header Navigation */
         .header {
             background: #ffffff;
             border-bottom: 1px solid #e2e8f0;
@@ -48,6 +42,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
@@ -76,246 +73,159 @@
             color: #2d3748;
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #718096;
-            text-decoration: none;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-            transition: color 0.2s ease;
+        .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        .back-link:hover {
-            color: #2d3748;
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 3rem 0;
-        }
-
-        /* Content Tabs */
-        .content-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .content-tab {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #718096;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .content-tab:hover {
-            color: #2d3748;
-            background: #f7fafc;
-        }
-
-        .content-tab.active {
-            color: #8b5cf6;
-            border-bottom-color: #8b5cf6;
-            background: #f3f4f6;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Page Header */
         .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
             text-align: center;
-            margin-bottom: 3rem;
         }
 
-        .model-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .model-subtitle {
-            font-size: 1rem;
-            color: #718096;
-            font-weight: 400;
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
         }
 
-        /* Content Tabs */
         .content-tabs {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
+            background: #e2e8f0;
+            border-bottom: 2px solid #cbd5e1;
+            padding: 0;
+            margin: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .content-tab {
             padding: 1rem 2rem;
-            background: transparent;
+            background: #f1f5f9;
             border: none;
-            border-bottom: 3px solid transparent;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #475569;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #718096;
+            border-bottom: 3px solid transparent;
+            border-top: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+            margin: 0;
         }
 
-        .content-tab:hover {
-            color: #2d3748;
-            background: #f7fafc;
+        .content-tab:first-child {
+            border-left: 1px solid #cbd5e1;
         }
 
         .content-tab.active {
-            color: #dc2626;
-            border-bottom-color: #dc2626;
-            background: #fef2f2;
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+            background: white;
+            font-weight: 700;
+        }
+
+        .content-tab:hover {
+            color: #1e40af;
+            background: #f8fafc;
         }
 
         .tab-content {
             display: none;
+            width: 100%;
+            padding: 0;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        /* Sigma Professional Industry Guide Styles */
+        /* Industry Guide Styling */
         .industry-guide {
             width: 100%;
+            padding: 2rem 3rem;
             background: #fafbfc;
-            padding: 3rem;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .guide-section {
             margin-bottom: 3rem;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-            transition: all 0.2s ease;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-item {
+            margin: 1rem 0;
             position: relative;
         }
 
-        .guide-section:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transform: translateY(-1px);
+        .guide-text {
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
         }
 
-        .guide-section h3 {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            font-size: 1.375rem;
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .guide-emphasis {
             font-weight: 600;
-            color: var(--accent-color);
-            margin-bottom: 1.75rem;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            color: #1f2937;
         }
 
-        .guide-section h3::before {
-            content: "";
-            width: 4px;
-            height: 24px;
-            background: var(--accent-color);
-            border-radius: 2px;
-            flex-shrink: 0;
-        }
-
-        .industry-guide h4 {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #111827;
-            margin: 2rem 0 1rem 0;
-            letter-spacing: -0.01em;
-        }
-
-        .guide-overview {
-            --accent-color: #3b82f6;
-            --accent-color-rgb: 59, 130, 246;
-            background: #f8faff;
-        }
-
-        .guide-strengths {
-            --accent-color: #10b981;
-            --accent-color-rgb: 16, 185, 129;
-            background: #f0fdf4;
-        }
-
-        .guide-limitations {
-            --accent-color: #f59e0b;
-            --accent-color-rgb: 245, 158, 11;
-            background: #fffbeb;
-        }
-
-        .guide-use-cases {
-            --accent-color: #8b5cf6;
-            --accent-color-rgb: 139, 92, 246;
-            background: #faf5ff;
-        }
-
-        .guide-choice {
-            --accent-color: #3b82f6;
-            --accent-color-rgb: 59, 130, 246;
-            --section-number: "5";
-            background: #f8faff;
-        }
-
-        .guide-avoid {
-            --accent-color: #ef4444;
-            --accent-color-rgb: 239, 68, 68;
-            background: #fef2f2;
-        }
-
-        .guide-tips {
-            --accent-color: #06b6d4;
-            --accent-color-rgb: 6, 182, 212;
-            background: #f0fdfa;
-        }
-
-        .guide-performance {
-            --accent-color: #10b981;
-            --accent-color-rgb: 16, 185, 129;
-            --section-number: "8";
-            background: #f0fdf4;
-        }
-
-        .guide-pitfalls {
-            --accent-color: #f59e0b;
-            --accent-color-rgb: 245, 158, 11;
-            --section-number: "9";
-            background: #fffbeb;
-        }
-
-        /* Academy Guide Styles */
+        /* Academy Guide Styling */
         .academy-guide {
             width: 100%;
-            background: #ffffff;
             padding: 2rem 3rem;
             line-height: 1.6;
         }
@@ -364,361 +274,141 @@
             margin-bottom: 1rem;
         }
 
-        /* Mathematical and Technical Elements */
+        /* Equation Styling */
         .equation-block {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-            font-size: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
             overflow-x: auto;
+            text-align: center;
         }
 
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
         .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
             margin: 1.5rem 0;
         }
 
         .term-item {
-            background: #f8f9fa;
-            border-left: 3px solid var(--accent-color);
-            padding: 1rem;
             margin: 0.75rem 0;
-            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+            color: #4b5563;
         }
 
         .term-item strong {
-            color: var(--accent-color);
-            font-size: 1.05rem;
+            color: #1f2937;
+            font-weight: 600;
         }
 
+        /* Constants Table */
         .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
             margin: 1.5rem 0;
         }
 
-        /* List Styles */
-        .guide-list {
-            list-style: none;
-            padding: 0;
-            margin: 1.25rem 0;
-            counter-reset: guide-counter;
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .guide-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            counter-increment: guide-counter;
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
         }
 
-        .industry-guide .guide-text::before {
-            content: counter(guide-counter) ". ";
-            color: #6b7280;
+        .constants-table th {
+            background: #f9fafb;
             font-weight: 600;
-        }
-
-        /* Academy Guide - Academic bullet formatting */
-        .academy-guide .guide-bullet {
-            background: #374151;
-            color: white;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            margin-top: 8px;
-        }
-
-        .academy-guide .guide-bullet::before {
-            content: "";
-        }
-
-        .guide-text {
-            font-size: 1rem;
-            line-height: 1.6;
             color: #374151;
-            flex: 1;
         }
 
-        .guide-emphasis {
-            color: var(--accent-color);
-            font-weight: 600;
+        .constants-table td {
+            color: #4b5563;
         }
 
-        /* Use Case and Avoid Items */
-        .use-case-item, .avoid-item {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .use-case-item h4, .avoid-item h4 {
-            color: var(--accent-color);
-            margin: 0 0 0.75rem 0;
-            font-size: 1.1rem;
-        }
-
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
                 padding: 0 1rem;
             }
 
-            .industry-guide, .academy-guide {
-                padding: 1.5rem;
+            .nav-tabs {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-tab {
+                font-size: 0.8rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .content-tabs {
+                padding: 0 1rem;
+            }
+
+            .content-tab {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
             }
 
             .guide-section {
                 padding: 1.5rem;
                 margin-bottom: 2rem;
             }
-
-            .guide-section h3 {
-                font-size: 1.25rem;
-            }
-        }
-
-        .guide-strengths {
-            background: #f0fdf4;
-            border-left: 4px solid #10b981;
-        }
-
-        .guide-limitations {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .guide-use-cases {
-            background: #ecfdf5;
-            border-left: 4px solid #059669;
-        }
-
-        .guide-avoid {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-        }
-
-        .guide-tips {
-            background: #f3f4f6;
-            border-left: 4px solid #6b7280;
-        }
-
-        .guide-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .guide-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .guide-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .guide-bullet {
-            color: #dc2626;
-            font-weight: 600;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-        }
-
-        .guide-text {
-            color: #4a5568;
-        }
-
-        .guide-emphasis {
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .use-case-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .avoid-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-
-
-        .equation-block {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-            font-size: 1rem;
-            overflow-x: auto;
-        }
-
-        .term-definitions {
-            space-y: 1rem;
-        }
-
-        .term-item {
-            background: #f8f9fa;
-            border-left: 3px solid #dc2626;
-            padding: 1rem;
-            margin: 0.75rem 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .term-item strong {
-            color: #b91c1c;
-            font-size: 1.05rem;
-        }
-
-        .constants-table {
-            margin: 1rem 0;
-        }
-
-        /* Simple Decision Cards for Academy */
-        .simple-decisions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .simple-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 2rem;
-            transition: box-shadow 0.2s ease;
-        }
-
-        .simple-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .simple-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .simple-title {
-            font-size: 1.125rem;
-            font-weight: 500;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-        }
-
-        .simple-subtitle {
-            font-size: 0.875rem;
-            color: #718096;
-        }
-
-        .simple-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .simple-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.4;
-        }
-
-        .simple-icon {
-            flex-shrink: 0;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            margin-top: 0.125rem;
-        }
-
-        .use-card .simple-icon {
-            background: #10b981;
-        }
-
-        .avoid-card .simple-icon {
-            background: #f59e0b;
-        }
-
-        .simple-text {
-            color: #4a5568;
-        }
-
-        .simple-emphasis {
-            font-weight: 500;
-            color: #2d3748;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .simple-decisions {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .model-title {
-                font-size: 2rem;
-            }
-            
-            .nav-tabs {
-                gap: 1rem;
-            }
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: #a0aec0;
-            font-size: 0.75rem;
-            border-top: 1px solid #e2e8f0;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
-                
-                <!-- Navigation Tabs -->
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
                 <div class="nav-tabs">
-                    <a href="../home.html" class="nav-tab">Home</a>
-                    <a href="../time-dependency.html" class="nav-tab">Time Dependency</a>
-                    <a href="../turbulence-models.html" class="nav-tab active">Turbulence Models</a>
-                    <a href="../methods.html" class="nav-tab">Methods</a>
-                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <a href="laminar.html" class="nav-tab">Laminar</a>
+                    <a href="k-epsilon.html" class="nav-tab">k-ε</a>
+                    <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
+                    <a href="inviscid.html" class="nav-tab active">Inviscid</a>
+                    <a href="reynolds-stress.html" class="nav-tab">RSM</a>
+                    <a href="des.html" class="nav-tab">DES</a>
+                    <a href="les.html" class="nav-tab">LES</a>
                 </div>
             </div>
         </div>
-    </header>
 
     <div class="container">
-        <div class="main-content">
-            <a href="../turbulence-models.html" class="back-link">
-                ← Turbulence Models
-            </a>
 
             <!-- Page Header -->
             <div class="page-header">
-                <h1 class="model-title">Inviscid Flow</h1>
+                <h1>Inviscid Flow</h1>
                 <p class="model-subtitle">Ideal flow model for conceptual design and high-speed flow analysis</p>
             </div>
 
