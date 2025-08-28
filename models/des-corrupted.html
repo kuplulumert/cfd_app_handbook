@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>DES Model - Detached Eddy Simulation - Beko CFD AI Agent</title>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
+        /* Header Navigation */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2d3748;
+            text-decoration: none;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 0;
+            text-decoration: none;
+            color: #718096;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: #2d3748;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content-tabs {
+            display: flex;
+            background: #e2e8f0;
+            border-bottom: 2px solid #cbd5e1;
+            padding: 0;
+            margin: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-tab {
+            padding: 1rem 2rem;
+            background: #f1f5f9;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            border-top: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .content-tab:first-child {
+            border-left: 1px solid #cbd5e1;
+        }
+
+        .content-tab.active {
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+            background: white;
+            font-weight: 700;
+        }
+
+        .content-tab:hover {
+            color: #1e40af;
+            background: #f8fafc;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Industry Guide Styling */
+        .industry-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .guide-section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-item {
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .guide-text {
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .guide-emphasis {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        /* Academy Guide Styling */
+        .academy-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            line-height: 1.6;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide h3:first-child {
+            margin-top: 0;
+        }
+
+        .academy-guide h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
+            line-height: 1.4;
+        }
+
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
+        }
+
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .nav-tabs {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-tab {
+                font-size: 0.8rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .content-tabs {
+                padding: 0 1rem;
+            }
+
+            .content-tab {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
+
+            .guide-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
+            <div class="header-content">
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
+                <div class="nav-tabs">
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <a href="laminar.html" class="nav-tab">Laminar</a>
+                    <a href="k-epsilon.html" class="nav-tab">k-ε</a>
+                    <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
+                    <a href="reynolds-stress.html" class="nav-tab">RSM</a>
+                    <a href="des.html" class="nav-tab active">DES</a>
+                    <a href="les.html" class="nav-tab">LES</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>DES Model - Detached Eddy Simulation</h1>
+                <p class="model-subtitle">Hybrid RANS-LES approach for complex unsteady flows with separation</p>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
+            </div>
+
+            <!-- Industry Guide Tab Content -->
+            <div id="industry" class="tab-content active">
+                <div class="industry-guide">
+                    
+                    <!-- Model Overview -->
+                    <div class="guide-section guide-overview">
+                        <h3>1. Model Overview</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>🔄 Hybrid RANS-LES approach</strong> using RANS near walls and LES in separated regions.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Industry standard</strong> for general-purpose turbulent flow simulations with robust convergence.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Wall function approach</strong> suitable for moderate Reynolds number flows in complex geometries.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Valid for <strong>fully developed turbulent flows</strong> with minimal adverse pressure gradients.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+    </style>
+</head>
+<body>
+        <!-- Navigation Header -->
+        <div class="header">
+            <div class="header-content">
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
+                <div class="nav-tabs">
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <a href="laminar.html" class="nav-tab">Laminar</a>
+                    <a href="k-epsilon.html" class="nav-tab">k-ε</a>
+                    <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
+                    <a href="inviscid.html" class="nav-tab">Inviscid</a>
+                    <a href="spalart-allmaras.html" class="nav-tab">Spalart-Allmaras</a>
+                    <a href="k-omega.html" class="nav-tab">k-ω</a>
+                    <a href="reynolds-stress.html" class="nav-tab">RSM</a>
+                    <a href="des.html" class="nav-tab active">DES</a>
+                    <a href="les.html" class="nav-tab">LES</a>
+                </div>
+            </div>
+        </div>
+
+    <div class="container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>DES Model - Detached Eddy Simulation</h1>
+                <p class="model-subtitle">Hybrid RANS-LES approach for complex unsteady flows with separation</p>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+            </div>
+
+            <!-- Industry Guide Tab Content -->
+            <div id="industry" class="tab-content active">
+                <div class="industry-guide">
+                    
+                    <!-- Model Overview -->
+                    <div class="guide-section guide-overview">
+                        <h3>1. Model Overview</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>🔄 Hybrid RANS-LES approach</strong> using RANS near walls and LES in separated regions.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Detached Eddy Simulation</strong> automatically switches between modeling approaches based on grid and flow characteristics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady flow capability</strong> capturing large-scale turbulent structures and flow instabilities.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Advanced separation prediction</strong> for complex geometries with massive flow separation.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Key Strengths -->
+                    <div class="guide-section guide-strengths">
+                        <h3>2. Key Strengths</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Massive separation accuracy:</strong> <strong>Superior prediction</strong> of large-scale flow separation and recirculation zones.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady flow capture:</strong> Resolves <strong>large turbulent structures</strong> and flow instabilities automatically.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> <strong>More affordable than full LES</strong> while capturing key unsteady physics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Automatic switching:</strong> No manual zone specification required - <strong>grid-dependent activation</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Complex geometry capability:</strong> Handles <strong>bluff bodies, backward-facing steps</strong> with excellent accuracy.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Limitations -->
+                    <div class="guide-section guide-limitations">
+                        <h3>3. Limitations</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time-dependent simulation:</strong> Requires <strong>unsteady calculations</strong> with small time steps for accurate results.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational cost:</strong> <strong>5-10x higher than RANS</strong> due to unsteady nature and fine time stepping.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mesh density requirements:</strong> Needs <strong>LES-quality mesh</strong> in separated regions for proper resolution.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Statistical convergence:</strong> Requires <strong>long averaging periods</strong> to obtain stable statistics.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Beko Appliance Applications -->
+                    <div class="guide-section guide-use-cases">
+                        <h3>4. Beko Appliance Applications</h3>
+                        
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Washing Machines:</span> Drum flow analysis, water distribution patterns, detergent mixing efficiency</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Dishwashers:</span> Spray arm performance, water jet impingement, cleaning effectiveness zones</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Cooktops:</span> Precise heat transfer analysis, airflow patterns around burners, ventilation efficiency</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Vacuum Cleaners:</span> Complex internal flows, separation in curved ducts, filtration system optimization</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Range Hoods:</span> Extraction efficiency, flow separation over surfaces, noise prediction</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Dryers:</span> Airflow uniformity, heat distribution, lint transport analysis</span>
+                        </div>
+                    </div>
+
+                    <!-- When to Choose DES Over RANS -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose DES Over RANS</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Massive flow separation:</strong> When <strong>large-scale unsteady structures</strong> dominate the flow physics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Complex 3D separation:</strong> Bluff bodies, automotive, aerospace with <strong>time-dependent effects</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Vortex shedding:</strong> When <strong>periodic unsteady behavior</strong> is critical to design.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mixed attached/separated regions:</strong> RANS near walls, <strong>LES in separated zones</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady forces/moments:</strong> When <strong>time-accurate predictions</strong> are required for design.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- When NOT to Use DES -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use DES</h3>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Fully attached flows:</span> Simple internal flows where separation is not expected</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Steady-state analysis:</span> When time-averaged results are sufficient</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Limited computational resources:</span> DES requires 5-10x more CPU time than RANS</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Preliminary design:</span> Early concept studies where RANS accuracy is sufficient</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Mesh limitations:</span> When LES-quality mesh resolution cannot be achieved</span>
+                        </div>
+                    </div>
+
+                    <!-- Setup and Mesh Guidelines -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Setup and Mesh Guidelines</h3>
+                        
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>y⁺ < 1:</strong> Essential for accurate wall treatment (target <strong>y⁺ ≈ 0.5</strong>).</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum <strong>15-20 cells</strong> across boundary layer.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.2</strong> in near-wall region, <strong>< 1.3</strong> elsewhere.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Aspect ratio:</strong> <strong>< 1000</strong> in boundary layer regions acceptable.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Solver Settings:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Discretization:</strong> <strong>Second-order upwind</strong> minimum for all equations.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁵</strong>, monitor integrated quantities.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Under-relaxation:</strong> k: <strong>0.6</strong>, ω: <strong>0.6</strong>, reduce if convergence issues.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Advanced Options:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Curvature correction:</strong> Enable for vacuum cleaners and highly curved flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Production limiter:</strong> Usually enabled by default, prevents unrealistic production.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Low-Re corrections:</strong> Consider for transitional flows or very fine meshes.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Performance Expectations -->
+                    <div class="guide-section guide-performance">
+                        <h3>8. Performance Expectations</h3>
+                        
+                        <h4>Accuracy Levels:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Wall shear stress:</strong> <strong>±3-5%</strong> for attached flows, <strong>±5-10%</strong> for separated flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Heat transfer:</strong> <strong>±5-8%</strong> for most engineering applications.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Pressure drop:</strong> <strong>±5-10%</strong> depending on geometry complexity.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Separation point:</strong> <strong>±10-15%</strong> for airfoil-type flows.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Computational Overhead:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>vs k-ε:</strong> <strong>20-30% longer</strong> solution time, <strong>2-3x finer mesh</strong> required.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Memory:</strong> <strong>15-20% higher</strong> due to additional variables and functions.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>ROI:</strong> Justifiable when <strong>wall effects or separation</strong> are critical to design.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Common Pitfalls and Solutions -->
+                    <div class="guide-section guide-pitfalls">
+                        <h3>9. Common Pitfalls and Solutions</h3>
+                        
+                        <h4>Mesh-Related Issues:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>y⁺ > 5</strong> causing poor wall treatment. <strong>Solution:</strong> Refine near-wall mesh.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Excessive aspect ratios</strong> causing convergence issues. <strong>Solution:</strong> Improve mesh quality.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Convergence Issues:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>ω equation diverging</strong>. <strong>Solution:</strong> Reduce under-relaxation, check inlet ω values.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Oscillating residuals</strong>. <strong>Solution:</strong> Enable production limiter, check mesh quality.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Physical Issues:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Overpredicted separation</strong>. <strong>Solution:</strong> Check curvature correction, consider transition model.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Poor swirl prediction</strong>. <strong>Solution:</strong> Consider Reynolds stress model instead.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academy Guide Tab Content -->
+            <div id="academy" class="tab-content">
+                <div class="academy-guide">
+                    
+                    <!-- Historical Context and Development -->
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
+                        <h3>Historical Context and Development</h3>
+                        <p class="guide-text">Detached Eddy Simulation (DES) was introduced by Philippe Spalart in 1997 as a hybrid RANS-LES approach designed to combine the computational efficiency of RANS modeling near walls with the accuracy of Large Eddy Simulation in separated regions.</p>
+                        
+                        <h4>Evolution and Motivation</h4>
+                        <p class="guide-text">The development of DES was motivated by the recognition that RANS models, while computationally efficient, fundamentally struggle with massively separated flows due to their steady-state formulation and eddy viscosity assumptions. Conversely, pure LES, while accurate, requires prohibitively fine meshes near solid boundaries to resolve the near-wall turbulent structures.</p>
+                        
+                        <p class="guide-text">Spalart's insight was to automatically switch between RANS treatment in attached boundary layers (where it excels) and LES treatment in separated regions (where large-scale unsteady structures dominate). This switching is accomplished through a modification of the turbulence length scale, making the approach mesh-dependent by design.</p>
+                        
+                        <p class="guide-text">Subsequent developments included Delayed DES (DDES) by Spalart et al. (2006) to prevent premature switching to LES mode in attached boundary layers, and Zonal DES approaches that provide explicit control over the RANS-LES interface.</p>
+                    </div>
+
+                    <!-- Mathematical Foundation and Switching Mechanism -->
+                    <div class="guide-section guide-overview">
+                        <h3>Mathematical Foundation and Switching Mechanism</h3>
+                        <p class="guide-text">DES modifies the dissipation term in the underlying RANS model to enable automatic switching between RANS and LES modes based on the relationship between the RANS length scale and the local grid spacing.</p>
+                        
+                        <h4>Modified Spalart-Allmaras DES:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - c_{w1} f_w \left[\frac{\tilde{\nu}}{\tilde{d}}\right]^2 + \frac{1}{\sigma} \frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma} \frac{\partial \tilde{\nu}}{\partial x_j} \frac{\partial \tilde{\nu}}{\partial x_j}$$
+                        </div>
+                        
+                        <h4>DES Length Scale Modification:</h4>
+                        <div class="equation-block">
+                            $$\tilde{d} = \min(d, C_{DES} \Delta)$$
+                        </div>
+                        
+                        <h4>Grid Scale Definition:</h4>
+                        <div class="equation-block">
+                            $$\Delta = \max(\Delta x, \Delta y, \Delta z)$$
+                        </div>
+                        
+                        <h4>Delayed DES (DDES) Modification:</h4>
+                        <div class="equation-block">
+                            $$\tilde{d} = d - f_d \max(0, d - C_{DES} \Delta)$$
+                        </div>
+                        
+                        <h4>Delay Function:</h4>
+                        <div class="equation-block">
+                            $$f_d = 1 - \tanh\left[\left(8 r_d\right)^n\right], \quad r_d = \frac{\nu_t}{\sqrt{0.5(u_{i,j} + u_{j,i})^2} k^2}$$
+                        </div>
+                        
+                        <h4>k-ω SST DES Formulation:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial k}{\partial t} + \frac{\partial (u_j k)}{\partial x_j} = P_k - \beta^* k \omega F_{DES} + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_k \nu_t) \frac{\partial k}{\partial x_j}\right]$$
+                        </div>
+                        
+                        <h4>DES Limiter Function:</h4>
+                        <div class="equation-block">
+                            $$F_{DES} = \max\left[\frac{L_t}{C_{DES} \Delta}, 1\right], \quad L_t = \frac{\sqrt{k}}{\beta^* \omega}$$
+                        </div>
+                        
+                        <div class="term-definitions">
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>d:</strong> Wall distance (m)</div>
+                            <div class="term-item"><strong>Δ:</strong> Grid scale, typically max(Δx, Δy, Δz) (m)</div>
+                            <div class="term-item"><strong>C_DES:</strong> DES model constant (~0.65) (-)</div>
+                            <div class="term-item"><strong>f_d:</strong> Delay function to prevent premature LES switching (-)</div>
+                            <div class="term-item"><strong>r_d:</strong> Dimensionless parameter for delay function (-)</div>
+                            <div class="term-item"><strong>L_t:</strong> Turbulent length scale (m)</div>
+                            <div class="term-item"><strong>F_DES:</strong> DES limiter function (-)</div>
+                        </div>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Constant</th>
+                                        <th>Spalart-Allmaras DES</th>
+                                        <th>k-ω SST DES</th>
+                                        <th>Physical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>C_DES</td>
+                                        <td>0.65</td>
+                                        <td>0.61</td>
+                                        <td>DES switching parameter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>c_b1</td>
+                                        <td>0.1355</td>
+                                        <td>-</td>
+                                        <td>Production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>c_w1</td>
+                                        <td>c_b1/κ² + (1+c_b2)/σ</td>
+                                        <td>-</td>
+                                        <td>Destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>n</td>
+                                        <td>-</td>
+                                        <td>8</td>
+                                        <td>Delay function exponent</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- DES Physics and Mode Switching -->
+                    <div class="guide-section">
+                        <h3>DES Physics and Mode Switching</h3>
+                        <p class="guide-text">The fundamental principle of DES lies in the length scale comparison that determines the dominant turbulent mechanism in different flow regions.</p>
+                        
+                        <h4>RANS Mode (Near-Wall Regions)</h4>
+                        <p class="guide-text">When the wall distance d is smaller than the grid scale Δ, the formulation reduces to standard RANS operation. In this region, the attached boundary layer turbulence is modeled using the underlying RANS equations (Spalart-Allmaras or k-ω SST), providing efficient and accurate near-wall treatment without requiring LES-level mesh resolution.</p>
+                        
+                        <h4>LES Mode (Separated Regions)</h4>
+                        <p class="guide-text">In separated regions away from walls, where d > C_DES Δ, the modified length scale effectively reduces the modeled turbulent viscosity, allowing the flow to develop three-dimensional unsteady turbulent structures that are resolved by the computational mesh rather than modeled.</p>
+                        
+                        <h4>Gray Area Mitigation</h4>
+                        <p class="guide-text">The "gray area" refers to the transition region where the model operates in an intermediate state between RANS and LES, potentially leading to non-physical behavior. Delayed DES addresses this through the delay function f_d, which prevents premature switching to LES mode in attached boundary layers by detecting the characteristic stress-strain relationship of attached flows.</p>
+                        
+                        <h4>Grid Scale Sensitivity</h4>
+                        <p class="guide-text">Unlike RANS models, DES results are inherently mesh-dependent by design. The grid scale Δ directly influences the RANS-LES switching, making mesh design a critical aspect of DES simulations. The mesh must be fine enough to resolve large turbulent structures in separated regions while remaining coarse enough near walls to maintain RANS efficiency.</p>
+                    </div>
+
+                    <!-- DES Variants and Modern Developments -->
+                    <div class="guide-section">
+                        <h3>DES Variants and Modern Developments</h3>
+                        <p class="guide-text">Since the original DES formulation, numerous variants have been developed to address specific limitations and extend the approach to different flow physics.</p>
+                        
+                        <h4>Delayed DES (DDES)</h4>
+                        <p class="guide-text">DDES incorporates a delay function to prevent premature switching to LES mode in attached boundary layers, addressing the "grid-induced separation" problem where insufficient LES resolution leads to non-physical flow separation. The delay function detects attached flow characteristics and maintains RANS treatment until the flow naturally separates.</p>
+                        
+                        <h4>Zonal DES (ZDES)</h4>
+                        <p class="guide-text">ZDES provides explicit user control over the RANS-LES interface through predefined zones, eliminating the automatic switching mechanism. This approach is particularly useful for flows where the separation location is known a priori and precise control over the hybrid interface is desired.</p>
+                        
+                        <h4>Scale-Adaptive Simulation (SAS)</h4>
+                        <p class="guide-text">SAS extends the DES concept by introducing a scale-adaptive source term that automatically adjusts the model behavior based on resolved turbulent scales, providing LES-like resolution in unsteady regions while maintaining RANS efficiency in steady regions without explicit grid-based switching.</p>
+                        
+                        <h4>Improved Delayed DES (IDDES)</h4>
+                        <p class="guide-text">IDDES combines the delay function of DDES with wall-modeled LES capability, enabling LES treatment down to the wall in regions where the grid resolution permits. This provides a seamless transition from RANS to wall-modeled LES to wall-resolved LES based on local grid resolution.</p>
+                    </div>
+
+                    <!-- Applications and Validation Cases -->
+                    <div class="guide-section">
+                        <h3>Applications and Validation Database</h3>
+                        <p class="guide-text">DES has been extensively validated across a wide range of separated flows and has become the method of choice for many industrial applications requiring unsteady flow predictions.</p>
+                        
+                        <h4>Benchmark Validation Cases</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Backward-facing step with various expansion ratios</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Flow around circular cylinders at high Reynolds numbers</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Airfoil stall and post-stall behavior</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Ahmed body for automotive aerodynamics</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Periodic hills for complex terrain flows</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Industrial Applications</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Automotive external aerodynamics with A-pillar and wake flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Aircraft high-lift configurations with slat and flap interactions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Wind turbine aerodynamics including tower and nacelle effects</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Building aerodynamics and urban wind environments</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Heat exchanger flows with tube bundle arrangements</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Performance Characteristics</h4>
+                        <p class="guide-text">DES typically provides superior prediction of separation points, reattachment lengths, and unsteady forces compared to RANS models, while requiring 5-10 times more computational resources than steady RANS but 1-2 orders of magnitude less than wall-resolved LES.</p>
+                    </div>
+
+                    <!-- Implementation and Best Practices -->
+                    <div class="guide-section">
+                        <h3>Implementation Guidelines and Best Practices</h3>
+                        <p class="guide-text">Successful DES implementation requires careful attention to mesh design, time stepping, and convergence criteria due to the hybrid nature and inherent unsteadiness of the approach.</p>
+                        
+                        <h4>Mesh Design Considerations</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">RANS mesh quality near walls: y⁺ < 1 for low-Re, y⁺ ≈ 30 for wall functions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">LES mesh requirements in separated regions: typically need grid scale on the order of boundary layer thickness</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Aspect ratio transition: gradual change from high aspect ratio near walls to isotropic cells in separated regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Interface location: ensure sufficient RANS region upstream of expected separation</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Temporal Resolution Requirements</h4>
+                        <p class="guide-text">DES requires time-accurate integration with time steps typically 1-2 orders of magnitude smaller than RANS simulations. The time step must resolve the convective time scale of large turbulent structures in the LES region, typically requiring CFL numbers of 0.5-1.0 in separated regions.</p>
+                        
+                        <h4>Statistical Convergence</h4>
+                        <p class="guide-text">Due to the inherent unsteadiness, DES results require statistical averaging over multiple flow-through times to achieve converged mean and RMS statistics. Typically 10-20 flow-through times are needed for first and second-order statistics convergence.</p>
+                        
+                        <h4>Boundary Conditions and Initialization</h4>
+                        <p class="guide-text">Inlet boundary conditions should include appropriate turbulent fluctuations in regions expected to operate in LES mode. Initialization from converged RANS solutions can accelerate the transition to statistical steady state, but care must be taken to allow development of three-dimensional unsteady structures.</p>
+                        
+                        <h4>Post-Processing Considerations</h4>
+                        <p class="guide-text">DES results require time-averaging for mean quantities and proper temporal sampling for spectral analysis. The identification of RANS vs. LES regions can be visualized through the ratio of modeled to total turbulent viscosity or through instantaneous flow field visualization.</p>
+                    </div>
+
+                    <!-- Advanced Topics and Future Directions -->
+                    <div class="guide-section">
+                        <h3>Advanced Topics and Future Directions</h3>
+                        <p class="guide-text">Contemporary DES research focuses on improving the RANS-LES interface, developing more robust switching criteria, and extending the approach to new physical phenomena.</p>
+                        
+                        <h4>Machine Learning Enhanced DES</h4>
+                        <p class="guide-text">Recent developments incorporate machine learning algorithms to optimize the RANS-LES switching criteria based on local flow characteristics, potentially improving automation and reducing user expertise requirements for mesh design and setup.</p>
+                        
+                        <h4>Compressible and High-Speed Flows</h4>
+                        <p class="guide-text">Extensions to compressible flows involve additional considerations for shock-turbulence interactions and density variations. Specialized formulations address the challenges of maintaining proper shock resolution while allowing turbulent mixing development in separated regions.</p>
+                        
+                        <h4>Multiphysics DES Applications</h4>
+                        <p class="guide-text">Modern applications extend DES to coupled phenomena including conjugate heat transfer, fluid-structure interaction, and combustion. These applications require careful consideration of the coupling between different physics and the appropriate treatment at RANS-LES interfaces.</p>
+                        
+                        <h4>Adaptive Mesh Refinement</h4>
+                        <p class="guide-text">Advanced implementations incorporate adaptive mesh refinement to automatically provide LES-quality resolution in separated regions while maintaining computational efficiency in attached flow regions, potentially reducing the mesh design burden on users.</p>
+                    </div>                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            Developed By Mert Küplülü
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab content
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.content-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        // KaTeX rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
