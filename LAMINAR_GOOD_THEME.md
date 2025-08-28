@@ -14,6 +14,7 @@ The **Laminar Good Theme** is a clean, professional design extracted from the La
 
 ### 📐 Layout Structure
 - **Full-Width Layout**: Utilizes complete screen width (width: 100%, margin: 0)
+- **Upper Navigation**: Sticky header with logo and model navigation links
 - **Dual-Tab System**: Prominent Industry Guide and Academy Guide tabs with clear borders
 - **Responsive Design**: Mobile-friendly with breakpoints at 768px
 - **Card-Based Sections**: Each section is a clean card with subtle shadows
@@ -90,6 +91,51 @@ The **Laminar Good Theme** is a clean, professional design extracted from the La
     border-bottom-color: #1e40af;
     background: white;
     font-weight: 700;
+}
+
+/* Header Navigation */
+.header {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    text-decoration: none;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-tab {
+    padding: 0.5rem 0;
+    text-decoration: none;
+    color: #718096;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-tab:hover,
+.nav-tab.active {
+    color: #2d3748;
 }
 
 .guide-section {
