@@ -121,32 +121,41 @@
             display: flex;
             gap: 0.5rem;
             margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
+            padding: 0 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .content-tab {
             padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-bottom: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            color: #718096;
-            transition: all 0.3s ease;
+            color: #6b7280;
+            transition: all 0.2s ease;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: -1px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             text-decoration: none;
             display: inline-block;
         }
 
         .content-tab:hover {
             color: #2d3748;
-            background: #f7fafc;
+            background: #f1f5f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .content-tab.active {
             color: #8b5cf6;
-            border-bottom-color: #8b5cf6;
-            background: #f3f4f6;
+            background: #ffffff;
+            border-color: #e2e8f0;
+            border-bottom: 1px solid #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
         }
 
         .tab-content {
@@ -580,29 +589,23 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
-                
-                <!-- Navigation Tabs -->
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
                 <div class="nav-tabs">
-                    <a href="../home.html" class="nav-tab">Home</a>
-                    <a href="../time-dependency.html" class="nav-tab">Time Dependency</a>
-                    <a href="../turbulence-models.html" class="nav-tab active">Turbulence Models</a>
-                    <a href="../methods.html" class="nav-tab">Methods</a>
-                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <a href="laminar.html" class="nav-tab">Laminar</a>
+                    <a href="k-epsilon.html" class="nav-tab">k-ε</a>
+                    <a href="k-omega-sst.html" class="nav-tab active">k-ω SST</a>
+                    <a href="reynolds-stress.html" class="nav-tab">RSM</a>
+                    <a href="des.html" class="nav-tab">DES</a>
+                    <a href="les.html" class="nav-tab">LES</a>
                 </div>
             </div>
         </div>
-    </header>
 
-    <div class="container">
         <div class="main-content">
-            <a href="../turbulence-models.html" class="back-link">
-                ← Turbulence Models
-            </a>
 
             <!-- Page Header -->
             <div class="page-header">
