@@ -689,7 +689,140 @@
     </footer>
 
     <script>
-        console.log('Turbulence Models page loaded with minimalistic theme');
+        // Scroll Position Restoration System
+        class ScrollPositionManager {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                // Restore scroll position when page loads
+                this.restoreScrollPosition();
+                
+                // Add click handlers to all model links
+                this.addModelLinkHandlers();
+                
+                // Save scroll position before unload
+                window.addEventListener('beforeunload', () => {
+                    this.saveCurrentScrollPosition();
+                });
+            }
+
+            // Save scroll position when clicking a model link
+            saveScrollPositionForModel(modelName) {
+                const scrollData = {
+                    scrollY: window.scrollY,
+                    timestamp: Date.now(),
+                    fromModel: modelName
+                };
+                sessionStorage.setItem('turbulenceModelsScrollPosition', JSON.stringify(scrollData));
+                console.log(`Saved scroll position for ${modelName}:`, scrollData);
+            }
+
+            // Save current scroll position
+            saveCurrentScrollPosition() {
+                const scrollData = {
+                    scrollY: window.scrollY,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem('turbulenceModelsCurrentScroll', JSON.stringify(scrollData));
+            }
+
+            // Restore scroll position when returning to page
+            restoreScrollPosition() {
+                // Check if we're returning from a model page
+                const savedPosition = sessionStorage.getItem('turbulenceModelsScrollPosition');
+                
+                if (savedPosition) {
+                    try {
+                        const scrollData = JSON.parse(savedPosition);
+                        
+                        // Only restore if the data is recent (within 5 minutes)
+                        if (Date.now() - scrollData.timestamp < 300000) {
+                            // Smooth scroll to the saved position
+                            setTimeout(() => {
+                                window.scrollTo({
+                                    top: scrollData.scrollY,
+                                    behavior: 'smooth'
+                                });
+                                console.log(`Restored scroll position from ${scrollData.fromModel}:`, scrollData.scrollY);
+                            }, 100);
+                        }
+                        
+                        // Clear the saved position after use
+                        sessionStorage.removeItem('turbulenceModelsScrollPosition');
+                    } catch (e) {
+                        console.error('Error restoring scroll position:', e);
+                    }
+                }
+            }
+
+            // Add click handlers to model links
+            addModelLinkHandlers() {
+                // Handle featured card clicks
+                const featuredCards = document.querySelectorAll('.featured-card');
+                featuredCards.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const modelName = card.querySelector('.featured-name')?.textContent || 'Featured Model';
+                        this.saveScrollPositionForModel(modelName);
+                    });
+                });
+
+                // Handle model row clicks
+                const modelRows = document.querySelectorAll('.model-row');
+                modelRows.forEach(row => {
+                    row.addEventListener('click', (e) => {
+                        const modelName = row.querySelector('.model-name')?.textContent || 'Model';
+                        this.saveScrollPositionForModel(modelName);
+                    });
+                });
+
+                // Handle direct model links
+                const modelLinks = document.querySelectorAll('a[href*="models/"]');
+                modelLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const modelName = link.textContent || link.href.split('/').pop();
+                        this.saveScrollPositionForModel(modelName);
+                    });
+                });
+            }
+
+            // Find model element position for precise scrolling
+            getModelElementPosition(modelName) {
+                const modelElements = document.querySelectorAll('.model-name, .featured-name');
+                for (let element of modelElements) {
+                    if (element.textContent.toLowerCase().includes(modelName.toLowerCase())) {
+                        const rect = element.getBoundingClientRect();
+                        return window.scrollY + rect.top - 100; // Offset for header
+                    }
+                }
+                return null;
+            }
+        }
+
+        // Initialize scroll position manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ScrollPositionManager();
+            console.log('Turbulence Models page loaded with scroll position restoration');
+        });
+
+        // Fallback scroll restoration for immediate page loads
+        window.addEventListener('load', () => {
+            const savedPosition = sessionStorage.getItem('turbulenceModelsScrollPosition');
+            if (savedPosition) {
+                try {
+                    const scrollData = JSON.parse(savedPosition);
+                    if (Date.now() - scrollData.timestamp < 300000) {
+                        window.scrollTo({
+                            top: scrollData.scrollY,
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch (e) {
+                    console.error('Fallback scroll restoration error:', e);
+                }
+            }
+        });
     </script>
 </body>
 </html>
