@@ -396,7 +396,6 @@
                 <div class="nav-tabs">
                     <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
                     <a href="laminar.html" class="nav-tab">Laminar</a>
-                    <a href="k-epsilon.html" class="nav-tab active">k-ε</a>
                     <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
                     <a href="reynolds-stress.html" class="nav-tab">RSM</a>
                     <a href="des.html" class="nav-tab">DES</a>
@@ -427,16 +426,16 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Direct Navier-Stokes solution</strong> without turbulence modeling or additional equations.</span>
+                                <span class="guide-text"><strong>Two-equation RANS model</strong> solving for turbulent kinetic energy (k) and dissipation rate (ε).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Exact viscous flow representation</strong> capturing all molecular-level momentum transport.</span>
+                                <span class="guide-text"><strong>Industry standard</strong> for general-purpose turbulent flow simulations with robust convergence.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Deterministic solution</strong> providing precise, reproducible results for smooth flows.</span>
+                                <span class="guide-text"><strong>Wall function approach</strong> suitable for moderate Reynolds number flows in complex geometries.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Valid for <strong>Reynolds numbers < 2300</strong> in internal flows and specific external configurations.</span>
+                                <span class="guide-text">Valid for <strong>fully developed turbulent flows</strong> with minimal adverse pressure gradients.</span>
                             </li>
                         </ul>
                     </div>
@@ -446,19 +445,19 @@
                         <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Highest accuracy:</strong> Exact solution without modeling assumptions or turbulence closure errors.</span>
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Lowest cost among two-equation models, <strong>40-50% faster than SST</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Analytical validation:</strong> Many exact analytical solutions available for verification.</span>
+                                <span class="guide-text"><strong>Robust convergence:</strong> Stable and reliable across <strong>wide range of flow conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Mesh independence:</strong> No near-wall modeling constraints or y⁺ requirements.</span>
+                                <span class="guide-text"><strong>Universal availability:</strong> Implemented in <strong>every commercial CFD solver</strong> with consistent formulation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Computational efficiency:</strong> No additional transport equations, fastest CFD approach for valid cases.</span>
+                                <span class="guide-text"><strong>Extensive validation:</strong> <strong>50+ years</strong> of validation data across diverse industrial applications.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Heat transfer precision:</strong> Exact prediction of wall heat transfer and temperature distributions.</span>
+                                <span class="guide-text"><strong>Mesh flexibility:</strong> Works with <strong>coarser meshes</strong> due to wall function approach.</span>
                             </li>
                         </ul>
                     </div>
@@ -468,16 +467,16 @@
                         <h3>3. Limitations</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Reynolds number restriction:</strong> <strong>Limited to Re < 2300</strong> for internal flows, much lower for external flows.</span>
+                                <span class="guide-text"><strong>Wall treatment limitation:</strong> <strong>Cannot integrate to wall</strong>, requires empirical wall functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Flow regime limitation:</strong> <strong>Cannot predict transition to turbulence</strong> or handle turbulent flows.</span>
+                                <span class="guide-text"><strong>Separation issues:</strong> <strong>Over-predicts attached flow</strong>, <strong>under-predicts separation</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Geometric constraints:</strong> Limited to <strong>smooth, well-designed geometries</strong> without sharp edges or sudden expansions.</span>
+                                <span class="guide-text"><strong>Swirl and rotation:</strong> Poor performance in <strong>strongly swirling or rotating flows</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Industrial applicability:</strong> <strong>Rarely applicable</strong> to real-world industrial flow systems.</span>
+                                <span class="guide-text"><strong>Transitional flows:</strong> <strong>Not suitable for laminar-turbulent transition</strong> regions.</span>
                             </li>
                         </ul>
                     </div>
@@ -487,22 +486,22 @@
                         <h3>4. Ideal Applications</h3>
                         
                         <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Simple Internal Flows:</span> Straight ducts, pipes, channels with fully developed turbulence</span>
+                            <span class="guide-text"><span class="guide-emphasis">Microfluidics:</span> Lab-on-chip devices, medical diagnostics, precise fluid manipulation at micro-scale</span>
                         </div>
                         <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Heat Exchangers:</span> Shell-and-tube, plate heat exchangers with established flow patterns</span>
+                            <span class="guide-text"><span class="guide-emphasis">Heat Exchangers:</span> Smooth channel flows, plate heat exchangers, precise thermal analysis</span>
                         </div>
                         <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Preliminary Design:</span> Early-stage analysis where speed is more important than precision</span>
+                            <span class="guide-text"><span class="guide-emphasis">Lubrication Systems:</span> Bearing flows, thin film lubrication, viscous fluid motion</span>
                         </div>
                         <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Large Domains:</span> External flows around buildings, urban environments</span>
+                            <span class="guide-text"><span class="guide-emphasis">Coating Processes:</span> Thin film coating, paint application, precise surface coverage</span>
                         </div>
                         <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">High Re Flows:</span> Fully turbulent flows with minimal separation or adverse gradients</span>
+                            <span class="guide-text"><span class="guide-emphasis">Flow Meters:</span> Venturi meters, orifice plates, precise flow measurement devices</span>
                         </div>
                         <div class="use-case-item">
-                            <span class="guide-text"><span class="guide-emphasis">Educational Use:</span> Teaching fundamental turbulence modeling concepts</span>
+                            <span class="guide-text"><span class="guide-emphasis">Biomedical:</span> Blood flow in vessels, drug delivery systems, biofluid mechanics</span>
                         </div>
                     </div>
 
@@ -674,51 +673,93 @@
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">Laminar flow represents the fundamental state of viscous fluid motion, governed by the exact Navier-Stokes equations without the need for turbulence modeling or closure approximations.</p>
+                        <p class="guide-text">The k-ε turbulence model represents the first complete two-equation turbulence closure, developed by Launder and Spalding in 1974, building upon the pioneering work of Kolmogorov (1942) and Prandtl's mixing length theory.</p>
                         
                         <h4>Timeline and Evolution</h4>
-                        <p class="guide-text">The mathematical description of laminar flow has its foundations in the 19th century with the independent work of Claude-Louis Navier (1822) and George Gabriel Stokes (1845), who developed the fundamental equations governing viscous fluid motion. Osborne Reynolds (1883) established the critical Reynolds number concept, defining the transition criterion between laminar and turbulent flow regimes.</p>
+                        <p class="guide-text">The development of the k-ε model marked a watershed moment in computational fluid dynamics. In 1972, Launder and Spalding began systematic development of a transport equation for the dissipation rate ε, complementing the well-established turbulent kinetic energy equation. The breakthrough came in 1974 with the publication of their seminal paper introducing the standard k-ε model.</p>
                         
-                        <p class="guide-text">Subsequent analytical solutions by Poiseuille (1840) for pipe flow, Couette (1890) for shear-driven flows, and Blasius (1908) for boundary layer flow over flat plates provided exact benchmarks that remain the gold standard for CFD validation. Modern computational capabilities have enabled the direct numerical solution of the Navier-Stokes equations for increasingly complex laminar flow configurations, maintaining exact mathematical rigor.</p>
+                        <p class="guide-text">Subsequent decades saw numerous refinements including the RNG k-ε variant (Yakhot and Orszag, 1986) incorporating renormalization group theory, the realizable k-ε model (Shih et al., 1995) ensuring mathematical realizability, and various low-Reynolds number variants for near-wall treatment. The model's widespread adoption was facilitated by its implementation in early commercial CFD codes during the 1980s.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
                         <h3>Mathematical Foundation and Complete Derivation</h3>
-                        <p class="guide-text">Laminar flow is governed by the incompressible Navier-Stokes equations, representing the exact conservation of mass and momentum without turbulence modeling assumptions or closure approximations.</p>
+                        <p class="guide-text">The k-ε model employs the Boussinesq eddy viscosity hypothesis, relating Reynolds stresses to mean strain rate through a turbulent viscosity. This approach provides closure for the Reynolds-averaged Navier-Stokes equations through two additional transport equations.</p>
                         
-                        <h4>Continuity Equation (Mass Conservation):</h4>
+                        <h4>Turbulent Kinetic Energy Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial u_i}{\partial x_i} = 0$$
+                            $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right] + P_k - \rho \varepsilon$$
                         </div>
                         
-                        <h4>Momentum Equation (Navier-Stokes):</h4>
+                        <h4>Dissipation Rate Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial u_i}{\partial t} + u_j \frac{\partial u_i}{\partial x_j} = -\frac{1}{\rho}\frac{\partial p}{\partial x_i} + \nu \frac{\partial^2 u_i}{\partial x_j \partial x_j} + g_i$$
+                            $$\frac{\partial(\rho \varepsilon)}{\partial t} + \frac{\partial(\rho \varepsilon u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_\varepsilon}\right) \frac{\partial \varepsilon}{\partial x_j}\right] + C_{1\varepsilon}\frac{\varepsilon}{k}P_k - C_{2\varepsilon}\rho\frac{\varepsilon^2}{k}$$
                         </div>
                         
-                        <h4>Energy Equation (Temperature Transport):</h4>
+                        <h4>Turbulent Viscosity Definition:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial T}{\partial t} + u_j \frac{\partial T}{\partial x_j} = \alpha \frac{\partial^2 T}{\partial x_j \partial x_j} + \frac{\Phi}{\rho c_p}$$
+                            $$\mu_t = \rho C_\mu \frac{k^2}{\varepsilon}$$
+                        </div>
+                        
+                        <h4>Production Term:</h4>
+                        <div class="equation-block">
+                            $$P_k = \mu_t \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right) \frac{\partial u_i}{\partial x_j}$$
                         </div>
                         
                         <div class="term-definitions">
                             <h4>Variable Definitions:</h4>
-                            <div class="term-item"><strong>u_i:</strong> Velocity components (m/s)</div>
-                            <div class="term-item"><strong>p:</strong> Pressure (Pa)</div>
+                            <div class="term-item"><strong>k:</strong> Turbulent kinetic energy (m²/s²)</div>
+                            <div class="term-item"><strong>ε:</strong> Turbulent dissipation rate (m²/s³)</div>
+                            <div class="term-item"><strong>μₜ:</strong> Turbulent viscosity (kg/(m·s))</div>
+                            <div class="term-item"><strong>Pₖ:</strong> Production of turbulent kinetic energy (kg/(m·s³))</div>
                             <div class="term-item"><strong>ρ:</strong> Fluid density (kg/m³)</div>
-                            <div class="term-item"><strong>ν:</strong> Kinematic viscosity (m²/s)</div>
-                            <div class="term-item"><strong>T:</strong> Temperature (K)</div>
-                            <div class="term-item"><strong>α:</strong> Thermal diffusivity (m²/s)</div>
-                            <div class="term-item"><strong>Φ:</strong> Viscous dissipation function (W/m³)</div>
-                            <div class="term-item"><strong>g_i:</strong> Gravitational acceleration components (m/s²)</div>
+                            <div class="term-item"><strong>uᵢ:</strong> Reynolds-averaged velocity components (m/s)</div>
+                        </div>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Constant</th>
+                                        <th>Value</th>
+                                        <th>Physical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cμ</td>
+                                        <td>0.09</td>
+                                        <td>Turbulent viscosity coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C₁ε</td>
+                                        <td>1.44</td>
+                                        <td>Dissipation production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C₂ε</td>
+                                        <td>1.92</td>
+                                        <td>Dissipation destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>σₖ</td>
+                                        <td>1.0</td>
+                                        <td>Turbulent Prandtl number for k</td>
+                                    </tr>
+                                    <tr>
+                                        <td>σε</td>
+                                        <td>1.3</td>
+                                        <td>Turbulent Prandtl number for ε</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <!-- Physical Interpretation -->
                     <div class="guide-section">
-                        <h3>Physical Interpretation and Flow Characteristics</h3>
-                        <p class="guide-text">Laminar flow is characterized by smooth, orderly fluid motion where viscous forces dominate over inertial forces. The flow occurs in well-defined layers or streamlines that do not mix except at the molecular level.</p>
+                        <h3>Physical Interpretation and Turbulence Physics</h3>
+                        <p class="guide-text">The k-ε model embodies fundamental principles of turbulent flow physics through its representation of the energy cascade process, from large-scale turbulent motions to molecular dissipation at the Kolmogorov scale.</p>
                         
                         <h4>Reynolds Number Criterion</h4>
                         <p class="guide-text">The transition from laminar to turbulent flow is governed by the Reynolds number, which represents the ratio of inertial to viscous forces:</p>
