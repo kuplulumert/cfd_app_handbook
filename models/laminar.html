@@ -141,12 +141,10 @@
 
         .guide-list {
             list-style: none;
-            counter-reset: guide-counter;
         }
 
         .guide-item {
             margin: 1rem 0;
-            counter-increment: guide-counter;
             position: relative;
         }
 
@@ -156,13 +154,6 @@
             line-height: 1.6;
             color: #4b5563;
             padding-left: 0;
-        }
-
-        .guide-text::before {
-            content: counter(guide-counter) ". ";
-            color: #6b7280;
-            font-weight: 600;
-            margin-right: 0.5rem;
         }
 
         .use-case-item, .avoid-item {
