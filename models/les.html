@@ -425,16 +425,14 @@
 
             <!-- Content Tabs -->
             <div class="content-tabs">
-                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
-                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
             <!-- Industry Guide Tab Content -->
             <div id="industry" class="tab-content active">
                 <div class="industry-guide">
                     
-                    <!-- Model Overview -->
-                    <div class="guide-section guide-overview">
                     <!-- Model Overview -->
                     <div class="guide-section guide-overview">
                         <h3>1. Model Overview</h3>
@@ -672,6 +670,7 @@
             <!-- Academy Guide Tab Content -->
             <div id="academy" class="tab-content">
                 <div class="academy-guide">
+                    <h2 style="color: red; background: yellow; padding: 10px;">🧪 LES ACADEMY TEST - IF YOU SEE THIS, TAB SWITCHING WORKS! 🧪</h2>
                     
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
@@ -922,7 +921,7 @@
 
     <script>
         // Tab functionality
-        function showTab(tabName) {
+        function showTab(evt, tabName) {
             // Hide all tab content
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -939,7 +938,7 @@
             document.getElementById(tabName).classList.add('active');
             
             // Add active class to clicked tab
-            event.target.classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
         
         // KaTeX rendering
