@@ -117,6 +117,38 @@
         /* Featured Models Section */
         .featured-section {
             margin-bottom: 4rem;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        /* Guide Section Styling */
+        .guide-section {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .guide-overview {
+            background: #f0f4f8;
+            border-left: 4px solid #4299e1;
+        }
+
+        .guide-reference {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+        }
+
+        .models-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
 
         .featured-title {
@@ -205,12 +237,12 @@
         }
 
         .section-title {
-            font-size: 1rem;
-            font-weight: 500;
             color: #2d3748;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
         }
 
         .models-table {
@@ -363,9 +395,9 @@
                 <div class="content-wrapper">
 
             <!-- Featured Models Section -->
-            <div class="featured-section">
-                <div class="featured-title">Most Used in Industry</div>
-                <div class="featured-subtitle">These two turbulence models account for nearly 90% of industrial CFD simulations.</div>
+            <div class="featured-section guide-overview">
+                <h3>Most Used in Industry</h3>
+                <p style="color: #4a5568; margin-bottom: 2rem; line-height: 1.6;">These two turbulence models account for nearly 90% of industrial CFD simulations.</p>
                 
                 <div class="featured-models">
                     <div class="featured-card" onclick="window.location.href='models/k-epsilon.html'">
@@ -384,9 +416,9 @@
                 </div>
             </div>
 
-            <!-- Section Divider -->
-            <hr class="section-divider">
-            <div class="all-models-title">Complete Model Reference</div>
+            <!-- Complete Model Reference Section -->
+            <div class="guide-section guide-reference">
+                <h3>Complete Model Reference</h3>
 
             <!-- Inviscid and Laminar -->
             <div class="models-section">
@@ -566,6 +598,7 @@
                 </table>
             </div>
         </div>
+            </div>
                 </div>
             </div>
         </div>
