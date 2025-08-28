@@ -534,7 +534,7 @@
                                 <span class="guide-text"><strong>3D flow limitations:</strong> <strong>Weaker performance</strong> in complex three-dimensional flows with crossflow effects.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Mesh sensitivity:</strong> Requires <strong>y⁺ < 1</strong> near walls for accurate results, similar to SST model.</span>
+                                <span class="guide-text"><strong>Wall treatment:</strong> Requires <strong>appropriate wall distance</strong> calculation and can be sensitive to mesh quality.</span>
                             </li>
                         </ul>
                     </div>
@@ -563,50 +563,45 @@
                         </div>
                     </div>
 
-                    <!-- When to Choose SST Over k-epsilon -->
+                    <!-- When to Choose Spalart-Allmaras -->
                     <div class="guide-section guide-choice">
-                        <h3>5. When to Choose SST Over k-epsilon</h3>
+                        <h3>5. When to Choose Spalart-Allmaras</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Wall-bounded flows:</strong> When accurate <strong>wall shear stress and heat transfer</strong> are critical.</span>
+                                <span class="guide-text"><strong>Aerospace applications:</strong> External aerodynamics, <strong>airfoil and wing flows</strong> where it excels.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Separation-prone flows:</strong> Diffusers, airfoils at high angles, curved channels.</span>
+                                <span class="guide-text"><strong>Boundary layer accuracy:</strong> When <strong>precise skin friction</strong> and wall shear prediction is critical.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Pressure-driven flows:</strong> Where <strong>adverse pressure gradients</strong> dominate.</span>
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Need for <strong>fast convergence</strong> with reasonable accuracy.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Mixed flow types:</strong> Combination of attached and separated flow regions.</span>
+                                <span class="guide-text"><strong>Single-equation preference:</strong> Simpler model setup with <strong>fewer boundary conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>High accuracy requirements:</strong> When <strong>±5% accuracy</strong> is needed vs <strong>±15% for k-epsilon</strong>.</span>
+                                <span class="guide-text"><strong>Mild separation:</strong> Flows with <strong>small separation bubbles</strong> but predominantly attached.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- When NOT to Use SST -->
+                    <!-- When NOT to Use Spalart-Allmaras -->
                     <div class="guide-section guide-avoid">
-                        <h3>6. When NOT to Use SST</h3>
+                        <h3>6. When NOT to Use Spalart-Allmaras</h3>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Simple internal flows:</span> Straight ducts, pipes - k-epsilon is adequate and faster</span>
+                            <span class="guide-text"><span class="guide-emphasis">Massive separation:</span> Large separated regions - use SST or RSM instead</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Preliminary design:</span> Early concept studies where speed matters more than precision</span>
+                            <span class="guide-text"><span class="guide-emphasis">Internal flows:</span> Pipe flows, heat exchangers - k-ε models are more appropriate</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Large domains:</span> External flows around buildings - computational cost prohibitive</span>
+                            <span class="guide-text"><span class="guide-emphasis">Highly swirling flows:</span> Cyclones, rotating machinery - consider RSM for anisotropic effects</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Highly swirling flows:</span> Cyclones, swirl combustors - consider RSM instead</span>
+                            <span class="guide-text"><span class="guide-emphasis">Free shear layers:</span> Mixing layers, jets - designed primarily for wall-bounded flows</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Transitional flows:</span> Use SST Transition model variant instead</span>
+                            <span class="guide-text"><span class="guide-emphasis">Complex 3D separation:</span> Corner flows, multiple vortex systems</span>
                         </div>
                     </div>
 
@@ -760,358 +755,258 @@
                         <h3>Historical Context and Development</h3>
                         <p class="guide-text">The Spalart-Allmaras model was developed by Philippe R. Spalart and Steven R. Allmaras in 1992-1994 as a one-equation turbulence model specifically designed for aerospace applications and external aerodynamics.</p>
                         
-                        <h4>Timeline and Evolution:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet"></span>
-                                <span class="guide-text"><strong>1972:</strong> Baldwin-Lomax algebraic model establishes foundation for single-equation approaches</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet"></span>
-                                <span class="guide-text"><strong>1988:</strong> Johnson-King one-equation model introduces transport equation for kinematic viscosity</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet"></span>
-                                <span class="guide-text"><strong>1992:</strong> Spalart and Allmaras develop original model for aerospace applications at NASA</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet"></span>
-                                <span class="guide-text"><strong>1994:</strong> Publication of the complete Spalart-Allmaras model formulation</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet"></span>
-                                <span class="guide-text"><strong>2000:</strong> SA-neg variant developed to handle negative νt regions</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet"></span>
-                                <span class="guide-text"><strong>2013:</strong> SA-R rotation correction variant for rotating reference frames</span>
-                            </li>
-                        </ul>
+                        <h4>Timeline and Evolution</h4>
+                        <p class="guide-text">The development began at Boeing in the early 1990s with the specific goal of creating a turbulence model optimized for aerospace flows. Spalart, working at Boeing's research division, collaborated with Allmaras to develop a model that would provide excellent boundary layer prediction while maintaining computational efficiency for complex aircraft configurations.</p>
+                        
+                        <p class="guide-text">The original 1992 conference paper introduced the basic formulation, followed by the comprehensive 1994 publication that established the model's widespread adoption. Subsequent refinements included rotation and curvature corrections (2000), improved production terms (2004), and various aerospace-specific modifications. The model quickly became the industry standard for external aerodynamics and remains the backbone of most commercial aircraft design calculations.</p>
                     </div>
 
-                    <!-- Mathematical Foundation and Derivation -->
+                    <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
-                        <h3>Mathematical Foundation and Complete Derivation</h3>
-                        <p class="guide-text">The Spalart-Allmaras model is based on a single transport equation for a modified kinematic viscosity (ν̃) that is related to turbulent viscosity through carefully designed damping functions.</p>
+                        <h3>Mathematical Foundation and Transport Equation</h3>
+                        <p class="guide-text">The Spalart-Allmaras model solves a single transport equation for a modified turbulent viscosity variable ν̃, which is related to but not identical to the turbulent kinematic viscosity.</p>
                         
-                        <h4>Transport Equation for Modified Viscosity:</h4>
+                        <h4>Modified Viscosity Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2 + \frac{1}{\sigma}\left[\frac{\partial}{\partial x_j}\left((\nu + \tilde{\nu})\frac{\partial \tilde{\nu}}{\partial x_j}\right) + c_{b2}\left(\frac{\partial \tilde{\nu}}{\partial x_j}\right)^2\right]$$
-                        </div>
-                        
-                        <h4>Turbulent Kinetic Energy Transport Equation:</h4>
-                        <div class="equation-block">
-                            $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right] + \tilde{P}_k - \beta^* \rho k \omega$$
+                            $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} + \frac{1}{\sigma} \left[ \frac{\partial}{\partial x_j} \left( (\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j} \right) + c_{b2} \left( \frac{\partial \tilde{\nu}}{\partial x_j} \right)^2 \right] - c_{w1} f_w \left( \frac{\tilde{\nu}}{d} \right)^2$$
                         </div>
                         
-                        <h4>Specific Dissipation Rate Transport Equation:</h4>
+                        <h4>Turbulent Viscosity Definition:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial(\rho \omega)}{\partial t} + \frac{\partial(\rho \omega u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_\omega}\right) \frac{\partial \omega}{\partial x_j}\right] + \alpha \frac{\omega}{k}\tilde{P}_k - \beta \rho \omega^2 + 2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
+                            $$\nu_t = \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}$$
                         </div>
                         
-                        <h4>Modified Turbulent Viscosity (SST Limiter):</h4>
+                        <h4>Modified Strain Rate:</h4>
                         <div class="equation-block">
-                            $$\mu_t = \frac{\rho a_1 k}{\max(a_1 \omega, \Omega F_2)}, \quad \text{where } \Omega = \sqrt{2\Omega_{ij}\Omega_{ij}}$$
+                            $$\tilde{S} = S + \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}, \quad f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}, \quad S = \sqrt{2 \Omega_{ij} \Omega_{ij}}$$
                         </div>
                         
-                        <h4>Blending Functions (F₁ and F₂):</h4>
+                        <h4>Wall Destruction Function:</h4>
                         <div class="equation-block">
-                            $$F_1 = \tanh\left[\min\left(\max\left(\frac{\sqrt{k}}{\beta^* \omega y}, \frac{500\mu}{\rho y^2 \omega}\right), \frac{4\rho k}{\sigma_{\omega 2} D_{\omega}^+ y^2}\right)^4\right]$$
-                        </div>
-                        <div class="equation-block">
-                            $$F_2 = \tanh\left[\left[\max\left(\frac{2\sqrt{k}}{\beta^* \omega y}, \frac{500\mu}{\rho y^2 \omega}\right)\right]^2\right]$$
+                            $$f_w = g \left( \frac{1 + c_{w3}^6}{g^6 + c_{w3}^6} \right)^{1/6}, \quad g = r + c_{w2}(r^6 - r), \quad r = \frac{\tilde{\nu}}{\tilde{S} \kappa^2 d^2}$$
                         </div>
                         
-                        <h4>Cross-Diffusion Term (Key SST Innovation):</h4>
-                        <div class="equation-block">
-                            $$D_{\omega}^+ = \max\left(2\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}, 10^{-10}\right)$$
-                        </div>
-                        <p class="guide-text">This term eliminates S-A model's sensitivity to freestream ω values by transforming S-A into k-epsilon formulation away from walls.</p>
-                    </div>
-
-                    <!-- Comprehensive Term Definitions and Physical Meaning -->
-                    <div class="guide-section guide-strengths">
-                        <h3>Comprehensive Term Definitions and Physical Meaning</h3>
                         <div class="term-definitions">
-                            <div class="term-item">
-                                <strong>ω:</strong> Specific dissipation rate [1/s]
-                                $$\omega = \frac{\epsilon}{C_\mu k}, \quad \text{relates to turbulent frequency}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Inverse of turbulent time scale, represents frequency of energy-containing eddies. Higher ω indicates faster turbulent mixing.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>F₁:</strong> Blending function (wall-to-freestream transition)
-                                $$F_1 = 1 \text{ near walls (S-A)}, \quad F_1 = 0 \text{ in freestream (k-epsilon)}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Switches between S-A formulation near walls (superior viscous sublayer treatment) and k-epsilon in outer region (freestream independence).</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>F₂:</strong> Shear stress limiter activation function
-                                $$F_2 = 1 \text{ in boundary layers}, \quad F_2 = 0 \text{ in free shear flows}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Activates shear stress limiter only where needed (attached boundary layers), preventing overprediction in adverse pressure gradients.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>P̃ₖ:</strong> Limited production term
-                                $$\tilde{P}_k = \min(P_k, 10\beta^* \rho k \omega)$$
-                                <p class="guide-text"><em>Physical meaning:</em> Prevents excessive production in stagnation regions, maintaining realizability constraints on turbulent kinetic energy.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>a₁:</strong> Shear stress limiter constant (0.31)
-                                $$\tau_{12} = \mu_t \frac{\partial u}{\partial y} \leq a_1 \rho k$$
-                                <p class="guide-text"><em>Physical meaning:</em> Enforces Bradshaw's assumption that shear stress is proportional to turbulent kinetic energy in boundary layers.</p>
-                            </li>
-                            <div class="term-item">
-                                <strong>Cross-diffusion:</strong> Model transformation mechanism
-                                $$2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Mathematically transforms S-A equations to k-epsilon formulation in freestream, eliminating ω sensitivity issues.</p>
-                            </div>
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>ν̃:</strong> Modified turbulent viscosity (m²/s)</div>
+                            <div class="term-item"><strong>νₜ:</strong> Turbulent kinematic viscosity (m²/s)</div>
+                            <div class="term-item"><strong>d:</strong> Distance to nearest wall (m)</div>
+                            <div class="term-item"><strong>S:</strong> Magnitude of vorticity tensor (1/s)</div>
+                            <div class="term-item"><strong>χ:</strong> Viscosity ratio ν̃/ν</div>
                         </div>
-                    </div>
-
-                    <!-- Turbulent Scales and Energy Cascade Theory -->
-                    <div class="guide-section guide-limitations">
-                        <h3>Turbulent Scales and SST Scale-Resolving Behavior</h3>
-                        <p class="guide-text">The SST model's hybrid formulation provides scale-appropriate behavior from viscous sublayer to outer boundary layer region.</p>
                         
-                        <h4>Near-Wall Scale Resolution (S-A region):</h4>
-                        <div class="equation-block">
-                            $$y^+ = \frac{y u_\tau}{\nu} < 1, \quad \text{viscous sublayer integration}$$
-                        </div>
-                        <p class="guide-text">Direct integration to wall without wall functions, resolving viscous length scale.</p>
-                        
-                        <h4>Outer Layer Scale Behavior (k-epsilon transformation):</h4>
-                        <div class="equation-block">
-                            $$\ell_t = \frac{\sqrt{k}}{\omega} \rightarrow \frac{k^{3/2}}{\epsilon}, \quad \text{turbulent length scale transition}$$
-                        </div>
-                        <p class="guide-text">Automatic transition to k-epsilon length scale formulation in freestream regions.</p>
-                        
-                        <h4>Shear Layer Scale Limitation:</h4>
-                        <div class="equation-block">
-                            $$\tau_{wall} \propto \rho k, \quad \text{Bradshaw's constraint on Reynolds stress}$$
-                        </div>
-                        <p class="guide-text">Ensures proper scaling of turbulent stresses in adverse pressure gradient boundary layers.</p>
-                    </div>
-
-                    <!-- Model Constants: Derivation and Physical Significance -->
-                    <div class="guide-section guide-use-cases">
-                        <h3>Model Constants: Blending and Physical Significance</h3>
-                        
-                        <h4>Blended Constants (φ = F₁φ₁ + (1-F₁)φ₂):</h4>
                         <div class="constants-table">
-                            <div class="equation-block">
-                                $$\text{Set 1 (S-A): } \sigma_{k1} = 0.85, \sigma_{\omega 1} = 0.5, \beta_1 = 0.075, \alpha_1 = 0.5532$$
-                                $$\text{Set 2 (k-epsilon): } \sigma_{k2} = 1.0, \sigma_{\omega 2} = 0.856, \beta_2 = 0.0828, \alpha_2 = 0.4403$$
-                                $$\text{Universal: } \beta^* = 0.09, \kappa = 0.41, a_1 = 0.31$$
-                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Constant</th>
+                                        <th>Value</th>
+                                        <th>Physical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>cb1</td>
+                                        <td>0.1355</td>
+                                        <td>Production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cb2</td>
+                                        <td>0.622</td>
+                                        <td>Cross-diffusion coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>σ</td>
+                                        <td>2/3</td>
+                                        <td>Turbulent Prandtl number</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cv1</td>
+                                        <td>7.1</td>
+                                        <td>Viscosity function parameter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cw1</td>
+                                        <td>cb1/κ² + (1+cb2)/σ</td>
+                                        <td>Destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>κ</td>
+                                        <td>0.41</td>
+                                        <td>von Kármán constant</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        
-                        <h4>Constant Derivations and Relationships:</h4>
-                        <div class="term-item">
-                            <strong>α coefficients from k-epsilon constants:</strong>
-                            $$\alpha = \frac{\beta}{\beta^*} - \frac{\sigma_\omega \kappa^2}{\sqrt{\beta^*}}$$
-                            <p class="guide-text">Ensures equivalent behavior to k-epsilon model in freestream when F₁ = 0.</p>
-                        </div>
-                        <div class="term-item">
-                            <strong>β* = 0.09:</strong> Universal constant linking k and ω
-                            $$\beta^* = C_\mu^{k-\epsilon} = 0.09$$
-                            <p class="guide-text">Maintains consistency with k-epsilon model's C_μ constant.</p>
-                        </div>
-                        <div class="term-item">
-                            <strong>a₁ = 0.31:</strong> Bradshaw's constant
-                            $$\frac{-\overline{u'v'}}{k} \approx 0.31 \text{ in equilibrium boundary layers}$$
-                            <p class="guide-text">Based on experimental observation that shear stress correlates with turbulent kinetic energy.</p>
-                        </div>
-                        
-                        <h4>Model Validation and Calibration Database</h4>
-                        <p class="guide-text">The SST model has been extensively validated against fundamental flow configurations that test specific aspects of the model's hybrid formulation. Flat plate boundary layers provide zero pressure gradient validation, confirming the model's ability to predict canonical attached flows. Adverse pressure gradient flows from the ERCOFTAC database demonstrate the model's superior performance in separating boundary layers compared to standard k-epsilon models.</p>
-                        
-                        <p class="guide-text">Airfoil flows using NACA series at various angles of attack validate the model's transition prediction and separated flow behavior. Backward-facing step configurations test separation and reattachment prediction capabilities, while free jets and mixing layers verify the model's freestream independence - a critical improvement over the original S-A formulation.</p>
                     </div>
 
-                    <!-- Advanced Theoretical Framework and Fundamental Assumptions -->
-                    <div class="guide-section guide-avoid">
-                        <h3>Advanced Theoretical Framework and Fundamental Assumptions</h3>
+                    <!-- Physical Interpretation -->
+                    <div class="guide-section">
+                        <h3>Physical Interpretation and Model Philosophy</h3>
+                        <p class="guide-text">The Spalart-Allmaras model represents a fundamental departure from traditional turbulence modeling approaches by focusing on a modified viscosity variable rather than turbulent kinetic energy and dissipation rate.</p>
                         
-                        <h4>Bradshaw's Assumption and Shear Stress Limitation:</h4>
-                        <div class="equation-block">
-                            $$\frac{-\overline{u'v'}}{k} = a_1 = 0.31 \text{ (in equilibrium boundary layers)}$$
-                        </div>
-                        <p class="guide-text">The SST model enforces this through the modified viscosity formulation:</p>
-                        <div class="equation-block">
-                            $$\mu_t = \frac{\rho a_1 k}{\max(a_1 \omega, \Omega F_2)} \Rightarrow \tau_{12} = \mu_t S \leq a_1 \rho k$$
-                        </div>
+                        <h4>Modified Viscosity Concept</h4>
+                        <p class="guide-text">The variable ν̃ is designed to asymptotically approach the turbulent viscosity in the far field while maintaining proper wall behavior. This approach eliminates the need for explicit length scale modeling, with the wall distance d providing the necessary geometric information.</p>
                         
-                        <h4>Realizability and Positivity Constraints:</h4>
-                        <p class="guide-text">The SST model maintains physical realizability through several mechanisms:</p>
+                        <h4>Wall Distance Dependency</h4>
+                        <p class="guide-text">The explicit dependence on wall distance d makes the model inherently suitable for wall-bounded flows but potentially problematic for free shear flows far from walls. The production term scales with ν̃·S, while destruction scales as (ν̃/d)², providing proper balance near walls.</p>
+                        
+                        <h4>Single-Equation Advantage</h4>
+                        <p class="guide-text">By solving only one additional transport equation, the model avoids the complex coupling issues associated with two-equation models. This leads to superior numerical robustness and faster convergence, particularly important for complex aerospace geometries.</p>
+                        
+                        <h4>Aerospace Design Philosophy</h4>
+                        <p class="guide-text">The model was calibrated specifically for attached and mildly separated boundary layers typical of aerospace applications. The constants were determined from airfoil data, flat plate boundary layers, and simple separation cases relevant to aircraft design.</p>
+                    </div>
+
+                    <!-- Model Assumptions and Limitations -->
+                    <div class="guide-section">
+                        <h3>Model Assumptions and Theoretical Limitations</h3>
+                        <p class="guide-text">The Spalart-Allmaras model incorporates several fundamental assumptions that define its range of applicability and inherent limitations.</p>
+                        
+                        <h4>Eddy Viscosity Assumption</h4>
+                        <p class="guide-text">Like all eddy viscosity models, S-A assumes isotropic turbulence and that Reynolds stresses are proportional to mean strain rates. This fails in:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Production limiting:</strong> P̃_k prevents excessive k production</span>
+                                <span class="guide-text">Flows with significant streamline curvature and system rotation</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Shear stress limiting:</strong> Prevents unrealistic Reynolds stress levels</span>
+                                <span class="guide-text">Three-dimensional separated flows with crossflow effects</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Positive definiteness:</strong> All transport coefficients remain positive</span>
+                                <span class="guide-text">Flows with significant Reynolds stress anisotropy</span>
                             </li>
                         </ul>
                         
-                        <h4>Wall Distance Dependency and y⁺ Insensitivity:</h4>
-                        <div class="equation-block">
-                            $$y^+ = \frac{y u_\tau}{\nu}, \quad \text{wall units}$$
-                        </div>
-                        <p class="guide-text">Unlike k-epsilon, SST integrates to the wall (y = 0) with boundary conditions:</p>
-                        <div class="equation-block">
-                            $$k|_{wall} = 0, \quad \omega|_{wall} = \frac{60\nu}{\beta_1 y_1^2}$$
-                        </div>
-                        <p class="guide-text">Where y₁ is distance to first grid point. This eliminates wall function dependence.</p>
+                        <h4>Wall Distance Dependency</h4>
+                        <p class="guide-text">The explicit wall distance dependence creates challenges in:</p>
                         
-                        <h4>Transformation to k-epsilon Formulation:</h4>
-                        <p class="guide-text">In the freestream (F₁ = 0), the model becomes equivalent to k-epsilon:</p>
-                        <div class="equation-block">
-                            $$\epsilon = \beta^* k \omega, \quad \mu_t = \rho C_\mu \frac{k^2}{\epsilon}$$
-                        </div>
-                        <p class="guide-text">This transformation is achieved through the cross-diffusion term, ensuring freestream independence.</p>
-                    </div>
-
-                    <!-- Advanced Model Variants and Modern Improvements -->
-                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
-                        <h3>Advanced Model Variants and Modern Improvements</h3>
-                        
-                        <h4>Viscous Sublayer Integration:</h4>
-                        <p class="guide-text">The SST model resolves the complete boundary layer structure:</p>
-                        <div class="equation-block">
-                            $$\text{Viscous sublayer: } y^+ < 5, \quad u^+ = y^+$$
-                            $$\text{Buffer layer: } 5 < y^+ < 30, \quad \text{transition region}$$
-                            $$\text{Log layer: } y^+ > 30, \quad u^+ = \frac{1}{\kappa}\ln(y^+) + B$$
-                        </div>
-                        
-                        <h4>Near-Wall Asymptotic Behavior:</h4>
-                        <div class="equation-block">
-                            $$k \sim y^2, \quad \omega \sim y^{-2} \text{ as } y \to 0$$
-                        </div>
-                        <p class="guide-text">These asymptotic behaviors are automatically satisfied by the SST formulation.</p>
-                        
-                        <h4>Mesh Requirements for Accurate Wall Treatment:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>y⁺ < 1:</strong> Recommended for optimal accuracy</span>
+                                <span class="guide-text">Multi-element airfoils with gap flows</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>y⁺ < 2:</strong> Acceptable for engineering accuracy</span>
+                                <span class="guide-text">Free shear flows far from solid boundaries</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Minimum 10-15 points:</strong> In boundary layer for resolution</span>
-                            </li>
-                            <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Growth ratio < 1.2:</strong> In near-wall region</span>
+                                <span class="guide-text">Complex geometries with ambiguous wall distance definitions</span>
                             </li>
                         </ul>
                         
-                        <h4>Wall Boundary Conditions Implementation:</h4>
-                        <div class="equation-block">
-                            $$k_{wall} = 0, \quad \frac{\partial k}{\partial n}\bigg|_{wall} = 0$$
-                            $$\omega_{wall} = \frac{60\nu}{\beta_1 (\Delta y_1)^2}, \quad \text{for } y_1^+ < 2$$
-                        </div>
+                        <h4>Aerospace Calibration Bias</h4>
+                        <p class="guide-text">The model's calibration for aerospace flows may limit performance in industrial applications with different flow characteristics, such as internal flows with heat transfer or flows with massive separation.</p>
                     </div>
 
-                    <!-- Advanced Model Variants and Modern Extensions -->
-                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
-                        <h3>Advanced Model Variants and Modern Extensions</h3>
+                    <!-- Validation Database and Performance -->
+                    <div class="guide-section">
+                        <h3>Model Validation and Performance Database</h3>
+                        <p class="guide-text">The Spalart-Allmaras model has been extensively validated against aerospace-relevant flow configurations, establishing its reputation as the industry standard for external aerodynamics.</p>
                         
-                        <h4>SST-2003 (Improved Corner Flow Prediction):</h4>
-                        <p class="guide-text">Enhanced version addressing corner flow stagnation issues:</p>
-                        <div class="equation-block">
-                            $$\tilde{P}_k = \mu_t S^2 - \frac{2}{3}\mu_t S_{kk}\frac{\partial u_k}{\partial x_k} - \frac{2}{3}\rho k \frac{\partial u_k}{\partial x_k}$$
-                        </div>
-                        <p class="guide-text">Includes proper treatment of dilatational effects and compressibility.</p>
+                        <h4>Successful Applications</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Zero pressure gradient boundary layers with excellent skin friction prediction</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Airfoil flows at moderate angles of attack with good lift and drag prediction</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Aircraft configuration analysis including wing-body combinations</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Helicopter rotor blade analysis and rotorcraft applications</span>
+                            </li>
+                        </ul>
                         
-                        <h4>SST-V (Vorticity Source Term):</h4>
-                        <div class="equation-block">
-                            $$S_\omega^{vorticity} = 2\rho\chi\Omega^2, \quad \chi = \frac{1}{3}\left(\frac{\Omega}{\sqrt{S^2 + \Omega^2}}\right)^3$$
-                        </div>
-                        <p class="guide-text">Improves prediction in flows with significant rotation or curvature effects.</p>
+                        <h4>Known Limitations</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Over-prediction of separation in adverse pressure gradients</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Poor performance in free shear layers and jet flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Inadequate representation of crossflow effects in 3D separation</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Limited accuracy in unsteady separated flows</span>
+                            </li>
+                        </ul>
                         
-                        <h4>Scale-Adaptive Simulation (SST-SAS):</h4>
-                        <div class="equation-block">
-                            $$Q_{SAS} = \max\left[2\rho\zeta_2\kappa S^2\left(\frac{L}{L_{vk}}\right)^2 - C_{SAS}\frac{2\rho k}{\sigma_\phi}\max\left(\frac{|\nabla\omega|^2}{\omega^2}, \frac{|\nabla k|^2}{k^2}\right), 0\right]$$
-                        </div>
-                        <p class="guide-text">Allows model to adapt between RANS and LES-like behavior based on flow unsteadiness.</p>
-                        
-                        <h4>Compressibility Corrections:</h4>
-                        <div class="equation-block">
-                            $$M_t = \sqrt{\frac{2k}{a^2}}, \quad \text{turbulent Mach number}$$
-                            $$\beta^* = \beta_0^*[1 + \chi_t M_t^2], \quad \chi_t = 1.5 \text{ for } M_t > 0.25$$
-                        </div>
-                        
-                        <h4>Transition Modeling Extensions:</h4>
-                        <div class="equation-block">
-                            $$\gamma-Re_{\theta t} \text{ model: } \gamma \text{ (intermittency)}, \, Re_{\theta t} \text{ (transition momentum thickness Reynolds number)}$$
-                        </div>
-                        <p class="guide-text">Enables prediction of laminar-turbulent transition in boundary layers.</p>
+                        <h4>Benchmark Test Cases</h4>
+                        <p class="guide-text">Standard validation includes the RAE 2822 airfoil, NACA 0012 at various angles of attack, flat plate boundary layer, and the NASA Common Research Model for transport aircraft. These cases provide quantitative measures of the model's performance across the aerospace design space.</p>
                     </div>
 
-                    <!-- Advanced Numerical Implementation -->
-                    <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
+                    <!-- Modern Variants and Extensions -->
+                    <div class="guide-section">
+                        <h3>Modern Variants and Theoretical Extensions</h3>
+                        <p class="guide-text">Several variants of the Spalart-Allmaras model have been developed to address specific limitations while maintaining the core single-equation framework.</p>
+                        
+                        <h4>Rotation and Curvature Correction (SA-RC)</h4>
+                        <p class="guide-text">This variant incorporates rotation and curvature effects through modification of the production term:</p>
+                        <div class="equation-block">
+                            $$\tilde{S} = S + f_{rot} \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}$$
+                        </div>
+                        <p class="guide-text">where f_rot accounts for system rotation and streamline curvature effects, improving predictions in turbomachinery and highly curved flows.</p>
+                        
+                        <h4>Negative SA (SA-neg)</h4>
+                        <p class="guide-text">This modification allows the working variable ν̃ to become negative in regions of high strain, enabling better representation of laminar-turbulent transition and separated flow physics. The negative values are prevented from contributing to turbulent viscosity through appropriate limiters.</p>
+                        
+                        <h4>Quadratic Constitutive Relation (SA-QCR)</h4>
+                        <p class="guide-text">This extension replaces the linear eddy viscosity assumption with a quadratic stress-strain relationship, partially addressing Reynolds stress anisotropy while maintaining computational efficiency.</p>
+                        
+                        <h4>Delayed Detached Eddy Simulation (SA-DDES)</h4>
+                        <p class="guide-text">This hybrid RANS-LES approach uses the SA model as the underlying RANS formulation, switching to LES behavior in separated regions while maintaining RANS mode in attached boundary layers.</p>
+                    </div>
+
+                    <!-- Numerical Implementation -->
+                    <div class="guide-section">
                         <h3>Advanced Numerical Implementation and Best Practices</h3>
+                        <p class="guide-text">The Spalart-Allmaras model's single-equation nature provides significant advantages in numerical implementation, but several considerations are critical for robust performance.</p>
                         
-                        <h4>Robust Source Term Treatment:</h4>
-                        <div class="equation-block">
-                            $$S_k = \tilde{P}_k - \beta^* \rho k \omega \rightarrow \tilde{P}_k - \beta^* \rho \omega \cdot k$$
-                            $$S_\omega = \alpha \frac{\omega}{k}\tilde{P}_k - \beta \rho \omega^2 \rightarrow \alpha \frac{\tilde{P}_k}{k} - \beta \rho \omega \cdot \omega$$
-                        </div>
-                        <p class="guide-text">Implicit treatment of destruction terms ensures numerical stability.</p>
-                        
-                        <h4>Blending Function Evaluation and Computational Considerations</h4>
-                        <p class="guide-text">The evaluation of blending functions F₁ and F₂ requires careful numerical treatment to ensure robust performance across diverse computational domains. Wall distance computation presents the primary computational challenge, particularly for complex geometries where efficient algorithms such as fast marching methods or Eikonal solvers are essential to maintain reasonable computational overhead while ensuring accuracy near geometric singularities.</p>
-                        
-                        <p class="guide-text">Gradient limiters play a crucial role in preventing excessive gradients during F₁ and F₂ calculation, which can lead to numerical instabilities or convergence difficulties. Smoothing techniques are employed to ensure continuous blending behavior across the computational domain, preventing artificial discontinuities that could compromise solution quality or convergence characteristics.</p>
-                        
-                        <h4>Cross-Diffusion Term Treatment and ω Equation Stability</h4>
-                        <div class="equation-block">
-                            $$\text{Cross-diffusion term: } 2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
-                        </div>
-                        <p class="guide-text">The cross-diffusion term represents a unique numerical challenge in SST model implementation, requiring careful treatment to maintain positivity and avoid division by zero operations. Advanced discretization schemes must ensure that the term's contribution remains physically meaningful while maintaining numerical stability, particularly in regions where ω approaches zero or exhibits sharp gradients.</p>
-                        
-                        <h4>Advanced Solution Strategies and Convergence Enhancement</h4>
-                        <p class="guide-text">Contemporary CFD solvers implement sophisticated solution strategies to enhance SST model convergence characteristics. Coupled S-A solving demonstrates superior convergence behavior compared to segregated approaches, particularly for flows with strong coupling between the turbulent variables. This approach treats the k and ω equations as a coupled system, reducing the iteration count required for convergence and improving overall robustness.</p>
-                        
-                        <p class="guide-text">Comprehensive monitoring strategies encompass both scaled and absolute residuals, typically requiring convergence criteria below 10⁻⁵ for engineering accuracy. Additionally, integral monitoring of key flow quantities including mass flow rates, pressure drops, and heat transfer coefficients provides essential verification of solution convergence beyond simple residual criteria.</p>
-                        
-                        <h4>Mesh Quality Requirements and Computational Grid Considerations</h4>
-                        <p class="guide-text">The SST model's near-wall integration capability places stringent requirements on computational mesh quality, necessitating careful attention to multiple geometric parameters:</p>
+                        <h4>Wall Distance Computation</h4>
+                        <p class="guide-text">Accurate and efficient wall distance calculation is crucial for SA model performance. Modern implementations use:</p>
                         
                         <ul class="guide-list">
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Near-wall spacing:</strong> First cell height must satisfy y⁺ < 1 for accurate wall integration</span>
+                                <span class="guide-text">Eikonal equation solvers for complex geometries</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Aspect ratio control:</strong> Maintain ratios below 1000 in near-wall regions for gradient accuracy</span>
+                                <span class="guide-text">Fast marching methods for computational efficiency</span>
                             </li>
                             <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Orthogonality:</strong> Overall mesh skewness should remain below 0.9 for accurate computations</span>
-                            </li>
-                            <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum 15-20 cells within the boundary layer</span>
-                            </li>
-                            <li class="guide-item">
-                                
-                                <span class="guide-text"><strong>Growth rate:</strong> Geometric progression with ratios limited to 1.2 in near-wall regions</span>
+                                <span class="guide-text">Signed distance functions for multi-body configurations</span>
                             </li>
                         </ul>
                         
-                        <h4>Implementation Robustness and Numerical Stability</h4>
-                        <p class="guide-text">Production-grade SST implementations incorporate multiple robustness enhancements including production limiting to prevent non-physical turbulence generation in stagnation regions, realizability constraints to maintain positive definiteness of turbulent quantities, and adaptive under-relaxation strategies that automatically adjust based on local convergence behavior. These features ensure reliable performance across the wide range of flow conditions encountered in engineering applications.</p>
-                    </div>
-                </div>
+                        <h4>Source Term Treatment</h4>
+                        <p class="guide-text">The destruction term requires careful implicit treatment to ensure numerical stability:</p>
+                        <div class="equation-block">
+                            $$\text{Destruction} = -c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2 \rightarrow -c_{w1} f_w \frac{\tilde{\nu}}{d^2} \cdot \tilde{\nu}$$
+                        </div>
+                        
+                        <h4>Boundary Conditions</h4>
+                        <p class="guide-text">Proper boundary condition implementation is essential:</p>
+                        
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Wall: ν̃ = 0 (no-slip condition)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Inlet: ν̃ = 3νₜ to 5νₜ (typical range for turbulent inlets)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Outlet: Zero gradient or specified based on upstream conditions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Symmetry: Zero normal gradient</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Convergence Enhancement</h4>
+                        <p class="guide-text">The single-equation nature typically provides excellent convergence, but optimization techniques include appropriate under-relaxation (typically 0.7-0.8), preconditioning for low-speed flows, and coupled solution algorithms for strongly coupled systems. Monitoring both scaled residuals and integral quantities ensures proper convergence assessment.</p>
+                    </div>                </div>
             </div>
         </div>
     </div>
