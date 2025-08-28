@@ -14,7 +14,7 @@ The **Laminar Good Theme** is a clean, professional design extracted from the La
 
 ### 📐 Layout Structure
 - **Full-Width Layout**: Utilizes complete screen width (width: 100%, margin: 0)
-- **Dual-Tab System**: Industry Guide and Academy Guide tabs
+- **Dual-Tab System**: Prominent Industry Guide and Academy Guide tabs with clear borders
 - **Responsive Design**: Mobile-friendly with breakpoints at 768px
 - **Card-Based Sections**: Each section is a clean card with subtle shadows
 
@@ -59,6 +59,37 @@ The **Laminar Good Theme** is a clean, professional design extracted from the La
     color: white;
     padding: 3rem 2rem;
     text-align: center;
+}
+
+.content-tabs {
+    display: flex;
+    background: #e2e8f0;
+    border-bottom: 2px solid #cbd5e1;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-tab {
+    padding: 1rem 2rem;
+    background: #f1f5f9;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    border-top: 1px solid #cbd5e1;
+    border-right: 1px solid #cbd5e1;
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+.content-tab.active {
+    color: #1e40af;
+    border-bottom-color: #1e40af;
+    background: white;
+    font-weight: 700;
 }
 
 .guide-section {
