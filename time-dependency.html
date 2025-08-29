@@ -553,26 +553,42 @@
                 <table class="time-table">
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Time-Averaged Equations</div>
+                            <div class="time-name">Time-Independent Solution</div>
                         </td>
                         <td class="time-description">
-                            ∂/∂t terms = 0. Solution represents long-term average behavior. Fast convergence, suitable for design optimization.
+                            ∂/∂t = 0. All time derivatives are zero. Solution represents long-term equilibrium state. Fast convergence, ideal for design optimization and parametric studies.
                         </td>
                     </tr>
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Pseudo-Transient</div>
+                            <div class="time-name">RANS Turbulence Models</div>
                         </td>
                         <td class="time-description">
-                            Uses artificial time-stepping to reach steady state. Improves convergence for difficult problems with strong coupling.
+                            Reynolds-averaged equations provide time-averaged flow field. Perfect for k-ε, k-ω, and other statistical turbulence models in steady applications.
                         </td>
                     </tr>
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Multiple Reference Frames</div>
+                            <div class="time-name">Heat Transfer Applications</div>
                         </td>
                         <td class="time-description">
-                            Steady analysis of rotating machinery. Frame of reference moves with rotating components for fan/pump applications.
+                            Thermal equilibrium analysis for HVAC, electronics cooling, and heat exchangers. Assumes constant boundary conditions and material properties.
+                        </td>
+                    </tr>
+                    <tr class="time-row">
+                        <td>
+                            <div class="time-name">Flow Through Components</div>
+                        </td>
+                        <td class="time-description">
+                            Pressure drop, flow distribution, and performance analysis. Excellent for fans, pumps, valves, and ducting systems.
+                        </td>
+                    </tr>
+                    <tr class="time-row">
+                        <td>
+                            <div class="time-name">Pseudo-Transient Continuation</div>
+                        </td>
+                        <td class="time-description">
+                            Artificial time-stepping to improve convergence. Helps reach steady state for difficult problems with strong coupling or non-linearities.
                         </td>
                     </tr>
                 </table>
@@ -584,69 +600,56 @@
                 <table class="time-table">
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Explicit Time Integration</div>
+                            <div class="time-name">Time-Accurate Solution</div>
                         </td>
                         <td class="time-description">
-                            Forward Euler, Runge-Kutta methods. Small time steps required, good for wave propagation and compressible flows.
+                            ∂/∂t ≠ 0. Captures temporal evolution of flow field. Essential for start-up, shut-down, and time-dependent boundary conditions.
                         </td>
                     </tr>
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Implicit Time Integration</div>
+                            <div class="time-name">Thermal Transients</div>
                         </td>
                         <td class="time-description">
-                            Backward Euler, Crank-Nicolson. Larger time steps possible, stable for diffusion-dominated flows and heat transfer.
+                            Heat-up and cool-down cycles, thermal shock analysis. Critical for appliance startup, defrost cycles, and temperature cycling.
                         </td>
                     </tr>
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Sliding Mesh</div>
+                            <div class="time-name">Flow Development</div>
                         </td>
                         <td class="time-description">
-                            Time-accurate simulation of rotating machinery. Grid moves with rotating components for true unsteady analysis.
+                            Entrance region development, mixing processes, and flow establishment. Important for understanding transient behavior in ducts and chambers.
                         </td>
                     </tr>
                     <tr class="time-row">
                         <td>
-                            <div class="time-name">Moving/Deforming Mesh</div>
+                            <div class="time-name">Oscillating Flows</div>
                         </td>
                         <td class="time-description">
-                            Grid adapts to moving boundaries. Essential for free surface flows, fluid-structure interaction, and shape changes.
+                            Pulsating fans, reciprocating compressors, and periodic boundary conditions. Captures frequency-dependent phenomena and resonance effects.
+                        </td>
+                    </tr>
+                    <tr class="time-row">
+                        <td>
+                            <div class="time-name">Implicit Time Stepping</div>
+                        </td>
+                        <td class="time-description">
+                            Backward Euler, Crank-Nicolson schemes. Larger time steps possible, unconditionally stable for diffusion-dominated problems.
+                        </td>
+                    </tr>
+                    <tr class="time-row">
+                        <td>
+                            <div class="time-name">Moving Mesh Applications</div>
+                        </td>
+                        <td class="time-description">
+                            Rotating fans, sliding components, and deforming boundaries. Essential for time-accurate simulation of moving parts.
                         </td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Special Techniques -->
-            <div class="time-section">
-                <div class="section-title">Special Time Techniques</div>
-                <table class="time-table">
-                    <tr class="time-row">
-                        <td>
-                            <div class="time-name">Harmonic Analysis</div>
-                        </td>
-                        <td class="time-description">
-                            Frequency domain solution for periodic flows. Efficient for oscillating boundary conditions and AC analysis.
-                        </td>
-                    </tr>
-                    <tr class="time-row">
-                        <td>
-                            <div class="time-name">Quasi-Static</div>
-                        </td>
-                        <td class="time-description">
-                            Series of steady states with slowly changing boundary conditions. Good for thermal cycling and seasonal analysis.
-                        </td>
-                    </tr>
-                    <tr class="time-row">
-                        <td>
-                            <div class="time-name">Time Periodic</div>
-                        </td>
-                        <td class="time-description">
-                            Solution assumes periodic behavior in time. Reduces computational cost for cyclically repeating phenomena.
-                        </td>
-                    </tr>
-                </table>
-            </div>
+
 
                 </div>
             </div>
