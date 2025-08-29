@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>k-ω Model - CFD Handbook</title>
+    <title>k-ω SST Model - CFD Handbook</title>
     
     <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -30,17 +30,10 @@
             animation: fadeInPage 1.2s ease-out forwards;
             overflow-x: hidden;
         }
+
         @keyframes fadeInPage {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-            to { opacity: 1; transform: translateY(0); }
-        }
-            min-height: 100vh;
-            opacity: 0;
-            animation: fadeInPage 1.2s ease-out forwards;
-            overflow-x: hidden;
-            overflow-x: hidden;
         }
 
         /* Header Navigation */
@@ -136,12 +129,10 @@
 
         .container {
             width: 100%;
-            max-width: 100vw;
             margin: 0;
             padding: 0;
             background: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            overflow-x: hidden;
         }
 
         .page-header {
@@ -164,59 +155,54 @@
             font-weight: 300;
         }
 
-                .content-tabs {
+        .content-tabs {
             display: flex;
-            gap: 2.5rem;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-            padding: 1.5rem 2rem;
+            background: #e2e8f0;
+            border-bottom: 2px solid #cbd5e1;
+            padding: 0;
             margin: 0;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .content-tab {
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            color: #4a5568;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border-radius: 12px;
+            padding: 1rem 2rem;
+            background: #f1f5f9;
             border: none;
-            background: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #475569;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .content-tab:hover::before,
-        .content-tab.active::before {
-            opacity: 1;
-        }
-
-        .content-tab:hover,
-        .content-tab.active {
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            border-bottom: 3px solid transparent;
+            border-top: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+            margin: 0;
         }
 
         .content-tab:first-child {
-            border-left: none;
+            border-left: 1px solid #cbd5e1;
+        }
+
+        .content-tab.active {
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+            background: white;
+            font-weight: 700;
+            -webkit-text-fill-color: #1e40af;
+            background-clip: initial;
+            -webkit-background-clip: initial;
+        }
+
+        .content-tab:hover {
+            color: #1e40af;
+            background: #f8fafc;
+            -webkit-text-fill-color: #1e40af;
+            background-clip: initial;
+            -webkit-background-clip: initial;
         }
 
         .tab-content {
@@ -232,11 +218,9 @@
         /* Industry Guide Styling */
         .industry-guide {
             width: 100%;
-            max-width: 100%;
-            padding: 2rem min(3rem, 5vw);
+            padding: 2rem 3rem;
             background: #fafbfc;
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-            box-sizing: border-box;
         }
 
         .industry-guide h3 {
@@ -265,10 +249,6 @@
             border-radius: 8px;
             padding: 2rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 100%;
-            overflow-wrap: break-word;
         }
 
         .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
@@ -296,9 +276,6 @@
             line-height: 1.6;
             color: #4b5563;
             padding-left: 0;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
         }
 
         .use-case-item, .avoid-item {
@@ -321,10 +298,8 @@
         /* Academy Guide Styling */
         .academy-guide {
             width: 100%;
-            max-width: 100%;
-            padding: 2rem min(3rem, 5vw);
+            padding: 2rem 3rem;
             line-height: 1.6;
-            box-sizing: border-box;
         }
 
         .academy-guide h3 {
@@ -420,14 +395,11 @@
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             overflow: hidden;
-            overflow-x: auto;
             margin: 1.5rem 0;
-            max-width: 100%;
         }
 
         .constants-table table {
             width: 100%;
-            min-width: 300px;
             border-collapse: collapse;
         }
 
@@ -461,14 +433,13 @@
             }
 
             .nav-tabs {
-                gap: 0.5rem;
+                gap: 1rem;
                 flex-wrap: wrap;
                 justify-content: center;
             }
 
             .nav-tab {
-                font-size: 0.75rem;
-                padding: 0.4rem 0;
+                font-size: 0.8rem;
             }
 
             .page-header {
@@ -484,45 +455,19 @@
                 padding: 1rem;
             }
 
+            .content-tabs {
+                padding: 0 1rem;
+            }
+
+            .content-tab {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
+
             .guide-section {
-                padding: 1rem;
+                padding: 1.5rem;
                 margin-bottom: 2rem;
             }
-
-            .equation-block {
-                padding: 1rem;
-                font-size: 0.9rem;
-            }
-
-            .constants-table {
-                font-size: 0.85rem;
-            }
-
-            .constants-table th,
-            .constants-table td {
-                padding: 0.5rem 0.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .industry-guide,
-            .academy-guide {
-                padding: 0.5rem;
-            }
-
-            .guide-section {
-                padding: 0.75rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .page-header h1 {
-                font-size: 1.75rem;
-            }
-
-            .nav-tab {
-                font-size: 0.7rem;
-            }
-
         }
     </style>
 </head>
@@ -535,10 +480,7 @@
                     <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
                     <a href="laminar.html" class="nav-tab">Laminar</a>
                     <a href="k-epsilon.html" class="nav-tab">k-ε</a>
-                    <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
-                    <a href="inviscid.html" class="nav-tab">Inviscid</a>
-                    <a href="spalart-allmaras.html" class="nav-tab">Spalart-Allmaras</a>
-                    <a href="k-omega.html" class="nav-tab active">k-ω</a>
+                    <a href="k-omega-sst.html" class="nav-tab active">k-ω SST</a>
                     <a href="reynolds-stress.html" class="nav-tab">RSM</a>
                     <a href="des.html" class="nav-tab">DES</a>
                     <a href="les.html" class="nav-tab">LES</a>
@@ -550,8 +492,8 @@
 
             <!-- Page Header -->
             <div class="page-header">
-                <h1>k-ω Model</h1>
-                <p class="model-subtitle">Two-equation model with superior near-wall treatment and boundary layer accuracy</p>
+                <h1>k-ω SST Model</h1>
+                <p class="model-subtitle">Industry standard combining accuracy with reliability</p>
             </div>
 
             <!-- Content Tabs -->
@@ -569,57 +511,70 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Two-equation RANS model</strong> solving for turbulent kinetic energy (k) and specific dissipation rate (ω).</span>
+                                
+                                <span class="guide-text"><strong>Advanced hybrid model</strong> switching between k-ω (near walls) and k-ε (freestream) formulations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Superior near-wall behavior</strong> with direct integration to wall surface without wall functions.</span>
+                                
+                                <span class="guide-text"><strong>Resolves boundary layer</strong> from wall to edge without wall functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Excellent boundary layer prediction</strong> for attached flows and favorable pressure gradients.</span>
+                                
+                                <span class="guide-text"><strong>Industry gold standard</strong> for complex flows with separation and adverse pressure gradients.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Foundation model</strong> that led to development of advanced variants like SST and BSL models.</span>
+                                
+                                <span class="guide-text"><strong>Built-in shear stress limiter</strong> prevents overprediction in strained flows.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Key Strengths -->
+                    <!-- Key Advantages -->
                     <div class="guide-section guide-strengths">
-                        <h3>2. Key Strengths</h3>
+                        <h3>2. Key Advantages</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Excellent near-wall behavior:</strong> Superior <strong>boundary layer prediction</strong> without wall functions.</span>
+                                
+                                <span class="guide-text"><strong>Exceptional near-wall accuracy:</strong> Direct integration to wall surface (<strong>y⁺ < 1</strong>).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Low Reynolds number capability:</strong> <strong>Direct integration to wall</strong> with y⁺ < 1 requirements.</span>
+                                
+                                <span class="guide-text"><strong>Separation prediction:</strong> <strong>Superior performance</strong> in adverse pressure gradients.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Attached flow accuracy:</strong> <strong>Excellent performance</strong> for favorable pressure gradients and boundary layers.</span>
+                                
+                                <span class="guide-text"><strong>Freestream independence:</strong> Eliminates k-ω model's <strong>sensitivity to inlet conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Simple formulation:</strong> <strong>Straightforward implementation</strong> with well-understood behavior.</span>
+                                
+                                <span class="guide-text"><strong>Robust convergence:</strong> Stable across <strong>wide range of flow conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Educational value:</strong> <strong>Foundation model</strong> for understanding ω-based turbulence modeling.</span>
+                                
+                                <span class="guide-text"><strong>Heat transfer accuracy:</strong> Reliable prediction of <strong>wall heat transfer coefficients</strong>.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Limitations -->
+                    <!-- Computational Requirements -->
                     <div class="guide-section guide-limitations">
-                        <h3>3. Limitations</h3>
+                        <h3>3. Computational Requirements</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Freestream sensitivity:</strong> <strong>Excessive dependence</strong> on freestream ω values and inlet conditions.</span>
+                                
+                                <span class="guide-text"><strong>Mesh requirements:</strong> Fine near-wall mesh with <strong>y⁺ < 1</strong> for optimal accuracy.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Separation prediction:</strong> <strong>Poor performance</strong> in adverse pressure gradients and separated flows.</span>
+                                
+                                <span class="guide-text"><strong>Computational cost:</strong> <strong>20-30% higher than k-ε</strong> due to additional equation complexity.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Free shear flows:</strong> <strong>Inaccurate prediction</strong> of jets, mixing layers, and wakes.</span>
+                                
+                                <span class="guide-text"><strong>Memory usage:</strong> Additional storage for <strong>blending functions and wall distance</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Freestream sensitivity:</strong> <strong>Sensitive to inlet ω values</strong> in external flow calculations.</span>
+                                
+                                <span class="guide-text"><strong>Convergence time:</strong> May require <strong>more iterations</strong> due to near-wall coupling.</span>
                             </li>
                         </ul>
                     </div>
@@ -648,9 +603,9 @@
                         </div>
                     </div>
 
-                    <!-- When to Choose k-ω Over k-ε -->
+                    <!-- When to Choose SST Over k-ε -->
                     <div class="guide-section guide-choice">
-                        <h3>5. When to Choose k-ω Over k-ε</h3>
+                        <h3>5. When to Choose SST Over k-ε</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
                                 
@@ -675,9 +630,9 @@
                         </ul>
                     </div>
 
-                    <!-- When NOT to Use k-ω -->
+                    <!-- When NOT to Use SST -->
                     <div class="guide-section guide-avoid">
-                        <h3>6. When NOT to Use k-ω</h3>
+                        <h3>6. When NOT to Use SST</h3>
                         <div class="avoid-item">
                             <span class="guide-text"><span class="guide-emphasis">Simple internal flows:</span> Straight ducts, pipes - k-ε is adequate and faster</span>
                         </div>
@@ -691,7 +646,7 @@
                             <span class="guide-text"><span class="guide-emphasis">Highly swirling flows:</span> Cyclones, swirl combustors - consider RSM instead</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Freestream sensitivity:</span> Sensitive to inlet ω values - use SST variant instead</span>
+                            <span class="guide-text"><span class="guide-emphasis">Transitional flows:</span> Use SST Transition model variant instead</span>
                         </div>
                     </div>
 
@@ -843,269 +798,331 @@
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The k-ω turbulence model was developed by David C. Wilcox in 1988 as an alternative to k-ε models, specifically designed to provide superior near-wall treatment and boundary layer prediction without the need for wall functions.</p>
+                        <p class="guide-text">The k-ω SST (Shear Stress Transport) model was developed by Florian Menter in 1994 to combine the best features of k-ω and k-ε formulations while addressing their individual limitations.</p>
                         
                         <h4>Timeline and Evolution</h4>
-                        <p class="guide-text">Wilcox's development of the k-ω model began in the 1980s with the recognition that k-ε models had fundamental limitations in the near-wall region. The original 1988 formulation introduced the specific dissipation rate ω as an alternative to the dissipation rate ε, providing better scaling properties near solid boundaries.</p>
+                        <p class="guide-text">The development of the SST model represents a systematic evolution in turbulence modeling. In 1988, Wilcox developed the k-ω model, which demonstrated superior near-wall behavior compared to k-ε formulations but suffered from excessive sensitivity to freestream ω values. This limitation was identified by Menter in 1993, who recognized that the k-ω model's performance degraded significantly when freestream ω values were not properly specified.</p>
                         
-                        <p class="guide-text">The 1998 revision (Wilcox k-ω '98) incorporated stress limiter functions and improved the model's performance in adverse pressure gradients. The 2006 version (Wilcox k-ω '06) further refined the model constants and addressed issues with separated flows. Despite being superseded by SST variants for many applications, the original k-ω model remains important for educational purposes and specific boundary layer applications.</p>
+                        <p class="guide-text">The breakthrough came in 1994 when Menter introduced the BSL (Baseline) k-ω model, which incorporated a blending function to seamlessly transition between k-ω and k-ε formulations. The same year saw the development of the complete SST model with its characteristic shear stress limiter. Subsequent refinements included the SST-2003 version with improved corner flow prediction capabilities, and the SST-V variant in 2009 featuring vorticity source terms for enhanced rotation effects modeling.</p>
                     </div>
 
-                    <!-- Mathematical Foundation -->
+                    <!-- Mathematical Foundation and Derivation -->
                     <div class="guide-section guide-overview">
-                        <h3>Mathematical Foundation and Transport Equations</h3>
-                        <p class="guide-text">The k-ω model solves two transport equations for turbulent kinetic energy (k) and specific dissipation rate (ω), providing closure for the Reynolds-averaged Navier-Stokes equations through the eddy viscosity hypothesis.</p>
+                        <h3>Mathematical Foundation and Hybrid Formulation</h3>
+                        <p class="guide-text">The SST model employs a blending function F₁ to seamlessly transition between k-ω formulation near walls and k-ε behavior in the outer region. This hybrid approach combines the superior near-wall treatment of the k-ω model with the freestream independence of the k-ε model.</p>
                         
                         <h4>Turbulent Kinetic Energy Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_j)}{\partial x_j} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right] + P_k - \beta^* \rho k \omega$$
+                            $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right] + \tilde{P}_k - \beta^* \rho k \omega$$
                         </div>
                         
                         <h4>Specific Dissipation Rate Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial(\rho \omega)}{\partial t} + \frac{\partial(\rho \omega u_j)}{\partial x_j} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_\omega}\right) \frac{\partial \omega}{\partial x_j}\right] + \alpha \frac{\omega}{k} P_k - \beta \rho \omega^2$$
+                            $$\frac{\partial(\rho \omega)}{\partial t} + \frac{\partial(\rho \omega u_i)}{\partial x_i} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_\omega}\right) \frac{\partial \omega}{\partial x_j}\right] + \alpha \frac{\omega}{k}\tilde{P}_k - \beta \rho \omega^2 + 2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
                         </div>
                         
-                        <h4>Turbulent Viscosity Definition:</h4>
+                        <h4>Modified Turbulent Viscosity (SST Limiter):</h4>
                         <div class="equation-block">
-                            $$\mu_t = \rho \frac{k}{\omega}$$
+                            $$\mu_t = \frac{\rho a_1 k}{\max(a_1 \omega, \Omega F_2)}, \quad \text{where } \Omega = \sqrt{2\Omega_{ij}\Omega_{ij}}$$
                         </div>
                         
-                        <h4>Production Term:</h4>
+                        <h4>Blending Functions (F₁ and F₂):</h4>
                         <div class="equation-block">
-                            $$P_k = \mu_t \frac{\partial u_i}{\partial x_j} \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right)$$
+                            $$F_1 = \tanh\left[\min\left(\max\left(\frac{\sqrt{k}}{\beta^* \omega y}, \frac{500\mu}{\rho y^2 \omega}\right), \frac{4\rho k}{\sigma_{\omega 2} D_{\omega}^+ y^2}\right)^4\right]$$
+                        </div>
+                        <div class="equation-block">
+                            $$F_2 = \tanh\left[\left[\max\left(\frac{2\sqrt{k}}{\beta^* \omega y}, \frac{500\mu}{\rho y^2 \omega}\right)\right]^2\right]$$
                         </div>
                         
+                        <h4>Cross-Diffusion Term (Key SST Innovation):</h4>
+                        <div class="equation-block">
+                            $$D_{\omega}^+ = \max\left(2\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}, 10^{-10}\right)$$
+                        </div>
+                        <p class="guide-text">This term eliminates k-ω model's sensitivity to freestream ω values by transforming k-ω into k-ε formulation away from walls.</p>
+                    </div>
+
+                    <!-- Comprehensive Term Definitions and Physical Meaning -->
+                    <div class="guide-section guide-strengths">
+                        <h3>Comprehensive Term Definitions and Physical Meaning</h3>
                         <div class="term-definitions">
-                            <h4>Variable Definitions:</h4>
-                            <div class="term-item"><strong>k:</strong> Turbulent kinetic energy (m²/s²)</div>
-                            <div class="term-item"><strong>ω:</strong> Specific dissipation rate (1/s)</div>
-                            <div class="term-item"><strong>μₜ:</strong> Turbulent viscosity (kg/(m·s))</div>
-                            <div class="term-item"><strong>Pₖ:</strong> Production of turbulent kinetic energy (kg/(m·s³))</div>
-                            <div class="term-item"><strong>ρ:</strong> Fluid density (kg/m³)</div>
-                            <div class="term-item"><strong>uⱼ:</strong> Reynolds-averaged velocity components (m/s)</div>
+                            <div class="term-item">
+                                <strong>ω:</strong> Specific dissipation rate [1/s]
+                                $$\omega = \frac{\epsilon}{C_\mu k}, \quad \text{relates to turbulent frequency}$$
+                                <p class="guide-text"><em>Physical meaning:</em> Inverse of turbulent time scale, represents frequency of energy-containing eddies. Higher ω indicates faster turbulent mixing.</p>
+                            </div>
+                            <div class="term-item">
+                                <strong>F₁:</strong> Blending function (wall-to-freestream transition)
+                                $$F_1 = 1 \text{ near walls (k-ω)}, \quad F_1 = 0 \text{ in freestream (k-ε)}$$
+                                <p class="guide-text"><em>Physical meaning:</em> Switches between k-ω formulation near walls (superior viscous sublayer treatment) and k-ε in outer region (freestream independence).</p>
+                            </div>
+                            <div class="term-item">
+                                <strong>F₂:</strong> Shear stress limiter activation function
+                                $$F_2 = 1 \text{ in boundary layers}, \quad F_2 = 0 \text{ in free shear flows}$$
+                                <p class="guide-text"><em>Physical meaning:</em> Activates shear stress limiter only where needed (attached boundary layers), preventing overprediction in adverse pressure gradients.</p>
+                            </div>
+                            <div class="term-item">
+                                <strong>P̃ₖ:</strong> Limited production term
+                                $$\tilde{P}_k = \min(P_k, 10\beta^* \rho k \omega)$$
+                                <p class="guide-text"><em>Physical meaning:</em> Prevents excessive production in stagnation regions, maintaining realizability constraints on turbulent kinetic energy.</p>
+                            </div>
+                            <div class="term-item">
+                                <strong>a₁:</strong> Shear stress limiter constant (0.31)
+                                $$\tau_{12} = \mu_t \frac{\partial u}{\partial y} \leq a_1 \rho k$$
+                                <p class="guide-text"><em>Physical meaning:</em> Enforces Bradshaw's assumption that shear stress is proportional to turbulent kinetic energy in boundary layers.</p>
+                            </li>
+                            <div class="term-item">
+                                <strong>Cross-diffusion:</strong> Model transformation mechanism
+                                $$2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
+                                <p class="guide-text"><em>Physical meaning:</em> Mathematically transforms k-ω equations to k-ε formulation in freestream, eliminating ω sensitivity issues.</p>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Turbulent Scales and Energy Cascade Theory -->
+                    <div class="guide-section guide-limitations">
+                        <h3>Turbulent Scales and SST Scale-Resolving Behavior</h3>
+                        <p class="guide-text">The SST model's hybrid formulation provides scale-appropriate behavior from viscous sublayer to outer boundary layer region.</p>
                         
+                        <h4>Near-Wall Scale Resolution (k-ω region):</h4>
+                        <div class="equation-block">
+                            $$y^+ = \frac{y u_\tau}{\nu} < 1, \quad \text{viscous sublayer integration}$$
+                        </div>
+                        <p class="guide-text">Direct integration to wall without wall functions, resolving viscous length scale.</p>
+                        
+                        <h4>Outer Layer Scale Behavior (k-ε transformation):</h4>
+                        <div class="equation-block">
+                            $$\ell_t = \frac{\sqrt{k}}{\omega} \rightarrow \frac{k^{3/2}}{\epsilon}, \quad \text{turbulent length scale transition}$$
+                        </div>
+                        <p class="guide-text">Automatic transition to k-ε length scale formulation in freestream regions.</p>
+                        
+                        <h4>Shear Layer Scale Limitation:</h4>
+                        <div class="equation-block">
+                            $$\tau_{wall} \propto \rho k, \quad \text{Bradshaw's constraint on Reynolds stress}$$
+                        </div>
+                        <p class="guide-text">Ensures proper scaling of turbulent stresses in adverse pressure gradient boundary layers.</p>
+                    </div>
+
+                    <!-- Model Constants: Derivation and Physical Significance -->
+                    <div class="guide-section guide-use-cases">
+                        <h3>Model Constants: Blending and Physical Significance</h3>
+                        
+                        <h4>Blended Constants (φ = F₁φ₁ + (1-F₁)φ₂):</h4>
                         <div class="constants-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Constant</th>
-                                        <th>Value (1988)</th>
-                                        <th>Value (2006)</th>
-                                        <th>Physical Significance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>β*</td>
-                                        <td>0.09</td>
-                                        <td>0.09</td>
-                                        <td>Dissipation coefficient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>α</td>
-                                        <td>5/9</td>
-                                        <td>0.52</td>
-                                        <td>Production coefficient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>β</td>
-                                        <td>0.075</td>
-                                        <td>0.0708</td>
-                                        <td>ω destruction coefficient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>σₖ</td>
-                                        <td>2.0</td>
-                                        <td>0.6</td>
-                                        <td>Turbulent Prandtl number for k</td>
-                                    </tr>
-                                    <tr>
-                                        <td>σ_ω</td>
-                                        <td>2.0</td>
-                                        <td>0.5</td>
-                                        <td>Turbulent Prandtl number for ω</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="equation-block">
+                                $$\text{Set 1 (k-ω): } \sigma_{k1} = 0.85, \sigma_{\omega 1} = 0.5, \beta_1 = 0.075, \alpha_1 = 0.5532$$
+                                $$\text{Set 2 (k-ε): } \sigma_{k2} = 1.0, \sigma_{\omega 2} = 0.856, \beta_2 = 0.0828, \alpha_2 = 0.4403$$
+                                $$\text{Universal: } \beta^* = 0.09, \kappa = 0.41, a_1 = 0.31$$
+                            </div>
+                        </div>
+                        
+                        <h4>Constant Derivations and Relationships:</h4>
+                        <div class="term-item">
+                            <strong>α coefficients from k-ε constants:</strong>
+                            $$\alpha = \frac{\beta}{\beta^*} - \frac{\sigma_\omega \kappa^2}{\sqrt{\beta^*}}$$
+                            <p class="guide-text">Ensures equivalent behavior to k-ε model in freestream when F₁ = 0.</p>
+                        </div>
+                        <div class="term-item">
+                            <strong>β* = 0.09:</strong> Universal constant linking k and ω
+                            $$\beta^* = C_\mu^{k-\epsilon} = 0.09$$
+                            <p class="guide-text">Maintains consistency with k-ε model's C_μ constant.</p>
+                        </div>
+                        <div class="term-item">
+                            <strong>a₁ = 0.31:</strong> Bradshaw's constant
+                            $$\frac{-\overline{u'v'}}{k} \approx 0.31 \text{ in equilibrium boundary layers}$$
+                            <p class="guide-text">Based on experimental observation that shear stress correlates with turbulent kinetic energy.</p>
+                        </div>
+                        
+                        <h4>Model Validation and Calibration Database</h4>
+                        <p class="guide-text">The SST model has been extensively validated against fundamental flow configurations that test specific aspects of the model's hybrid formulation. Flat plate boundary layers provide zero pressure gradient validation, confirming the model's ability to predict canonical attached flows. Adverse pressure gradient flows from the ERCOFTAC database demonstrate the model's superior performance in separating boundary layers compared to standard k-ε models.</p>
+                        
+                        <p class="guide-text">Airfoil flows using NACA series at various angles of attack validate the model's transition prediction and separated flow behavior. Backward-facing step configurations test separation and reattachment prediction capabilities, while free jets and mixing layers verify the model's freestream independence - a critical improvement over the original k-ω formulation.</p>
+                    </div>
+
+                    <!-- Advanced Theoretical Framework and Fundamental Assumptions -->
+                    <div class="guide-section guide-avoid">
+                        <h3>Advanced Theoretical Framework and Fundamental Assumptions</h3>
+                        
+                        <h4>Bradshaw's Assumption and Shear Stress Limitation:</h4>
+                        <div class="equation-block">
+                            $$\frac{-\overline{u'v'}}{k} = a_1 = 0.31 \text{ (in equilibrium boundary layers)}$$
+                        </div>
+                        <p class="guide-text">The SST model enforces this through the modified viscosity formulation:</p>
+                        <div class="equation-block">
+                            $$\mu_t = \frac{\rho a_1 k}{\max(a_1 \omega, \Omega F_2)} \Rightarrow \tau_{12} = \mu_t S \leq a_1 \rho k$$
+                        </div>
+                        
+                        <h4>Realizability and Positivity Constraints:</h4>
+                        <p class="guide-text">The SST model maintains physical realizability through several mechanisms:</p>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Production limiting:</strong> P̃_k prevents excessive k production</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Shear stress limiting:</strong> Prevents unrealistic Reynolds stress levels</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Positive definiteness:</strong> All transport coefficients remain positive</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Wall Distance Dependency and y⁺ Insensitivity:</h4>
+                        <div class="equation-block">
+                            $$y^+ = \frac{y u_\tau}{\nu}, \quad \text{wall units}$$
+                        </div>
+                        <p class="guide-text">Unlike k-ε, SST integrates to the wall (y = 0) with boundary conditions:</p>
+                        <div class="equation-block">
+                            $$k|_{wall} = 0, \quad \omega|_{wall} = \frac{60\nu}{\beta_1 y_1^2}$$
+                        </div>
+                        <p class="guide-text">Where y₁ is distance to first grid point. This eliminates wall function dependence.</p>
+                        
+                        <h4>Transformation to k-ε Formulation:</h4>
+                        <p class="guide-text">In the freestream (F₁ = 0), the model becomes equivalent to k-ε:</p>
+                        <div class="equation-block">
+                            $$\epsilon = \beta^* k \omega, \quad \mu_t = \rho C_\mu \frac{k^2}{\epsilon}$$
+                        </div>
+                        <p class="guide-text">This transformation is achieved through the cross-diffusion term, ensuring freestream independence.</p>
+                    </div>
+
+                    <!-- Advanced Model Variants and Modern Improvements -->
+                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
+                        <h3>Advanced Model Variants and Modern Improvements</h3>
+                        
+                        <h4>Viscous Sublayer Integration:</h4>
+                        <p class="guide-text">The SST model resolves the complete boundary layer structure:</p>
+                        <div class="equation-block">
+                            $$\text{Viscous sublayer: } y^+ < 5, \quad u^+ = y^+$$
+                            $$\text{Buffer layer: } 5 < y^+ < 30, \quad \text{transition region}$$
+                            $$\text{Log layer: } y^+ > 30, \quad u^+ = \frac{1}{\kappa}\ln(y^+) + B$$
+                        </div>
+                        
+                        <h4>Near-Wall Asymptotic Behavior:</h4>
+                        <div class="equation-block">
+                            $$k \sim y^2, \quad \omega \sim y^{-2} \text{ as } y \to 0$$
+                        </div>
+                        <p class="guide-text">These asymptotic behaviors are automatically satisfied by the SST formulation.</p>
+                        
+                        <h4>Mesh Requirements for Accurate Wall Treatment:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>y⁺ < 1:</strong> Recommended for optimal accuracy</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>y⁺ < 2:</strong> Acceptable for engineering accuracy</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Minimum 10-15 points:</strong> In boundary layer for resolution</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Growth ratio < 1.2:</strong> In near-wall region</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Wall Boundary Conditions Implementation:</h4>
+                        <div class="equation-block">
+                            $$k_{wall} = 0, \quad \frac{\partial k}{\partial n}\bigg|_{wall} = 0$$
+                            $$\omega_{wall} = \frac{60\nu}{\beta_1 (\Delta y_1)^2}, \quad \text{for } y_1^+ < 2$$
                         </div>
                     </div>
 
-                    <!-- Physical Interpretation -->
-                    <div class="guide-section">
-                        <h3>Physical Interpretation and Model Philosophy</h3>
-                        <p class="guide-text">The k-ω model represents a fundamental advance in turbulence modeling by using the specific dissipation rate ω instead of the dissipation rate ε, providing superior behavior in the near-wall region and boundary layers.</p>
+                    <!-- Advanced Model Variants and Modern Extensions -->
+                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
+                        <h3>Advanced Model Variants and Modern Extensions</h3>
                         
-                        <h4>Specific Dissipation Rate Concept</h4>
-                        <p class="guide-text">The variable ω = ε/(β*k) represents the frequency of the energy-containing turbulent eddies. This formulation provides better scaling properties near walls compared to ε-based models, eliminating the need for wall functions in many applications.</p>
+                        <h4>SST-2003 (Improved Corner Flow Prediction):</h4>
+                        <p class="guide-text">Enhanced version addressing corner flow stagnation issues:</p>
+                        <div class="equation-block">
+                            $$\tilde{P}_k = \mu_t S^2 - \frac{2}{3}\mu_t S_{kk}\frac{\partial u_k}{\partial x_k} - \frac{2}{3}\rho k \frac{\partial u_k}{\partial x_k}$$
+                        </div>
+                        <p class="guide-text">Includes proper treatment of dilatational effects and compressibility.</p>
                         
-                        <h4>Near-Wall Behavior Advantages</h4>
-                        <p class="guide-text">The k-ω formulation naturally integrates to the wall with boundary conditions k = 0 and ω = 6ν/(β₁y₁²) where y₁ is the distance to the first grid point. This provides superior boundary layer prediction without complex wall function treatments.</p>
+                        <h4>SST-V (Vorticity Source Term):</h4>
+                        <div class="equation-block">
+                            $$S_\omega^{vorticity} = 2\rho\chi\Omega^2, \quad \chi = \frac{1}{3}\left(\frac{\Omega}{\sqrt{S^2 + \Omega^2}}\right)^3$$
+                        </div>
+                        <p class="guide-text">Improves prediction in flows with significant rotation or curvature effects.</p>
                         
-                        <h4>Length Scale Definition</h4>
-                        <p class="guide-text">The turbulent length scale in k-ω models is defined as l_t = √k/ω, which provides appropriate scaling near walls and in boundary layers. This contrasts with k-ε models where the length scale k^(3/2)/ε becomes problematic near solid boundaries.</p>
+                        <h4>Scale-Adaptive Simulation (SST-SAS):</h4>
+                        <div class="equation-block">
+                            $$Q_{SAS} = \max\left[2\rho\zeta_2\kappa S^2\left(\frac{L}{L_{vk}}\right)^2 - C_{SAS}\frac{2\rho k}{\sigma_\phi}\max\left(\frac{|\nabla\omega|^2}{\omega^2}, \frac{|\nabla k|^2}{k^2}\right), 0\right]$$
+                        </div>
+                        <p class="guide-text">Allows model to adapt between RANS and LES-like behavior based on flow unsteadiness.</p>
                         
-                        <h4>Direct Wall Integration</h4>
-                        <p class="guide-text">Unlike k-ε models that require wall functions or complex low-Reynolds number modifications, the k-ω model can integrate directly to the wall surface with proper boundary conditions, making it particularly suitable for boundary layer applications.</p>
+                        <h4>Compressibility Corrections:</h4>
+                        <div class="equation-block">
+                            $$M_t = \sqrt{\frac{2k}{a^2}}, \quad \text{turbulent Mach number}$$
+                            $$\beta^* = \beta_0^*[1 + \chi_t M_t^2], \quad \chi_t = 1.5 \text{ for } M_t > 0.25$$
+                        </div>
+                        
+                        <h4>Transition Modeling Extensions:</h4>
+                        <div class="equation-block">
+                            $$\gamma-Re_{\theta t} \text{ model: } \gamma \text{ (intermittency)}, \, Re_{\theta t} \text{ (transition momentum thickness Reynolds number)}$$
+                        </div>
+                        <p class="guide-text">Enables prediction of laminar-turbulent transition in boundary layers.</p>
                     </div>
 
-                    <!-- Model Limitations and Sensitivity -->
-                    <div class="guide-section">
-                        <h3>Model Limitations and Freestream Sensitivity</h3>
-                        <p class="guide-text">While the k-ω model provides excellent near-wall behavior, it suffers from significant limitations that have led to the development of improved variants like SST.</p>
+                    <!-- Advanced Numerical Implementation -->
+                    <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
+                        <h3>Advanced Numerical Implementation and Best Practices</h3>
                         
-                        <h4>Freestream Sensitivity Issue</h4>
-                        <p class="guide-text">The primary limitation of the k-ω model is its excessive sensitivity to inlet boundary conditions for ω in the freestream. Small changes in the specified ω values can dramatically affect the solution, particularly in external flows.</p>
+                        <h4>Robust Source Term Treatment:</h4>
+                        <div class="equation-block">
+                            $$S_k = \tilde{P}_k - \beta^* \rho k \omega \rightarrow \tilde{P}_k - \beta^* \rho \omega \cdot k$$
+                            $$S_\omega = \alpha \frac{\omega}{k}\tilde{P}_k - \beta \rho \omega^2 \rightarrow \alpha \frac{\tilde{P}_k}{k} - \beta \rho \omega \cdot \omega$$
+                        </div>
+                        <p class="guide-text">Implicit treatment of destruction terms ensures numerical stability.</p>
+                        
+                        <h4>Blending Function Evaluation and Computational Considerations</h4>
+                        <p class="guide-text">The evaluation of blending functions F₁ and F₂ requires careful numerical treatment to ensure robust performance across diverse computational domains. Wall distance computation presents the primary computational challenge, particularly for complex geometries where efficient algorithms such as fast marching methods or Eikonal solvers are essential to maintain reasonable computational overhead while ensuring accuracy near geometric singularities.</p>
+                        
+                        <p class="guide-text">Gradient limiters play a crucial role in preventing excessive gradients during F₁ and F₂ calculation, which can lead to numerical instabilities or convergence difficulties. Smoothing techniques are employed to ensure continuous blending behavior across the computational domain, preventing artificial discontinuities that could compromise solution quality or convergence characteristics.</p>
+                        
+                        <h4>Cross-Diffusion Term Treatment and ω Equation Stability</h4>
+                        <div class="equation-block">
+                            $$\text{Cross-diffusion term: } 2(1-F_1)\frac{\rho}{\sigma_{\omega 2}}\frac{1}{\omega}\frac{\partial k}{\partial x_j}\frac{\partial \omega}{\partial x_j}$$
+                        </div>
+                        <p class="guide-text">The cross-diffusion term represents a unique numerical challenge in SST model implementation, requiring careful treatment to maintain positivity and avoid division by zero operations. Advanced discretization schemes must ensure that the term's contribution remains physically meaningful while maintaining numerical stability, particularly in regions where ω approaches zero or exhibits sharp gradients.</p>
+                        
+                        <h4>Advanced Solution Strategies and Convergence Enhancement</h4>
+                        <p class="guide-text">Contemporary CFD solvers implement sophisticated solution strategies to enhance SST model convergence characteristics. Coupled k-ω solving demonstrates superior convergence behavior compared to segregated approaches, particularly for flows with strong coupling between the turbulent variables. This approach treats the k and ω equations as a coupled system, reducing the iteration count required for convergence and improving overall robustness.</p>
+                        
+                        <p class="guide-text">Comprehensive monitoring strategies encompass both scaled and absolute residuals, typically requiring convergence criteria below 10⁻⁵ for engineering accuracy. Additionally, integral monitoring of key flow quantities including mass flow rates, pressure drops, and heat transfer coefficients provides essential verification of solution convergence beyond simple residual criteria.</p>
+                        
+                        <h4>Mesh Quality Requirements and Computational Grid Considerations</h4>
+                        <p class="guide-text">The SST model's near-wall integration capability places stringent requirements on computational mesh quality, necessitating careful attention to multiple geometric parameters:</p>
                         
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">External flows show strong dependence on freestream ω specification</span>
+                                
+                                <span class="guide-text"><strong>Near-wall spacing:</strong> First cell height must satisfy y⁺ < 1 for accurate wall integration</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Solutions can vary significantly with inlet ω boundary conditions</span>
+                                
+                                <span class="guide-text"><strong>Aspect ratio control:</strong> Maintain ratios below 1000 in near-wall regions for gradient accuracy</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Requires careful selection of inlet ω values based on turbulence intensity</span>
+                                
+                                <span class="guide-text"><strong>Orthogonality:</strong> Overall mesh skewness should remain below 0.9 for accurate computations</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum 15-20 cells within the boundary layer</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Growth rate:</strong> Geometric progression with ratios limited to 1.2 in near-wall regions</span>
                             </li>
                         </ul>
                         
-                        <h4>Free Shear Flow Limitations</h4>
-                        <p class="guide-text">The k-ω model generally under-predicts spreading rates in free shear flows such as:</p>
-                        
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text">Plane mixing layers and jets</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Round jets and wake flows</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Far-field regions away from solid boundaries</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Adverse Pressure Gradient Issues</h4>
-                        <p class="guide-text">The original k-ω model tends to predict separation too early in adverse pressure gradients, particularly on smooth surfaces like airfoils at moderate angles of attack.</p>
+                        <h4>Implementation Robustness and Numerical Stability</h4>
+                        <p class="guide-text">Production-grade SST implementations incorporate multiple robustness enhancements including production limiting to prevent non-physical turbulence generation in stagnation regions, realizability constraints to maintain positive definiteness of turbulent quantities, and adaptive under-relaxation strategies that automatically adjust based on local convergence behavior. These features ensure reliable performance across the wide range of flow conditions encountered in engineering applications.</p>
                     </div>
-
-                    <!-- Validation and Applications -->
-                    <div class="guide-section">
-                        <h3>Model Validation and Optimal Applications</h3>
-                        <p class="guide-text">The k-ω model has been extensively validated for specific flow types where its strengths can be utilized while avoiding its known limitations.</p>
-                        
-                        <h4>Successful Applications</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text">Zero and favorable pressure gradient boundary layers</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Internal flows with well-defined inlet conditions</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Near-wall flow phenomena and skin friction prediction</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Low Reynolds number flows with transitional effects</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Benchmark Test Cases</h4>
-                        <p class="guide-text">Standard validation includes flat plate boundary layers, Falkner-Skan flows, pipe and channel flows, and simple separated flows. The model generally shows excellent agreement for attached boundary layers but struggles with external flows and complex separation.</p>
-                        
-                        <h4>Comparison with Other Models</h4>
-                        <p class="guide-text">While superseded by SST for most engineering applications, the k-ω model remains valuable for:</p>
-                        
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text">Educational purposes to understand ω-based turbulence modeling</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Fundamental boundary layer research</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Applications where freestream sensitivity is not an issue</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">As a foundation for developing more advanced models</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Model Variants and Evolution -->
-                    <div class="guide-section">
-                        <h3>Model Variants and Historical Evolution</h3>
-                        <p class="guide-text">The k-ω model has undergone several revisions and has served as the foundation for numerous advanced turbulence models.</p>
-                        
-                        <h4>Wilcox k-ω Versions</h4>
-                        <p class="guide-text">Original 1988 model established the basic k-ω framework with simple constant formulation. The 1998 revision introduced stress limiter functions and improved constants. The 2006 version (k-ω '06) incorporated cross-diffusion terms and addressed freestream sensitivity issues to some extent.</p>
-                        
-                        <h4>Low-Reynolds Number Variants</h4>
-                        <p class="guide-text">Several low-Reynolds number modifications have been developed to improve near-wall behavior and handle transitional flows. These variants include damping functions and modified source terms for very low Reynolds number applications.</p>
-                        
-                        <h4>Foundation for Advanced Models</h4>
-                        <p class="guide-text">The k-ω model served as the foundation for several important developments:</p>
-                        
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text">Baseline (BSL) k-ω model with improved freestream behavior</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Shear Stress Transport (SST) model combining k-ω and k-ε advantages</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Scale-Adaptive Simulation (SAS) hybrid RANS-LES approaches</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Various transition models based on ω formulations</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Numerical Implementation -->
-                    <div class="guide-section">
-                        <h3>Numerical Implementation and Best Practices</h3>
-                        <p class="guide-text">Successful implementation of the k-ω model requires careful attention to boundary conditions, mesh requirements, and numerical considerations.</p>
-                        
-                        <h4>Boundary Conditions</h4>
-                        <p class="guide-text">Proper boundary condition specification is critical for k-ω model success:</p>
-                        
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text">Wall: k = 0, ω = 6ν/(β₁y₁²) where y₁ is first cell height</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Inlet: k from turbulence intensity, ω from k and length scale</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Outlet: Zero gradient or extrapolation from upstream</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Freestream: Careful specification of ω to avoid sensitivity issues</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Mesh Requirements</h4>
-                        <p class="guide-text">The k-ω model's direct wall integration capability requires specific mesh considerations:</p>
-                        
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text">y⁺ < 1 for accurate near-wall resolution</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Adequate boundary layer resolution with 15-20 cells</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Smooth growth ratios (< 1.2) in near-wall regions</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Proper clustering near walls to resolve gradients</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Convergence Considerations</h4>
-                        <p class="guide-text">The k-ω model generally provides good convergence characteristics, but optimization includes appropriate under-relaxation factors (typically k: 0.6, ω: 0.6), monitoring of both residuals and integral quantities, and careful initialization procedures especially for ω boundary conditions.</p>
-                    </div>                    </div>
                 </div>
             </div>
         </div>
@@ -1122,12 +1139,12 @@
         // Tab functionality
         function showTab(evt, tabName) {
             var i, tabcontent, tablinks;
-
+            
             // Hide all tab content
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
             
             // Remove active class from all tabs
             const tabs = document.querySelectorAll('.content-tab');

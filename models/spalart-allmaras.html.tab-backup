@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Reynolds Stress Model - CFD Handbook</title>
+    <title>Spalart-Allmaras Model - CFD Handbook</title>
     
     <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -164,59 +164,54 @@
             font-weight: 300;
         }
 
-                .content-tabs {
+        .content-tabs {
             display: flex;
-            gap: 2.5rem;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-            padding: 1.5rem 2rem;
+            background: #e2e8f0;
+            border-bottom: 2px solid #cbd5e1;
+            padding: 0;
             margin: 0;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .content-tab {
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            color: #4a5568;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border-radius: 12px;
+            padding: 1rem 2rem;
+            background: #f1f5f9;
             border: none;
-            background: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #475569;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .content-tab:hover::before,
-        .content-tab.active::before {
-            opacity: 1;
-        }
-
-        .content-tab:hover,
-        .content-tab.active {
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            border-bottom: 3px solid transparent;
+            border-top: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+            margin: 0;
         }
 
         .content-tab:first-child {
-            border-left: none;
+            border-left: 1px solid #cbd5e1;
+        }
+
+        .content-tab.active {
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+            background: white;
+            font-weight: 700;
+            -webkit-text-fill-color: #1e40af;
+            background-clip: initial;
+            -webkit-background-clip: initial;
+        }
+
+        .content-tab:hover {
+            color: #1e40af;
+            background: #f8fafc;
+            -webkit-text-fill-color: #1e40af;
+            background-clip: initial;
+            -webkit-background-clip: initial;
         }
 
         .tab-content {
@@ -484,6 +479,15 @@
                 padding: 1rem;
             }
 
+            .content-tabs {
+                padding: 0;
+            }
+
+            .content-tab {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+
             .guide-section {
                 padding: 1rem;
                 margin-bottom: 2rem;
@@ -523,6 +527,10 @@
                 font-size: 0.7rem;
             }
 
+            .content-tab {
+                padding: 0.5rem 0.25rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -537,9 +545,8 @@
                     <a href="k-epsilon.html" class="nav-tab">k-ε</a>
                     <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
                     <a href="inviscid.html" class="nav-tab">Inviscid</a>
-                    <a href="spalart-allmaras.html" class="nav-tab">Spalart-Allmaras</a>
-                    <a href="k-omega.html" class="nav-tab">k-ω</a>
-                    <a href="reynolds-stress.html" class="nav-tab active">RSM</a>
+                    <a href="spalart-allmaras.html" class="nav-tab active">Spalart-Allmaras</a>
+                    <a href="reynolds-stress.html" class="nav-tab">RSM</a>
                     <a href="des.html" class="nav-tab">DES</a>
                     <a href="les.html" class="nav-tab">LES</a>
                 </div>
@@ -550,8 +557,8 @@
 
             <!-- Page Header -->
             <div class="page-header">
-                <h1>Reynolds Stress Model</h1>
-                <p class="model-subtitle">Advanced seven-equation model for complex anisotropic turbulent flows</p>
+                <h1>Spalart-Allmaras Model</h1>
+                <p class="model-subtitle">Single-equation turbulence model optimized for aerospace applications</p>
             </div>
 
             <!-- Content Tabs -->
@@ -569,16 +576,16 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Seven-equation RANS model</strong> solving directly for all six Reynolds stress components plus dissipation rate.</span>
+                                <span class="guide-text"><strong>Single-equation RANS model</strong> solving for modified viscosity (ν̃) without additional length scale.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Most advanced turbulence closure</strong> capturing full anisotropic turbulence behavior without eddy viscosity assumptions.</span>
+                                <span class="guide-text"><strong>Designed for aerospace applications</strong> with excellent performance for boundary layers and mild separation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Superior accuracy</strong> for complex flows with strong streamline curvature, swirl, and rotation effects.</span>
+                                <span class="guide-text"><strong>Computational efficiency</strong> with only one additional transport equation to solve.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Research-grade model</strong> providing detailed insight into turbulence structure and physics.</span>
+                                <span class="guide-text"><strong>Robust convergence</strong> and excellent numerical stability across wide range of flow conditions.</span>
                             </li>
                         </ul>
                     </div>
@@ -588,19 +595,19 @@
                         <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Anisotropic turbulence:</strong> Directly computes all six Reynolds stress components without isotropic assumptions.</span>
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Only <strong>one additional equation</strong>, fastest among advanced turbulence models.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Complex flow accuracy:</strong> <strong>Superior performance</strong> in flows with strong streamline curvature, swirl, and rotation.</span>
+                                <span class="guide-text"><strong>Aerospace heritage:</strong> <strong>Extensively validated</strong> for airfoil and wing flows with excellent track record.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>No eddy viscosity limitation:</strong> Eliminates Boussinesq approximation constraints for <strong>highly anisotropic flows</strong>.</span>
+                                <span class="guide-text"><strong>Boundary layer accuracy:</strong> <strong>Superior prediction</strong> of attached boundary layers and skin friction.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Secondary flow prediction:</strong> Captures <strong>corner flows, duct flows</strong> with secondary circulation patterns.</span>
+                                <span class="guide-text"><strong>Numerical robustness:</strong> <strong>Excellent convergence</strong> characteristics and stability.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Research capabilities:</strong> Provides detailed insight into <strong>turbulence structure and physics</strong>.</span>
+                                <span class="guide-text"><strong>Memory efficiency:</strong> <strong>Minimal storage</strong> requirements compared to two-equation models.</span>
                             </li>
                         </ul>
                     </div>
@@ -610,16 +617,16 @@
                         <h3>3. Limitations</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Computational cost:</strong> <strong>3-4x higher than two-equation models</strong> due to seven transport equations.</span>
+                                <span class="guide-text"><strong>Separated flow accuracy:</strong> <strong>Limited performance</strong> in flows with large-scale separation and recirculation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Memory requirements:</strong> <strong>Significant storage</strong> for six Reynolds stress components plus dissipation rate.</span>
+                                <span class="guide-text"><strong>Free shear flows:</strong> <strong>Poor prediction</strong> of jets, mixing layers, and wakes compared to k-epsilon models.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Convergence challenges:</strong> More difficult convergence due to <strong>equation coupling and stiffness</strong>.</span>
+                                <span class="guide-text"><strong>3D flow limitations:</strong> <strong>Weaker performance</strong> in complex three-dimensional flows with crossflow effects.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Numerical stability:</strong> Requires careful <strong>under-relaxation and initialization</strong> for stable solutions.</span>
+                                <span class="guide-text"><strong>Wall treatment:</strong> Requires <strong>appropriate wall distance</strong> calculation and can be sensitive to mesh quality.</span>
                             </li>
                         </ul>
                     </div>
@@ -648,45 +655,45 @@
                         </div>
                     </div>
 
-                    <!-- When to Choose RSM Over Eddy Viscosity Models -->
+                    <!-- When to Choose Spalart-Allmaras -->
                     <div class="guide-section guide-choice">
-                        <h3>5. When to Choose RSM Over Eddy Viscosity Models</h3>
+                        <h3>5. When to Choose Spalart-Allmaras</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Strongly anisotropic flows:</strong> When <strong>Reynolds stress anisotropy</strong> is critical to flow physics.</span>
+                                <span class="guide-text"><strong>Aerospace applications:</strong> External aerodynamics, <strong>airfoil and wing flows</strong> where it excels.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Swirling and rotating flows:</strong> Cyclones, turbomachinery, and <strong>system rotation effects</strong>.</span>
+                                <span class="guide-text"><strong>Boundary layer accuracy:</strong> When <strong>precise skin friction</strong> and wall shear prediction is critical.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Complex 3D separation:</strong> Where <strong>crossflow effects</strong> and corner flows dominate.</span>
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Need for <strong>fast convergence</strong> with reasonable accuracy.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Buoyant flows:</strong> Natural convection with <strong>strong stratification</strong> and secondary flows.</span>
+                                <span class="guide-text"><strong>Single-equation preference:</strong> Simpler model setup with <strong>fewer boundary conditions</strong>.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Curved boundaries:</strong> Flow over <strong>curved surfaces</strong> with streamline curvature effects.</span>
+                                <span class="guide-text"><strong>Mild separation:</strong> Flows with <strong>small separation bubbles</strong> but predominantly attached.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- When NOT to Use RSM -->
+                    <!-- When NOT to Use Spalart-Allmaras -->
                     <div class="guide-section guide-avoid">
-                        <h3>6. When NOT to Use RSM</h3>
+                        <h3>6. When NOT to Use Spalart-Allmaras</h3>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Simple attached flows:</span> Straight ducts, pipes - simpler models are adequate and much faster</span>
+                            <span class="guide-text"><span class="guide-emphasis">Massive separation:</span> Large separated regions - use SST or RSM instead</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Preliminary design:</span> Early concept studies where computational cost outweighs accuracy benefits</span>
+                            <span class="guide-text"><span class="guide-emphasis">Internal flows:</span> Pipe flows, heat exchangers - k-ε models are more appropriate</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Large domain studies:</span> Massive computational cost - use eddy viscosity models instead</span>
+                            <span class="guide-text"><span class="guide-emphasis">Highly swirling flows:</span> Cyclones, rotating machinery - consider RSM for anisotropic effects</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Limited computational resources:</span> RSM requires 3-5x more CPU time and memory</span>
+                            <span class="guide-text"><span class="guide-emphasis">Free shear layers:</span> Mixing layers, jets - designed primarily for wall-bounded flows</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Convergence issues:</span> Complex coupling can lead to numerical instabilities</span>
+                            <span class="guide-text"><span class="guide-emphasis">Complex 3D separation:</span> Corner flows, multiple vortex systems</span>
                         </div>
                     </div>
 
@@ -775,7 +782,7 @@
                         <ul class="guide-list">
                             <li class="guide-item">
                                 
-                                <span class="guide-text"><strong>vs k-ε:</strong> <strong>20-30% longer</strong> solution time, <strong>2-3x finer mesh</strong> required.</span>
+                                <span class="guide-text"><strong>vs k-epsilon:</strong> <strong>20-30% longer</strong> solution time, <strong>2-3x finer mesh</strong> required.</span>
                             </li>
                             <li class="guide-item">
                                 
@@ -838,57 +845,46 @@
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The Reynolds Stress Model (RSM) represents the most advanced level of RANS turbulence closure, directly solving transport equations for all six independent Reynolds stress components plus the dissipation rate, eliminating the eddy viscosity hypothesis entirely.</p>
+                        <p class="guide-text">The Spalart-Allmaras model was developed by Philippe R. Spalart and Steven R. Allmaras in 1992-1994 as a one-equation turbulence model specifically designed for aerospace applications and external aerodynamics.</p>
                         
                         <h4>Timeline and Evolution</h4>
-                        <p class="guide-text">The theoretical foundation for RSM was established in the 1970s with the work of Hanjalic and Launder (1972), who derived the exact transport equations for Reynolds stresses. The Launder, Reece, and Rodi (1975) model provided the first practical implementation with closure approximations for pressure-strain correlations.</p>
+                        <p class="guide-text">The development began at Boeing in the early 1990s with the specific goal of creating a turbulence model optimized for aerospace flows. Spalart, working at Boeing's research division, collaborated with Allmaras to develop a model that would provide excellent boundary layer prediction while maintaining computational efficiency for complex aircraft configurations.</p>
                         
-                        <p class="guide-text">Subsequent developments included the Speziale, Sarkar, and Gatski (1991) model with improved pressure-strain modeling, the omega-based RSM variants by Wilcox (1993), and modern implementations like the Stress-Omega model. Despite computational advances, RSM remains the most resource-intensive RANS approach, reserved for cases where Reynolds stress anisotropy is critical.</p>
+                        <p class="guide-text">The original 1992 conference paper introduced the basic formulation, followed by the comprehensive 1994 publication that established the model's widespread adoption. Subsequent refinements included rotation and curvature corrections (2000), improved production terms (2004), and various aerospace-specific modifications. The model quickly became the industry standard for external aerodynamics and remains the backbone of most commercial aircraft design calculations.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
-                        <h3>Mathematical Foundation and Transport Equations</h3>
-                        <p class="guide-text">The Reynolds Stress Model solves seven transport equations: six for the independent Reynolds stress components and one for either dissipation rate or specific dissipation rate, providing complete closure without eddy viscosity assumptions.</p>
+                        <h3>Mathematical Foundation and Transport Equation</h3>
+                        <p class="guide-text">The Spalart-Allmaras model solves a single transport equation for a modified turbulent viscosity variable ν̃, which is related to but not identical to the turbulent kinematic viscosity.</p>
                         
-                        <h4>Reynolds Stress Transport Equation:</h4>
+                        <h4>Modified Viscosity Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial(\rho \overline{u_i'u_j'})}{\partial t} + \frac{\partial(\rho U_k \overline{u_i'u_j'})}{\partial x_k} = P_{ij} + D_{ij} + \Pi_{ij} - \varepsilon_{ij}$$
+                            $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} + \frac{1}{\sigma} \left[ \frac{\partial}{\partial x_j} \left( (\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j} \right) + c_{b2} \left( \frac{\partial \tilde{\nu}}{\partial x_j} \right)^2 \right] - c_{w1} f_w \left( \frac{\tilde{\nu}}{d} \right)^2$$
                         </div>
                         
-                        <h4>Production Term (Exact):</h4>
+                        <h4>Turbulent Viscosity Definition:</h4>
                         <div class="equation-block">
-                            $$P_{ij} = -\rho \overline{u_i'u_k'} \frac{\partial U_j}{\partial x_k} - \rho \overline{u_j'u_k'} \frac{\partial U_i}{\partial x_k}$$
+                            $$\nu_t = \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}$$
                         </div>
                         
-                        <h4>Pressure-Strain Correlation (Modeled):</h4>
+                        <h4>Modified Strain Rate:</h4>
                         <div class="equation-block">
-                            $$\Pi_{ij} = \overline{p' \left(\frac{\partial u_i'}{\partial x_j} + \frac{\partial u_j'}{\partial x_i}\right)} = \Pi_{ij,1} + \Pi_{ij,2} + \Pi_{ij,w}$$
+                            $$\tilde{S} = S + \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}, \quad f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}, \quad S = \sqrt{2 \Omega_{ij} \Omega_{ij}}$$
                         </div>
                         
-                        <h4>Linear Pressure-Strain Model (Rotta):</h4>
+                        <h4>Wall Destruction Function:</h4>
                         <div class="equation-block">
-                            $$\Pi_{ij,1} = -C_1 \rho \varepsilon \left(\frac{\overline{u_i'u_j'}}{k} - \frac{2}{3}\delta_{ij}\right)$$
-                        </div>
-                        
-                        <h4>Rapid Distortion (Isotropization of Production):</h4>
-                        <div class="equation-block">
-                            $$\Pi_{ij,2} = -C_2 \left(P_{ij} - \frac{2}{3}P \delta_{ij}\right)$$
-                        </div>
-                        
-                        <h4>Dissipation Rate Transport Equation:</h4>
-                        <div class="equation-block">
-                            $$\frac{\partial(\rho \varepsilon)}{\partial t} + \frac{\partial(\rho U_k \varepsilon)}{\partial x_k} = \frac{\partial}{\partial x_k}\left[\left(\mu + \frac{\mu_t}{\sigma_\varepsilon}\right) \frac{\partial \varepsilon}{\partial x_k}\right] + C_{1\varepsilon}\frac{\varepsilon}{k}P - C_{2\varepsilon}\rho\frac{\varepsilon^2}{k}$$
+                            $$f_w = g \left( \frac{1 + c_{w3}^6}{g^6 + c_{w3}^6} \right)^{1/6}, \quad g = r + c_{w2}(r^6 - r), \quad r = \frac{\tilde{\nu}}{\tilde{S} \kappa^2 d^2}$$
                         </div>
                         
                         <div class="term-definitions">
                             <h4>Variable Definitions:</h4>
-                            <div class="term-item"><strong>u'ᵢu'ⱼ:</strong> Reynolds stress tensor components (m²/s²)</div>
-                            <div class="term-item"><strong>Pᵢⱼ:</strong> Production tensor (exact, no modeling) (kg/(m·s³))</div>
-                            <div class="term-item"><strong>Πᵢⱼ:</strong> Pressure-strain correlation (modeled) (kg/(m·s³))</div>
-                            <div class="term-item"><strong>εᵢⱼ:</strong> Dissipation tensor (kg/(m·s³))</div>
-                            <div class="term-item"><strong>k:</strong> Turbulent kinetic energy = ½u'ᵢu'ᵢ (m²/s²)</div>
-                            <div class="term-item"><strong>ε:</strong> Dissipation rate (m²/s³)</div>
+                            <div class="term-item"><strong>ν̃:</strong> Modified turbulent viscosity (m²/s)</div>
+                            <div class="term-item"><strong>νₜ:</strong> Turbulent kinematic viscosity (m²/s)</div>
+                            <div class="term-item"><strong>d:</strong> Distance to nearest wall (m)</div>
+                            <div class="term-item"><strong>S:</strong> Magnitude of vorticity tensor (1/s)</div>
+                            <div class="term-item"><strong>χ:</strong> Viscosity ratio ν̃/ν</div>
                         </div>
                         
                         <div class="constants-table">
@@ -896,41 +892,40 @@
                                 <thead>
                                     <tr>
                                         <th>Constant</th>
-                                        <th>LRR Model</th>
-                                        <th>SSG Model</th>
+                                        <th>Value</th>
                                         <th>Physical Significance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>C₁</td>
-                                        <td>1.8</td>
-                                        <td>1.7</td>
-                                        <td>Return to isotropy coefficient</td>
+                                        <td>cb1</td>
+                                        <td>0.1355</td>
+                                        <td>Production coefficient</td>
                                     </tr>
                                     <tr>
-                                        <td>C₂</td>
-                                        <td>0.6</td>
-                                        <td>1.05</td>
-                                        <td>Rapid distortion coefficient</td>
+                                        <td>cb2</td>
+                                        <td>0.622</td>
+                                        <td>Cross-diffusion coefficient</td>
                                     </tr>
                                     <tr>
-                                        <td>C₁ε</td>
-                                        <td>1.44</td>
-                                        <td>1.44</td>
-                                        <td>ε production coefficient</td>
+                                        <td>σ</td>
+                                        <td>2/3</td>
+                                        <td>Turbulent Prandtl number</td>
                                     </tr>
                                     <tr>
-                                        <td>C₂ε</td>
-                                        <td>1.92</td>
-                                        <td>1.92</td>
-                                        <td>ε destruction coefficient</td>
+                                        <td>cv1</td>
+                                        <td>7.1</td>
+                                        <td>Viscosity function parameter</td>
                                     </tr>
                                     <tr>
-                                        <td>σε</td>
-                                        <td>1.3</td>
-                                        <td>1.3</td>
-                                        <td>Turbulent Prandtl number for ε</td>
+                                        <td>cw1</td>
+                                        <td>cb1/κ² + (1+cb2)/σ</td>
+                                        <td>Destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>κ</td>
+                                        <td>0.41</td>
+                                        <td>von Kármán constant</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -939,143 +934,171 @@
 
                     <!-- Physical Interpretation -->
                     <div class="guide-section">
-                        <h3>Physical Interpretation and Anisotropy Modeling</h3>
-                        <p class="guide-text">The Reynolds Stress Model represents the pinnacle of RANS modeling by directly computing the anisotropic Reynolds stress tensor without the fundamental limitation of the eddy viscosity hypothesis.</p>
+                        <h3>Physical Interpretation and Model Philosophy</h3>
+                        <p class="guide-text">The Spalart-Allmaras model represents a fundamental departure from traditional turbulence modeling approaches by focusing on a modified viscosity variable rather than turbulent kinetic energy and dissipation rate.</p>
                         
-                        <h4>Reynolds Stress Anisotropy</h4>
-                        <p class="guide-text">Unlike eddy viscosity models that assume isotropic turbulent viscosity, RSM captures the full anisotropic nature of Reynolds stresses. The stress tensor is not constrained to be proportional to the strain rate tensor, enabling prediction of complex flow phenomena like secondary flows and stress-driven separation.</p>
+                        <h4>Modified Viscosity Concept</h4>
+                        <p class="guide-text">The variable ν̃ is designed to asymptotically approach the turbulent viscosity in the far field while maintaining proper wall behavior. This approach eliminates the need for explicit length scale modeling, with the wall distance d providing the necessary geometric information.</p>
                         
-                        <h4>Pressure-Strain Correlation Physics</h4>
-                        <p class="guide-text">The pressure-strain correlation Πᵢⱼ represents the redistribution of energy among different stress components and the return to isotropy. The Rotta term (Π₁) drives stresses toward isotropy, while the rapid distortion term (Π₂) accounts for the immediate response to mean flow deformation.</p>
+                        <h4>Wall Distance Dependency</h4>
+                        <p class="guide-text">The explicit dependence on wall distance d makes the model inherently suitable for wall-bounded flows but potentially problematic for free shear flows far from walls. The production term scales with ν̃·S, while destruction scales as (ν̃/d)², providing proper balance near walls.</p>
                         
-                        <h4>Exact Production Term</h4>
-                        <p class="guide-text">The production term Pᵢⱼ requires no modeling assumptions, representing the exact extraction of turbulent energy from the mean flow. This provides superior accuracy in complex flows where production mechanisms vary significantly among stress components.</p>
+                        <h4>Single-Equation Advantage</h4>
+                        <p class="guide-text">By solving only one additional transport equation, the model avoids the complex coupling issues associated with two-equation models. This leads to superior numerical robustness and faster convergence, particularly important for complex aerospace geometries.</p>
                         
-                        <h4>Wall Effects and Near-Wall Treatment</h4>
-                        <p class="guide-text">Near solid boundaries, additional wall reflection terms (Πᵢⱼ,w) account for the redistribution effects of viscous pressure fluctuations. These terms ensure proper stress behavior at walls, particularly important for heat transfer and skin friction prediction.</p>
+                        <h4>Aerospace Design Philosophy</h4>
+                        <p class="guide-text">The model was calibrated specifically for attached and mildly separated boundary layers typical of aerospace applications. The constants were determined from airfoil data, flat plate boundary layers, and simple separation cases relevant to aircraft design.</p>
                     </div>
 
-                    <!-- Model Variants and Closure Approaches -->
+                    <!-- Model Assumptions and Limitations -->
                     <div class="guide-section">
-                        <h3>Model Variants and Closure Approaches</h3>
-                        <p class="guide-text">Several RSM variants exist, differing primarily in their pressure-strain correlation models and near-wall treatment approaches.</p>
+                        <h3>Model Assumptions and Theoretical Limitations</h3>
+                        <p class="guide-text">The Spalart-Allmaras model incorporates several fundamental assumptions that define its range of applicability and inherent limitations.</p>
                         
-                        <h4>Linear Pressure-Strain Models</h4>
-                        <p class="guide-text">The Launder, Reece, and Rodi (LRR) model provides a linear relationship between pressure-strain correlation and stress anisotropy. The Speziale, Sarkar, and Gatski (SSG) model improves upon LRR with better performance in homogeneous flows and realizability constraints.</p>
+                        <h4>Eddy Viscosity Assumption</h4>
+                        <p class="guide-text">Like all eddy viscosity models, S-A assumes isotropic turbulence and that Reynolds stresses are proportional to mean strain rates. This fails in:</p>
                         
-                        <h4>Quadratic Pressure-Strain Models</h4>
-                        <p class="guide-text">More advanced models include quadratic terms in the anisotropy tensor, providing better representation of strong anisotropic flows but at increased computational cost and complexity.</p>
-                        
-                        <h4>Wall Treatment Approaches</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Low-Reynolds number: Direct integration to wall with damping functions</span>
+                                <span class="guide-text">Flows with significant streamline curvature and system rotation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Wall function approach: Enhanced wall functions accounting for anisotropy</span>
+                                <span class="guide-text">Three-dimensional separated flows with crossflow effects</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Two-layer approach: RSM in outer region, one-equation model near wall</span>
+                                <span class="guide-text">Flows with significant Reynolds stress anisotropy</span>
                             </li>
                         </ul>
                         
-                        <h4>Omega-Based RSM</h4>
-                        <p class="guide-text">Alternative formulations solve for specific dissipation rate ω instead of ε, providing better near-wall behavior similar to k-ω models while maintaining the anisotropic stress predictions of RSM.</p>
+                        <h4>Wall Distance Dependency</h4>
+                        <p class="guide-text">The explicit wall distance dependence creates challenges in:</p>
+                        
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Multi-element airfoils with gap flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Free shear flows far from solid boundaries</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Complex geometries with ambiguous wall distance definitions</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Aerospace Calibration Bias</h4>
+                        <p class="guide-text">The model's calibration for aerospace flows may limit performance in industrial applications with different flow characteristics, such as internal flows with heat transfer or flows with massive separation.</p>
                     </div>
 
-                    <!-- Applications and Validation -->
+                    <!-- Validation Database and Performance -->
                     <div class="guide-section">
-                        <h3>Model Applications and Validation Database</h3>
-                        <p class="guide-text">RSM excels in flows where Reynolds stress anisotropy significantly affects the mean flow development, particularly in cases where eddy viscosity models fundamentally fail.</p>
+                        <h3>Model Validation and Performance Database</h3>
+                        <p class="guide-text">The Spalart-Allmaras model has been extensively validated against aerospace-relevant flow configurations, establishing its reputation as the industry standard for external aerodynamics.</p>
                         
                         <h4>Successful Applications</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Strongly swirling flows with cyclone-type geometries</span>
+                                <span class="guide-text">Zero pressure gradient boundary layers with excellent skin friction prediction</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Flows with system rotation and Coriolis effects</span>
+                                <span class="guide-text">Airfoil flows at moderate angles of attack with good lift and drag prediction</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Secondary flow development in non-circular ducts</span>
+                                <span class="guide-text">Aircraft configuration analysis including wing-body combinations</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Buoyancy-driven flows with strong stratification</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Complex 3D separation with crossflow effects</span>
+                                <span class="guide-text">Helicopter rotor blade analysis and rotorcraft applications</span>
                             </li>
                         </ul>
-                        
-                        <h4>Benchmark Test Cases</h4>
-                        <p class="guide-text">Standard validation includes the square duct secondary flow, rotating channel flow, impinging jets, backward-facing step with ribs, and various swirling flow configurations. RSM generally shows superior performance compared to eddy viscosity models in these anisotropic flow scenarios.</p>
                         
                         <h4>Known Limitations</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Computational cost: 3-5x more expensive than two-equation models</span>
+                                <span class="guide-text">Over-prediction of separation in adverse pressure gradients</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Convergence challenges due to strong coupling between equations</span>
+                                <span class="guide-text">Poor performance in free shear layers and jet flows</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Pressure-strain modeling remains largely empirical</span>
+                                <span class="guide-text">Inadequate representation of crossflow effects in 3D separation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Can be overly sensitive to boundary conditions and numerical schemes</span>
+                                <span class="guide-text">Limited accuracy in unsteady separated flows</span>
                             </li>
                         </ul>
+                        
+                        <h4>Benchmark Test Cases</h4>
+                        <p class="guide-text">Standard validation includes the RAE 2822 airfoil, NACA 0012 at various angles of attack, flat plate boundary layer, and the NASA Common Research Model for transport aircraft. These cases provide quantitative measures of the model's performance across the aerospace design space.</p>
                     </div>
 
-                    <!-- Advanced Topics and Modern Developments -->
+                    <!-- Modern Variants and Extensions -->
                     <div class="guide-section">
-                        <h3>Advanced Topics and Modern Developments</h3>
-                        <p class="guide-text">Contemporary RSM research focuses on improving pressure-strain correlation models, developing more efficient numerical algorithms, and extending RSM to complex physical phenomena.</p>
+                        <h3>Modern Variants and Theoretical Extensions</h3>
+                        <p class="guide-text">Several variants of the Spalart-Allmaras model have been developed to address specific limitations while maintaining the core single-equation framework.</p>
                         
-                        <h4>Realizability and Consistency</h4>
-                        <p class="guide-text">Modern RSM implementations ensure realizability constraints are satisfied, preventing non-physical states where normal stresses become negative or the stress tensor loses positive semi-definiteness. This involves careful design of pressure-strain correlations and dissipation modeling.</p>
+                        <h4>Rotation and Curvature Correction (SA-RC)</h4>
+                        <p class="guide-text">This variant incorporates rotation and curvature effects through modification of the production term:</p>
+                        <div class="equation-block">
+                            $$\tilde{S} = S + f_{rot} \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}$$
+                        </div>
+                        <p class="guide-text">where f_rot accounts for system rotation and streamline curvature effects, improving predictions in turbomachinery and highly curved flows.</p>
                         
-                        <h4>Elliptic Relaxation Approach</h4>
-                        <p class="guide-text">The v²-f model and elliptic relaxation RSM variants solve additional elliptic equations to better represent near-wall turbulence anisotropy without explicit wall distance dependencies, improving robustness in complex geometries.</p>
+                        <h4>Negative SA (SA-neg)</h4>
+                        <p class="guide-text">This modification allows the working variable ν̃ to become negative in regions of high strain, enabling better representation of laminar-turbulent transition and separated flow physics. The negative values are prevented from contributing to turbulent viscosity through appropriate limiters.</p>
                         
-                        <h4>Machine Learning Enhancement</h4>
-                        <p class="guide-text">Recent developments incorporate machine learning to improve pressure-strain correlation modeling, using high-fidelity DNS/LES data to develop data-driven closure models that outperform traditional algebraic formulations.</p>
+                        <h4>Quadratic Constitutive Relation (SA-QCR)</h4>
+                        <p class="guide-text">This extension replaces the linear eddy viscosity assumption with a quadratic stress-strain relationship, partially addressing Reynolds stress anisotropy while maintaining computational efficiency.</p>
                         
-                        <h4>Hybrid RANS-LES Applications</h4>
-                        <p class="guide-text">RSM serves as the RANS component in advanced hybrid approaches, particularly for flows where anisotropic effects in attached regions significantly influence the separated regions that transition to LES treatment.</p>
+                        <h4>Delayed Detached Eddy Simulation (SA-DDES)</h4>
+                        <p class="guide-text">This hybrid RANS-LES approach uses the SA model as the underlying RANS formulation, switching to LES behavior in separated regions while maintaining RANS mode in attached boundary layers.</p>
                     </div>
 
                     <!-- Numerical Implementation -->
                     <div class="guide-section">
-                        <h3>Numerical Implementation and Best Practices</h3>
-                        <p class="guide-text">Successful RSM implementation requires careful attention to numerical methods, convergence strategies, and computational resource management due to the model's complexity and strong coupling.</p>
+                        <h3>Advanced Numerical Implementation and Best Practices</h3>
+                        <p class="guide-text">The Spalart-Allmaras model's single-equation nature provides significant advantages in numerical implementation, but several considerations are critical for robust performance.</p>
                         
-                        <h4>Solution Strategies</h4>
+                        <h4>Wall Distance Computation</h4>
+                        <p class="guide-text">Accurate and efficient wall distance calculation is crucial for SA model performance. Modern implementations use:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Coupled solution of stress equations to reduce iterations</span>
+                                <span class="guide-text">Eikonal equation solvers for complex geometries</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Conservative under-relaxation factors (0.3-0.5) for stress equations</span>
+                                <span class="guide-text">Fast marching methods for computational efficiency</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Careful initialization with simpler model results</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Monitoring of stress realizability during solution process</span>
+                                <span class="guide-text">Signed distance functions for multi-body configurations</span>
                             </li>
                         </ul>
                         
-                        <h4>Mesh Requirements</h4>
-                        <p class="guide-text">RSM typically requires finer meshes than eddy viscosity models due to the complexity of stress gradient resolution. Near-wall treatment depends on the chosen variant (y⁺ < 1 for low-Re models, y⁺ ≈ 30 for wall functions).</p>
+                        <h4>Source Term Treatment</h4>
+                        <p class="guide-text">The destruction term requires careful implicit treatment to ensure numerical stability:</p>
+                        <div class="equation-block">
+                            $$\text{Destruction} = -c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2 \rightarrow -c_{w1} f_w \frac{\tilde{\nu}}{d^2} \cdot \tilde{\nu}$$
+                        </div>
                         
                         <h4>Boundary Conditions</h4>
-                        <p class="guide-text">Proper specification of Reynolds stress boundary conditions requires understanding of flow physics. Inlet profiles should reflect realistic turbulence anisotropy when available from experiments or higher-fidelity simulations.</p>
+                        <p class="guide-text">Proper boundary condition implementation is essential:</p>
                         
-                        <h4>Computational Efficiency</h4>
-                        <p class="guide-text">Modern implementations optimize memory usage through efficient stress tensor storage and leverage parallel computing architectures. Despite advances, RSM remains computationally demanding and should be reserved for cases where anisotropic effects are crucial to flow physics.</p>
-                    </div>                    </div>
-                </div>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Wall: ν̃ = 0 (no-slip condition)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Inlet: ν̃ = 3νₜ to 5νₜ (typical range for turbulent inlets)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Outlet: Zero gradient or specified based on upstream conditions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Symmetry: Zero normal gradient</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Convergence Enhancement</h4>
+                        <p class="guide-text">The single-equation nature typically provides excellent convergence, but optimization techniques include appropriate under-relaxation (typically 0.7-0.8), preconditioning for low-speed flows, and coupled solution algorithms for strongly coupled systems. Monitoring both scaled residuals and integral quantities ensures proper convergence assessment.</p>
+                    </div>                </div>
             </div>
         </div>
     </div>
