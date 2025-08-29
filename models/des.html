@@ -102,18 +102,6 @@
             width: 100%;
         }
 
-        .nav-tabs {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-tab {
-            padding: 0.5rem 0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
         .logo::after {
             content: '';
             position: absolute;
@@ -133,9 +121,46 @@
             transition: color 0.2s ease;
         }
 
+                .nav-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
         .nav-tab:hover,
         .nav-tab.active {
-            color: #2d3748;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
         .container {
@@ -220,7 +245,6 @@
         .content-tab:first-child {
             border-left: none;
         }
-
 
         .tab-content {
             display: none;
@@ -447,16 +471,6 @@
                 flex-direction: column;
                 gap: 1rem;
                 padding: 0 1rem;
-            }
-
-            .nav-tabs {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .nav-tab {
-                font-size: 0.8rem;
             }
 
             .page-header {
