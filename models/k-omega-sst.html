@@ -122,9 +122,9 @@
         font-size: 0.9rem;
         font-weight: 500;
         border-radius: 12px;
+            white-space: nowrap;
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
-        overflow: hidden;
         }
         .nav-tab::before {
         content: '';
@@ -194,12 +194,12 @@
         font-size: 0.9rem;
         font-weight: 500;
         border-radius: 12px;
+            white-space: nowrap;
         border: none;
         background: none;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
-        overflow: hidden;
         }
         .content-tab::before {
         content: '';
@@ -415,7 +415,6 @@
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            overflow: hidden;
             margin: 1.5rem 0;
         }
 
@@ -470,7 +469,32 @@
                 padding: 1.5rem;
                 margin-bottom: 2rem;
             }
-        }
+        
+            .nav-tabs {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+
+            .content-tabs {
+                gap: 1rem;
+                padding: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
     </style>
 </head>
 <body>
