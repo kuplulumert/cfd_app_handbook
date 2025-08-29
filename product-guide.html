@@ -91,13 +91,19 @@
         }
 
         .nav-tab {
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
-            transition: all 0.3s ease;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .logo::after {
+        .nav-tab::after {
             content: '';
             position: absolute;
             bottom: -4px;
@@ -108,13 +114,8 @@
             transition: width 0.3s ease;
         }
 
-        .logo:hover::after {
+        .nav-tab:hover::after {
             width: 100%;
-            color: #64748b;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            font-size: 0.875rem;
-            font-weight: 500;
         }
 
         .nav-tab:hover {

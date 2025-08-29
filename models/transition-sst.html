@@ -95,35 +95,16 @@
         }
 
         .nav-tab {
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
-        }
-
-        .logo:hover::after {
-            width: 100%;
-            color: #64748b;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .nav-tab:hover {
-            background: rgba(59,130,246,0.1);
-            color: #3b82f6;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         .nav-tab.active {
@@ -139,23 +120,6 @@
             text-decoration: none;
             transition: all 0.3s ease;
             position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
-        }
-
-        .logo:hover::after {
-            width: 100%;
-            font-weight: 500;
-            transition: all 0.3s ease;
         }
 
         .back-link:hover {
