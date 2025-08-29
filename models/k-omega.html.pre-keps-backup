@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Reynolds Stress Model - CFD Handbook</title>
+    <title>k-ω Model - CFD Handbook</title>
     
     <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -118,41 +118,45 @@
         }
 
                 .nav-tabs {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
         }
+
         .nav-tab {
-        padding: 0.75rem 1.5rem;
-        text-decoration: none;
-        color: #4a5568;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 12px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
+
         .nav-tab::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-        opacity: 0;
-        transition: opacity 0.3s ease;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
         .nav-tab:hover::before,
         .nav-tab.active::before {
-        opacity: 1;
+            opacity: 1;
         }
+
         .nav-tab:hover,
         .nav-tab.active {
-        color: #667eea;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
         .container {
@@ -186,53 +190,58 @@
         }
 
                 .content-tabs {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-        padding: 1.5rem 2rem;
-        margin: 0;
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
         }
+
         .content-tab {
-        padding: 0.75rem 1.5rem;
-        text-decoration: none;
-        color: #4a5568;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 12px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
+
         .content-tab::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-        opacity: 0;
-        transition: opacity 0.3s ease;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
         .content-tab:hover::before,
         .content-tab.active::before {
-        opacity: 1;
+            opacity: 1;
         }
+
         .content-tab:hover,
         .content-tab.active {
-        color: #667eea;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
+
         .content-tab:first-child {
-        border-left: none;
+            border-left: none;
         }
 
         .tab-content {
@@ -539,8 +548,8 @@
                     <a href="k-omega-sst.html" class="nav-tab">k-ω SST</a>
                     <a href="inviscid.html" class="nav-tab">Inviscid</a>
                     <a href="spalart-allmaras.html" class="nav-tab">Spalart-Allmaras</a>
-                    <a href="k-omega.html" class="nav-tab">k-ω</a>
-                    <a href="reynolds-stress.html" class="nav-tab active">RSM</a>
+                    <a href="k-omega.html" class="nav-tab active">k-ω</a>
+                    <a href="reynolds-stress.html" class="nav-tab">RSM</a>
                     <a href="des.html" class="nav-tab">DES</a>
                     <a href="les.html" class="nav-tab">LES</a>
                 </div>
@@ -551,8 +560,8 @@
 
             <!-- Page Header -->
             <div class="page-header">
-                <h1>Reynolds Stress Model</h1>
-                <p class="model-subtitle">Advanced seven-equation model for complex anisotropic turbulent flows</p>
+                <h1>k-ω Model</h1>
+                <p class="model-subtitle">Two-equation model with superior near-wall treatment and boundary layer accuracy</p>
             </div>
 
             <!-- Content Tabs -->
@@ -570,16 +579,16 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Seven-equation RANS model</strong> solving directly for all six Reynolds stress components plus dissipation rate.</span>
+                                <span class="guide-text"><strong>Two-equation RANS model</strong> solving for turbulent kinetic energy (k) and specific dissipation rate (ω).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Most advanced turbulence closure</strong> capturing full anisotropic turbulence behavior without eddy viscosity assumptions.</span>
+                                <span class="guide-text"><strong>Superior near-wall behavior</strong> with direct integration to wall surface without wall functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Superior accuracy</strong> for complex flows with strong streamline curvature, swirl, and rotation effects.</span>
+                                <span class="guide-text"><strong>Excellent boundary layer prediction</strong> for attached flows and favorable pressure gradients.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Research-grade model</strong> providing detailed insight into turbulence structure and physics.</span>
+                                <span class="guide-text"><strong>Foundation model</strong> that led to development of advanced variants like SST and BSL models.</span>
                             </li>
                         </ul>
                     </div>
@@ -589,19 +598,19 @@
                         <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Anisotropic turbulence:</strong> Directly computes all six Reynolds stress components without isotropic assumptions.</span>
+                                <span class="guide-text"><strong>Excellent near-wall behavior:</strong> Superior <strong>boundary layer prediction</strong> without wall functions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Complex flow accuracy:</strong> <strong>Superior performance</strong> in flows with strong streamline curvature, swirl, and rotation.</span>
+                                <span class="guide-text"><strong>Low Reynolds number capability:</strong> <strong>Direct integration to wall</strong> with y⁺ < 1 requirements.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>No eddy viscosity limitation:</strong> Eliminates Boussinesq approximation constraints for <strong>highly anisotropic flows</strong>.</span>
+                                <span class="guide-text"><strong>Attached flow accuracy:</strong> <strong>Excellent performance</strong> for favorable pressure gradients and boundary layers.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Secondary flow prediction:</strong> Captures <strong>corner flows, duct flows</strong> with secondary circulation patterns.</span>
+                                <span class="guide-text"><strong>Simple formulation:</strong> <strong>Straightforward implementation</strong> with well-understood behavior.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Research capabilities:</strong> Provides detailed insight into <strong>turbulence structure and physics</strong>.</span>
+                                <span class="guide-text"><strong>Educational value:</strong> <strong>Foundation model</strong> for understanding ω-based turbulence modeling.</span>
                             </li>
                         </ul>
                     </div>
@@ -611,16 +620,16 @@
                         <h3>3. Limitations</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Computational cost:</strong> <strong>3-4x higher than two-equation models</strong> due to seven transport equations.</span>
+                                <span class="guide-text"><strong>Freestream sensitivity:</strong> <strong>Excessive dependence</strong> on freestream ω values and inlet conditions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Memory requirements:</strong> <strong>Significant storage</strong> for six Reynolds stress components plus dissipation rate.</span>
+                                <span class="guide-text"><strong>Separation prediction:</strong> <strong>Poor performance</strong> in adverse pressure gradients and separated flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Convergence challenges:</strong> More difficult convergence due to <strong>equation coupling and stiffness</strong>.</span>
+                                <span class="guide-text"><strong>Free shear flows:</strong> <strong>Inaccurate prediction</strong> of jets, mixing layers, and wakes.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Numerical stability:</strong> Requires careful <strong>under-relaxation and initialization</strong> for stable solutions.</span>
+                                <span class="guide-text"><strong>Freestream sensitivity:</strong> <strong>Sensitive to inlet ω values</strong> in external flow calculations.</span>
                             </li>
                         </ul>
                     </div>
@@ -649,45 +658,50 @@
                         </div>
                     </div>
 
-                    <!-- When to Choose RSM Over Eddy Viscosity Models -->
+                    <!-- When to Choose k-ω Over k-ε -->
                     <div class="guide-section guide-choice">
-                        <h3>5. When to Choose RSM Over Eddy Viscosity Models</h3>
+                        <h3>5. When to Choose k-ω Over k-ε</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Strongly anisotropic flows:</strong> When <strong>Reynolds stress anisotropy</strong> is critical to flow physics.</span>
+                                
+                                <span class="guide-text"><strong>Wall-bounded flows:</strong> When accurate <strong>wall shear stress and heat transfer</strong> are critical.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Swirling and rotating flows:</strong> Cyclones, turbomachinery, and <strong>system rotation effects</strong>.</span>
+                                
+                                <span class="guide-text"><strong>Separation-prone flows:</strong> Diffusers, airfoils at high angles, curved channels.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Complex 3D separation:</strong> Where <strong>crossflow effects</strong> and corner flows dominate.</span>
+                                
+                                <span class="guide-text"><strong>Pressure-driven flows:</strong> Where <strong>adverse pressure gradients</strong> dominate.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Buoyant flows:</strong> Natural convection with <strong>strong stratification</strong> and secondary flows.</span>
+                                
+                                <span class="guide-text"><strong>Mixed flow types:</strong> Combination of attached and separated flow regions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text"><strong>Curved boundaries:</strong> Flow over <strong>curved surfaces</strong> with streamline curvature effects.</span>
+                                
+                                <span class="guide-text"><strong>High accuracy requirements:</strong> When <strong>±5% accuracy</strong> is needed vs <strong>±15% for k-ε</strong>.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- When NOT to Use RSM -->
+                    <!-- When NOT to Use k-ω -->
                     <div class="guide-section guide-avoid">
-                        <h3>6. When NOT to Use RSM</h3>
+                        <h3>6. When NOT to Use k-ω</h3>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Simple attached flows:</span> Straight ducts, pipes - simpler models are adequate and much faster</span>
+                            <span class="guide-text"><span class="guide-emphasis">Simple internal flows:</span> Straight ducts, pipes - k-ε is adequate and faster</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Preliminary design:</span> Early concept studies where computational cost outweighs accuracy benefits</span>
+                            <span class="guide-text"><span class="guide-emphasis">Preliminary design:</span> Early concept studies where speed matters more than precision</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Large domain studies:</span> Massive computational cost - use eddy viscosity models instead</span>
+                            <span class="guide-text"><span class="guide-emphasis">Large domains:</span> External flows around buildings - computational cost prohibitive</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Limited computational resources:</span> RSM requires 3-5x more CPU time and memory</span>
+                            <span class="guide-text"><span class="guide-emphasis">Highly swirling flows:</span> Cyclones, swirl combustors - consider RSM instead</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Convergence issues:</span> Complex coupling can lead to numerical instabilities</span>
+                            <span class="guide-text"><span class="guide-emphasis">Freestream sensitivity:</span> Sensitive to inlet ω values - use SST variant instead</span>
                         </div>
                     </div>
 
@@ -839,57 +853,47 @@
                     <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The Reynolds Stress Model (RSM) represents the most advanced level of RANS turbulence closure, directly solving transport equations for all six independent Reynolds stress components plus the dissipation rate, eliminating the eddy viscosity hypothesis entirely.</p>
+                        <p class="guide-text">The k-ω turbulence model was developed by David C. Wilcox in 1988 as an alternative to k-ε models, specifically designed to provide superior near-wall treatment and boundary layer prediction without the need for wall functions.</p>
                         
                         <h4>Timeline and Evolution</h4>
-                        <p class="guide-text">The theoretical foundation for RSM was established in the 1970s with the work of Hanjalic and Launder (1972), who derived the exact transport equations for Reynolds stresses. The Launder, Reece, and Rodi (1975) model provided the first practical implementation with closure approximations for pressure-strain correlations.</p>
+                        <p class="guide-text">Wilcox's development of the k-ω model began in the 1980s with the recognition that k-ε models had fundamental limitations in the near-wall region. The original 1988 formulation introduced the specific dissipation rate ω as an alternative to the dissipation rate ε, providing better scaling properties near solid boundaries.</p>
                         
-                        <p class="guide-text">Subsequent developments included the Speziale, Sarkar, and Gatski (1991) model with improved pressure-strain modeling, the omega-based RSM variants by Wilcox (1993), and modern implementations like the Stress-Omega model. Despite computational advances, RSM remains the most resource-intensive RANS approach, reserved for cases where Reynolds stress anisotropy is critical.</p>
+                        <p class="guide-text">The 1998 revision (Wilcox k-ω '98) incorporated stress limiter functions and improved the model's performance in adverse pressure gradients. The 2006 version (Wilcox k-ω '06) further refined the model constants and addressed issues with separated flows. Despite being superseded by SST variants for many applications, the original k-ω model remains important for educational purposes and specific boundary layer applications.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
                         <h3>Mathematical Foundation and Transport Equations</h3>
-                        <p class="guide-text">The Reynolds Stress Model solves seven transport equations: six for the independent Reynolds stress components and one for either dissipation rate or specific dissipation rate, providing complete closure without eddy viscosity assumptions.</p>
+                        <p class="guide-text">The k-ω model solves two transport equations for turbulent kinetic energy (k) and specific dissipation rate (ω), providing closure for the Reynolds-averaged Navier-Stokes equations through the eddy viscosity hypothesis.</p>
                         
-                        <h4>Reynolds Stress Transport Equation:</h4>
+                        <h4>Turbulent Kinetic Energy Transport Equation:</h4>
                         <div class="equation-block">
-                            $$\frac{\partial(\rho \overline{u_i'u_j'})}{\partial t} + \frac{\partial(\rho U_k \overline{u_i'u_j'})}{\partial x_k} = P_{ij} + D_{ij} + \Pi_{ij} - \varepsilon_{ij}$$
+                            $$\frac{\partial(\rho k)}{\partial t} + \frac{\partial(\rho k u_j)}{\partial x_j} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_k}\right) \frac{\partial k}{\partial x_j}\right] + P_k - \beta^* \rho k \omega$$
                         </div>
                         
-                        <h4>Production Term (Exact):</h4>
+                        <h4>Specific Dissipation Rate Transport Equation:</h4>
                         <div class="equation-block">
-                            $$P_{ij} = -\rho \overline{u_i'u_k'} \frac{\partial U_j}{\partial x_k} - \rho \overline{u_j'u_k'} \frac{\partial U_i}{\partial x_k}$$
+                            $$\frac{\partial(\rho \omega)}{\partial t} + \frac{\partial(\rho \omega u_j)}{\partial x_j} = \frac{\partial}{\partial x_j}\left[\left(\mu + \frac{\mu_t}{\sigma_\omega}\right) \frac{\partial \omega}{\partial x_j}\right] + \alpha \frac{\omega}{k} P_k - \beta \rho \omega^2$$
                         </div>
                         
-                        <h4>Pressure-Strain Correlation (Modeled):</h4>
+                        <h4>Turbulent Viscosity Definition:</h4>
                         <div class="equation-block">
-                            $$\Pi_{ij} = \overline{p' \left(\frac{\partial u_i'}{\partial x_j} + \frac{\partial u_j'}{\partial x_i}\right)} = \Pi_{ij,1} + \Pi_{ij,2} + \Pi_{ij,w}$$
+                            $$\mu_t = \rho \frac{k}{\omega}$$
                         </div>
                         
-                        <h4>Linear Pressure-Strain Model (Rotta):</h4>
+                        <h4>Production Term:</h4>
                         <div class="equation-block">
-                            $$\Pi_{ij,1} = -C_1 \rho \varepsilon \left(\frac{\overline{u_i'u_j'}}{k} - \frac{2}{3}\delta_{ij}\right)$$
-                        </div>
-                        
-                        <h4>Rapid Distortion (Isotropization of Production):</h4>
-                        <div class="equation-block">
-                            $$\Pi_{ij,2} = -C_2 \left(P_{ij} - \frac{2}{3}P \delta_{ij}\right)$$
-                        </div>
-                        
-                        <h4>Dissipation Rate Transport Equation:</h4>
-                        <div class="equation-block">
-                            $$\frac{\partial(\rho \varepsilon)}{\partial t} + \frac{\partial(\rho U_k \varepsilon)}{\partial x_k} = \frac{\partial}{\partial x_k}\left[\left(\mu + \frac{\mu_t}{\sigma_\varepsilon}\right) \frac{\partial \varepsilon}{\partial x_k}\right] + C_{1\varepsilon}\frac{\varepsilon}{k}P - C_{2\varepsilon}\rho\frac{\varepsilon^2}{k}$$
+                            $$P_k = \mu_t \frac{\partial u_i}{\partial x_j} \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right)$$
                         </div>
                         
                         <div class="term-definitions">
                             <h4>Variable Definitions:</h4>
-                            <div class="term-item"><strong>u'ᵢu'ⱼ:</strong> Reynolds stress tensor components (m²/s²)</div>
-                            <div class="term-item"><strong>Pᵢⱼ:</strong> Production tensor (exact, no modeling) (kg/(m·s³))</div>
-                            <div class="term-item"><strong>Πᵢⱼ:</strong> Pressure-strain correlation (modeled) (kg/(m·s³))</div>
-                            <div class="term-item"><strong>εᵢⱼ:</strong> Dissipation tensor (kg/(m·s³))</div>
-                            <div class="term-item"><strong>k:</strong> Turbulent kinetic energy = ½u'ᵢu'ᵢ (m²/s²)</div>
-                            <div class="term-item"><strong>ε:</strong> Dissipation rate (m²/s³)</div>
+                            <div class="term-item"><strong>k:</strong> Turbulent kinetic energy (m²/s²)</div>
+                            <div class="term-item"><strong>ω:</strong> Specific dissipation rate (1/s)</div>
+                            <div class="term-item"><strong>μₜ:</strong> Turbulent viscosity (kg/(m·s))</div>
+                            <div class="term-item"><strong>Pₖ:</strong> Production of turbulent kinetic energy (kg/(m·s³))</div>
+                            <div class="term-item"><strong>ρ:</strong> Fluid density (kg/m³)</div>
+                            <div class="term-item"><strong>uⱼ:</strong> Reynolds-averaged velocity components (m/s)</div>
                         </div>
                         
                         <div class="constants-table">
@@ -897,41 +901,41 @@
                                 <thead>
                                     <tr>
                                         <th>Constant</th>
-                                        <th>LRR Model</th>
-                                        <th>SSG Model</th>
+                                        <th>Value (1988)</th>
+                                        <th>Value (2006)</th>
                                         <th>Physical Significance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>C₁</td>
-                                        <td>1.8</td>
-                                        <td>1.7</td>
-                                        <td>Return to isotropy coefficient</td>
+                                        <td>β*</td>
+                                        <td>0.09</td>
+                                        <td>0.09</td>
+                                        <td>Dissipation coefficient</td>
                                     </tr>
                                     <tr>
-                                        <td>C₂</td>
+                                        <td>α</td>
+                                        <td>5/9</td>
+                                        <td>0.52</td>
+                                        <td>Production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>β</td>
+                                        <td>0.075</td>
+                                        <td>0.0708</td>
+                                        <td>ω destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>σₖ</td>
+                                        <td>2.0</td>
                                         <td>0.6</td>
-                                        <td>1.05</td>
-                                        <td>Rapid distortion coefficient</td>
+                                        <td>Turbulent Prandtl number for k</td>
                                     </tr>
                                     <tr>
-                                        <td>C₁ε</td>
-                                        <td>1.44</td>
-                                        <td>1.44</td>
-                                        <td>ε production coefficient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C₂ε</td>
-                                        <td>1.92</td>
-                                        <td>1.92</td>
-                                        <td>ε destruction coefficient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>σε</td>
-                                        <td>1.3</td>
-                                        <td>1.3</td>
-                                        <td>Turbulent Prandtl number for ε</td>
+                                        <td>σ_ω</td>
+                                        <td>2.0</td>
+                                        <td>0.5</td>
+                                        <td>Turbulent Prandtl number for ω</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -940,141 +944,177 @@
 
                     <!-- Physical Interpretation -->
                     <div class="guide-section">
-                        <h3>Physical Interpretation and Anisotropy Modeling</h3>
-                        <p class="guide-text">The Reynolds Stress Model represents the pinnacle of RANS modeling by directly computing the anisotropic Reynolds stress tensor without the fundamental limitation of the eddy viscosity hypothesis.</p>
+                        <h3>Physical Interpretation and Model Philosophy</h3>
+                        <p class="guide-text">The k-ω model represents a fundamental advance in turbulence modeling by using the specific dissipation rate ω instead of the dissipation rate ε, providing superior behavior in the near-wall region and boundary layers.</p>
                         
-                        <h4>Reynolds Stress Anisotropy</h4>
-                        <p class="guide-text">Unlike eddy viscosity models that assume isotropic turbulent viscosity, RSM captures the full anisotropic nature of Reynolds stresses. The stress tensor is not constrained to be proportional to the strain rate tensor, enabling prediction of complex flow phenomena like secondary flows and stress-driven separation.</p>
+                        <h4>Specific Dissipation Rate Concept</h4>
+                        <p class="guide-text">The variable ω = ε/(β*k) represents the frequency of the energy-containing turbulent eddies. This formulation provides better scaling properties near walls compared to ε-based models, eliminating the need for wall functions in many applications.</p>
                         
-                        <h4>Pressure-Strain Correlation Physics</h4>
-                        <p class="guide-text">The pressure-strain correlation Πᵢⱼ represents the redistribution of energy among different stress components and the return to isotropy. The Rotta term (Π₁) drives stresses toward isotropy, while the rapid distortion term (Π₂) accounts for the immediate response to mean flow deformation.</p>
+                        <h4>Near-Wall Behavior Advantages</h4>
+                        <p class="guide-text">The k-ω formulation naturally integrates to the wall with boundary conditions k = 0 and ω = 6ν/(β₁y₁²) where y₁ is the distance to the first grid point. This provides superior boundary layer prediction without complex wall function treatments.</p>
                         
-                        <h4>Exact Production Term</h4>
-                        <p class="guide-text">The production term Pᵢⱼ requires no modeling assumptions, representing the exact extraction of turbulent energy from the mean flow. This provides superior accuracy in complex flows where production mechanisms vary significantly among stress components.</p>
+                        <h4>Length Scale Definition</h4>
+                        <p class="guide-text">The turbulent length scale in k-ω models is defined as l_t = √k/ω, which provides appropriate scaling near walls and in boundary layers. This contrasts with k-ε models where the length scale k^(3/2)/ε becomes problematic near solid boundaries.</p>
                         
-                        <h4>Wall Effects and Near-Wall Treatment</h4>
-                        <p class="guide-text">Near solid boundaries, additional wall reflection terms (Πᵢⱼ,w) account for the redistribution effects of viscous pressure fluctuations. These terms ensure proper stress behavior at walls, particularly important for heat transfer and skin friction prediction.</p>
+                        <h4>Direct Wall Integration</h4>
+                        <p class="guide-text">Unlike k-ε models that require wall functions or complex low-Reynolds number modifications, the k-ω model can integrate directly to the wall surface with proper boundary conditions, making it particularly suitable for boundary layer applications.</p>
                     </div>
 
-                    <!-- Model Variants and Closure Approaches -->
+                    <!-- Model Limitations and Sensitivity -->
                     <div class="guide-section">
-                        <h3>Model Variants and Closure Approaches</h3>
-                        <p class="guide-text">Several RSM variants exist, differing primarily in their pressure-strain correlation models and near-wall treatment approaches.</p>
+                        <h3>Model Limitations and Freestream Sensitivity</h3>
+                        <p class="guide-text">While the k-ω model provides excellent near-wall behavior, it suffers from significant limitations that have led to the development of improved variants like SST.</p>
                         
-                        <h4>Linear Pressure-Strain Models</h4>
-                        <p class="guide-text">The Launder, Reece, and Rodi (LRR) model provides a linear relationship between pressure-strain correlation and stress anisotropy. The Speziale, Sarkar, and Gatski (SSG) model improves upon LRR with better performance in homogeneous flows and realizability constraints.</p>
+                        <h4>Freestream Sensitivity Issue</h4>
+                        <p class="guide-text">The primary limitation of the k-ω model is its excessive sensitivity to inlet boundary conditions for ω in the freestream. Small changes in the specified ω values can dramatically affect the solution, particularly in external flows.</p>
                         
-                        <h4>Quadratic Pressure-Strain Models</h4>
-                        <p class="guide-text">More advanced models include quadratic terms in the anisotropy tensor, providing better representation of strong anisotropic flows but at increased computational cost and complexity.</p>
-                        
-                        <h4>Wall Treatment Approaches</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Low-Reynolds number: Direct integration to wall with damping functions</span>
+                                <span class="guide-text">External flows show strong dependence on freestream ω specification</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Wall function approach: Enhanced wall functions accounting for anisotropy</span>
+                                <span class="guide-text">Solutions can vary significantly with inlet ω boundary conditions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Two-layer approach: RSM in outer region, one-equation model near wall</span>
+                                <span class="guide-text">Requires careful selection of inlet ω values based on turbulence intensity</span>
                             </li>
                         </ul>
                         
-                        <h4>Omega-Based RSM</h4>
-                        <p class="guide-text">Alternative formulations solve for specific dissipation rate ω instead of ε, providing better near-wall behavior similar to k-ω models while maintaining the anisotropic stress predictions of RSM.</p>
+                        <h4>Free Shear Flow Limitations</h4>
+                        <p class="guide-text">The k-ω model generally under-predicts spreading rates in free shear flows such as:</p>
+                        
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Plane mixing layers and jets</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Round jets and wake flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Far-field regions away from solid boundaries</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Adverse Pressure Gradient Issues</h4>
+                        <p class="guide-text">The original k-ω model tends to predict separation too early in adverse pressure gradients, particularly on smooth surfaces like airfoils at moderate angles of attack.</p>
                     </div>
 
-                    <!-- Applications and Validation -->
+                    <!-- Validation and Applications -->
                     <div class="guide-section">
-                        <h3>Model Applications and Validation Database</h3>
-                        <p class="guide-text">RSM excels in flows where Reynolds stress anisotropy significantly affects the mean flow development, particularly in cases where eddy viscosity models fundamentally fail.</p>
+                        <h3>Model Validation and Optimal Applications</h3>
+                        <p class="guide-text">The k-ω model has been extensively validated for specific flow types where its strengths can be utilized while avoiding its known limitations.</p>
                         
                         <h4>Successful Applications</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Strongly swirling flows with cyclone-type geometries</span>
+                                <span class="guide-text">Zero and favorable pressure gradient boundary layers</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Flows with system rotation and Coriolis effects</span>
+                                <span class="guide-text">Internal flows with well-defined inlet conditions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Secondary flow development in non-circular ducts</span>
+                                <span class="guide-text">Near-wall flow phenomena and skin friction prediction</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Buoyancy-driven flows with strong stratification</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Complex 3D separation with crossflow effects</span>
+                                <span class="guide-text">Low Reynolds number flows with transitional effects</span>
                             </li>
                         </ul>
                         
                         <h4>Benchmark Test Cases</h4>
-                        <p class="guide-text">Standard validation includes the square duct secondary flow, rotating channel flow, impinging jets, backward-facing step with ribs, and various swirling flow configurations. RSM generally shows superior performance compared to eddy viscosity models in these anisotropic flow scenarios.</p>
+                        <p class="guide-text">Standard validation includes flat plate boundary layers, Falkner-Skan flows, pipe and channel flows, and simple separated flows. The model generally shows excellent agreement for attached boundary layers but struggles with external flows and complex separation.</p>
                         
-                        <h4>Known Limitations</h4>
+                        <h4>Comparison with Other Models</h4>
+                        <p class="guide-text">While superseded by SST for most engineering applications, the k-ω model remains valuable for:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Computational cost: 3-5x more expensive than two-equation models</span>
+                                <span class="guide-text">Educational purposes to understand ω-based turbulence modeling</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Convergence challenges due to strong coupling between equations</span>
+                                <span class="guide-text">Fundamental boundary layer research</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Pressure-strain modeling remains largely empirical</span>
+                                <span class="guide-text">Applications where freestream sensitivity is not an issue</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Can be overly sensitive to boundary conditions and numerical schemes</span>
+                                <span class="guide-text">As a foundation for developing more advanced models</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Advanced Topics and Modern Developments -->
+                    <!-- Model Variants and Evolution -->
                     <div class="guide-section">
-                        <h3>Advanced Topics and Modern Developments</h3>
-                        <p class="guide-text">Contemporary RSM research focuses on improving pressure-strain correlation models, developing more efficient numerical algorithms, and extending RSM to complex physical phenomena.</p>
+                        <h3>Model Variants and Historical Evolution</h3>
+                        <p class="guide-text">The k-ω model has undergone several revisions and has served as the foundation for numerous advanced turbulence models.</p>
                         
-                        <h4>Realizability and Consistency</h4>
-                        <p class="guide-text">Modern RSM implementations ensure realizability constraints are satisfied, preventing non-physical states where normal stresses become negative or the stress tensor loses positive semi-definiteness. This involves careful design of pressure-strain correlations and dissipation modeling.</p>
+                        <h4>Wilcox k-ω Versions</h4>
+                        <p class="guide-text">Original 1988 model established the basic k-ω framework with simple constant formulation. The 1998 revision introduced stress limiter functions and improved constants. The 2006 version (k-ω '06) incorporated cross-diffusion terms and addressed freestream sensitivity issues to some extent.</p>
                         
-                        <h4>Elliptic Relaxation Approach</h4>
-                        <p class="guide-text">The v²-f model and elliptic relaxation RSM variants solve additional elliptic equations to better represent near-wall turbulence anisotropy without explicit wall distance dependencies, improving robustness in complex geometries.</p>
+                        <h4>Low-Reynolds Number Variants</h4>
+                        <p class="guide-text">Several low-Reynolds number modifications have been developed to improve near-wall behavior and handle transitional flows. These variants include damping functions and modified source terms for very low Reynolds number applications.</p>
                         
-                        <h4>Machine Learning Enhancement</h4>
-                        <p class="guide-text">Recent developments incorporate machine learning to improve pressure-strain correlation modeling, using high-fidelity DNS/LES data to develop data-driven closure models that outperform traditional algebraic formulations.</p>
+                        <h4>Foundation for Advanced Models</h4>
+                        <p class="guide-text">The k-ω model served as the foundation for several important developments:</p>
                         
-                        <h4>Hybrid RANS-LES Applications</h4>
-                        <p class="guide-text">RSM serves as the RANS component in advanced hybrid approaches, particularly for flows where anisotropic effects in attached regions significantly influence the separated regions that transition to LES treatment.</p>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Baseline (BSL) k-ω model with improved freestream behavior</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Shear Stress Transport (SST) model combining k-ω and k-ε advantages</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Scale-Adaptive Simulation (SAS) hybrid RANS-LES approaches</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Various transition models based on ω formulations</span>
+                            </li>
+                        </ul>
                     </div>
 
                     <!-- Numerical Implementation -->
                     <div class="guide-section">
                         <h3>Numerical Implementation and Best Practices</h3>
-                        <p class="guide-text">Successful RSM implementation requires careful attention to numerical methods, convergence strategies, and computational resource management due to the model's complexity and strong coupling.</p>
+                        <p class="guide-text">Successful implementation of the k-ω model requires careful attention to boundary conditions, mesh requirements, and numerical considerations.</p>
                         
-                        <h4>Solution Strategies</h4>
+                        <h4>Boundary Conditions</h4>
+                        <p class="guide-text">Proper boundary condition specification is critical for k-ω model success:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-text">Coupled solution of stress equations to reduce iterations</span>
+                                <span class="guide-text">Wall: k = 0, ω = 6ν/(β₁y₁²) where y₁ is first cell height</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Conservative under-relaxation factors (0.3-0.5) for stress equations</span>
+                                <span class="guide-text">Inlet: k from turbulence intensity, ω from k and length scale</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Careful initialization with simpler model results</span>
+                                <span class="guide-text">Outlet: Zero gradient or extrapolation from upstream</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-text">Monitoring of stress realizability during solution process</span>
+                                <span class="guide-text">Freestream: Careful specification of ω to avoid sensitivity issues</span>
                             </li>
                         </ul>
                         
                         <h4>Mesh Requirements</h4>
-                        <p class="guide-text">RSM typically requires finer meshes than eddy viscosity models due to the complexity of stress gradient resolution. Near-wall treatment depends on the chosen variant (y⁺ < 1 for low-Re models, y⁺ ≈ 30 for wall functions).</p>
+                        <p class="guide-text">The k-ω model's direct wall integration capability requires specific mesh considerations:</p>
                         
-                        <h4>Boundary Conditions</h4>
-                        <p class="guide-text">Proper specification of Reynolds stress boundary conditions requires understanding of flow physics. Inlet profiles should reflect realistic turbulence anisotropy when available from experiments or higher-fidelity simulations.</p>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">y⁺ < 1 for accurate near-wall resolution</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Adequate boundary layer resolution with 15-20 cells</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Smooth growth ratios (< 1.2) in near-wall regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Proper clustering near walls to resolve gradients</span>
+                            </li>
+                        </ul>
                         
-                        <h4>Computational Efficiency</h4>
-                        <p class="guide-text">Modern implementations optimize memory usage through efficient stress tensor storage and leverage parallel computing architectures. Despite advances, RSM remains computationally demanding and should be reserved for cases where anisotropic effects are crucial to flow physics.</p>
+                        <h4>Convergence Considerations</h4>
+                        <p class="guide-text">The k-ω model generally provides good convergence characteristics, but optimization includes appropriate under-relaxation factors (typically k: 0.6, ω: 0.6), monitoring of both residuals and integral quantities, and careful initialization procedures especially for ω boundary conditions.</p>
                     </div>                    </div>
                 </div>
             </div>

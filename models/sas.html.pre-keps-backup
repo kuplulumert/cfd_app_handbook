@@ -119,41 +119,45 @@
         }
 
                 .nav-tabs {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
         }
+
         .nav-tab {
-        padding: 0.75rem 1.5rem;
-        text-decoration: none;
-        color: #4a5568;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 12px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
+
         .nav-tab::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-        opacity: 0;
-        transition: opacity 0.3s ease;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
         .nav-tab:hover::before,
         .nav-tab.active::before {
-        opacity: 1;
+            opacity: 1;
         }
+
         .nav-tab:hover,
         .nav-tab.active {
-        color: #667eea;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
         .container {
@@ -185,53 +189,58 @@
         }
 
                 .content-tabs {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-        padding: 1.5rem 2rem;
-        margin: 0;
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
         }
+
         .content-tab {
-        padding: 0.75rem 1.5rem;
-        text-decoration: none;
-        color: #4a5568;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 12px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
+
         .content-tab::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-        opacity: 0;
-        transition: opacity 0.3s ease;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
         .content-tab:hover::before,
         .content-tab.active::before {
-        opacity: 1;
+            opacity: 1;
         }
+
         .content-tab:hover,
         .content-tab.active {
-        color: #667eea;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
+
         .content-tab:first-child {
-        border-left: none;
+            border-left: none;
         }
 
         .tab-content {
