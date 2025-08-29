@@ -25,9 +25,15 @@
             line-height: 1.6;
             color: #2d3748;
             background-color: #f7fafc;
-
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
         @keyframes fadeInPage {
             from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
             to { opacity: 1; transform: translateY(0); }
         }
             min-height: 100vh;
@@ -552,8 +558,8 @@
 
             <!-- Content Tabs -->
             <div class="content-tabs">
-                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
-                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
             <!-- Industry Guide Tab Content -->
@@ -1085,7 +1091,9 @@
 
     <script>
         // Tab functionality
-        function showTab(tabName) {
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
             // Hide all tab content
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -1102,7 +1110,7 @@
             document.getElementById(tabName).classList.add('active');
             
             // Add active class to clicked tab
-            event.target.classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
         
         // KaTeX rendering
