@@ -58,7 +58,14 @@
             padding: 0.75rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
         }
 
         .header-content {
@@ -72,6 +79,23 @@
             font-weight: 700;
             color: #3b82f6;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
 
@@ -86,6 +110,23 @@
         .nav-tab {
             padding: 0.5rem 1rem;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
             color: #64748b;
             border-radius: 0.5rem;
             transition: all 0.3s ease;
@@ -152,7 +193,11 @@
 
         .header-cell {
             padding: 0.75rem 1.25rem;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #1e40af;
             font-size: 0.8rem;
             text-align: center;
@@ -172,9 +217,30 @@
 
         .model-name {
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #1e293b;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
             transition: color 0.2s ease;
         }
 
@@ -192,7 +258,11 @@
             padding: 0.25rem 0.5rem;
             border-radius: 0.375rem;
             font-size: 0.625rem;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             border: 1px solid;
             background: rgba(255,255,255,0.8);
         }
@@ -219,7 +289,7 @@
         .footer {
             background: rgba(255,255,255,0.9);
             border-top: 1px solid rgba(59,130,246,0.1);
-            padding: 1rem 0;
+            padding: 1.5rem 0;
             text-align: center;
             color: #64748b;
             font-size: 0.75rem;
@@ -275,17 +345,41 @@
     <!-- Solver Comparison Table -->
     <section class="comparison-section">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 1.5rem; color: #1e293b; font-size: 1.5rem; font-weight: 600;">⚖️ Solver Method Comparison</h2>
+            <h2 style="text-align: center; margin-bottom: 1.5rem; color: #1e293b; font-size: 1.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;">⚖️ Solver Method Comparison</h2>
             
             <div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-radius: 1rem; padding: 1.5rem; border: 1px solid rgba(59,130,246,0.1); margin-bottom: 2rem;">
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead>
                         <tr style="background: rgba(59,130,246,0.05);">
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 600; color: #3b82f6;">Solver</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 600; color: #3b82f6;">Convergence Speed</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 600; color: #3b82f6;">Memory Usage</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 600; color: #3b82f6;">Best Application</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 600; color: #3b82f6;">Key Advantage</th>
+                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #3b82f6;">Solver</th>
+                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #3b82f6;">Convergence Speed</th>
+                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #3b82f6;">Memory Usage</th>
+                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #3b82f6;">Best Application</th>
+                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #3b82f6;">Key Advantage</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -344,14 +438,22 @@
 
                 <!-- SOLVER SCHEMES -->
                 <tr style="background: rgba(194,65,12,0.03); border-top: 2px solid rgba(194,65,12,0.15);">
-                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #7c2d12; font-size: 0.8rem; background: rgba(194,65,12,0.06);">
+                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #7c2d12; font-size: 0.8rem; background: rgba(194,65,12,0.06);">
                         🔧 SOLVER SCHEMES
                     </td>
                 </tr>
 
                 <!-- SIMPLE (Most Common) -->
                 <tr class="model-row" onclick="window.location.href='methods/simple.html?v=2024'" style="background: rgba(194,65,12,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/simple.html?v=2024" class="model-name" style="font-size: 1rem;">SIMPLE</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -364,7 +466,11 @@
 
                 <!-- SIMPLEC -->
                 <tr class="model-row" onclick="window.location.href='methods/simplec.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/simplec.html?v=2024" class="model-name" style="font-size: 1rem;">SIMPLEC</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -377,7 +483,11 @@
 
                 <!-- PISO -->
                 <tr class="model-row" onclick="window.location.href='methods/piso.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/piso.html?v=2024" class="model-name" style="font-size: 1rem;">PISO</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -390,7 +500,11 @@
 
                 <!-- PIMPLE -->
                 <tr class="model-row" onclick="window.location.href='methods/pimple.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/pimple.html?v=2024" class="model-name" style="font-size: 1rem;">PIMPLE</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -403,7 +517,11 @@
 
                 <!-- Coupled -->
                 <tr class="model-row" onclick="window.location.href='methods/coupled.html?v=2024'" style="background: rgba(194,65,12,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/coupled.html?v=2024" class="model-name" style="font-size: 1rem;">Coupled</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -416,14 +534,22 @@
 
                 <!-- DISCRETIZATION SCHEMES -->
                 <tr style="background: rgba(139,92,246,0.03); border-top: 2px solid rgba(139,92,246,0.15);">
-                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #581c87; font-size: 0.8rem; background: rgba(139,92,246,0.06);">
+                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #581c87; font-size: 0.8rem; background: rgba(139,92,246,0.06);">
                         📐 DISCRETIZATION SCHEMES
                     </td>
                 </tr>
 
                 <!-- First Order Upwind -->
                 <tr class="model-row" onclick="window.location.href='methods/first-order-upwind.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/first-order-upwind.html?v=2024" class="model-name" style="font-size: 1rem;">First Order Upwind</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -436,7 +562,11 @@
 
                 <!-- Second Order Upwind (Most Common) -->
                 <tr class="model-row" onclick="window.location.href='methods/second-order-upwind.html?v=2024'" style="background: rgba(139,92,246,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/second-order-upwind.html?v=2024" class="model-name" style="font-size: 1rem;">Second Order Upwind</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -449,7 +579,11 @@
 
                 <!-- Central Difference -->
                 <tr class="model-row" onclick="window.location.href='methods/central-difference.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/central-difference.html?v=2024" class="model-name" style="font-size: 1rem;">Central Difference</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -462,7 +596,11 @@
 
                 <!-- QUICK -->
                 <tr class="model-row" onclick="window.location.href='methods/quick.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/quick.html?v=2024" class="model-name" style="font-size: 1rem;">QUICK</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -475,7 +613,11 @@
 
                 <!-- MUSCL -->
                 <tr class="model-row" onclick="window.location.href='methods/muscl.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/muscl.html?v=2024" class="model-name" style="font-size: 1rem;">MUSCL</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -488,7 +630,11 @@
 
                 <!-- TVD -->
                 <tr class="model-row" onclick="window.location.href='methods/tvd.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/tvd.html?v=2024" class="model-name" style="font-size: 1rem;">TVD</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -501,7 +647,11 @@
 
                 <!-- WENO -->
                 <tr class="model-row" onclick="window.location.href='methods/weno.html?v=2024b'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="methods/weno.html?v=2024b" class="model-name" style="font-size: 1rem;">WENO</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -514,14 +664,22 @@
 
                 <!-- GRADIENT METHODS -->
                 <tr style="background: rgba(16,185,129,0.03); border-top: 2px solid rgba(16,185,129,0.15);">
-                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 600; color: #065f46; font-size: 0.8rem; background: rgba(16,185,129,0.06);">
+                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #065f46; font-size: 0.8rem; background: rgba(16,185,129,0.06);">
                         🟢 GRADIENT METHODS
                     </td>
                 </tr>
 
                 <!-- Green-Gauss Cell Based (Most Common) -->
                 <tr class="model-row" style="background: rgba(16,185,129,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="#" class="model-name" style="font-size: 1rem;">Green-Gauss Cell Based</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -534,7 +692,11 @@
 
                 <!-- Green-Gauss Node Based -->
                 <tr class="model-row">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="#" class="model-name" style="font-size: 1rem;">Green-Gauss Node Based</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -547,7 +709,11 @@
 
                 <!-- Least Squares Cell Based -->
                 <tr class="model-row">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="#" class="model-name" style="font-size: 1rem;">Least Squares Cell Based</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -560,7 +726,11 @@
 
                 <!-- Least Squares Node Based -->
                 <tr class="model-row">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 600; color: #1e293b;">
+                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #1e293b;">
                         <a href="#" class="model-name" style="font-size: 1rem;">Least Squares Node Based</a>
                     </td>
                     <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
@@ -644,6 +814,35 @@
                     row.style.opacity = '1';
                     row.style.transform = 'translateY(0)';
                 }, 200 + (index * 50));
+            });
+        });
+
+        // Premium Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Page Transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-30px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 400);
+        }
+
+        // Add smooth transitions to navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
             });
         });
 

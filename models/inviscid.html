@@ -26,17 +26,34 @@
             line-height: 1.6;
             color: #2d3748;
             background-color: #f7fafc;
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
             overflow-x: hidden;
         }
 
         /* Header Navigation */
         .header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
         }
 
         .header-content {
@@ -49,10 +66,31 @@
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #2d3748;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
         .nav-tabs {
@@ -63,6 +101,23 @@
         .nav-tab {
             padding: 0.5rem 0;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
             color: #718096;
             font-size: 0.875rem;
             font-weight: 500;
@@ -99,7 +154,7 @@
         }
 
         .model-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             opacity: 0.9;
             font-weight: 300;
         }
@@ -118,7 +173,11 @@
             background: #f1f5f9;
             border: none;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #475569;
             cursor: pointer;
             border-bottom: 3px solid transparent;
@@ -175,7 +234,11 @@
         .industry-guide h4 {
             color: #374151;
             font-size: 1.2rem;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin: 2rem 0 1rem 0;
             font-family: system-ui, -apple-system, sans-serif;
         }
@@ -231,7 +294,11 @@
         }
 
         .guide-emphasis {
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #1f2937;
         }
 
@@ -258,7 +325,11 @@
 
         .academy-guide h4 {
             font-size: 1.2rem;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #374151;
             margin: 2.5rem 0 1rem 0;
             line-height: 1.4;
@@ -275,7 +346,8 @@
         .academy-guide .guide-section {
             margin-bottom: 4rem;
             padding: 2.5rem;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
@@ -319,7 +391,11 @@
 
         .term-item strong {
             color: #1f2937;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* Constants Table */
@@ -348,7 +424,11 @@
 
         .constants-table th {
             background: #f9fafb;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             color: #374151;
         }
 

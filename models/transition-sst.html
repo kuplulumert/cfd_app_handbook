@@ -49,7 +49,14 @@
             padding: 0.75rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
         }
 
         .header-content {
@@ -63,6 +70,23 @@
             font-weight: 700;
             color: #3b82f6;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
         .nav-tabs {
@@ -73,6 +97,23 @@
         .nav-tab {
             padding: 0.5rem 1rem;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
             color: #64748b;
             border-radius: 0.5rem;
             transition: all 0.3s ease;
@@ -96,6 +137,23 @@
             gap: 0.5rem;
             color: #3b82f6;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -189,7 +247,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
@@ -204,7 +262,7 @@
         }
 
         .decision-title {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #1e293b;
         }
@@ -242,7 +300,7 @@
         }
 
         .section-title {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #1e293b;
         }
@@ -258,7 +316,11 @@
 
         .highlight-box h4 {
             color: #8b5cf6;
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
             font-size: 1rem;
         }
@@ -394,9 +456,21 @@
                     <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
                         <thead>
                             <tr style="background: rgba(16,185,129,0.1);">
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Situation</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Why It Works</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Advice</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #065f46;">Situation</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #065f46;">Why It Works</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #065f46;">Advice</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -438,9 +512,21 @@
                     <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
                         <thead>
                             <tr style="background: rgba(245,158,11,0.1);">
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Situation</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Why It Fails</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Industry Advice</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #92400e;">Situation</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #92400e;">Why It Fails</th>
+                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; color: #92400e;">Industry Advice</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -675,6 +761,35 @@
                     {left: "$$", right: "$$", display: true},
                     {left: "$", right: "$", display: false}
                 ]
+            });
+        });
+
+        // Premium Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Page Transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-30px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 400);
+        }
+
+        // Add smooth transitions to navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
             });
         });
 
