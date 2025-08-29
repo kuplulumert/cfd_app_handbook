@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Laminar Flow - Beko CFD AI Agent</title>
+    <title>Laminar Flow Model - Technical Guide</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6">        
+
+        </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+        
+    </script>
     
-    <!-- KaTeX for math rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
     
     <style>
         * {
@@ -21,803 +29,680 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.5;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
             color: #2d3748;
-            background: #ffffff;
+            background-color: #f7fafc;
             min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        /* Header Navigation */
 
-        /* Header */
+                /* Premium Header Navigation */
         .header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2d3748;
-            text-decoration: none;
-        }
-
-        .nav-tabs {
+                .nav-tabs {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
+            align-items: center;
         }
 
         .nav-tab {
-            padding: 0.5rem 0;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
-            color: #718096;
-            font-size: 0.875rem;
+            color: #4a5568;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.2s ease;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
         }
 
         .nav-tab:hover,
         .nav-tab.active {
-            color: #2d3748;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #718096;
-            text-decoration: none;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover {
-            color: #2d3748;
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 3rem 0;
-        }
-
-        /* Page Header */
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .model-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
-        }
-
-        .model-subtitle {
-            font-size: 1rem;
-            color: #718096;
-            font-weight: 400;
-        }
-
-        /* Content Tabs */
-        .content-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .content-tab {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #718096;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        .model-selector {
+            position: relative;
             display: inline-block;
         }
 
-        .content-tab:hover {
-            color: #2d3748;
-            background: #f7fafc;
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
         }
 
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
+                .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #2d3748;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+            color: #718096;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }        \
+                .content-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+        }
+
+        .content-tab {
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 12px;
+            white-space: nowrap;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        }
+        .content-tab::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+        .content-tab:hover::before,
+        .content-tab.active::before {
+        opacity: 1;
+        }
+        .content-tab:hover,
         .content-tab.active {
-            color: #059669;
-            border-bottom-color: #059669;
-            background: #ecfdf5;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        .content-tab:first-child {
+        border-left: none;
         }
 
         .tab-content {
             display: none;
+            width: 100%;
+            padding: 0;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        /* Industry Guide Styles */
+        /* Industry Guide Styling */
         .industry-guide {
-            max-width: 800px;
+            width: 100%;
+            padding: 2rem 3rem;
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .guide-section {
-            margin-bottom: 2rem;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+            background: white;
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .guide-section h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .guide-overview {
-            background: #ecfdf5;
-            border-left: 4px solid #059669;
-        }
-
-        .guide-strengths {
-            background: #f0fdf4;
-            border-left: 4px solid #10b981;
-        }
-
-        .guide-limitations {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .guide-use-cases {
-            background: #ecfdf5;
-            border-left: 4px solid #059669;
-        }
-
-        .guide-avoid {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-        }
-
-        .guide-tips {
-            background: #f3f4f6;
-            border-left: 4px solid #6b7280;
-        }
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
 
         .guide-list {
             list-style: none;
-            padding: 0;
-            margin: 0;
         }
 
         .guide-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .guide-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .guide-bullet {
-            color: #059669;
-            font-weight: 600;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
+            margin: 1rem 0;
+            position: relative;
         }
 
         .guide-text {
-            color: #4a5568;
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
         }
 
         .guide-emphasis {
-            font-weight: 600;
-            color: #2d3748;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
         }
 
-        .use-case-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .avoid-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* Academy Guide Styles */
+        /* Academy Guide Styling */
         .academy-guide {
-            max-width: 900px;
+            width: 100%;
+            padding: 2rem 3rem;
+            line-height: 1.6;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide h3:first-child {
+            margin-top: 0;
         }
 
         .academy-guide h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin: 1.5rem 0 0.75rem 0;
-        }
-
-        .equation-block {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-            font-size: 1rem;
-            overflow-x: auto;
-        }
-
-        .term-definitions {
-            space-y: 1rem;
-        }
-
-        .term-item {
-            background: #f8f9fa;
-            border-left: 3px solid #059669;
-            padding: 1rem;
-            margin: 0.75rem 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .term-item strong {
-            color: #047857;
-            font-size: 1.05rem;
-        }
-
-        .constants-table {
-            margin: 1rem 0;
-        }
-
-        /* Simple Decision Cards for Academy */
-        .simple-decisions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .simple-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 2rem;
-            transition: box-shadow 0.2s ease;
-        }
-
-        .simple-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .simple-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .simple-title {
-            font-size: 1.125rem;
-            font-weight: 500;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-        }
-
-        .simple-subtitle {
-            font-size: 0.875rem;
-            color: #718096;
-        }
-
-        .simple-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .simple-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
             line-height: 1.4;
         }
 
-        .simple-icon {
-            flex-shrink: 0;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            margin-top: 0.125rem;
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
         }
 
-        .use-card .simple-icon {
-            background: #10b981;
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .avoid-card .simple-icon {
-            background: #f59e0b;
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
         }
 
-        .simple-text {
-            color: #4a5568;
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
         }
 
-        .simple-emphasis {
-            font-weight: 500;
-            color: #2d3748;
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
         }
 
-        /* Responsive */
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .simple-decisions {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+
+            .logo {
+                font-size: 1.2rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
             }
-            
-            .model-title {
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
                 font-size: 2rem;
             }
-            
-            .nav-tabs {
-                gap: 1rem;
-            }
-        }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: #a0aec0;
-            font-size: 0.75rem;
-            border-top: 1px solid #e2e8f0;
-        }
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .guide-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+                    \
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
-                
-                <!-- Navigation Tabs -->
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
                 <div class="nav-tabs">
-                    <a href="../home.html" class="nav-tab">Home</a>
-                    <a href="../time-dependency.html" class="nav-tab">Time Dependency</a>
-                    <a href="../turbulence-models.html" class="nav-tab active">Turbulence Models</a>
-                    <a href="../methods.html" class="nav-tab">Methods</a>
-                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <div class="model-selector">
+                        <select id="modelSelect" class="model-dropdown" onchange="navigateToModel(this.value)">
+                            <option value="">Select Model...</option>
+                            <option value="laminar.html">Laminar Flow</option>
+                            <option value="k-epsilon.html">k-ε (Standard)</option>
+                            <option value="k-omega.html">k-ω (Wilcox)</option>
+                            <option value="k-omega-sst.html">k-ω SST</option>
+                            <option value="reynolds-stress.html">Reynolds Stress Model (RSM)</option>
+                            <option value="spalart-allmaras.html">Spalart-Allmaras</option>
+                            <option value="des.html">Detached Eddy Simulation (DES)</option>
+                            <option value="les.html">Large Eddy Simulation (LES)</option>
+                            <option value="sas.html">Scale-Adaptive Simulation (SAS)</option>
+                            <option value="k-kl-omega.html">k-kL-ω Transition</option>
+                            <option value="inviscid.html">Inviscid Flow</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
 
-    <div class="container">
         <div class="main-content">
-            <a href="../turbulence-models.html" class="back-link">
-                ← Turbulence Models
-            </a>
-
             <!-- Page Header -->
             <div class="page-header">
-                <h1 class="model-title">Laminar Flow</h1>
-                <p class="model-subtitle">Viscous flow model for low Reynolds number and smooth, ordered motion</p>
+                <h1>Laminar Flow Model</h1>
+                <p class="model-subtitle">Direct Navier-Stokes solution for viscous flows without turbulence</p>
             </div>
 
             <!-- Content Tabs -->
             <div class="content-tabs">
-                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
-                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
             <!-- Industry Guide Tab Content -->
             <div id="industry" class="tab-content active">
                 <div class="industry-guide">
                     
-                    <!-- Interactive Reynolds Number Calculator -->
-                    <div class="guide-section" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-left: 4px solid #10b981; margin-bottom: 3rem;">
-                        <h3 style="color: #065f46; margin-bottom: 1.5rem;">🧮 Reynolds Number Calculator & Flow Regime Predictor</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
-                            <div>
-                                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                    <h4 style="color: #047857; margin-bottom: 1rem;">Input Parameters</h4>
-                                    <div style="display: grid; gap: 1rem;">
-                                        <div>
-                                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Velocity (m/s):</label>
-                                            <input type="number" id="velocity" placeholder="e.g., 0.1" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem;" oninput="calculateReynolds()">
-                                        </div>
-                                        <div>
-                                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Length Scale (m):</label>
-                                            <input type="number" id="length" placeholder="e.g., 0.01" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem;" oninput="calculateReynolds()">
-                                        </div>
-                                        <div>
-                                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Kinematic Viscosity (m²/s):</label>
-                                            <select id="viscosity" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem;" onchange="calculateReynolds()">
-                                                <option value="1.5e-5">Air (20°C): 1.5×10⁻⁵</option>
-                                                <option value="1.0e-6">Water (20°C): 1.0×10⁻⁶</option>
-                                                <option value="1.0e-4">Oil (typical): 1.0×10⁻⁴</option>
-                                                <option value="custom">Custom value...</option>
-                                            </select>
-                                            <input type="number" id="customViscosity" placeholder="Enter custom value" style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem; margin-top: 0.5rem; display: none;" oninput="calculateReynolds()">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                    <h4 style="color: #047857; margin-bottom: 1rem;">Results & Recommendation</h4>
-                                    <div id="reynolds-result" style="text-align: center; padding: 1rem;">
-                                        <div style="font-size: 2rem; font-weight: 700; color: #6b7280; margin-bottom: 0.5rem;">Re = ?</div>
-                                        <div style="color: #6b7280;">Enter parameters above</div>
-                                    </div>
-                                    <div id="flow-regime" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center; font-weight: 600; display: none;">
-                                    </div>
-                                    <div id="model-recommendation" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center; display: none;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Visual Flow Regime Chart -->
-                    <div class="guide-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-left: 4px solid #0ea5e9; margin-bottom: 3rem;">
-                        <h3 style="color: #0c4a6e; margin-bottom: 1.5rem;">📊 Flow Regime Chart & Critical Reynolds Numbers</h3>
-                        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-                                <div style="text-align: center; padding: 1.5rem; background: #fef3c7; border-radius: 10px; border: 2px solid #f59e0b;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🟢</div>
-                                    <div style="font-weight: 700; color: #92400e; margin-bottom: 0.5rem;">LAMINAR</div>
-                                    <div style="font-size: 1.25rem; font-weight: 600; color: #92400e;">Re < 2,300</div>
-                                    <div style="font-size: 0.875rem; color: #78716c; margin-top: 0.5rem;">Smooth, predictable flow</div>
-                                </div>
-                                <div style="text-align: center; padding: 1.5rem; background: #fed7d7; border-radius: 10px; border: 2px solid #f56565;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🟡</div>
-                                    <div style="font-weight: 700; color: #c53030; margin-bottom: 0.5rem;">TRANSITION</div>
-                                    <div style="font-size: 1.25rem; font-weight: 600; color: #c53030;">2,300 < Re < 4,000</div>
-                                    <div style="font-size: 0.875rem; color: #78716c; margin-top: 0.5rem;">Unpredictable regime</div>
-                                </div>
-                                <div style="text-align: center; padding: 1.5rem; background: #fee2e2; border-radius: 10px; border: 2px solid #ef4444;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔴</div>
-                                    <div style="font-weight: 700; color: #dc2626; margin-bottom: 0.5rem;">TURBULENT</div>
-                                    <div style="font-size: 1.25rem; font-weight: 600; color: #dc2626;">Re > 4,000</div>
-                                    <div style="font-size: 0.875rem; color: #78716c; margin-top: 0.5rem;">Chaotic mixing</div>
-                                </div>
-                            </div>
-                            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                                <h4 style="color: #1e40af; margin-bottom: 1rem;">💡 Critical Reynolds Numbers by Geometry</h4>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
-                                        <span>🚰 Circular Pipe:</span> <strong>Re < 2,300</strong>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
-                                        <span>📐 Parallel Plates:</span> <strong>Re < 1,400</strong>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
-                                        <span>🏠 Flat Plate:</span> <strong>Re < 500,000</strong>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px;">
-                                        <span>⭕ Sphere:</span> <strong>Re < 250,000</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Model Overview with Icons -->
+                    <!-- Model Overview -->
                     <div class="guide-section guide-overview">
-                        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                            <span style="background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 0.5rem; border-radius: 8px; font-size: 1.25rem;">🌊</span>
-                            1. Laminar Flow Model Overview
-                        </h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2rem;">📏</span>
-                                    <h4 style="color: #047857; margin: 0;">Mathematical Foundation</h4>
-                                </div>
-                                <p style="color: #4a5568; line-height: 1.6;">Solves full Navier-Stokes equations with viscous terms. No turbulence modeling required - direct solution of fundamental fluid mechanics equations.</p>
-                            </div>
-                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2rem;">🎯</span>
-                                    <h4 style="color: #047857; margin: 0;">Flow Characteristics</h4>
-                                </div>
-                                <p style="color: #4a5568; line-height: 1.6;">Smooth, ordered flow with parallel streamlines. No chaotic mixing - fluid layers slide past each other without cross-stream momentum transfer.</p>
-                            </div>
-                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2rem;">⚖️</span>
-                                    <h4 style="color: #047857; margin: 0;">Force Balance</h4>
-                                </div>
-                                <p style="color: #4a5568; line-height: 1.6;">Viscous forces dominate inertial forces (low Re). Molecular-level momentum transport controls flow behavior and provides natural flow stability.</p>
-                            </div>
-                            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #059669;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2rem;">🎲</span>
-                                    <h4 style="color: #047857; margin: 0;">Exact Solutions</h4>
-                                </div>
-                                <p style="color: #4a5568; line-height: 1.6;">When conditions are truly laminar, provides mathematically exact solution limited only by numerical precision. No modeling uncertainty.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Key Advantages with Performance Metrics -->
-                    <div class="guide-section guide-strengths">
-                        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                            <span style="background: linear-gradient(135deg, #10b981, #34d399); color: white; padding: 0.5rem; border-radius: 8px; font-size: 1.25rem;">✨</span>
-                            2. Key Advantages & Performance Metrics
-                        </h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem;">
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🎯</span>
-                                    <h4 style="color: #065f46; margin: 0;">Exact Accuracy</h4>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">When flow is truly laminar, provides mathematically exact solution limited only by numerical precision.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Accuracy: ±0.1-1%</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">vs ±5-15% for turbulence models</div>
-                                </div>
-                            </div>
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🌡️</span>
-                                    <h4 style="color: #065f46; margin: 0;">Heat Transfer Precision</h4>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Excellent prediction of thermal boundary layers and wall heat transfer coefficients.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Nusselt number: ±2-5%</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Perfect for electronics cooling</div>
-                                </div>
-                            </div>
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">⚡</span>
-                                    <h4 style="color: #065f46; margin: 0;">Computational Speed</h4>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">No turbulence modeling overhead - fastest viscous flow solution method.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">30-50% faster than RANS</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Lower memory requirements</div>
-                                </div>
-                            </div>
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">📐</span>
-                                    <h4 style="color: #065f46; margin: 0;">Analytical Validation</h4>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Extensive classical solutions available for code verification and validation.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Poiseuille, Couette, Blasius</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Exact analytical benchmarks</div>
-                                </div>
-                            </div>
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🎛️</span>
-                                    <h4 style="color: #065f46; margin: 0;">Mesh Efficiency</h4>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Excellent convergence behavior with moderate mesh resolution requirements.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Stable convergence</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">No turbulence model instabilities</div>
-                                </div>
-                            </div>
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #f0fdf4); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="background: #10b981; color: white; padding: 0.5rem; border-radius: 50%; font-size: 1.5rem;">🔬</span>
-                                    <h4 style="color: #065f46; margin: 0;">Physical Insight</h4>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Direct solution reveals fundamental flow physics without modeling approximations.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Pure physics</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">No empirical constants</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reynolds Number Limitations -->
-                    <div class="guide-section guide-limitations">
-                        <h3>3. Reynolds Number Limitations</h3>
+                        <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Critical Re limits:</strong> Pipe flow: Re < 2,300; External flow: Re < 500,000 (depends on disturbances).</span>
+                                <span class="guide-text"><strong>Direct Navier-Stokes solution</strong> without turbulence modeling or additional equations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Transition ignored:</strong> Cannot predict laminar-to-turbulent transition.</span>
+                                <span class="guide-text"><strong>Exact viscous flow representation</strong> capturing all molecular-level momentum transport.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Instability blindness:</strong> Misses flow instabilities that lead to turbulence.</span>
+                                <span class="guide-text"><strong>Deterministic solution</strong> providing precise, reproducible results for smooth flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Industrial reality:</strong> Most industrial flows exceed laminar Re limits.</span>
+                                <span class="guide-text">Valid for <strong>Reynolds numbers < 2300</strong> in internal flows and specific external configurations.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Beko Appliance Applications -->
+                    <!-- Key Strengths -->
+                    <div class="guide-section guide-strengths">
+                        <h3>2. Key Strengths</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Highest accuracy:</strong> Exact solution without modeling assumptions or turbulence closure errors.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Analytical validation:</strong> Many exact analytical solutions available for verification.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mesh independence:</strong> No near-wall modeling constraints or y⁺ requirements.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> No additional transport equations, fastest CFD approach for valid cases.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Heat transfer precision:</strong> Exact prediction of wall heat transfer and temperature distributions.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Limitations -->
+                    <div class="guide-section guide-limitations">
+                        <h3>3. Limitations</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Reynolds number restriction:</strong> <strong>Limited to Re < 2300</strong> for internal flows, much lower for external flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Flow regime limitation:</strong> <strong>Cannot predict transition to turbulence</strong> or handle turbulent flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Geometric constraints:</strong> Limited to <strong>smooth, well-designed geometries</strong> without sharp edges or sudden expansions.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Industrial applicability:</strong> <strong>Rarely applicable</strong> to real-world industrial flow systems.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Ideal Applications -->
                     <div class="guide-section guide-use-cases">
-                        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                            <span style="background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 0.5rem; border-radius: 8px; font-size: 1.25rem;">🏭</span>
-                            4. Beko Appliance Applications & Reynolds Number Ranges
-                        </h3>
+                        <h3>4. Ideal Applications</h3>
                         
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem;">
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2.5rem;">🔬</span>
-                                    <div>
-                                        <h4 style="color: #065f46; margin: 0;">Microfluidics & Sensors</h4>
-                                        <div style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 0.1 - 100</div>
-                                    </div>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Small-scale flow devices, lab-on-chip components in smart appliances, precise fluid control systems.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Perfect Application ✅</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Small scales ensure laminar conditions</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2.5rem;">🌡️</span>
-                                    <div>
-                                        <h4 style="color: #065f46; margin: 0;">Electronics Cooling</h4>
-                                        <div style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 10 - 1,000</div>
-                                    </div>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Natural convection cooling in control circuits, low-velocity cooling flows, precise thermal management.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Excellent Choice ✅</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">High heat transfer accuracy needed</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 1.5rem; border-radius: 12px; border: 2px solid #f59e0b;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2.5rem;">🛢️</span>
-                                    <div>
-                                        <h4 style="color: #92400e; margin: 0;">Viscous Fluid Processing</h4>
-                                        <div style="background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 1 - 500</div>
-                                    </div>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Thick lubricants, oil flows in compressors, high-viscosity fluid processing systems.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                                    <div style="font-weight: 600; color: #b45309;">Good Application ⚠️</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Verify Reynolds number first</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 1.5rem; border-radius: 12px; border: 2px solid #10b981;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2.5rem;">🎯</span>
-                                    <div>
-                                        <h4 style="color: #065f46; margin: 0;">Thermal Analysis</h4>
-                                        <div style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: 0.1 - 2,000</div>
-                                    </div>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Precise heat transfer in thin films, coatings, interfaces, and thermal barrier analysis.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
-                                    <div style="font-weight: 600; color: #047857;">Best Choice ✅</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">When thermal precision is critical</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: linear-gradient(135deg, #f0f9ff, #dbeafe); padding: 1.5rem; border-radius: 12px; border: 2px solid #3b82f6;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2.5rem;">🚀</span>
-                                    <div>
-                                        <h4 style="color: #1e40af; margin: 0;">Startup Conditions</h4>
-                                        <div style="background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: Variable</div>
-                                    </div>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">Initial flow development before turbulence onset, transient analysis during appliance startup.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                                    <div style="font-weight: 600; color: #1e40af;">Transient Use 🔄</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">May transition to turbulent</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: linear-gradient(135d, #f3e8ff, #e9d5ff); padding: 1.5rem; border-radius: 12px; border: 2px solid #8b5cf6;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <span style="font-size: 2.5rem;">🔍</span>
-                                    <div>
-                                        <h4 style="color: #6b21a8; margin: 0;">Component Validation</h4>
-                                        <div style="background: #8b5cf6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">Re: Controlled</div>
-                                    </div>
-                                </div>
-                                <p style="color: #374151; margin-bottom: 1rem;">CFD verification against analytical solutions, code validation, research and development.</p>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #8b5cf6;">
-                                    <div style="font-weight: 600; color: #6b21a8;">Research Tool 🔬</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Exact solutions available</div>
-                                </div>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Microfluidics:</span> Lab-on-chip devices, medical diagnostics, precise fluid manipulation at micro-scale</span>
                         </div>
-                        
-                        <!-- Quick Application Guide -->
-                        <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 2rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid #64748b;">
-                            <h4 style="color: #334155; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 1.5rem;">💡</span>
-                                Quick Application Decision Guide
-                            </h4>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                                <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
-                                    <div style="font-weight: 600; color: #059669; margin-bottom: 0.5rem;">✅ Use Laminar When:</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Re < 2,000 AND accuracy is critical</div>
-                                </div>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
-                                    <div style="font-weight: 600; color: #dc2626; margin-bottom: 0.5rem;">❌ Avoid When:</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">Re > 4,000 OR mixing is important</div>
-                                </div>
-                                <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
-                                    <div style="font-weight: 600; color: #f59e0b; margin-bottom: 0.5rem;">⚠️ Check Carefully:</div>
-                                    <div style="font-size: 0.875rem; color: #6b7280;">2,000 < Re < 4,000 (transition zone)</div>
-                                </div>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Heat Exchangers:</span> Smooth channel flows, plate heat exchangers, precise thermal analysis</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Lubrication Systems:</span> Bearing flows, thin film lubrication, viscous fluid motion</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Coating Processes:</span> Thin film coating, paint application, precise surface coverage</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Flow Meters:</span> Venturi meters, orifice plates, precise flow measurement devices</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Biomedical:</span> Blood flow in vessels, drug delivery systems, biofluid mechanics</span>
                         </div>
                     </div>
 
-                    <!-- When to Use Laminar -->
-                    <div class="guide-section" style="background: #f0f9ff; border-left: 4px solid #3b82f6;">
-                        <h3>5. When to Use Laminar Flow</h3>
+                    <!-- When to Choose Laminar Over Turbulent -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose Laminar Over Turbulent</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Verified low Re:</strong> Reynolds number definitively below transition limits.</span>
+                                <span class="guide-text"><strong>Low Reynolds numbers:</strong> Re < 2300 for internal flows, Re < 5×10⁵ for external flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>High-viscosity fluids:</strong> Oils, polymers, or other non-Newtonian fluids in laminar regime.</span>
+                                <span class="guide-text"><strong>High viscosity fluids:</strong> Oils, polymers, viscous liquids with inherently stable flow.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Microfluidic devices:</strong> Small-scale flows where surface forces dominate.</span>
+                                <span class="guide-text"><strong>Microfluidic devices:</strong> Small-scale flows where surface forces dominate inertial effects.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Precise heat transfer:</strong> When thermal boundary layer accuracy is critical.</span>
+                                <span class="guide-text"><strong>Smooth geometries:</strong> Well-designed channels, streamlined bodies without sharp edges.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Natural convection:</strong> Low-velocity buoyancy-driven flows in enclosed spaces.</span>
+                                <span class="guide-text"><strong>Verification studies:</strong> Benchmarking against analytical solutions for model validation.</span>
                             </li>
                         </ul>
                     </div>
@@ -826,167 +711,138 @@
                     <div class="guide-section guide-avoid">
                         <h3>6. When NOT to Use Laminar</h3>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Industrial equipment:</span> Pumps, fans, compressors - typically operate at Re > 10,000</span>
+                            <span class="guide-text"><span class="guide-emphasis">High Reynolds numbers:</span> Re > 2300 for pipes, Re > 5×10⁵ for flat plates - flow will be turbulent</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">External aerodynamics:</span> Vehicle flows, HVAC external units - always turbulent</span>
+                            <span class="guide-text"><span class="guide-emphasis">Sharp edges:</span> Sudden expansions, contractions, or obstacles that trigger flow separation</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Forced convection:</span> Most heat exchangers and cooling systems with fans/pumps</span>
+                            <span class="guide-text"><span class="guide-emphasis">High velocity flows:</span> Jets, high-speed flows where inertial forces dominate</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Mixing applications:</span> Turbulent mixing is orders of magnitude more effective</span>
+                            <span class="guide-text"><span class="guide-emphasis">Industrial processes:</span> Most real-world applications operate in turbulent regime</span>
                         </div>
                         <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Transitional regime:</span> Flows near laminar-turbulent transition (Re: 2,000-4,000)</span>
-                        </div>
-                        <div class="avoid-item">
-                            <span class="guide-text"><span class="guide-emphasis">Unknown flow regime:</span> When Reynolds number or flow state is uncertain</span>
+                            <span class="guide-text"><span class="guide-emphasis">Mixed convection:</span> Natural and forced convection with instabilities and transition</span>
                         </div>
                     </div>
 
-                    <!-- Setup Guidelines -->
+                    <!-- Setup and Mesh Guidelines -->
                     <div class="guide-section guide-tips">
-                        <h3>7. Setup and Verification Guidelines</h3>
-                        
-                        <h4>Reynolds Number Verification:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Calculate Re first:</strong> Re = ρUL/μ where L is characteristic length, U is velocity.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Pipe flow:</strong> Re = ρUD/μ < 2,300 for laminar (D = diameter).</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>External flow:</strong> Re = ρUL/μ < 100,000-500,000 depending on geometry and disturbances.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Safety margin:</strong> Use laminar only when Re is well below transition (factor of 2-3).</span>
-                            </li>
-                        </ul>
+                        <h3>7. Setup and Mesh Guidelines</h3>
                         
                         <h4>Mesh Requirements:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum 15-20 cells across boundary layer thickness.</span>
+                                <span class="guide-text"><strong>No y⁺ constraints:</strong> No turbulent wall treatment requirements - any reasonable near-wall resolution works.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall spacing:</strong> y⁺ < 1 for wall-normal first cell (similar to SST requirements).</span>
+                                <span class="guide-text"><strong>Smooth gradients:</strong> Focus on <strong>smooth mesh transitions</strong> and adequate resolution for velocity gradients.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Growth ratio:</strong> < 1.2 in boundary layer regions for smooth gradients.</span>
+                                <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.3</strong> throughout domain, no special near-wall restrictions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Aspect ratio:</strong> < 1000 in high-gradient regions acceptable.</span>
+                                <span class="guide-text"><strong>Aspect ratio:</strong> <strong>< 100</strong> recommended for good numerical accuracy.</span>
                             </li>
                         </ul>
                         
                         <h4>Solver Settings:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Discretization:</strong> Second-order upwind minimum for momentum and energy.</span>
+                                <span class="guide-text"><strong>Discretization:</strong> <strong>Second-order</strong> or higher for momentum, first-order adequate for simple cases.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Convergence:</strong> Residuals < 10⁻⁶ for high-precision heat transfer analysis.</span>
+                                <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁶</strong> for momentum, monitor wall forces and flow rates.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Under-relaxation:</strong> Momentum: 0.7, Pressure: 0.3 for stable convergence.</span>
+                                <span class="guide-text"><strong>Under-relaxation:</strong> Momentum: <strong>0.7</strong>, Pressure: <strong>0.3</strong>, conservative values for stability.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Verification Steps:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Analytical comparison:</strong> Compare with Poiseuille flow, Couette flow, or Blasius solutions where applicable.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mesh independence:</strong> Verify solution doesn't change with further mesh refinement.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mass conservation:</strong> Check inlet/outlet mass balance to machine precision.</span>
                             </li>
                         </ul>
                     </div>
 
                     <!-- Performance Expectations -->
-                    <div class="guide-section" style="background: #f0fdf4; border-left: 4px solid #10b981;">
+                    <div class="guide-section guide-performance">
                         <h3>8. Performance Expectations</h3>
                         
                         <h4>Accuracy Levels:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Velocity fields:</strong> Exact when flow is truly laminar (limited only by numerical precision).</span>
+                                <span class="guide-text"><strong>Exact solutions:</strong> <strong>Machine precision</strong> accuracy for analytical cases (Poiseuille, Couette flows).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Pressure drop:</strong> ±1-2% for developed laminar flows with good mesh.</span>
+                                <span class="guide-text"><strong>Heat transfer:</strong> <strong>±1-2%</strong> for well-resolved laminar flows with proper boundary conditions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Heat transfer:</strong> ±2-5% for wall heat transfer coefficients in laminar regime.</span>
+                                <span class="guide-text"><strong>Pressure drop:</strong> <strong>±2-3%</strong> for smooth geometries within valid Reynolds number range.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall shear stress:</strong> ±1-3% when mesh properly resolves boundary layer.</span>
+                                <span class="guide-text"><strong>Wall shear stress:</strong> <strong>±1-3%</strong> accuracy limited primarily by mesh resolution.</span>
                             </li>
                         </ul>
                         
-                        <h4>Computational Performance:</h4>
+                        <h4>Computational Advantages:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>vs RANS models:</strong> 30-50% faster solution time, no turbulence model overhead.</span>
+                                <span class="guide-text"><strong>vs turbulence models:</strong> <strong>50-70% faster</strong> solution time, no additional transport equations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Memory usage:</strong> Lower due to fewer transport equations.</span>
+                                <span class="guide-text"><strong>Memory:</strong> <strong>Minimal memory footprint</strong> - only momentum and continuity equations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Convergence:</strong> Generally stable and predictable convergence behavior.</span>
+                                <span class="guide-text"><strong>ROI:</strong> <strong>Highest accuracy per computational cost</strong> within valid flow regime.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Validation and Common Pitfalls -->
-                    <div class="guide-section" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
-                        <h3>9. Validation and Common Pitfalls</h3>
+                    <!-- Common Pitfalls and Solutions -->
+                    <div class="guide-section guide-pitfalls">
+                        <h3>9. Common Pitfalls and Solutions</h3>
                         
-                        <h4>Classical Validation Cases:</h4>
+                        <h4>Physical Modeling Errors:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Poiseuille flow:</strong> Parabolic velocity profile in circular pipes (analytical solution available).</span>
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Using laminar for Re > 2300</strong> in pipes. <strong>Solution:</strong> Check Reynolds number, switch to turbulent model.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Couette flow:</strong> Linear velocity profile between parallel plates.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Blasius boundary layer:</strong> Flat plate boundary layer with analytical solution.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Natural convection:</strong> Rayleigh-Bénard cells, cavity flow benchmarks.</span>
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Ignoring transition effects</strong>. <strong>Solution:</strong> Consider transitional models for borderline Re numbers.</span>
                             </li>
                         </ul>
                         
-                        <h4>Common Pitfalls:</h4>
+                        <h4>Numerical Issues:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Pitfall:</strong> Using above Re limits. <strong>Solution:</strong> Always verify Re < 2,300 for pipes, Re < 100,000 for external.</span>
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Insufficient mesh resolution</strong> for velocity gradients. <strong>Solution:</strong> Refine mesh in high-gradient regions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Pitfall:</strong> Poor boundary layer resolution. <strong>Solution:</strong> Ensure y⁺ < 1 and adequate cells across BL.</span>
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Slow convergence</strong> with high aspect ratio cells. <strong>Solution:</strong> Use coupled solver, improve mesh orthogonality.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Boundary Condition Errors:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Incorrect inlet velocity profile</strong>. <strong>Solution:</strong> Use developed profile for internal flows, uniform for external flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Pitfall:</strong> Ignoring transition. <strong>Solution:</strong> Check for flow instabilities or use transition models.</span>
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Outlet boundary affecting solution</strong>. <strong>Solution:</strong> Extend domain downstream, use outflow boundary conditions.</span>
                             </li>
                         </ul>
                     </div>
+
                 </div>
             </div>
 
@@ -995,579 +851,218 @@
                 <div class="academy-guide">
                     
                     <!-- Historical Context and Development -->
-                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #059669;">
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">Laminar flow theory represents one of the foundational achievements in fluid mechanics, building upon the Navier-Stokes equations to describe viscous flow behavior. The understanding of laminar flow preceded turbulence theory by nearly a century.</p>
+                        <p class="guide-text">Laminar flow represents the fundamental state of viscous fluid motion, governed by the exact Navier-Stokes equations without the need for turbulence modeling or closure approximations.</p>
                         
-                        <h4>Timeline and Evolution:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1822:</strong> Navier develops the momentum equations including viscous effects</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1845:</strong> Stokes independently derives viscous flow equations (Navier-Stokes)</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1840:</strong> Poiseuille experimentally studies laminar flow in circular pipes</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1883:</strong> Reynolds demonstrates laminar-turbulent transition in pipes</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1908:</strong> Blasius solves boundary layer equations for flat plate</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1920s:</strong> Orr-Sommerfeld develops linear stability theory for laminar flows</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1950s-1960s:</strong> Development of numerical methods for solving Navier-Stokes equations</span>
-                            </li>
-                        </ul>
+                        <h4>Timeline and Evolution</h4>
+                        <p class="guide-text">The mathematical description of laminar flow has its foundations in the 19th century with the independent work of Claude-Louis Navier (1822) and George Gabriel Stokes (1845), who developed the fundamental equations governing viscous fluid motion. Osborne Reynolds (1883) established the critical Reynolds number concept, defining the transition criterion between laminar and turbulent flow regimes.</p>
+                        
+                        <p class="guide-text">Subsequent analytical solutions by Poiseuille (1840) for pipe flow, Couette (1890) for shear-driven flows, and Blasius (1908) for boundary layer flow over flat plates provided exact benchmarks that remain the gold standard for CFD validation. Modern computational capabilities have enabled the direct numerical solution of the Navier-Stokes equations for increasingly complex laminar flow configurations, maintaining exact mathematical rigor.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
-                        <h3>Complete Mathematical Formulation</h3>
-                        <p class="guide-text">Laminar flow is governed by the incompressible Navier-Stokes equations, representing conservation of mass and momentum with viscous effects included.</p>
+                        <h3>Mathematical Foundation and Complete Derivation</h3>
+                        <p class="guide-text">Laminar flow is governed by the incompressible Navier-Stokes equations, representing the exact conservation of mass and momentum without turbulence modeling assumptions or closure approximations.</p>
                         
                         <h4>Continuity Equation (Mass Conservation):</h4>
                         <div class="equation-block">
-                            $$\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0$$
-                        </div>
-                        <p class="guide-text">For incompressible flow (ρ = constant):</p>
-                        <div class="equation-block">
-                            $$\nabla \cdot \mathbf{u} = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0$$
+                            $$\frac{\partial u_i}{\partial x_i} = 0$$
                         </div>
                         
-                        <h4>Momentum Conservation (Navier-Stokes Equations):</h4>
+                        <h4>Momentum Equation (Navier-Stokes):</h4>
                         <div class="equation-block">
-                            $$\rho\left(\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u}\right) = -\nabla p + \mu \nabla^2 \mathbf{u} + \rho \mathbf{g}$$
+                            $$\frac{\partial u_i}{\partial t} + u_j \frac{\partial u_i}{\partial x_j} = -\frac{1}{\rho}\frac{\partial p}{\partial x_i} + \nu \frac{\partial^2 u_i}{\partial x_j \partial x_j} + g_i$$
                         </div>
                         
-                        <h4>Component Form (Cartesian Coordinates):</h4>
+                        <h4>Energy Equation (Temperature Transport):</h4>
                         <div class="equation-block">
-                            $$\rho\left(\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} + w\frac{\partial u}{\partial z}\right) = -\frac{\partial p}{\partial x} + \mu\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}\right) + \rho g_x$$
+                            $$\frac{\partial T}{\partial t} + u_j \frac{\partial T}{\partial x_j} = \alpha \frac{\partial^2 T}{\partial x_j \partial x_j} + \frac{\Phi}{\rho c_p}$$
                         </div>
                         
-                        <h4>Energy Conservation with Viscous Dissipation:</h4>
-                        <div class="equation-block">
-                            $$\rho c_p \left(\frac{\partial T}{\partial t} + \mathbf{u} \cdot \nabla T\right) = k \nabla^2 T + \Phi$$
-                        </div>
-                        <p class="guide-text">Where Φ is the viscous dissipation function:</p>
-                        <div class="equation-block">
-                            $$\Phi = \mu \left[2\left(\frac{\partial u}{\partial x}\right)^2 + 2\left(\frac{\partial v}{\partial y}\right)^2 + 2\left(\frac{\partial w}{\partial z}\right)^2 + \left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)^2 + \text{...}\right]$$
-                        </div>
-                        
-                        <h4>Dimensionless Form and Reynolds Number:</h4>
-                        <div class="equation-block">
-                            $$Re = \frac{\rho U L}{\mu} = \frac{\text{Inertial forces}}{\text{Viscous forces}}$$
-                        </div>
-                        <p class="guide-text">Dimensionless Navier-Stokes equations:</p>
-                        <div class="equation-block">
-                            $$\frac{\partial \mathbf{u}^*}{\partial t^*} + \mathbf{u}^* \cdot \nabla^* \mathbf{u}^* = -\nabla^* p^* + \frac{1}{Re} \nabla^{*2} \mathbf{u}^*$$
-                        </div>
-                    </div>
-
-                    <!-- Term Definitions and Physical Meaning -->
-                    <div class="guide-section guide-strengths">
-                        <h3>Comprehensive Term Definitions and Physical Meaning</h3>
                         <div class="term-definitions">
-                            <div class="term-item">
-                                <strong>μ:</strong> Dynamic viscosity [Pa·s or kg/m·s]
-                                $$\tau = \mu \frac{du}{dy} \text{ (Newton's law of viscosity)}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Resistance to shear deformation. Quantifies internal friction between fluid layers sliding past each other.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>ν:</strong> Kinematic viscosity [m²/s]
-                                $$\nu = \frac{\mu}{\rho}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Ratio of viscous diffusion rate to density. Controls momentum diffusion in viscous flows.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>Re:</strong> Reynolds number (dimensionless)
-                                $$Re = \frac{\rho U L}{\mu} = \frac{U L}{\nu}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Ratio of inertial to viscous forces. Determines flow regime: Re < 2,300 (laminar), Re > 4,000 (turbulent) for pipe flow.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>∇²u:</strong> Viscous diffusion term [1/s²]
-                                $$\nabla^2 \mathbf{u} = \frac{\partial^2 \mathbf{u}}{\partial x^2} + \frac{\partial^2 \mathbf{u}}{\partial y^2} + \frac{\partial^2 \mathbf{u}}{\partial z^2}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Laplacian operator representing viscous momentum diffusion. Smooths velocity gradients through molecular viscosity.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>u·∇u:</strong> Convective acceleration [m/s²]
-                                $$\mathbf{u} \cdot \nabla \mathbf{u} = u\frac{\partial \mathbf{u}}{\partial x} + v\frac{\partial \mathbf{u}}{\partial y} + w\frac{\partial \mathbf{u}}{\partial z}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Nonlinear inertial term representing convective transport of momentum. Couples velocity components and creates mathematical complexity.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>δ:</strong> Boundary layer thickness [m]
-                                $$\delta = \text{distance where } u = 0.99 U_\infty$$
-                                <p class="guide-text"><em>Physical meaning:</em> Region where viscous effects are significant. Grows as √x for laminar flow over flat plate.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>τw:</strong> Wall shear stress [Pa]
-                                $$\tau_w = \mu \frac{\partial u}{\partial y}\bigg|_{wall}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Tangential stress exerted by fluid on wall surface. Determines skin friction drag and wall heat transfer.</p>
-                            </div>
-                            <div class="term-item">
-                                <strong>Cf:</strong> Skin friction coefficient (dimensionless)
-                                $$C_f = \frac{\tau_w}{\frac{1}{2}\rho U^2}$$
-                                <p class="guide-text"><em>Physical meaning:</em> Normalized wall shear stress. For laminar flat plate: C<sub>f</sub> = 0.664/√Re<sub>x</sub>.</p>
-                            </div>
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>u_i:</strong> Velocity components (m/s)</div>
+                            <div class="term-item"><strong>p:</strong> Pressure (Pa)</div>
+                            <div class="term-item"><strong>ρ:</strong> Fluid density (kg/m³)</div>
+                            <div class="term-item"><strong>ν:</strong> Kinematic viscosity (m²/s)</div>
+                            <div class="term-item"><strong>T:</strong> Temperature (K)</div>
+                            <div class="term-item"><strong>α:</strong> Thermal diffusivity (m²/s)</div>
+                            <div class="term-item"><strong>Φ:</strong> Viscous dissipation function (W/m³)</div>
+                            <div class="term-item"><strong>g_i:</strong> Gravitational acceleration components (m/s²)</div>
                         </div>
                     </div>
 
-                    <!-- Classical Solutions and Exact Results -->
-                    <div class="guide-section" style="background: #f0fdf4; border-left: 4px solid #16a34a;">
-                        <h3>Classical Solutions and Exact Analytical Results</h3>
+                    <!-- Physical Interpretation -->
+                    <div class="guide-section">
+                        <h3>Physical Interpretation and Flow Characteristics</h3>
+                        <p class="guide-text">Laminar flow is characterized by smooth, orderly fluid motion where viscous forces dominate over inertial forces. The flow occurs in well-defined layers or streamlines that do not mix except at the molecular level.</p>
                         
-                        <h4>Poiseuille Flow (Circular Pipe):</h4>
+                        <h4>Reynolds Number Criterion</h4>
+                        <p class="guide-text">The transition from laminar to turbulent flow is governed by the Reynolds number, which represents the ratio of inertial to viscous forces:</p>
+                        
                         <div class="equation-block">
-                            $$u(r) = \frac{1}{4\mu}\frac{dp}{dx}(R^2 - r^2) = u_{max}\left(1 - \frac{r^2}{R^2}\right)$$
-                        </div>
-                        <div class="equation-block">
-                            $$u_{max} = \frac{R^2}{4\mu}\left(-\frac{dp}{dx}\right), \quad \bar{u} = \frac{u_{max}}{2}$$
-                        </div>
-                        <p class="guide-text">Pressure drop relation:</p>
-                        <div class="equation-block">
-                            $$\Delta p = \frac{32\mu \bar{u} L}{D^2} = \frac{128\mu Q L}{\pi D^4} \text{ (Hagen-Poiseuille law)}$$
+                            $$Re = \frac{\rho V L}{\mu} = \frac{V L}{\nu}$$
                         </div>
                         
-                        <h4>Couette Flow (Parallel Plates):</h4>
-                        <div class="equation-block">
-                            $$u(y) = \frac{U y}{h} + \frac{1}{2\mu}\frac{dp}{dx}y(h-y)$$
-                        </div>
-                        <p class="guide-text">For pure shear flow (dp/dx = 0): u(y) = Uy/h (linear profile)</p>
+                        <p class="guide-text">Critical Reynolds numbers for various geometries include Re < 2300 for pipe flow, Re < 5×10⁵ for flow over flat plates, and much lower values for complex geometries with adverse pressure gradients.</p>
                         
-                        <h4>Blasius Boundary Layer (Flat Plate):</h4>
+                        <h4>Viscous Stress Tensor</h4>
+                        <p class="guide-text">The viscous stress tensor for laminar flow is directly proportional to the rate of strain tensor:</p>
+                        
                         <div class="equation-block">
-                            $$\frac{\partial^3 f}{\partial \eta^3} + \frac{1}{2}f\frac{\partial^2 f}{\partial \eta^2} = 0$$
-                        </div>
-                        <p class="guide-text">Where η = y√(U/(νx)) is similarity variable. Key results:</p>
-                        <div class="equation-block">
-                            $$\delta = \frac{5.0x}{\sqrt{Re_x}}, \quad C_f = \frac{0.664}{\sqrt{Re_x}}, \quad f''(0) = 0.332$$
+                            $$\tau_{ij} = \mu \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right)$$
                         </div>
                         
-                        <h4>Stagnation Point Flow (Hiemenz Flow):</h4>
-                        <div class="equation-block">
-                            $$f''' + ff'' - (f')^2 + 1 = 0$$
-                        </div>
-                        <p class="guide-text">Exact solution for flow impinging on flat plate, important for heat transfer applications.</p>
-                        
-                        <h4>Natural Convection (Vertical Plate):</h4>
-                        <div class="equation-block">
-                            $$Ra = \frac{g\beta(T_w - T_\infty)L^3}{\nu\alpha} \text{ (Rayleigh number)}$$
-                        </div>
-                        <div class="equation-block">
-                            $$Nu_L = 0.68 + \frac{0.67Ra_L^{1/4}}{[1 + (0.492/Pr)^{9/16}]^{4/9}} \text{ for } 10^{-1} < Ra_L < 10^9$$
-                        </div>
+                        <p class="guide-text">This linear relationship between stress and strain rate is fundamental to Newtonian fluid behavior and distinguishes laminar flow from the complex, nonlinear stress-strain relationships in turbulent flows.</p>
                     </div>
 
-                    <!-- Boundary Layer Theory -->
-                    <div class="guide-section guide-limitations">
-                        <h3>Boundary Layer Theory and Approximations</h3>
+                    <!-- Analytical Solutions -->
+                    <div class="guide-section">
+                        <h3>Classical Analytical Solutions</h3>
+                        <p class="guide-text">Several exact analytical solutions exist for laminar flow, providing benchmarks for CFD verification and fundamental understanding of viscous flow behavior.</p>
                         
-                        <h4>Prandtl's Boundary Layer Equations:</h4>
-                        <p class="guide-text">For high Reynolds number flows, boundary layer approximation (∂p/∂y ≈ 0):</p>
-                        <div class="equation-block">
-                            $$u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} = -\frac{1}{\rho}\frac{dp}{dx} + \nu\frac{\partial^2 u}{\partial y^2}$$
-                        </div>
-                        <div class="equation-block">
-                            $$\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = 0$$
-                        </div>
+                        <h4>Poiseuille Flow (Pipe Flow)</h4>
+                        <p class="guide-text">For fully developed laminar flow in a circular pipe, the velocity profile is parabolic:</p>
                         
-                        <h4>Boundary Layer Scales and Thickness:</h4>
                         <div class="equation-block">
-                            $$\delta \sim \sqrt{\frac{\nu x}{U}} \sim \frac{x}{\sqrt{Re_x}}$$
-                        </div>
-                        <p class="guide-text">This shows boundary layer grows as √x and becomes thinner with increasing Reynolds number.</p>
-                        
-                        <h4>Displacement and Momentum Thickness:</h4>
-                        <div class="equation-block">
-                            $$\delta^* = \int_0^\infty \left(1 - \frac{u}{U}\right) dy \text{ (displacement thickness)}$$
-                        </div>
-                        <div class="equation-block">
-                            $$\theta = \int_0^\infty \frac{u}{U}\left(1 - \frac{u}{U}\right) dy \text{ (momentum thickness)}$$
+                            $$u(r) = \frac{\Delta p}{4\mu L}(R^2 - r^2) = u_{max}\left(1 - \frac{r^2}{R^2}\right)$$
                         </div>
                         
-                        <h4>Shape Factor and Flow Characterization:</h4>
-                        <div class="equation-block">
-                            $$H = \frac{\delta^*}{\theta}$$
-                        </div>
-                        <p class="guide-text">For Blasius boundary layer: H = 2.59. Increasing H indicates approaching separation.</p>
+                        <p class="guide-text">The maximum velocity occurs at the centerline, and the pressure drop is given by the Hagen-Poiseuille equation:</p>
                         
-                        <h4>Von Kármán Integral Method:</h4>
                         <div class="equation-block">
-                            $$\frac{d\theta}{dx} + (H + 2)\frac{\theta}{U}\frac{dU}{dx} = \frac{C_f}{2}$$
+                            $$\Delta p = \frac{32\mu \bar{u} L}{D^2}$$
                         </div>
-                        <p class="guide-text">Approximate method for boundary layer calculation using assumed velocity profiles.</p>
+                        
+                        <h4>Couette Flow (Shear-Driven Flow)</h4>
+                        <p class="guide-text">For flow between parallel plates with one moving at constant velocity, the velocity profile is linear:</p>
+                        
+                        <div class="equation-block">
+                            $$u(y) = \frac{U y}{h}$$
+                        </div>
+                        
+                        <h4>Blasius Boundary Layer</h4>
+                        <p class="guide-text">For laminar boundary layer flow over a flat plate, the similarity solution provides the dimensionless velocity profile as a function of the similarity variable η = y√(U/νx).</p>
                     </div>
 
-                    <!-- Stability Theory and Transition -->
-                    <div class="guide-section guide-use-cases">
-                        <h3>Linear Stability Theory and Transition Mechanisms</h3>
+                    <!-- Computational Considerations -->
+                    <div class="guide-section">
+                        <h3>Computational Implementation and Numerical Methods</h3>
+                        <p class="guide-text">Direct numerical solution of the Navier-Stokes equations for laminar flow requires careful attention to numerical schemes, boundary conditions, and mesh design to maintain the mathematical accuracy inherent in the exact equations.</p>
                         
-                        <h4>Orr-Sommerfeld Equation:</h4>
-                        <p class="guide-text">Governs linear stability of parallel laminar flows:</p>
-                        <div class="equation-block">
-                            $$(U - c)(\phi'' - \alpha^2\phi) - U''\phi = -\frac{i}{\alpha Re}(\phi^{iv} - 2\alpha^2\phi'' + \alpha^4\phi)$$
-                        </div>
-                        <p class="guide-text">Where φ is eigenfunction, α is wavenumber, c = c<sub>r</sub> + ic<sub>i</sub> is complex phase velocity.</p>
+                        <h4>Discretization Methods</h4>
+                        <p class="guide-text">The choice of spatial discretization scheme significantly affects solution accuracy. Second-order or higher schemes are recommended to minimize numerical diffusion, which can artificially stabilize the solution and mask physical instabilities near transition.</p>
                         
-                        <h4>Instability Criteria:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Necessary condition (Rayleigh):</strong> U''(y) must change sign for inviscid instability</span>
+                                <span class="guide-text">Finite Volume Method: Conservative formulation ensuring mass and momentum conservation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Inflection point theorem:</strong> Inflection points in velocity profile indicate potential instability</span>
+                                <span class="guide-text">Finite Element Method: Superior handling of complex geometries and boundary conditions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Critical Reynolds numbers:</strong> Re<sub>cr</sub> ≈ 520 for Blasius boundary layer</span>
+                                <span class="guide-text">Spectral Methods: Highest accuracy for smooth solutions in simple geometries</span>
                             </li>
                         </ul>
                         
-                        <h4>Transition Mechanisms:</h4>
-                        <div class="term-item">
-                            <strong>Natural transition:</strong> Tollmien-Schlichting waves → nonlinear breakdown → turbulent spots
-                        </div>
-                        <div class="term-item">
-                            <strong>Bypass transition:</strong> High freestream turbulence bypasses linear instability stage
-                        </div>
-                        <div class="term-item">
-                            <strong>Separation-induced transition:</strong> Separated shear layer becomes unstable
-                        </div>
-                        
-                        <h4>Critical Reynolds Numbers for Common Geometries:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Pipe flow:</strong> Re<sub>cr</sub> ≈ 2,300 (depends on disturbances)</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Flat plate:</strong> Re<sub>x,cr</sub> ≈ 500,000 (natural transition)</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Circular cylinder:</strong> Re<sub>cr</sub> ≈ 47 (von Kármán vortex street)</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Sphere:</strong> Re<sub>cr</sub> ≈ 250,000 (boundary layer transition)</span>
-                            </li>
-                        </ul>
+                        <h4>Pressure-Velocity Coupling</h4>
+                        <p class="guide-text">The incompressible Navier-Stokes equations require special treatment due to the absence of an explicit pressure equation. Common approaches include SIMPLE, PISO, and coupled algorithms, with coupled solvers often providing superior convergence for laminar flows.</p>
                     </div>
 
-                    <!-- Heat and Mass Transfer in Laminar Flow -->
-                    <div class="guide-section guide-avoid">
-                        <h3>Heat and Mass Transfer in Laminar Flow</h3>
+                    <!-- Validation and Verification -->
+                    <div class="guide-section">
+                        <h3>Model Validation and Verification Database</h3>
+                        <p class="guide-text">Laminar flow solutions can be rigorously validated against analytical solutions and high-quality experimental data, providing confidence in numerical accuracy that is unmatched by turbulent flow simulations.</p>
                         
-                        <h4>Energy Equation with Prandtl Number:</h4>
-                        <div class="equation-block">
-                            $$\frac{\partial T}{\partial t} + \mathbf{u} \cdot \nabla T = \alpha \nabla^2 T + \frac{\Phi}{\rho c_p}$$
-                        </div>
-                        <p class="guide-text">Where α = k/(ρc<sub>p</sub>) is thermal diffusivity and Prandtl number:</p>
-                        <div class="equation-block">
-                            $$Pr = \frac{\nu}{\alpha} = \frac{\mu c_p}{k} = \frac{\text{momentum diffusivity}}{\text{thermal diffusivity}}$$
-                        </div>
+                        <h4>Standard Validation Cases</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Lid-driven cavity flow: Benchmark for recirculating laminar flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Flow past circular cylinder: Transition from steady to unsteady laminar flow</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Backward-facing step: Laminar separation and reattachment</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Natural convection in cavities: Buoyancy-driven laminar flows</span>
+                            </li>
+                        </ul>
                         
-                        <h4>Thermal Boundary Layer Thickness:</h4>
-                        <div class="equation-block">
-                            $$\frac{\delta_T}{\delta} = Pr^{-1/3} \text{ for } Pr > 1$$
-                        </div>
-                        <p class="guide-text">For Pr > 1 (liquids): thermal BL is thinner than velocity BL</p>
-                        <p class="guide-text">For Pr < 1 (gases, liquid metals): thermal BL is thicker than velocity BL</p>
-                        
-                        <h4>Classical Heat Transfer Solutions:</h4>
-                        <div class="term-item">
-                            <strong>Flat plate (constant wall temperature):</strong>
-                            $$Nu_x = 0.332 Re_x^{1/2} Pr^{1/3} \text{ for } Pr > 0.6$$
-                        </div>
-                        <div class="term-item">
-                            <strong>Circular pipe (fully developed):</strong>
-                            $$Nu = 4.36 \text{ (constant heat flux)}, \quad Nu = 3.66 \text{ (constant wall temperature)}$$
-                        </div>
-                        <div class="term-item">
-                            <strong>Natural convection (vertical plate):</strong>
-                            $$Nu_L = 0.68 + \frac{0.67Ra_L^{1/4}}{[1 + (0.492/Pr)^{9/16}]^{4/9}}$$
-                        </div>
-                        
-                        <h4>Mass Transfer Analogies:</h4>
-                        <div class="equation-block">
-                            $$Sc = \frac{\nu}{D_{AB}} = \frac{\text{momentum diffusivity}}{\text{mass diffusivity}}$$
-                        </div>
-                        <p class="guide-text">Schmidt number Sc plays same role as Prandtl number Pr. Mass transfer correlations obtained by analogy:</p>
-                        <div class="equation-block">
-                            $$Sh = Nu(Pr \to Sc) \text{ (Sherwood number analogy)}$$
-                        </div>
+                        <h4>Experimental Validation</h4>
+                        <p class="guide-text">High-quality experimental data for laminar flows provides additional validation opportunities, particularly for heat transfer coefficients, pressure distributions, and flow visualization studies. The deterministic nature of laminar flow enables precise comparison between computational and experimental results.</p>
                     </div>
 
-                    <!-- Numerical Methods for Laminar Flow -->
-                    <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
-                        <h3>Numerical Methods and Computational Aspects</h3>
+                    <!-- Advanced Applications -->
+                    <div class="guide-section">
+                        <h3>Advanced Numerical Methods and Modern Developments</h3>
+                        <p class="guide-text">Modern computational capabilities have enabled the solution of increasingly complex laminar flow problems, including multi-physics coupling, non-Newtonian behavior, and microfluidic applications.</p>
                         
-                        <h4>Finite Difference Discretization:</h4>
-                        <p class="guide-text">Central difference for diffusion, upwind for convection:</p>
-                        <div class="equation-block">
-                            $$\frac{\partial^2 u}{\partial x^2} \approx \frac{u_{i+1} - 2u_i + u_{i-1}}{(\Delta x)^2}$$
-                        </div>
-                        <div class="equation-block">
-                            $$u\frac{\partial u}{\partial x} \approx u_i \frac{u_i - u_{i-1}}{\Delta x} \text{ (upwind)}$$
-                        </div>
+                        <h4>Multi-Physics Coupling</h4>
+                        <p class="guide-text">Laminar flow solutions often serve as the foundation for coupled simulations involving heat transfer, mass transfer, chemical reactions, and structural mechanics. The deterministic nature of laminar flow provides a stable base for these complex multi-physics interactions.</p>
                         
-                        <h4>Finite Volume Method:</h4>
-                        <div class="equation-block">
-                            $$\int_V \frac{\partial \mathbf{u}}{\partial t} dV + \oint_S \mathbf{u}(\mathbf{u} \cdot \mathbf{n}) dS = -\oint_S p\mathbf{n} dS + \oint_S \mu(\nabla \mathbf{u}) \cdot \mathbf{n} dS$$
-                        </div>
+                        <h4>Microfluidics and Lab-on-Chip</h4>
+                        <p class="guide-text">At microscales, laminar flow dominates due to low Reynolds numbers, enabling precise control of fluid mixing, particle manipulation, and chemical reactions. Surface tension effects and electrokinetic phenomena become increasingly important.</p>
                         
-                        <h4>Pressure-Velocity Coupling:</h4>
-                        <div class="term-item">
-                            <strong>SIMPLE algorithm:</strong> Semi-Implicit Method for Pressure-Linked Equations
-                            <ul class="guide-list">
-                                <li class="guide-item"><span class="guide-bullet">1.</span><span class="guide-text">Solve momentum with guessed pressure</span></li>
-                                <li class="guide-item"><span class="guide-bullet">2.</span><span class="guide-text">Solve pressure correction equation</span></li>
-                                <li class="guide-item"><span class="guide-bullet">3.</span><span class="guide-text">Update velocity and pressure fields</span></li>
-                                <li class="guide-item"><span class="guide-bullet">4.</span><span class="guide-text">Iterate until convergence</span></li>
-                            </ul>
-                        </div>
+                        <h4>Non-Newtonian Extensions</h4>
+                        <p class="guide-text">The laminar flow framework extends naturally to non-Newtonian fluids, where the linear stress-strain relationship is replaced by more complex constitutive equations. Examples include power-law fluids, viscoelastic materials, and Bingham plastics.</p>
                         
-                        <h4>Stability Constraints:</h4>
-                        <div class="equation-block">
-                            $$\text{CFL: } \frac{u\Delta t}{\Delta x} < 1, \quad \text{Diffusion: } \frac{\nu \Delta t}{(\Delta x)^2} < \frac{1}{2}$$
-                        </div>
-                        
-                        <h4>Grid Generation for Boundary Layers:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Geometric progression:</strong> First cell height y₁, growth ratio r < 1.2</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>y⁺ < 1:</strong> For accurate wall shear stress and heat transfer</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Boundary layer resolution:</strong> 15-20 cells within δ</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Advanced Methods:</h4>
-                        <div class="term-item">
-                            <strong>Spectral methods:</strong> High-order accuracy using Fourier or Chebyshev expansions
-                        </div>
-                        <div class="term-item">
-                            <strong>Immersed boundary:</strong> Handling complex geometries without body-fitted grids
-                        </div>
-                        <div class="term-item">
-                            <strong>Adaptive mesh refinement:</strong> Automatic grid refinement in high-gradient regions
-                        </div>
+                        <h4>High-Performance Computing</h4>
+                        <p class="guide-text">Modern parallel computing architectures enable the solution of laminar flow problems with unprecedented resolution and complexity. Direct numerical simulation capabilities continue to expand the range of accessible Reynolds numbers and geometric complexity.</p>
                     </div>
 
-                    <!-- Modern Applications and Challenges -->
-                    <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
-                        <h3>Modern Applications and Computational Challenges</h3>
-                        
-                        <h4>Microfluidics and MEMS:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Low Reynolds number flows:</strong> Re < 1, Stokes flow dominates</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Surface effects:</strong> Contact line dynamics, wetting phenomena</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Electrokinetic flows:</strong> Electroosmosis, electrophoresis</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Non-Newtonian Fluids:</h4>
-                        <div class="equation-block">
-                            $$\boldsymbol{\tau} = \eta(\dot{\gamma}) \boldsymbol{\gamma}$$
-                        </div>
-                        <p class="guide-text">Where η(γ̇) is shear-rate dependent viscosity:</p>
-                        <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text"><strong>Power-law:</strong> η = K γ̇ⁿ⁻¹</span></li>
-                            <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text"><strong>Carreau model:</strong> η = η∞ + (η₀ - η∞)[1 + (λγ̇)²]^((n-1)/2)</span></li>
-                        </ul>
-                        
-                        <h4>Multiphase Laminar Flows:</h4>
-                        <div class="term-item">
-                            <strong>Volume of Fluid (VOF):</strong> Interface tracking for immiscible fluids
-                        </div>
-                        <div class="term-item">
-                            <strong>Level set methods:</strong> Smooth interface representation
-                        </div>
-                        <div class="term-item">
-                            <strong>Phase field methods:</strong> Diffuse interface models
-                        </div>
-                        
-                        <h4>High-Performance Computing:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Domain decomposition:</strong> Parallel solution of large systems</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Multigrid methods:</strong> Efficient solution of elliptic equations</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>GPU acceleration:</strong> Massively parallel finite difference/volume methods</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Verification and Validation:</h4>
-                        <div class="term-item">
-                            <strong>Method of Manufactured Solutions:</strong> Systematic code verification
-                        </div>
-                        <div class="term-item">
-                            <strong>Grid convergence studies:</strong> Assessing numerical error
-                        </div>
-                        <div class="term-item">
-                            <strong>Benchmark problems:</strong> Standard test cases for validation
-                            <ul class="guide-list">
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Driven cavity flow</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Flow over backward-facing step</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Natural convection in enclosed spaces</span></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            Developed By Mert Küplülü
-        </div>
-    </footer>
-
     <script>
-        // Tab functionality
-        function showTab(tabName) {
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
             // Hide all tab content
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
             
             // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.content-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-        
-        // Reynolds Number Calculator
-        function calculateReynolds() {
-            const velocity = parseFloat(document.getElementById('velocity').value);
-            const length = parseFloat(document.getElementById('length').value);
-            const viscositySelect = document.getElementById('viscosity').value;
-            let viscosity;
-            
-            if (viscositySelect === 'custom') {
-                document.getElementById('customViscosity').style.display = 'block';
-                viscosity = parseFloat(document.getElementById('customViscosity').value);
-            } else {
-                document.getElementById('customViscosity').style.display = 'none';
-                viscosity = parseFloat(viscositySelect);
+            tablinks = document.getElementsByClassName("content-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
             }
             
-            if (velocity && length && viscosity) {
-                const reynolds = (velocity * length) / viscosity;
-                const resultDiv = document.getElementById('reynolds-result');
-                const regimeDiv = document.getElementById('flow-regime');
-                const recommendationDiv = document.getElementById('model-recommendation');
-                
-                // Display Reynolds number
-                resultDiv.innerHTML = `
-                    <div style="font-size: 2rem; font-weight: 700; color: #047857; margin-bottom: 0.5rem;">
-                        Re = ${reynolds.toExponential(2)}
-                    </div>
-                    <div style="color: #6b7280;">Reynolds Number</div>
-                `;
-                
-                // Determine flow regime and recommendation
-                regimeDiv.style.display = 'block';
-                recommendationDiv.style.display = 'block';
-                
-                if (reynolds < 2300) {
-                    regimeDiv.innerHTML = '🟢 LAMINAR FLOW';
-                    regimeDiv.style.background = '#dcfce7';
-                    regimeDiv.style.color = '#166534';
-                    regimeDiv.style.border = '2px solid #22c55e';
-                    
-                    recommendationDiv.innerHTML = '✅ USE LAMINAR MODEL<br><span style="font-size: 0.875rem; font-weight: normal;">Perfect choice - exact accuracy expected</span>';
-                    recommendationDiv.style.background = '#dcfce7';
-                    recommendationDiv.style.color = '#166534';
-                    recommendationDiv.style.border = '2px solid #22c55e';
-                } else if (reynolds < 4000) {
-                    regimeDiv.innerHTML = '🟡 TRANSITION ZONE';
-                    regimeDiv.style.background = '#fef3c7';
-                    regimeDiv.style.color = '#92400e';
-                    regimeDiv.style.border = '2px solid #f59e0b';
-                    
-                    recommendationDiv.innerHTML = '⚠️ USE TRANSITION MODEL<br><span style="font-size: 0.875rem; font-weight: normal;">Flow may be laminar or turbulent</span>';
-                    recommendationDiv.style.background = '#fef3c7';
-                    recommendationDiv.style.color = '#92400e';
-                    recommendationDiv.style.border = '2px solid #f59e0b';
-                } else {
-                    regimeDiv.innerHTML = '🔴 TURBULENT FLOW';
-                    regimeDiv.style.background = '#fee2e2';
-                    regimeDiv.style.color = '#dc2626';
-                    regimeDiv.style.border = '2px solid #ef4444';
-                    
-                    recommendationDiv.innerHTML = '❌ DO NOT USE LAMINAR<br><span style="font-size: 0.875rem; font-weight: normal;">Use k-ε or k-ω SST instead</span>';
-                    recommendationDiv.style.background = '#fee2e2';
-                    recommendationDiv.style.color = '#dc2626';
-                    recommendationDiv.style.border = '2px solid #ef4444';
-                }
-            }
+            // Show the selected tab content and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
-        
-        // Viscosity selector handler
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('viscosity').addEventListener('change', function() {
-                if (this.value === 'custom') {
-                    document.getElementById('customViscosity').style.display = 'block';
-                } else {
-                    document.getElementById('customViscosity').style.display = 'none';
-                }
-                calculateReynolds();
-            });
-        });
-
-        // KaTeX rendering
-        document.addEventListener("DOMContentLoaded", function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: "$$", right: "$$", display: true},
-                    {left: "$", right: "$", display: false}
-                ]
-            });
-        });
     </script>
+
+    <script>
+        function navigateToModel(modelFile) {
+            if (modelFile) {
+                window.location.href = modelFile;
+            }
+        }
+
+        function setCurrentModel() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('modelSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentModel);
+    </script>
+
 </body>
 </html>

@@ -3,536 +3,1138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detached Eddy Simulation - Compact Guide v1.0</title>
-    <meta name="description" content="DES model explained compactly with guidance.">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <title>DES Model - Detached Eddy Simulation - Technical Guide</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6">        
+
+        </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+        
+    </script>
     
-    <!-- KaTeX for Math -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.4; color: #1e293b; background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%); font-size: 14px; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
-        .header { background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03)); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(59,130,246,0.15); padding: 0.75rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 10px rgba(0,0,0,0.04); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; }
-        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
-        .logo-icon { width: 2rem; height: 2rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(99,102,241,0.2); }
-        .logo h1 { font-size: 1rem; font-weight: 600; color: #1e293b; }
-        .logo p { font-size: 0.75rem; color: #64748b; font-style: italic; }
-        .back-button { color: #64748b; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(59,130,246,0.15); background: rgba(255,255,255,0.8); font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
-        .back-button:hover { color: #3b82f6; border-color: #3b82f6; background: rgba(59,130,246,0.05); }
-        .main-content { padding: 1rem 0; }
-        .model-hero { text-align: center; padding: 1.5rem 0 1rem 0; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9)); border-radius: 0.75rem; margin-bottom: 1.5rem; border: 1px solid rgba(59,130,246,0.1); }
-        .model-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 0.375rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(99,102,241,0.2); }
-        .model-hero h1 { font-size: 2rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; line-height: 1.2; }
-        .model-hero p { font-size: 1rem; color: #64748b; max-width: 600px; margin: 0 auto; }
-        .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; margin-bottom: 1.5rem; }
-        .main-column { min-width: 0; }
-        .sidebar { background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1rem; border: 1px solid rgba(59,130,246,0.1); height: fit-content; position: sticky; top: 5rem; }
-        .content-section { background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid rgba(59,130,246,0.1); }
-        .content-section h2 { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .content-section ul { margin: 0.75rem 0; padding-left: 1.25rem; }
-        .content-section li { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; line-height: 1.4; }
-        .equation-large { font-size: 1rem !important; margin: 0.75rem 0 !important; }
-        .variables-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
-        .variable-item { background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; }
-        .variable-symbol { font-family: 'KaTeX_Math', 'Times New Roman', serif; font-size: 1rem; font-weight: 600; color: #6366f1; margin-bottom: 0.25rem; }
-        .variable-name { font-size: 0.75rem; font-weight: 600; color: #1e293b; margin-bottom: 0.125rem; }
-        .variable-description { font-size: 0.625rem; color: #64748b; line-height: 1.3; }
-        .properties-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin: 0.75rem 0; }
-        .properties-table th, .properties-table td { padding: 0.5rem; border: 1px solid rgba(59,130,246,0.1); text-align: left; }
-        .properties-table th { background: rgba(99,102,241,0.1); color: #4338ca; font-weight: 600; }
-        .sidebar h3 { font-size: 1rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .sidebar ul { list-style: none; margin-bottom: 1rem; }
-        .sidebar li { margin-bottom: 0.375rem; }
-        .sidebar a { color: #64748b; text-decoration: none; font-size: 0.75rem; transition: color 0.2s ease; display: flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0; }
-        .sidebar a:hover { color: #3b82f6; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; gap: 1rem; } .sidebar { position: static; order: -1; } .container { padding: 0 0.75rem; } .model-hero h1 { font-size: 1.5rem; } .model-hero p { font-size: 0.875rem; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+
+                /* Premium Header Navigation */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+                .nav-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
+                .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #2d3748;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+            color: #718096;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }        \
+                .content-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+        }
+
+        .content-tab {
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 12px;
+            white-space: nowrap;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        }
+        .content-tab::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+        .content-tab:hover::before,
+        .content-tab.active::before {
+        opacity: 1;
+        }
+        .content-tab:hover,
+        .content-tab.active {
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        .content-tab:first-child {
+        border-left: none;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Industry Guide Styling */
+        .industry-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .guide-section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-item {
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .guide-text {
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .guide-emphasis {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
+        }
+
+        /* Academy Guide Styling */
+        .academy-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            line-height: 1.6;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide h3:first-child {
+            margin-top: 0;
+        }
+
+        .academy-guide h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
+            line-height: 1.4;
+        }
+
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
+        }
+
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+            .logo {
+                font-size: 1.2rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .guide-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+                    \
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">
-                    <div class="logo-icon">
-                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">DES</span>
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
+                <div class="nav-tabs">
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <div class="model-selector">
+                        <select id="modelSelect" class="model-dropdown" onchange="navigateToModel(this.value)">
+                            <option value="">Select Model...</option>
+                            <option value="laminar.html">Laminar Flow</option>
+                            <option value="k-epsilon.html">k-ε (Standard)</option>
+                            <option value="k-omega.html">k-ω (Wilcox)</option>
+                            <option value="k-omega-sst.html">k-ω SST</option>
+                            <option value="reynolds-stress.html">Reynolds Stress Model (RSM)</option>
+                            <option value="spalart-allmaras.html">Spalart-Allmaras</option>
+                            <option value="des.html">Detached Eddy Simulation (DES)</option>
+                            <option value="les.html">Large Eddy Simulation (LES)</option>
+                            <option value="sas.html">Scale-Adaptive Simulation (SAS)</option>
+                            <option value="k-kl-omega.html">k-kL-ω Transition</option>
+                            <option value="inviscid.html">Inviscid Flow</option>
+                        </select>
                     </div>
-                    <div>
-                        <h1>Detached Eddy Simulation</h1>
-                        <p>Hybrid RANS-LES</p>
-                    </div>
-                </a>
-                <a href="../turbulence-models.html" class="back-button"><span>←</span><span>Back to Models</span></a>
+                </div>
             </div>
         </div>
-    </header>
 
-    <main class="main-content">
-        <div class="container">
-            
-            <div style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
-                ✅ NEW: Detached Eddy Simulation Available!
+        <div class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>DES Model - Detached Eddy Simulation</h1>
+                <p class="model-subtitle">Hybrid RANS-LES approach for complex unsteady flows with separation</p>
             </div>
 
-            <div class="model-hero">
-                <div class="model-badge">
-                    <span>DES</span>
-                    <span>Hybrid RANS-LES Model</span>
-                </div>
-                <h1>Detached Eddy Simulation</h1>
-                <p>Hybrid approach using RANS near walls and LES in separated regions</p>
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
-            <div class="content-grid">
-                <div class="main-column">
-                    
-                    <!-- FIRST: Practical Applications -->
-                    <div class="content-section" id="applications">
-                        <h2><span>🛠️</span> Practical Applications</h2>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
-                            <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">🎯 Excellent For:</h4>
-                                <ul style="font-size: 0.75rem; color: #065f46; list-style: none; padding: 0;">
-                                    <li>• Massively separated flows</li>
-                                    <li>• Bluff body aerodynamics</li>
-                                    <li>• Aircraft high-lift configurations</li>
-                                    <li>• Automotive external flows</li>
-                                    <li>• Vortex shedding behind cylinders</li>
-                                    <li>• Turbomachinery with separation</li>
-                                    <li>• Building aerodynamics</li>
-                                </ul>
-                            </div>
-                            <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Limitations:</h4>
-                                <ul style="font-size: 0.75rem; color: #7f1d1d; list-style: none; padding: 0;">
-                                    <li>• Very high computational cost</li>
-                                    <li>• Complex grid requirements</li>
-                                    <li>• Unsteady simulations required</li>
-                                    <li>• Grid-scale dependency</li>
-                                    <li>• Gray area issues</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced CFD Guidance -->
-                    <div class="content-section" id="guidance">
-                        <h2>
-                            <span>🎯</span>
-                            CFD Guidance - Detached Eddy Simulation
-                        </h2>
-                        
-                        <!-- HIGHLIGHTED: When to Use -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use DES (Critical Applications)</h3>
-                            <ul style="color: #065f46; font-weight: 500;">
-                                <li><strong>Massively separated flows</strong> - Large separation regions where RANS fails</li>
-                                <li><strong>Bluff body aerodynamics</strong> - Cars, buildings, bridges with wake flows</li>
-                                <li><strong>Aircraft high-lift configurations</strong> - Flaps, slats with complex separation</li>
-                                <li><strong>Automotive external aerodynamics</strong> - Vehicle wake and separation prediction</li>
-                                <li><strong>Vortex shedding phenomena</strong> - Cylinders, struts, landing gear</li>
-                                <li><strong>Turbomachinery with separation</strong> - Stalled compressor stages, diffusers</li>
-                                <li><strong>Building aerodynamics</strong> - Wind loads, pedestrian comfort</li>
-                                <li><strong>Research applications</strong> - When unsteady separation physics is critical</li>
-                            </ul>
-                        </div>
-
-                        <!-- HIGHLIGHTED: When to Avoid -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid DES (Critical Limitations)</h3>
-                            <ul style="color: #7f1d1d; font-weight: 500;">
-                                <li><strong>Attached boundary layer flows</strong> - RANS sufficient, DES unnecessary</li>
-                                <li><strong>Industrial routine analysis</strong> - Too expensive for everyday engineering</li>
-                                <li><strong>Limited computational resources</strong> - Requires massive CPU and memory</li>
-                                <li><strong>Steady flow applications</strong> - Cannot provide steady-state solutions</li>
-                                <li><strong>Preliminary design studies</strong> - Overkill for initial conceptual work</li>
-                                <li><strong>Simple internal flows</strong> - Pipes, ducts where RANS works well</li>
-                                <li><strong>Gray area problems</strong> - Ambiguous RANS/LES interface regions</li>
-                                <li><strong>Grid dependency issues</strong> - Results strongly depend on grid quality</li>
-                            </ul>
-                        </div>
-
-                        <h3>Setup Tips & Best Practices</h3>
-                        <ul>
-                            <li><strong>Grid requirements:</strong> RANS-quality near walls, LES-quality in separation regions</li>
-                            <li><strong>Interface location:</strong> Ensure RANS/LES interface is in separated region</li>
-                            <li><strong>Time stepping:</strong> Small time steps for LES regions, CFL < 1</li>
-                            <li><strong>Simulation time:</strong> Very long runs needed for statistical convergence</li>
-                            <li><strong>Wall treatment:</strong> Use RANS near walls with appropriate y+</li>
-                            <li><strong>Post-processing:</strong> Time-averaged results for engineering analysis</li>
+            <!-- Industry Guide Tab Content -->
+            <div id="industry" class="tab-content active">
+                <div class="industry-guide">
+                    <!-- Model Overview -->
+                    <div class="guide-section guide-overview">
+                        <h3>1. Model Overview</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>🔄 Hybrid RANS-LES approach</strong> using RANS near walls and LES in separated regions.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Detached Eddy Simulation</strong> automatically switches between modeling approaches based on grid and flow characteristics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady flow capability</strong> capturing large-scale turbulent structures and flow instabilities.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Advanced separation prediction</strong> for complex geometries with massive flow separation.</span>
+                            </li>
                         </ul>
                     </div>
 
-                    <!-- Enhanced Equations with Detailed Explanations -->
-                    <div class="content-section" id="equations">
-                        <h2>
-                            <span>📐</span>
-                            DES Equations - Detailed Analysis
-                        </h2>
+                    <!-- Key Advantages -->
+                    <div class="guide-section guide-advantages">
+                        <h3>2. Key Advantages</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time-accurate results:</strong> Captures <strong>unsteady forces and moments</strong> critical for design.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Superior separation prediction:</strong> <strong>LES resolution</strong> in separated regions where RANS fails.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> <strong>RANS near walls</strong> avoids expensive wall-resolved LES.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Large-scale structure resolution:</strong> Resolves <strong>vortex shedding and mixing</strong> phenomena.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Performance Characteristics -->
+                    <div class="guide-section guide-performance">
+                        <h3>3. Performance Characteristics</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Accuracy:</strong> <strong>Superior to RANS</strong> for separated flows, <strong>more efficient than LES</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational cost:</strong> <strong>5-10x RANS</strong> time, <strong>10-100x less than wall-resolved LES</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Memory requirements:</strong> <strong>Moderate increase</strong> due to unsteady storage and finer mesh.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Convergence:</strong> Requires <strong>statistical averaging</strong> over multiple flow-through times.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Industry Applications -->
+                    <div class="guide-section guide-applications">
+                        <h3>4. Industry Applications</h3>
                         
-                        <!-- Modified Dissipation -->
-                        <div style="background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(139,92,246,0.05)); border: 1px solid rgba(99,102,241,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #4338ca; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Modified Dissipation Term (DES Key Innovation)</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    D^* = \min(\beta^* k \omega, C_{DES} k^{3/2} / \Delta)
-                                </div>
-                                <div class="equation-large katex-display">
-                                    \text{where } \Delta = \max(\Delta x, \Delta y, \Delta z)
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Switches between RANS and LES dissipation</p>
-                                <p><strong>β*kω:</strong> Standard RANS dissipation (near walls)</p>
-                                <p><strong>CDESk^(3/2)/Δ:</strong> LES-like dissipation (separated regions)</p>
-                                <p><strong>Δ:</strong> Grid scale (largest cell dimension)</p>
-                                <p><strong>CDES ≈ 0.65:</strong> DES constant</p>
-                                <p><strong>min() function:</strong> Automatically chooses smaller dissipation</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Automotive:</span> External aerodynamics with A-pillar separation and wake flows</span>
                         </div>
-
-                        <!-- k Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Modified k Equation</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} =
-                                </div>
-                                <div class="equation-large katex-display">
-                                    P_k - D^* + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_k \nu_t)\frac{\partial k}{\partial x_j}\right]
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> k equation with modified dissipation</p>
-                                <p><strong>∂k/∂t + Uⱼ ∂k/∂xⱼ:</strong> Unsteady + convection terms</p>
-                                <p><strong>Pk:</strong> Standard production by mean shear</p>
-                                <p><strong>-D*:</strong> Modified dissipation (RANS near walls, LES in separation)</p>
-                                <p><strong>Diffusion:</strong> Standard k diffusion</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Aerospace:</span> High-lift configurations, aircraft wake interactions, landing gear noise</span>
                         </div>
-
-                        <!-- Standard ω Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(248,113,113,0.05)); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Standard ω Equation</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    \frac{\partial \omega}{\partial t} + U_j \frac{\partial \omega}{\partial x_j} =
-                                </div>
-                                <div class="equation-large katex-display">
-                                    \alpha \frac{\omega}{k} P_k - \beta \omega^2 + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_\omega \nu_t)\frac{\partial \omega}{\partial x_j}\right]
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Standard RANS equation for ω (no modification)</p>
-                                <p><strong>Note:</strong> DES modification only affects k equation dissipation</p>
-                                <p><strong>Purpose:</strong> Provides length scale in RANS regions</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Wind Energy:</span> Turbine blade stall, tower and nacelle effects, wind farm interactions</span>
                         </div>
-
-                        <!-- DES Length Scale -->
-                        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(52,211,153,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ DES Length Scale Switching</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    L_{DES} = \min\left(\frac{\sqrt{k}}{\beta^* \omega}, C_{DES} \Delta\right)
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Switches between RANS and LES length scales</p>
-                                <p><strong>√k/(β*ω):</strong> RANS length scale (near walls)</p>
-                                <p><strong>CDESΔ:</strong> Grid-based length scale (separated regions)</p>
-                                <p><strong>min() function:</strong> Automatically chooses appropriate scale</p>
-                                <p><strong>Result:</strong> RANS behavior near walls, LES behavior in separation</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Building Design:</span> Wind loading, pedestrian comfort, urban wind environments</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Marine:</span> Ship wake dynamics, propeller-hull interactions, offshore platform flows</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Industrial:</span> Heat exchanger flows, mixing chambers, bluff body flows</span>
                         </div>
                     </div>
 
-                    <!-- Enhanced Variables -->
-                    <div class="content-section" id="variables">
-                        <h2>
-                            <span>🔤</span>
-                            Variables & DES Parameters
-                        </h2>
-                        
-                        <div class="variables-grid">
-                            <div class="variable-item">
-                                <div class="variable-symbol">k</div>
-                                <div class="variable-name">Turbulent Kinetic Energy</div>
-                                <div class="variable-description">Modified dissipation (m²/s²)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">ω</div>
-                                <div class="variable-name">Specific Dissipation Rate</div>
-                                <div class="variable-description">Standard RANS equation (1/s)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">D*</div>
-                                <div class="variable-name">Modified Dissipation</div>
-                                <div class="variable-description">RANS/LES switching dissipation</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">Δ</div>
-                                <div class="variable-name">Grid Scale</div>
-                                <div class="variable-description">max(Δx, Δy, Δz)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">LDES</div>
-                                <div class="variable-name">DES Length Scale</div>
-                                <div class="variable-description">Switches RANS/LES behavior</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">νt</div>
-                                <div class="variable-name">Turbulent Viscosity</div>
-                                <div class="variable-description">Reduced in LES regions</div>
-                            </div>
+                    <!-- When to Choose DES Over RANS -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose DES Over RANS</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Massive flow separation:</strong> When <strong>large-scale unsteady structures</strong> dominate the flow physics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Complex 3D separation:</strong> Bluff bodies, automotive, aerospace with <strong>time-dependent effects</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Vortex shedding:</strong> When <strong>periodic unsteady behavior</strong> is critical to design.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mixed attached/separated regions:</strong> RANS near walls, <strong>LES in separated zones</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady forces/moments:</strong> When <strong>time-accurate predictions</strong> are required for design.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- When NOT to Use DES -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use DES</h3>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Fully attached flows:</span> Simple internal flows where separation is not expected</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Steady-state analysis:</span> When time-averaged results are sufficient</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Limited computational resources:</span> DES requires 5-10x more CPU time than RANS</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Preliminary design:</span> Early concept studies where RANS accuracy is sufficient</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Mesh limitations:</span> When LES-quality mesh resolution cannot be achieved</span>
                         </div>
                     </div>
 
-                    <!-- Enhanced Analogy -->
-                    <div class="content-section" id="analogy">
-                        <h2>
-                            <span>💡</span>
-                            Hybrid RANS-LES Analogy
-                        </h2>
-                        <p>Think of DES as a <strong>security system with two different modes</strong> - detailed monitoring in high-risk areas and general surveillance elsewhere.</p>
+                    <!-- Setup and Mesh Guidelines -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Setup and Mesh Guidelines</h3>
                         
-                        <p><strong>Near walls (RANS mode):</strong> Like using standard security cameras for routine monitoring - efficient, reliable, and adequate for normal conditions where you know what to expect.</p>
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Near-wall region:</strong> RANS mesh quality (y⁺ < 1 for low-Re, y⁺ ≈ 30 for wall functions)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Separated regions:</strong> LES mesh resolution (grid scale ~ boundary layer thickness)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Aspect ratio transition:</strong> Gradual change from high AR near walls to isotropic in LES region</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Total cells:</strong> Typically 2-5x more than equivalent RANS mesh</span>
+                            </li>
+                        </ul>
                         
-                        <p><strong>Separated regions (LES mode):</strong> Like switching to high-definition, motion-tracking cameras in areas where trouble is likely - captures all the detailed action when things get chaotic.</p>
+                        <h4>Solver Settings:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time step:</strong> CFL < 1.0 in LES regions, resolve convective time scales</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Temporal scheme:</strong> Second-order implicit for accuracy and stability</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Spatial discretization:</strong> Central differencing or low-dissipation upwind schemes</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Averaging time:</strong> 10-20 flow-through times for statistical convergence</span>
+                            </li>
+                        </ul>
                         
-                        <p><strong>Automatic switching:</strong> Like smart sensors that detect when an area becomes "high-risk" (separated) and automatically upgrade the monitoring level without human intervention.</p>
-                        
-                        <p><strong>Grid-based detection:</strong> Like the system knowing how good each camera is - it only switches to detailed mode if the camera quality (grid resolution) can handle it.</p>
-                        
-                        <p><strong>Computational efficiency:</strong> Like using expensive high-def cameras only where needed instead of everywhere - much cheaper than full LES but much more detailed than pure RANS.</p>
+                        <h4>Boundary Conditions:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Inlets:</strong> Include turbulent fluctuations for LES regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Walls:</strong> No-slip with appropriate RANS wall treatment</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Outlets:</strong> Convective outflow or pressure outlets away from separation</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- Model Constants -->
-                    <div class="content-section" id="constants">
-                        <h2>
-                            <span>📊</span>
-                            DES Model Constants
-                        </h2>
+                    <!-- Performance Optimization -->
+                    <div class="guide-section guide-optimization">
+                        <h3>8. Performance Optimization</h3>
                         
-                        <table class="properties-table">
-                            <tr>
-                                <th>Constant</th>
-                                <th>Value</th>
-                                <th>Physical Role</th>
-                                <th>Purpose</th>
-                            </tr>
-                            <tr>
-                                <td><strong>CDES</strong></td>
-                                <td>0.65</td>
-                                <td>DES constant</td>
-                                <td>Controls RANS/LES switching</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Base constants</strong></td>
-                                <td>Spalart-Allmaras</td>
-                                <td>Underlying RANS model</td>
-                                <td>Standard S-A coefficients</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Δ calculation</strong></td>
-                                <td>max(Δx,Δy,Δz)</td>
-                                <td>Grid scale definition</td>
-                                <td>LES filter width</td>
-                            </tr>
-                        </table>
+                        <h4>Computational Efficiency:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Parallel scaling:</strong> DES scales well with multiple cores due to unsteady nature</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Memory management:</strong> Monitor memory usage for large unsteady datasets</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>I/O optimization:</strong> Balance result frequency with storage requirements</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Solution Strategy:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Initialization:</strong> Start from converged RANS solution for faster development</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Monitoring:</strong> Track statistical quantities and flow-through times</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Validation:</strong> Compare with experimental data or higher-fidelity simulations</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- DES Features -->
-                    <div class="content-section" id="features">
-                        <h2>
-                            <span>🚀</span>
-                            DES Key Features
-                        </h2>
+                    <!-- Troubleshooting -->
+                    <div class="guide-section guide-limitations">
+                        <h3>9. Common Issues and Solutions</h3>
                         
-                        <!-- Hybrid Approach -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(99,102,241,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #4338ca; font-weight: 600; margin-bottom: 0.5rem;">Hybrid RANS-LES Approach</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Uses RANS in attached boundary layers (where it's accurate and efficient) and switches to LES in separated regions (where RANS fails and LES excels).</p>
-                        </div>
-
-                        <!-- Automatic Switching -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Automatic Mode Switching</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">No user intervention required - the model automatically detects separated regions based on local length scales and switches to LES mode.</p>
-                        </div>
-
-                        <!-- Computational Efficiency -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(245,158,11,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">Computational Efficiency</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Much cheaper than full LES since only separated regions require LES-quality grids and time stepping. Attached regions use efficient RANS treatment.</p>
-                        </div>
-                    </div>
-
-                    <!-- DES Variants -->
-                    <div class="content-section" id="variants">
-                        <h2>
-                            <span>🔄</span>
-                            DES Model Variants
-                        </h2>
+                        <h4>Grid-Induced Separation:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> Premature switching to LES mode in attached boundary layers</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Solution:</strong> Use Delayed DES (DDES) variant or refine transition region</span>
+                            </li>
+                        </ul>
                         
-                        <!-- Original DES -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(99,102,241,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #4338ca; font-weight: 600; margin-bottom: 0.5rem;">Original DES (Spalart et al., 1997)</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Based on Spalart-Allmaras model. Simple modification to dissipation term. Prone to "grid-induced separation" in attached boundary layers.</p>
-                        </div>
-
-                        <!-- Delayed DES -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Delayed DES (DDES)</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Includes delay function to prevent premature switching to LES mode in attached boundary layers. Solves grid-induced separation problem.</p>
-                        </div>
-
-                        <!-- Improved DES -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(245,158,11,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">Improved Delayed DES (IDDES)</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Latest variant with improved wall treatment and better handling of attached/separated flow interfaces. Most robust DES formulation.</p>
-                        </div>
-                    </div>
-
-                    <!-- Advantages & Disadvantages -->
-                    <div class="content-section" id="comparison">
-                        <h2>
-                            <span>⚖️</span>
-                            DES vs RANS and LES
-                        </h2>
+                        <h4>Statistical Convergence:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> Slow convergence of time-averaged quantities</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Solution:</strong> Extend simulation time, check periodicity, improve initial conditions</span>
+                            </li>
+                        </ul>
                         
-                        <!-- Advantages -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages over RANS and LES</h4>
-                            <ul style="font-size: 0.8rem; color: #065f46;">
-                                <li><strong>Best of both worlds:</strong> RANS efficiency + LES accuracy where needed</li>
-                                <li><strong>Captures unsteady separation:</strong> Resolves large-scale separation structures</li>
-                                <li><strong>Automatic region detection:</strong> No user specification of RANS/LES zones</li>
-                                <li><strong>Lower cost than LES:</strong> Only separated regions need LES treatment</li>
-                                <li><strong>Better than RANS for separation:</strong> Captures unsteady separation physics</li>
-                                <li><strong>Industrial applicability:</strong> More practical than full LES</li>
-                            </ul>
-                        </div>
-
-                        <!-- Disadvantages -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Disadvantages and Challenges</h4>
-                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
-                                <li><strong>Gray area issues:</strong> Ambiguous behavior at RANS/LES interface</li>
-                                <li><strong>Grid dependency:</strong> Results depend strongly on grid quality and distribution</li>
-                                <li><strong>Much higher cost than RANS:</strong> Unsteady simulations with fine grids</li>
-                                <li><strong>Less accurate than LES:</strong> Still uses RANS in boundary layers</li>
-                                <li><strong>Complex setup:</strong> Requires expertise in both RANS and LES</li>
-                                <li><strong>Validation challenges:</strong> Difficult to validate hybrid approach</li>
-                            </ul>
-                        </div>
+                        <h4>Numerical Instabilities:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> Solution divergence or excessive numerical dissipation</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Solution:</strong> Reduce time step, improve mesh quality, adjust numerical schemes</span>
+                            </li>
+                        </ul>
                     </div>
-
-                </div>
-
-                <div class="sidebar">
-                    <h3><span>🧭</span> Quick Navigation</h3>
-                    <ul>
-                        <li><a href="#applications">🛠️ Applications</a></li>
-                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
-                        <li><a href="#equations">📐 Equations</a></li>
-                        <li><a href="#variables">🔤 Variables</a></li>
-                        <li><a href="#analogy">💡 Analogy</a></li>
-                        <li><a href="#constants">📊 Constants</a></li>
-                        <li><a href="#features">🚀 Features</a></li>
-                        <li><a href="#variants">🔄 Variants</a></li>
-                        <li><a href="#comparison">⚖️ Comparison</a></li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;"><span>🔗</span> Related Models</h3>
-                    <ul>
-                        <li><a href="spalart-allmaras.html">Spalart-Allmaras</a></li>
-                        <li><a href="sas.html">Scale Adaptive Simulation</a></li>
-                        <li><a href="les.html">Large Eddy Simulation</a></li>
-                        <li><a href="../turbulence-models.html">← All Models</a></li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;"><span>📚</span> Model Info</h3>
-                    <ul>
-                        <li><span style="color: #6366f1;">Type:</span> Hybrid RANS-LES</li>
-                        <li><span style="color: #6366f1;">Variables:</span> k, ω, D*</li>
-                        <li><span style="color: #6366f1;">Base:</span> Spalart-Allmaras</li>
-                        <li><span style="color: #6366f1;">Cost:</span> Very High</li>
-                        <li><span style="color: #6366f1; font-weight: 600;">Status:</span> Available</li>
-                    </ul>
-
-                    <h3 style="margin-top: 1.5rem;"><span>⚙️</span> Key Parameters</h3>
-                    <ul>
-                        <li><span style="color: #6366f1;">Grid:</span> RANS + LES quality</li>
-                        <li><span style="color: #6366f1;">Time:</span> Small steps</li>
-                        <li><span style="color: #6366f1;">Mode:</span> Unsteady only</li>
-                        <li><span style="color: #6366f1;">Best for:</span> Massive separation</li>
-                    </ul>
-
-                    <h3 style="margin-top: 1.5rem;"><span>🏆</span> Validation Cases</h3>
-                    <ul>
-                        <li><span style="color: #6366f1;">Bluff bodies:</span> Excellent</li>
-                        <li><span style="color: #6366f1;">Separation:</span> Very good</li>
-                        <li><span style="color: #6366f1;">Vortex shedding:</span> Good</li>
-                        <li><span style="color: #6366f1;">High-lift:</span> Good</li>
-                    </ul>
-
-                    <h3 style="margin-top: 1.5rem;"><span>🔬</span> Development Status</h3>
-                    <ul>
-                        <li><span style="color: #6366f1;">Maturity:</span> Mature</li>
-                        <li><span style="color: #6366f1;">Usage:</span> Research + Industry</li>
-                        <li><span style="color: #6366f1;">Variants:</span> DES, DDES, IDDES</li>
-                        <li><span style="color: #6366f1;">Future:</span> Standard for separation</li>
-                    </ul>
                 </div>
             </div>
+            
+            <!-- Academy Guide Tab Content -->
+            <div id="academy" class="tab-content">
+                <div class="academy-guide">
+                    
+                    <!-- Historical Context and Development -->
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
+                        <h3>Historical Context and Development</h3>
+                        <p class="guide-text">Detached Eddy Simulation (DES) was introduced by Philippe Spalart in 1997 as a hybrid RANS-LES approach designed to combine the computational efficiency of RANS modeling near walls with the accuracy of Large Eddy Simulation in separated regions.</p>
+                        
+                        <h4>Evolution and Motivation</h4>
+                        <p class="guide-text">The development of DES was motivated by the recognition that RANS models, while computationally efficient, fundamentally struggle with massively separated flows due to their steady-state formulation and eddy viscosity assumptions. Conversely, pure LES, while accurate, requires prohibitively fine meshes near solid boundaries to resolve the near-wall turbulent structures.</p>
+                        
+                        <p class="guide-text">Spalart's insight was to automatically switch between RANS treatment in attached boundary layers (where it excels) and LES treatment in separated regions (where large-scale unsteady structures dominate). This switching is accomplished through a modification of the turbulence length scale, making the approach mesh-dependent by design.</p>
+                        
+                        <p class="guide-text">Subsequent developments included Delayed DES (DDES) by Spalart et al. (2006) to prevent premature switching to LES mode in attached boundary layers, and Zonal DES approaches that provide explicit control over the RANS-LES interface.</p>
+                    </div>
 
-        </div>
-    </main>
+                    <!-- Mathematical Foundation and Switching Mechanism -->
+                    <div class="guide-section guide-overview">
+                        <h3>Mathematical Foundation and Switching Mechanism</h3>
+                        <p class="guide-text">DES modifies the dissipation term in the underlying RANS model to enable automatic switching between RANS and LES modes based on the relationship between the RANS length scale and the local grid spacing.</p>
+                        
+                        <h4>Modified Spalart-Allmaras DES:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - c_{w1} f_w \left[\frac{\tilde{\nu}}{\tilde{d}}\right]^2 + \frac{1}{\sigma} \frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma} \frac{\partial \tilde{\nu}}{\partial x_j} \frac{\partial \tilde{\nu}}{\partial x_j}$$
+                        </div>
+                        
+                        <h4>DES Length Scale Modification:</h4>
+                        <div class="equation-block">
+                            $$\tilde{d} = \min(d, C_{DES} \Delta)$$
+                        </div>
+                        
+                        <h4>Grid Scale Definition:</h4>
+                        <div class="equation-block">
+                            $$\Delta = \max(\Delta x, \Delta y, \Delta z)$$
+                        </div>
+                        
+                        <h4>Delayed DES (DDES) Modification:</h4>
+                        <div class="equation-block">
+                            $$\tilde{d} = d - f_d \max(0, d - C_{DES} \Delta)$$
+                        </div>
+                        
+                        <h4>Delay Function:</h4>
+                        <div class="equation-block">
+                            $$f_d = 1 - \tanh\left[\left(8 r_d\right)^n\right], \quad r_d = \frac{\nu_t}{\sqrt{0.5(u_{i,j} + u_{j,i})^2} k^2}$$
+                        </div>
+                        
+                        <h4>k-ω SST DES Formulation:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial k}{\partial t} + \frac{\partial (u_j k)}{\partial x_j} = P_k - \beta^* k \omega F_{DES} + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_k \nu_t) \frac{\partial k}{\partial x_j}\right]$$
+                        </div>
+                        
+                        <h4>DES Limiter Function:</h4>
+                        <div class="equation-block">
+                            $$F_{DES} = \max\left[\frac{L_t}{C_{DES} \Delta}, 1\right], \quad L_t = \frac{\sqrt{k}}{\beta^* \omega}$$
+                        </div>
+                        
+                        <div class="term-definitions">
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>d:</strong> Wall distance (m)</div>
+                            <div class="term-item"><strong>Δ:</strong> Grid scale, typically max(Δx, Δy, Δz) (m)</div>
+                            <div class="term-item"><strong>C_DES:</strong> DES model constant (~0.65) (-)</div>
+                            <div class="term-item"><strong>f_d:</strong> Delay function to prevent premature LES switching (-)</div>
+                            <div class="term-item"><strong>r_d:</strong> Dimensionless parameter for delay function (-)</div>
+                            <div class="term-item"><strong>L_t:</strong> Turbulent length scale (m)</div>
+                            <div class="term-item"><strong>F_DES:</strong> DES limiter function (-)</div>
+                        </div>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Constant</th>
+                                        <th>Spalart-Allmaras DES</th>
+                                        <th>k-ω SST DES</th>
+                                        <th>Physical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>C_DES</td>
+                                        <td>0.65</td>
+                                        <td>0.61</td>
+                                        <td>DES switching parameter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>c_b1</td>
+                                        <td>0.1355</td>
+                                        <td>-</td>
+                                        <td>Production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>c_w1</td>
+                                        <td>c_b1/κ² + (1+c_b2)/σ</td>
+                                        <td>-</td>
+                                        <td>Destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>n</td>
+                                        <td>-</td>
+                                        <td>8</td>
+                                        <td>Delay function exponent</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
-        <div class="container">
-            <p style="color: #64748b; font-size: 0.75rem;">© 2024 CFD Reference | <a href="../turbulence-models.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a></p>
+                    <!-- DES Physics and Mode Switching -->
+                    <div class="guide-section">
+                        <h3>DES Physics and Mode Switching</h3>
+                        <p class="guide-text">The fundamental principle of DES lies in the length scale comparison that determines the dominant turbulent mechanism in different flow regions.</p>
+                        
+                        <h4>RANS Mode (Near-Wall Regions)</h4>
+                        <p class="guide-text">When the wall distance d is smaller than the grid scale Δ, the formulation reduces to standard RANS operation. In this region, the attached boundary layer turbulence is modeled using the underlying RANS equations (Spalart-Allmaras or k-ω SST), providing efficient and accurate near-wall treatment without requiring LES-level mesh resolution.</p>
+                        
+                        <h4>LES Mode (Separated Regions)</h4>
+                        <p class="guide-text">In separated regions away from walls, where d > C_DES Δ, the modified length scale effectively reduces the modeled turbulent viscosity, allowing the flow to develop three-dimensional unsteady turbulent structures that are resolved by the computational mesh rather than modeled.</p>
+                        
+                        <h4>Gray Area Mitigation</h4>
+                        <p class="guide-text">The "gray area" refers to the transition region where the model operates in an intermediate state between RANS and LES, potentially leading to non-physical behavior. Delayed DES addresses this through the delay function f_d, which prevents premature switching to LES mode in attached boundary layers by detecting the characteristic stress-strain relationship of attached flows.</p>
+                        
+                        <h4>Grid Scale Sensitivity</h4>
+                        <p class="guide-text">Unlike RANS models, DES results are inherently mesh-dependent by design. The grid scale Δ directly influences the RANS-LES switching, making mesh design a critical aspect of DES simulations. The mesh must be fine enough to resolve large turbulent structures in separated regions while remaining coarse enough near walls to maintain RANS efficiency.</p>
+                    </div>
+
+                    <!-- DES Variants and Modern Developments -->
+                    <div class="guide-section">
+                        <h3>DES Variants and Modern Developments</h3>
+                        <p class="guide-text">Since the original DES formulation, numerous variants have been developed to address specific limitations and extend the approach to different flow physics.</p>
+                        
+                        <h4>Delayed DES (DDES)</h4>
+                        <p class="guide-text">DDES incorporates a delay function to prevent premature switching to LES mode in attached boundary layers, addressing the "grid-induced separation" problem where insufficient LES resolution leads to non-physical flow separation. The delay function detects attached flow characteristics and maintains RANS treatment until the flow naturally separates.</p>
+                        
+                        <h4>Zonal DES (ZDES)</h4>
+                        <p class="guide-text">ZDES provides explicit user control over the RANS-LES interface through predefined zones, eliminating the automatic switching mechanism. This approach is particularly useful for flows where the separation location is known a priori and precise control over the hybrid interface is desired.</p>
+                        
+                        <h4>Scale-Adaptive Simulation (SAS)</h4>
+                        <p class="guide-text">SAS extends the DES concept by introducing a scale-adaptive source term that automatically adjusts the model behavior based on resolved turbulent scales, providing LES-like resolution in unsteady regions while maintaining RANS efficiency in steady regions without explicit grid-based switching.</p>
+                        
+                        <h4>Improved Delayed DES (IDDES)</h4>
+                        <p class="guide-text">IDDES combines the delay function of DDES with wall-modeled LES capability, enabling LES treatment down to the wall in regions where the grid resolution permits. This provides a seamless transition from RANS to wall-modeled LES to wall-resolved LES based on local grid resolution.</p>
+                    </div>
+
+                    <!-- Applications and Validation Cases -->
+                    <div class="guide-section">
+                        <h3>Applications and Validation Database</h3>
+                        <p class="guide-text">DES has been extensively validated across a wide range of separated flows and has become the method of choice for many industrial applications requiring unsteady flow predictions.</p>
+                        
+                        <h4>Benchmark Validation Cases</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Backward-facing step with various expansion ratios</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Flow around circular cylinders at high Reynolds numbers</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Airfoil stall and post-stall behavior</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Ahmed body for automotive aerodynamics</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Periodic hills for complex terrain flows</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Industrial Applications</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Automotive external aerodynamics with A-pillar and wake flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Aircraft high-lift configurations with slat and flap interactions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Wind turbine aerodynamics including tower and nacelle effects</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Building aerodynamics and urban wind environments</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Heat exchanger flows with tube bundle arrangements</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Performance Characteristics</h4>
+                        <p class="guide-text">DES typically provides superior prediction of separation points, reattachment lengths, and unsteady forces compared to RANS models, while requiring 5-10 times more computational resources than steady RANS but 1-2 orders of magnitude less than wall-resolved LES.</p>
+                    </div>
+
+                    <!-- Implementation and Best Practices -->
+                    <div class="guide-section">
+                        <h3>Implementation Guidelines and Best Practices</h3>
+                        <p class="guide-text">Successful DES implementation requires careful attention to mesh design, time stepping, and convergence criteria due to the hybrid nature and inherent unsteadiness of the approach.</p>
+                        
+                        <h4>Mesh Design Considerations</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">RANS mesh quality near walls: y⁺ < 1 for low-Re, y⁺ ≈ 30 for wall functions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">LES mesh requirements in separated regions: typically need grid scale on the order of boundary layer thickness</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Aspect ratio transition: gradual change from high aspect ratio near walls to isotropic cells in separated regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Interface location: ensure sufficient RANS region upstream of expected separation</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Temporal Resolution Requirements</h4>
+                        <p class="guide-text">DES requires time-accurate integration with time steps typically 1-2 orders of magnitude smaller than RANS simulations. The time step must resolve the convective time scale of large turbulent structures in the LES region, typically requiring CFL numbers of 0.5-1.0 in separated regions.</p>
+                        
+                        <h4>Statistical Convergence</h4>
+                        <p class="guide-text">Due to the inherent unsteadiness, DES results require statistical averaging over multiple flow-through times to achieve converged mean and RMS statistics. Typically 10-20 flow-through times are needed for first and second-order statistics convergence.</p>
+                        
+                        <h4>Boundary Conditions and Initialization</h4>
+                        <p class="guide-text">Inlet boundary conditions should include appropriate turbulent fluctuations in regions expected to operate in LES mode. Initialization from converged RANS solutions can accelerate the transition to statistical steady state, but care must be taken to allow development of three-dimensional unsteady structures.</p>
+                        
+                        <h4>Post-Processing Considerations</h4>
+                        <p class="guide-text">DES results require time-averaging for mean quantities and proper temporal sampling for spectral analysis. The identification of RANS vs. LES regions can be visualized through the ratio of modeled to total turbulent viscosity or through instantaneous flow field visualization.</p>
+                    </div>
+
+                    <!-- Advanced Topics and Future Directions -->
+                    <div class="guide-section">
+                        <h3>Advanced Topics and Future Directions</h3>
+                        <p class="guide-text">Contemporary DES research focuses on improving the RANS-LES interface, developing more robust switching criteria, and extending the approach to new physical phenomena.</p>
+                        
+                        <h4>Machine Learning Enhanced DES</h4>
+                        <p class="guide-text">Recent developments incorporate machine learning algorithms to optimize the RANS-LES switching criteria based on local flow characteristics, potentially improving automation and reducing user expertise requirements for mesh design and setup.</p>
+                        
+                        <h4>Compressible and High-Speed Flows</h4>
+                        <p class="guide-text">Extensions to compressible flows involve additional considerations for shock-turbulence interactions and density variations. Specialized formulations address the challenges of maintaining proper shock resolution while allowing turbulent mixing development in separated regions.</p>
+                        
+                        <h4>Multiphysics DES Applications</h4>
+                        <p class="guide-text">Modern applications extend DES to coupled phenomena including conjugate heat transfer, fluid-structure interaction, and combustion. These applications require careful consideration of the coupling between different physics and the appropriate treatment at RANS-LES interfaces.</p>
+                        
+                        <h4>Adaptive Mesh Refinement</h4>
+                        <p class="guide-text">Advanced implementations incorporate adaptive mesh refinement to automatically provide LES-quality resolution in separated regions while maintaining computational efficiency in attached flow regions, potentially reducing the mesh design burden on users.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // Initialize KaTeX
-        document.addEventListener("DOMContentLoaded", function() {
-            const equations = document.querySelectorAll('.katex-display');
-            equations.forEach(eq => {
-                katex.render(eq.textContent, eq, {
-                    displayMode: true,
-                    throwOnError: false
-                });
-            });
-        });
-
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        console.log('Detached Eddy Simulation page loaded - Enhanced compact design active');
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("content-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
     </script>
+
+    <script>
+        function navigateToModel(modelFile) {
+            if (modelFile) {
+                window.location.href = modelFile;
+            }
+        }
+
+        function setCurrentModel() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('modelSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentModel);
+    </script>
+
 </body>
 </html>

@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Spalart-Allmaras - Beko CFD AI Agent</title>
+    <title>Spalart-Allmaras Model - CFD Handbook</title>
     
     <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -21,1203 +21,1152 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #1e293b;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #2d3748;
+            background-color: #f7fafc;
             min-height: 100vh;
             opacity: 0;
-            animation: fadeInPage 0.6s ease-out forwards;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
         }
-
         @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
+            to { opacity: 1; transform: translateY(0); }
+        }
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+            overflow-x: hidden;
         }
 
-        /* Header */
+        /* Header Navigation */
+
+                /* Premium Header Navigation */
         .header {
-            background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03));
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(139,92,246,0.12);
-            padding: 0.75rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
+
+                .nav-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
+                .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #3b82f6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #2d3748;
             text-decoration: none;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .nav-tab {
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            color: #64748b;
-            border-radius: 0.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+            color: #718096;
             font-size: 0.875rem;
             font-weight: 500;
+            transition: color 0.2s ease;
         }
 
-        .nav-tab:hover {
-            background: rgba(59,130,246,0.1);
-            color: #3b82f6;
-        }
+        
 
-        .nav-tab.active {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .back-link:hover {
-            transform: translateX(-2px);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 2rem 0;
-        }
-
-        /* Page Header */
         .page-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            border: 1px solid rgba(139,92,246,0.1);
-        }
-
-        .model-icon {
-            width: 4rem;
-            height: 4rem;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }        \
+                .content-tabs {
             display: flex;
+            gap: 2.5rem;
             align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0 auto 1rem;
-            box-shadow: 0 4px 6px -1px rgba(139,92,246,0.2);
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #8b5cf6;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            font-size: 1.125rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Content Tabs */
-        .content-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(139,92,246,0.1);
-            padding-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
         }
 
         .content-tab {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: 2px solid rgba(139,92,246,0.2);
-            border-radius: 0.75rem;
-            color: #64748b;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 12px;
+            white-space: nowrap;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
         }
-
-        .content-tab:hover {
-            background: rgba(139,92,246,0.05);
-            border-color: rgba(139,92,246,0.3);
-            color: #8b5cf6;
+        .content-tab::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
         }
-
+        .content-tab:hover::before,
+        .content-tab.active::before {
+        opacity: 1;
+        }
+        .content-tab:hover,
         .content-tab.active {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            border-color: #8b5cf6;
-            color: white;
-            box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        .content-tab:first-child {
+        border-left: none;
         }
 
         .tab-content {
             display: none;
+            width: 100%;
+            padding: 0;
         }
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease-in;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Industry Guide Styles */
+        /* Industry Guide Styling */
         .industry-guide {
-            max-width: none;
+            width: 100%;
+            max-width: 100%;
+            padding: 2rem min(3rem, 5vw);
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .guide-section {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(139,92,246,0.1);
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+            overflow-wrap: break-word;
         }
 
-        .guide-section h3 {
-            color: #1e293b;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(139,92,246,0.1);
-        }
-
-        .guide-section h4 {
-            color: #4f46e5;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem 0;
-        }
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
 
         .guide-list {
             list-style: none;
-            margin: 0;
-            padding: 0;
         }
 
         .guide-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            transition: background 0.2s ease;
-        }
-
-        .guide-item:hover {
-            background: rgba(139,92,246,0.03);
-        }
-
-        .guide-bullet {
-            color: #8b5cf6;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 0.1rem;
-            flex-shrink: 0;
+            margin: 1rem 0;
+            position: relative;
         }
 
         .guide-text {
-            color: #4b5563;
+            display: block;
+            font-size: 1rem;
             line-height: 1.6;
-            flex: 1;
-        }
-
-        .guide-emphasis {
-            color: #1e293b;
-            font-weight: 600;
+            color: #4b5563;
+            padding-left: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .use-case-item, .avoid-item {
-            background: rgba(139,92,246,0.03);
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            border-left: 3px solid #8b5cf6;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
         }
 
-        /* Academy Guide Styles */
+        .guide-emphasis {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
+        }
+
+        /* Academy Guide Styling */
         .academy-guide {
-            max-width: none;
-        }
-
-        .theory-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(139,92,246,0.15);
-        }
-
-        .theory-section h3 {
-            color: #1e293b;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid rgba(139,92,246,0.2);
-        }
-
-        .theory-section h4 {
-            color: #4f46e5;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-        }
-
-        .equation-container {
-            background: linear-gradient(135deg, rgba(248,250,252,0.9), rgba(241,245,249,0.8));
-            border: 2px solid rgba(139,92,246,0.15);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(139,92,246,0.05);
-        }
-
-        .equation-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #8b5cf6;
-            margin-bottom: 1rem;
-        }
-
-        .math-block {
-            font-size: 1.1rem;
-            color: #1e293b;
-            margin: 0.5rem 0;
-        }
-
-        .definition-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .definition-item {
-            background: rgba(139,92,246,0.05);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 1px solid rgba(139,92,246,0.1);
-        }
-
-        .definition-term {
-            font-weight: 700;
-            color: #8b5cf6;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .definition-desc {
-            color: #4b5563;
-            line-height: 1.5;
-            font-size: 0.9rem;
-        }
-
-        .physical-meaning {
-            background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(5,150,105,0.03));
-            border-left: 4px solid #10b981;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .physical-meaning h4 {
-            color: #065f46;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Quick Decision Cards */
-        .quick-decisions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .decision-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .decision-card.use-it {
-            border-color: #10b981;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
-        }
-
-        .decision-card.avoid-it {
-            border-color: #f59e0b;
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
-        }
-
-        .decision-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .decision-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .use-it .decision-icon {
-            background: linear-gradient(135deg, #10b981, #34d399);
-            color: white;
-        }
-
-        .avoid-it .decision-icon {
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-            color: white;
-        }
-
-        .decision-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        /* Content Sections */
-        .content-section {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(139,92,246,0.1);
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid rgba(139,92,246,0.1);
-        }
-
-        .section-icon {
-            width: 2rem;
-            height: 2rem;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            font-weight: 700;
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        /* Highlight Boxes */
-        .highlight-box {
-            background: rgba(139,92,246,0.05);
-            border-left: 4px solid #8b5cf6;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .highlight-box h4 {
-            color: #8b5cf6;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        /* Equation Boxes */
-        .equation-box {
-            background: rgba(248, 250, 252, 0.9);
-            border: 2px solid rgba(139,92,246,0.15);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            text-align: center;
-        }
-
-        .equation-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #8b5cf6;
-            margin-bottom: 1rem;
-        }
-
-        /* Info Grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .info-item {
-            background: rgba(139,92,246,0.05);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 1px solid rgba(139,92,246,0.1);
-        }
-
-        .info-label {
-            font-weight: 700;
-            color: #8b5cf6;
-            margin-bottom: 0.25rem;
-            font-size: 0.875rem;
-        }
-
-        .info-value {
-            font-size: 0.875rem;
-            color: #64748b;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+            max-width: 100%;
+            padding: 2rem min(3rem, 5vw);
+            line-height: 1.6;
+            box-sizing: border-box;
         }
 
-        .comparison-table th,
-        .comparison-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(139,92,246,0.1);
-        }
-
-        .comparison-table th {
-            background: rgba(139,92,246,0.08);
+        .academy-guide h3 {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #8b5cf6;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
         }
 
-        /* Responsive */
+        .academy-guide h3:first-child {
+            margin-top: 0;
+        }
+
+        .academy-guide h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
+            line-height: 1.4;
+        }
+
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
+        }
+
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            max-width: 100%;
+        }
+
+        .constants-table table {
+            width: 100%;
+            min-width: 300px;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .quick-decisions {
-                grid-template-columns: 1fr;
+
+            .logo {
+                font-size: 1.2rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
             }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
+
+            .page-header {
+                padding: 2rem 1rem;
             }
-            
-            .page-title {
+
+            .page-header h1 {
                 font-size: 2rem;
             }
-        }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: #94a3b8;
-            font-size: 0.75rem;
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .guide-section {
+                padding: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .equation-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .constants-table {
+                font-size: 0.85rem;
+            }
+
+            .constants-table th,
+            .constants-table td {
+                padding: 0.5rem 0.75rem;
+            }
+
+                    \
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
+
+        @media (max-width: 480px) {
+            .industry-guide,
+            .academy-guide {
+                padding: 0.5rem;
+            }
+
+            .guide-section {
+                padding: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
-                
-                <!-- Navigation Tabs -->
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
                 <div class="nav-tabs">
-                    <a href="../home.html" class="nav-tab">🏠 Home</a>
-                    <a href="../time-dependency.html" class="nav-tab">1. Time Dependency</a>
-                    <a href="../turbulence-models.html" class="nav-tab active">2. Turbulence Models</a>
-                    <a href="../methods.html" class="nav-tab">3. Methods</a>
-                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <div class="model-selector">
+                        <select id="modelSelect" class="model-dropdown" onchange="navigateToModel(this.value)">
+                            <option value="">Select Model...</option>
+                            <option value="laminar.html">Laminar Flow</option>
+                            <option value="k-epsilon.html">k-ε (Standard)</option>
+                            <option value="k-omega.html">k-ω (Wilcox)</option>
+                            <option value="k-omega-sst.html">k-ω SST</option>
+                            <option value="reynolds-stress.html">Reynolds Stress Model (RSM)</option>
+                            <option value="spalart-allmaras.html">Spalart-Allmaras</option>
+                            <option value="des.html">Detached Eddy Simulation (DES)</option>
+                            <option value="les.html">Large Eddy Simulation (LES)</option>
+                            <option value="sas.html">Scale-Adaptive Simulation (SAS)</option>
+                            <option value="k-kl-omega.html">k-kL-ω Transition</option>
+                            <option value="inviscid.html">Inviscid Flow</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
 
     <div class="container">
-        <div class="main-content">
-            <a href="../turbulence-models.html" class="back-link">
-                ← Back to Turbulence Models
-            </a>
 
             <!-- Page Header -->
             <div class="page-header">
-                <div class="model-icon">S-A</div>
-                <h1 class="page-title">Spalart-Allmaras</h1>
-                <p class="page-subtitle">One-equation RANS model - Aerospace legacy model for external aerodynamics</p>
+                <h1>Spalart-Allmaras Model</h1>
+                <p class="model-subtitle">Single-equation turbulence model optimized for aerospace applications</p>
             </div>
 
             <!-- Content Tabs -->
             <div class="content-tabs">
-                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
-                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
             <!-- Industry Guide Tab Content -->
             <div id="industry" class="tab-content active">
-            <div class="quick-decisions">
-                <div class="decision-card use-it">
-                    <div class="decision-header">
-                        <div class="decision-icon">✅</div>
-                        <div class="decision-title">Use Spalart-Allmaras When (Industry Focus)</div>
-                    </div>
+                <div class="industry-guide">
                     
-                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
-                        <thead>
-                            <tr style="background: rgba(16,185,129,0.1);">
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Situation</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Why It Works</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.2); font-weight: 600; color: #065f46;">Advice</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>External aerodynamics (aircraft, missiles)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Designed specifically for aerospace applications</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Legacy aerospace standard, well-validated</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Boundary layer flows (airfoils, wings)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Excellent near-wall behavior, good separation</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Good for attached and mildly separated flows</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Simple CFD codes (one equation advantage)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Lower memory, simpler implementation</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">When computational simplicity matters</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);"><strong>Legacy aerospace codes (established workflows)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Extensively validated in aerospace industry</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(16,185,129,0.1);">Maintain compatibility with existing processes</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem;"><strong>Wall-bounded flows (channels, ducts)</strong></td>
-                                <td style="padding: 0.5rem;">Good wall treatment, reasonable accuracy</td>
-                                <td style="padding: 0.5rem;">Alternative to k-ω for wall-bounded flows</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="decision-card avoid-it">
-                    <div class="decision-header">
-                        <div class="decision-icon">⚠️</div>
-                        <div class="decision-title">Avoid Spalart-Allmaras When (Industry Focus)</div>
+                    <!-- Model Overview -->
+                    <div class="guide-section guide-overview">
+                        <h3>1. Model Overview</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Single-equation RANS model</strong> solving for modified viscosity (ν̃) without additional length scale.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Designed for aerospace applications</strong> with excellent performance for boundary layers and mild separation.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency</strong> with only one additional transport equation to solve.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Robust convergence</strong> and excellent numerical stability across wide range of flow conditions.</span>
+                            </li>
+                        </ul>
                     </div>
-                    
-                    <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
-                        <thead>
-                            <tr style="background: rgba(245,158,11,0.1);">
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Situation</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Why It Fails</th>
-                                <th style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.2); font-weight: 600; color: #92400e;">Industry Advice</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Modern aerospace projects (new designs)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">k-ω SST generally more accurate and versatile</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ω SST for new aerospace projects</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Industrial flows (HVAC, pumps, process equipment)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Not optimized for industrial applications</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ε for industrial equipment</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Free shear flows (jets, mixing layers)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Poor performance in free turbulence</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ε or k-ω for free shear</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Complex 3D flows (automotive, turbomachinery)</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Limited physics compared to two-equation models</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ω SST for complex 3D flows</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);"><strong>Heat transfer applications</strong></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Lacks thermal modeling capabilities</td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid rgba(245,158,11,0.1);">Use k-ε or k-ω for thermal analysis</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem;"><strong>Rotating flows (turbines, mixers)</strong></td>
-                                <td style="padding: 0.5rem;">No rotation corrections built-in</td>
-                                <td style="padding: 0.5rem;">Use RSM or rotation-corrected models</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
-            <!-- Industry Takeaway -->
-            <div class="content-section" style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 2px solid #3b82f6;">
-                <div class="section-header">
-                    <div class="section-icon">🔑</div>
-                    <div class="section-title">Industry Takeaway</div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-                    <div class="highlight-box" style="background: rgba(16,185,129,0.05); border-left: 4px solid #10b981;">
-                        <h4 style="color: #065f46;">✅ Aerospace Legacy</h4>
-                        <p>Use for legacy aerospace codes and established workflows - proven track record.</p>
+                    <!-- Key Strengths -->
+                    <div class="guide-section guide-strengths">
+                        <h3>2. Key Strengths</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Only <strong>one additional equation</strong>, fastest among advanced turbulence models.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Aerospace heritage:</strong> <strong>Extensively validated</strong> for airfoil and wing flows with excellent track record.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Boundary layer accuracy:</strong> <strong>Superior prediction</strong> of attached boundary layers and skin friction.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Numerical robustness:</strong> <strong>Excellent convergence</strong> characteristics and stability.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Memory efficiency:</strong> <strong>Minimal storage</strong> requirements compared to two-equation models.</span>
+                            </li>
+                        </ul>
                     </div>
-                    
-                    <div class="highlight-box" style="background: rgba(245,158,11,0.05); border-left: 4px solid #f59e0b;">
-                        <h4 style="color: #92400e;">⚡ One Equation Simple</h4>
-                        <p>Simpler than two-equation models but less versatile - k-ω SST usually better choice.</p>
-                    </div>
-                    
-                    <div class="highlight-box" style="background: rgba(139,92,246,0.05); border-left: 4px solid #8b5cf6;">
-                        <h4 style="color: #5b21b6;">🎯 Specific Domain</h4>
-                        <p>Best for external aerodynamics - not recommended for industrial or automotive applications.</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Practical Applications -->
-            <div class="content-section">
-                <div class="section-header">
-                    <div class="section-icon">🎯</div>
-                    <div class="section-title">Practical Applications</div>
-                </div>
-                
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">✈️ Aerospace Legacy</div>
-                        <div class="info-value">Aircraft, missiles, established codes</div>
+                    <!-- Limitations -->
+                    <div class="guide-section guide-limitations">
+                        <h3>3. Limitations</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Separated flow accuracy:</strong> <strong>Limited performance</strong> in flows with large-scale separation and recirculation.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Free shear flows:</strong> <strong>Poor prediction</strong> of jets, mixing layers, and wakes compared to k-epsilon models.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>3D flow limitations:</strong> <strong>Weaker performance</strong> in complex three-dimensional flows with crossflow effects.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Wall treatment:</strong> Requires <strong>appropriate wall distance</strong> calculation and can be sensitive to mesh quality.</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">🌊 Boundary Layers</div>
-                        <div class="info-value">Airfoil flows, external aerodynamics</div>
+
+                    <!-- Home Appliance Applications -->
+                    <div class="guide-section guide-use-cases">
+                        <h3>4. Home Appliance Applications</h3>
+                        
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Washing Machines:</span> Drum flow analysis, water distribution patterns, detergent mixing efficiency</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Dishwashers:</span> Spray arm performance, water jet impingement, cleaning effectiveness zones</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Cooktops:</span> Precise heat transfer analysis, airflow patterns around burners, ventilation efficiency</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Vacuum Cleaners:</span> Complex internal flows, separation in curved ducts, filtration system optimization</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Range Hoods:</span> Extraction efficiency, flow separation over surfaces, noise prediction</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Dryers:</span> Airflow uniformity, heat distribution, lint transport analysis</span>
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">💾 Simple Implementation</div>
-                        <div class="info-value">One equation, lower memory</div>
+
+                    <!-- When to Choose Spalart-Allmaras -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose Spalart-Allmaras</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Aerospace applications:</strong> External aerodynamics, <strong>airfoil and wing flows</strong> where it excels.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Boundary layer accuracy:</strong> When <strong>precise skin friction</strong> and wall shear prediction is critical.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> Need for <strong>fast convergence</strong> with reasonable accuracy.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Single-equation preference:</strong> Simpler model setup with <strong>fewer boundary conditions</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mild separation:</strong> Flows with <strong>small separation bubbles</strong> but predominantly attached.</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">📐 Wall-Bounded Flows</div>
-                        <div class="info-value">Channels, ducts with good wall treatment</div>
+
+                    <!-- When NOT to Use Spalart-Allmaras -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use Spalart-Allmaras</h3>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Massive separation:</span> Large separated regions - use SST or RSM instead</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Internal flows:</span> Pipe flows, heat exchangers - k-ε models are more appropriate</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Highly swirling flows:</span> Cyclones, rotating machinery - consider RSM for anisotropic effects</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Free shear layers:</span> Mixing layers, jets - designed primarily for wall-bounded flows</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Complex 3D separation:</span> Corner flows, multiple vortex systems</span>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Mathematical Formulation -->
-            <div class="content-section">
-                <div class="section-header">
-                    <div class="section-icon">🔢</div>
-                    <div class="section-title">Transport Equation</div>
-                </div>
+                    <!-- Setup and Mesh Guidelines -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Setup and Mesh Guidelines</h3>
+                        
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>y⁺ < 1:</strong> Essential for accurate wall treatment (target <strong>y⁺ ≈ 0.5</strong>).</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Boundary layer resolution:</strong> Minimum <strong>15-20 cells</strong> across boundary layer.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.2</strong> in near-wall region, <strong>< 1.3</strong> elsewhere.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Aspect ratio:</strong> <strong>< 1000</strong> in boundary layer regions acceptable.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Solver Settings:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Discretization:</strong> <strong>Second-order upwind</strong> minimum for all equations.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁵</strong>, monitor integrated quantities.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Under-relaxation:</strong> k: <strong>0.6</strong>, ω: <strong>0.6</strong>, reduce if convergence issues.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Advanced Options:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Curvature correction:</strong> Enable for vacuum cleaners and highly curved flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Production limiter:</strong> Usually enabled by default, prevents unrealistic production.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Low-Re corrections:</strong> Consider for transitional flows or very fine meshes.</span>
+                            </li>
+                        </ul>
+                    </div>
 
-                <div class="equation-box">
-                    <div class="equation-title">Modified Turbulent Viscosity (ν̃)</div>
-                    <div>$$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu}$$</div>
-                    <div>$$- \left[c_{w1} f_w - \frac{c_{b1}}{\kappa^2} f_{t2}\right] \left(\frac{\tilde{\nu}}{d}\right)^2 + \frac{1}{\sigma}\frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma}\left(\frac{\partial \tilde{\nu}}{\partial x_j}\right)^2$$</div>
-                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                        Single transport equation for modified turbulent viscosity
-                    </p>
-                </div>
+                    <!-- Performance Expectations -->
+                    <div class="guide-section guide-performance">
+                        <h3>8. Performance Expectations</h3>
+                        
+                        <h4>Accuracy Levels:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Wall shear stress:</strong> <strong>±3-5%</strong> for attached flows, <strong>±5-10%</strong> for separated flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Heat transfer:</strong> <strong>±5-8%</strong> for most engineering applications.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Pressure drop:</strong> <strong>±5-10%</strong> depending on geometry complexity.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Separation point:</strong> <strong>±10-15%</strong> for airfoil-type flows.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Computational Overhead:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>vs k-epsilon:</strong> <strong>20-30% longer</strong> solution time, <strong>2-3x finer mesh</strong> required.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Memory:</strong> <strong>15-20% higher</strong> due to additional variables and functions.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>ROI:</strong> Justifiable when <strong>wall effects or separation</strong> are critical to design.</span>
+                            </li>
+                        </ul>
+                    </div>
 
-                <div class="equation-box">
-                    <div class="equation-title">Turbulent Viscosity</div>
-                    <div>$$\nu_t = \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}$$</div>
-                    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748b;">
-                        Damping function ensures proper near-wall behavior
-                    </p>
-                </div>
-            </div>
-
-            <!-- Engineering Analogy -->
-            <div class="content-section">
-                <div class="section-header">
-                    <div class="section-icon">🧠</div>
-                    <div class="section-title">Engineering Analogy</div>
-                </div>
-                
-                <div class="highlight-box">
-                    <h4>🎯 Specialized Tool</h4>
-                    <p><strong>Spalart-Allmaras is like a specialized aerospace tool:</strong></p>
-                    <ul style="margin-top: 0.5rem; padding-left: 1rem;">
-                        <li><strong>Single purpose:</strong> "Designed specifically for aircraft and missiles"</li>
-                        <li><strong>Simple design:</strong> "One equation instead of two - easier to implement"</li>
-                        <li><strong>Proven track record:</strong> "Trusted by aerospace industry for decades"</li>
-                        <li><strong>Limited scope:</strong> "Works great for its intended purpose, not general-purpose"</li>
-                        <li><strong>Being replaced:</strong> "Newer tools (k-ω SST) are more versatile and accurate"</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Performance Comparison -->
-            <div class="content-section">
-                <div class="section-header">
-                    <div class="section-icon">⚖️</div>
-                    <div class="section-title">vs Other Models</div>
-                </div>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Equations</th>
-                            <th>Aerospace Use</th>
-                            <th>Versatility</th>
-                            <th>Modern Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background: rgba(139,92,246,0.05);">
-                            <td><strong>Spalart-Allmaras</strong></td>
-                            <td>1</td>
-                            <td>Legacy Standard</td>
-                            <td>Limited</td>
-                            <td>Being replaced</td>
-                        </tr>
-                        <tr>
-                            <td>k-ω SST</td>
-                            <td>2</td>
-                            <td>Modern Standard</td>
-                            <td>Excellent</td>
-                            <td>Current favorite</td>
-                        </tr>
-                        <tr>
-                            <td>k-ε</td>
-                            <td>2</td>
-                            <td>Limited Use</td>
-                            <td>Good</td>
-                            <td>Industrial standard</td>
-                        </tr>
-                        <tr>
-                            <td>Reynolds Stress</td>
-                            <td>7</td>
-                            <td>Research Only</td>
-                            <td>Excellent</td>
-                            <td>Too expensive</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <!-- Common Pitfalls and Solutions -->
+                    <div class="guide-section guide-pitfalls">
+                        <h3>9. Common Pitfalls and Solutions</h3>
+                        
+                        <h4>Mesh-Related Issues:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>y⁺ > 5</strong> causing poor wall treatment. <strong>Solution:</strong> Refine near-wall mesh.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Excessive aspect ratios</strong> causing convergence issues. <strong>Solution:</strong> Improve mesh quality.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Convergence Issues:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>ω equation diverging</strong>. <strong>Solution:</strong> Reduce under-relaxation, check inlet ω values.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Oscillating residuals</strong>. <strong>Solution:</strong> Enable production limiter, check mesh quality.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Physical Issues:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Overpredicted separation</strong>. <strong>Solution:</strong> Check curvature correction, consider transition model.</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Problem:</strong> <strong>Poor swirl prediction</strong>. <strong>Solution:</strong> Consider Reynolds stress model instead.</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <!-- Academy Guide Tab Content -->
             <div id="academy" class="tab-content">
                 <div class="academy-guide">
-                    <div class="theory-section">
-                        <h3>Historical Context & Development</h3>
+                    
+                    <!-- Historical Context and Development -->
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
+                        <h3>Historical Context and Development</h3>
+                        <p class="guide-text">The Spalart-Allmaras model was developed by Philippe R. Spalart and Steven R. Allmaras in 1992-1994 as a one-equation turbulence model specifically designed for aerospace applications and external aerodynamics.</p>
                         
-                        <h4>Development Timeline</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1992:</strong> Philippe Spalart and Steven Allmaras develop one-equation turbulence model at NASA Langley Research Center.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1994:</strong> Original S-A model published, designed specifically for aerospace applications and external aerodynamics.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1990s-2000s:</strong> Widespread adoption in aerospace industry, becomes standard for aircraft and missile design.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>2000s-Present:</strong> Various modifications (S-A-neg, S-A-RC, S-A-BC) developed for specific applications, though k-ω SST gains popularity.</span>
-                            </li>
-                        </ul>
-
-                        <h4>Design Philosophy</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Single equation simplicity:</strong> Avoid complexity of two-equation models while maintaining reasonable accuracy.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Aerospace focus:</strong> Optimized for external aerodynamics, boundary layers, and mild separation.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Computational efficiency:</strong> Lower memory requirements and simpler implementation than k-ε or k-ω models.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall integration:</strong> Designed to integrate to the wall without wall functions, suitable for y⁺ ≈ 1.</span>
-                            </li>
-                        </ul>
+                        <h4>Timeline and Evolution</h4>
+                        <p class="guide-text">The development began at Boeing in the early 1990s with the specific goal of creating a turbulence model optimized for aerospace flows. Spalart, working at Boeing's research division, collaborated with Allmaras to develop a model that would provide excellent boundary layer prediction while maintaining computational efficiency for complex aircraft configurations.</p>
+                        
+                        <p class="guide-text">The original 1992 conference paper introduced the basic formulation, followed by the comprehensive 1994 publication that established the model's widespread adoption. Subsequent refinements included rotation and curvature corrections (2000), improved production terms (2004), and various aerospace-specific modifications. The model quickly became the industry standard for external aerodynamics and remains the backbone of most commercial aircraft design calculations.</p>
                     </div>
 
-                    <div class="theory-section">
-                        <h3>Mathematical Foundation & Transport Equation</h3>
+                    <!-- Mathematical Foundation -->
+                    <div class="guide-section guide-overview">
+                        <h3>Mathematical Foundation and Transport Equation</h3>
+                        <p class="guide-text">The Spalart-Allmaras model solves a single transport equation for a modified turbulent viscosity variable ν̃, which is related to but not identical to the turbulent kinematic viscosity.</p>
                         
-                        <h4>Modified Turbulent Viscosity Transport</h4>
-                        <div class="equation-container">
-                            <div class="equation-title">Spalart-Allmaras Transport Equation</div>
-                            <div class="math-block">
-                                $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = P + D - Y$$
-                            </div>
+                        <h4>Modified Viscosity Transport Equation:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} + \frac{1}{\sigma} \left[ \frac{\partial}{\partial x_j} \left( (\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j} \right) + c_{b2} \left( \frac{\partial \tilde{\nu}}{\partial x_j} \right)^2 \right] - c_{w1} f_w \left( \frac{\tilde{\nu}}{d} \right)^2$$
                         </div>
-
-                        <div class="equation-container">
-                            <div class="equation-title">Complete Form with All Terms</div>
-                            <div class="math-block">
-                                $$\frac{\partial \tilde{\nu}}{\partial t} + u_j \frac{\partial \tilde{\nu}}{\partial x_j} = c_{b1} \tilde{S} \tilde{\nu} - \left[c_{w1} f_w - \frac{c_{b1}}{\kappa^2} f_{t2}\right] \left(\frac{\tilde{\nu}}{d}\right)^2$$
-                            </div>
-                            <div class="math-block">
-                                $$+ \frac{1}{\sigma}\frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right] + \frac{c_{b2}}{\sigma}\left(\frac{\partial \tilde{\nu}}{\partial x_j}\right)^2$$
-                            </div>
+                        
+                        <h4>Turbulent Viscosity Definition:</h4>
+                        <div class="equation-block">
+                            $$\nu_t = \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}$$
                         </div>
-
-                        <div class="physical-meaning">
-                            <h4>Physical Interpretation</h4>
-                            <p><strong>Modified turbulent viscosity ν̃:</strong> Related to but not identical to turbulent viscosity. Near walls, ν̃ ≈ νₜ. In the freestream, ν̃ can exceed νₜ significantly.</p>
-                            <p><strong>Single equation approach:</strong> Avoids length scale equation (like ε or ω) by using distance to nearest wall as the length scale.</p>
+                        
+                        <h4>Modified Strain Rate:</h4>
+                        <div class="equation-block">
+                            $$\tilde{S} = S + \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}, \quad f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}, \quad S = \sqrt{2 \Omega_{ij} \Omega_{ij}}$$
                         </div>
-
-                        <h4>Individual Term Definitions</h4>
-                        <div class="definition-grid">
-                            <div class="definition-item">
-                                <div class="definition-term">Production Term: $c_{b1} \tilde{S} \tilde{\nu}$</div>
-                                <div class="definition-desc">
-                                    $\tilde{S} = S + \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}$ is modified strain rate.
-                                    $S = \sqrt{2\Omega_{ij}\Omega_{ij}}$ is magnitude of vorticity tensor.
-                                    Generates turbulent viscosity in regions of high strain.
-                                </div>
-                            </div>
-                            
-                            <div class="definition-item">
-                                <div class="definition-term">Destruction Term: $c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2$</div>
-                                <div class="definition-desc">
-                                    $f_w = g \left[\frac{1 + c_{w3}^6}{g^6 + c_{w3}^6}\right]^{1/6}$ where $g = r + c_{w2}(r^6 - r)$
-                                    $r = \min\left(\frac{\tilde{\nu}}{\tilde{S}\kappa^2 d^2}, 10\right)$ is strain rate parameter.
-                                    Destroys turbulent viscosity, preventing excessive buildup.
-                                </div>
-                            </div>
-                            
-                            <div class="definition-item">
-                                <div class="definition-term">Diffusion: $\frac{1}{\sigma}\frac{\partial}{\partial x_j}\left[(\nu + \tilde{\nu}) \frac{\partial \tilde{\nu}}{\partial x_j}\right]$</div>
-                                <div class="definition-desc">
-                                    Molecular and turbulent diffusion of modified turbulent viscosity.
-                                    σ = 2/3 is turbulent Prandtl number for ν̃ equation.
-                                </div>
-                            </div>
-                            
-                            <div class="definition-item">
-                                <div class="definition-term">Cross-Diffusion: $\frac{c_{b2}}{\sigma}\left(\frac{\partial \tilde{\nu}}{\partial x_j}\right)^2$</div>
-                                <div class="definition-desc">
-                                    Additional diffusion term proportional to gradient magnitude.
-                                    $c_{b2} = 0.622$ enhances numerical stability and accuracy.
-                                </div>
-                            </div>
+                        
+                        <h4>Wall Destruction Function:</h4>
+                        <div class="equation-block">
+                            $$f_w = g \left( \frac{1 + c_{w3}^6}{g^6 + c_{w3}^6} \right)^{1/6}, \quad g = r + c_{w2}(r^6 - r), \quad r = \frac{\tilde{\nu}}{\tilde{S} \kappa^2 d^2}$$
+                        </div>
+                        
+                        <div class="term-definitions">
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>ν̃:</strong> Modified turbulent viscosity (m²/s)</div>
+                            <div class="term-item"><strong>νₜ:</strong> Turbulent kinematic viscosity (m²/s)</div>
+                            <div class="term-item"><strong>d:</strong> Distance to nearest wall (m)</div>
+                            <div class="term-item"><strong>S:</strong> Magnitude of vorticity tensor (1/s)</div>
+                            <div class="term-item"><strong>χ:</strong> Viscosity ratio ν̃/ν</div>
+                        </div>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Constant</th>
+                                        <th>Value</th>
+                                        <th>Physical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>cb1</td>
+                                        <td>0.1355</td>
+                                        <td>Production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cb2</td>
+                                        <td>0.622</td>
+                                        <td>Cross-diffusion coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>σ</td>
+                                        <td>2/3</td>
+                                        <td>Turbulent Prandtl number</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cv1</td>
+                                        <td>7.1</td>
+                                        <td>Viscosity function parameter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cw1</td>
+                                        <td>cb1/κ² + (1+cb2)/σ</td>
+                                        <td>Destruction coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>κ</td>
+                                        <td>0.41</td>
+                                        <td>von Kármán constant</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="theory-section">
-                        <h3>Turbulent Viscosity Calculation & Damping Functions</h3>
+                    <!-- Physical Interpretation -->
+                    <div class="guide-section">
+                        <h3>Physical Interpretation and Model Philosophy</h3>
+                        <p class="guide-text">The Spalart-Allmaras model represents a fundamental departure from traditional turbulence modeling approaches by focusing on a modified viscosity variable rather than turbulent kinetic energy and dissipation rate.</p>
                         
-                        <h4>Turbulent Viscosity Relation</h4>
-                        <div class="equation-container">
-                            <div class="equation-title">Viscosity Calculation</div>
-                            <div class="math-block">
-                                $$\nu_t = \tilde{\nu} f_{v1}, \quad f_{v1} = \frac{\chi^3}{\chi^3 + c_{v1}^3}, \quad \chi = \frac{\tilde{\nu}}{\nu}$$
-                            </div>
-                        </div>
-
-                        <div class="physical-meaning">
-                            <h4>Damping Function Behavior</h4>
-                            <p><strong>Near wall (χ → 0):</strong> $f_{v1} → 0$, ensuring νₜ → 0 at the wall.</p>
-                            <p><strong>Away from wall (χ >> 1):</strong> $f_{v1} → 1$, so νₜ ≈ ν̃ in turbulent regions.</p>
-                            <p><strong>Transition region:</strong> Smooth transition ensures proper near-wall behavior without wall functions.</p>
-                        </div>
-
-                        <h4>Additional Damping Functions</h4>
-                        <div class="definition-grid">
-                            <div class="definition-item">
-                                <div class="definition-term">$f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}$</div>
-                                <div class="definition-desc">Modifies strain rate in production term to improve performance in adverse pressure gradients.</div>
-                            </div>
-                            
-                            <div class="definition-item">
-                                <div class="definition-term">$f_{t2} = c_{t3} \exp(-c_{t4} \chi^2)$</div>
-                                <div class="definition-desc">Trip function term (usually zero in practical applications) for transition modeling.</div>
-                            </div>
-                        </div>
-
-                        <h4>Model Constants</h4>
-                        <div class="definition-grid">
-                            <div class="definition-item">
-                                <div class="definition-term">$c_{b1} = 0.1355$</div>
-                                <div class="definition-desc">Production coefficient</div>
-                            </div>
-                            <div class="definition-item">
-                                <div class="definition-term">$c_{b2} = 0.622$</div>
-                                <div class="definition-desc">Cross-diffusion coefficient</div>
-                            </div>
-                            <div class="definition-item">
-                                <div class="definition-term">$c_{w1} = \frac{c_{b1}}{\kappa^2} + \frac{1 + c_{b2}}{\sigma}$</div>
-                                <div class="definition-desc">Destruction coefficient (≈ 3.239)</div>
-                            </div>
-                            <div class="definition-item">
-                                <div class="definition-term">$c_{w2} = 0.3, c_{w3} = 2.0$</div>
-                                <div class="definition-desc">Destruction function parameters</div>
-                            </div>
-                            <div class="definition-item">
-                                <div class="definition-term">$c_{v1} = 7.1$</div>
-                                <div class="definition-desc">Viscosity damping parameter</div>
-                            </div>
-                            <div class="definition-item">
-                                <div class="definition-term">$\kappa = 0.41, \sigma = 2/3$</div>
-                                <div class="definition-desc">von Kármán constant and Prandtl number</div>
-                            </div>
-                        </div>
+                        <h4>Modified Viscosity Concept</h4>
+                        <p class="guide-text">The variable ν̃ is designed to asymptotically approach the turbulent viscosity in the far field while maintaining proper wall behavior. This approach eliminates the need for explicit length scale modeling, with the wall distance d providing the necessary geometric information.</p>
+                        
+                        <h4>Wall Distance Dependency</h4>
+                        <p class="guide-text">The explicit dependence on wall distance d makes the model inherently suitable for wall-bounded flows but potentially problematic for free shear flows far from walls. The production term scales with ν̃·S, while destruction scales as (ν̃/d)², providing proper balance near walls.</p>
+                        
+                        <h4>Single-Equation Advantage</h4>
+                        <p class="guide-text">By solving only one additional transport equation, the model avoids the complex coupling issues associated with two-equation models. This leads to superior numerical robustness and faster convergence, particularly important for complex aerospace geometries.</p>
+                        
+                        <h4>Aerospace Design Philosophy</h4>
+                        <p class="guide-text">The model was calibrated specifically for attached and mildly separated boundary layers typical of aerospace applications. The constants were determined from airfoil data, flat plate boundary layers, and simple separation cases relevant to aircraft design.</p>
                     </div>
 
-                    <div class="theory-section">
-                        <h3>Advanced Theoretical Framework & Assumptions</h3>
+                    <!-- Model Assumptions and Limitations -->
+                    <div class="guide-section">
+                        <h3>Model Assumptions and Theoretical Limitations</h3>
+                        <p class="guide-text">The Spalart-Allmaras model incorporates several fundamental assumptions that define its range of applicability and inherent limitations.</p>
                         
-                        <h4>Fundamental Assumptions</h4>
+                        <h4>Eddy Viscosity Assumption</h4>
+                        <p class="guide-text">Like all eddy viscosity models, S-A assumes isotropic turbulence and that Reynolds stresses are proportional to mean strain rates. This fails in:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Single length scale:</strong> Wall distance d provides length scale, eliminating need for separate length scale equation.</span>
+                                <span class="guide-text">Flows with significant streamline curvature and system rotation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Boussinesq hypothesis:</strong> Maintains linear stress-strain relation with single turbulent viscosity.</span>
+                                <span class="guide-text">Three-dimensional separated flows with crossflow effects</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Attached flow focus:</strong> Optimized for boundary layers and mildly separated flows, not free shear flows.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>High Reynolds number:</strong> Assumes turbulent flow, though near-wall treatment handles viscous effects.</span>
+                                <span class="guide-text">Flows with significant Reynolds stress anisotropy</span>
                             </li>
                         </ul>
-
-                        <h4>Limitations and Modeling Compromises</h4>
+                        
+                        <h4>Wall Distance Dependency</h4>
+                        <p class="guide-text">The explicit wall distance dependence creates challenges in:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Geometric dependence:</strong> Requires wall distance calculation, complicating implementation in complex geometries.</span>
+                                <span class="guide-text">Multi-element airfoils with gap flows</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Free shear flow weakness:</strong> Not calibrated for jets, mixing layers, or free turbulence.</span>
+                                <span class="guide-text">Free shear flows far from solid boundaries</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Rotation effects:</strong> No built-in rotation or curvature corrections compared to more advanced models.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Scalar transport:</strong> Limited thermal modeling capabilities compared to k-ε family models.</span>
+                                <span class="guide-text">Complex geometries with ambiguous wall distance definitions</span>
                             </li>
                         </ul>
+                        
+                        <h4>Aerospace Calibration Bias</h4>
+                        <p class="guide-text">The model's calibration for aerospace flows may limit performance in industrial applications with different flow characteristics, such as internal flows with heat transfer or flows with massive separation.</p>
                     </div>
 
-                    <div class="theory-section">
-                        <h3>Wall Treatment & Boundary Conditions</h3>
+                    <!-- Validation Database and Performance -->
+                    <div class="guide-section">
+                        <h3>Model Validation and Performance Database</h3>
+                        <p class="guide-text">The Spalart-Allmaras model has been extensively validated against aerospace-relevant flow configurations, establishing its reputation as the industry standard for external aerodynamics.</p>
                         
-                        <h4>Wall Boundary Conditions</h4>
-                        <div class="equation-container">
-                            <div class="equation-title">Wall Conditions</div>
-                            <div class="math-block">
-                                $$\tilde{\nu}_{wall} = 0, \quad \nu_t = \tilde{\nu} f_{v1} → 0 \text{ as } \chi → 0$$
-                            </div>
+                        <h4>Successful Applications</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Zero pressure gradient boundary layers with excellent skin friction prediction</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Airfoil flows at moderate angles of attack with good lift and drag prediction</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Aircraft configuration analysis including wing-body combinations</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Helicopter rotor blade analysis and rotorcraft applications</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Known Limitations</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Over-prediction of separation in adverse pressure gradients</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Poor performance in free shear layers and jet flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Inadequate representation of crossflow effects in 3D separation</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Limited accuracy in unsteady separated flows</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Benchmark Test Cases</h4>
+                        <p class="guide-text">Standard validation includes the RAE 2822 airfoil, NACA 0012 at various angles of attack, flat plate boundary layer, and the NASA Common Research Model for transport aircraft. These cases provide quantitative measures of the model's performance across the aerospace design space.</p>
+                    </div>
+
+                    <!-- Modern Variants and Extensions -->
+                    <div class="guide-section">
+                        <h3>Modern Variants and Theoretical Extensions</h3>
+                        <p class="guide-text">Several variants of the Spalart-Allmaras model have been developed to address specific limitations while maintaining the core single-equation framework.</p>
+                        
+                        <h4>Rotation and Curvature Correction (SA-RC)</h4>
+                        <p class="guide-text">This variant incorporates rotation and curvature effects through modification of the production term:</p>
+                        <div class="equation-block">
+                            $$\tilde{S} = S + f_{rot} \frac{\tilde{\nu}}{\kappa^2 d^2} f_{v2}$$
                         </div>
+                        <p class="guide-text">where f_rot accounts for system rotation and streamline curvature effects, improving predictions in turbomachinery and highly curved flows.</p>
+                        
+                        <h4>Negative SA (SA-neg)</h4>
+                        <p class="guide-text">This modification allows the working variable ν̃ to become negative in regions of high strain, enabling better representation of laminar-turbulent transition and separated flow physics. The negative values are prevented from contributing to turbulent viscosity through appropriate limiters.</p>
+                        
+                        <h4>Quadratic Constitutive Relation (SA-QCR)</h4>
+                        <p class="guide-text">This extension replaces the linear eddy viscosity assumption with a quadratic stress-strain relationship, partially addressing Reynolds stress anisotropy while maintaining computational efficiency.</p>
+                        
+                        <h4>Delayed Detached Eddy Simulation (SA-DDES)</h4>
+                        <p class="guide-text">This hybrid RANS-LES approach uses the SA model as the underlying RANS formulation, switching to LES behavior in separated regions while maintaining RANS mode in attached boundary layers.</p>
+                    </div>
 
-                        <div class="physical-meaning">
-                            <h4>No-Slip Implementation</h4>
-                            <p>The S-A model naturally satisfies no-slip conditions through the damping function $f_{v1}$. As ν̃ → 0 at the wall, χ → 0, and consequently νₜ → 0, ensuring proper wall treatment without explicit wall functions.</p>
+                    <!-- Numerical Implementation -->
+                    <div class="guide-section">
+                        <h3>Advanced Numerical Implementation and Best Practices</h3>
+                        <p class="guide-text">The Spalart-Allmaras model's single-equation nature provides significant advantages in numerical implementation, but several considerations are critical for robust performance.</p>
+                        
+                        <h4>Wall Distance Computation</h4>
+                        <p class="guide-text">Accurate and efficient wall distance calculation is crucial for SA model performance. Modern implementations use:</p>
+                        
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Eikonal equation solvers for complex geometries</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Fast marching methods for computational efficiency</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Signed distance functions for multi-body configurations</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Source Term Treatment</h4>
+                        <p class="guide-text">The destruction term requires careful implicit treatment to ensure numerical stability:</p>
+                        <div class="equation-block">
+                            $$\text{Destruction} = -c_{w1} f_w \left(\frac{\tilde{\nu}}{d}\right)^2 \rightarrow -c_{w1} f_w \frac{\tilde{\nu}}{d^2} \cdot \tilde{\nu}$$
                         </div>
-
-                        <h4>Mesh Requirements</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>y⁺ ≈ 1:</strong> First cell should be in viscous sublayer for optimal accuracy.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall function alternative:</strong> Can use wall functions for y⁺ > 30, though less accurate than integration to wall.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Smooth growth:</strong> Boundary layer mesh should have smooth growth from wall to avoid numerical issues.</span>
-                            </li>
-                        </ul>
-
-                        <h4>Far-Field Boundary Conditions</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Freestream specification:</strong> ν̃ = 0.1ν to 1.0ν in freestream (low values for external flows).</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Inlet conditions:</strong> Specify ν̃ based on expected turbulence level or empirical correlations.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Outlet conditions:</strong> Zero-gradient or convective boundary conditions for ν̃.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="theory-section">
-                        <h3>Model Variants & Improvements</h3>
                         
-                        <h4>Spalart-Allmaras Negative (S-A-neg)</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Negative viscosity handling:</strong> Allows ν̃ to become negative in separated regions, improving robustness.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Enhanced separation:</strong> Better prediction of flow separation and reattachment.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Modified destruction:</strong> Different destruction term formulation for negative ν̃ values.</span>
-                            </li>
-                        </ul>
-
-                        <h4>Rotation and Curvature Correction (S-A-RC)</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Rotation effects:</strong> Includes corrections for system rotation and streamline curvature.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Production modification:</strong> Rotation function multiplies production term based on local rotation rate.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Improved accuracy:</strong> Better performance in rotating machinery and highly curved flows.</span>
-                            </li>
-                        </ul>
-
-                        <h4>Boundary Condition Variant (S-A-BC)</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Modified wall condition:</strong> Alternative wall boundary condition implementation.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Enhanced robustness:</strong> Improved numerical stability in some flow configurations.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="theory-section">
-                        <h3>Numerical Implementation & Solution Strategies</h3>
+                        <h4>Boundary Conditions</h4>
+                        <p class="guide-text">Proper boundary condition implementation is essential:</p>
                         
-                        <h4>Discretization Considerations</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Convection schemes:</strong> Second-order upwind recommended for ν̃ equation to balance accuracy and stability.</span>
+                                <span class="guide-text">Wall: ν̃ = 0 (no-slip condition)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Source term treatment:</strong> Implicit treatment of destruction term prevents negative ν̃ in standard model.</span>
+                                <span class="guide-text">Inlet: ν̃ = 3νₜ to 5νₜ (typical range for turbulent inlets)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Wall distance:</strong> Accurate and efficient wall distance calculation crucial for model performance.</span>
+                                <span class="guide-text">Outlet: Zero gradient or specified based on upstream conditions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Symmetry: Zero normal gradient</span>
                             </li>
                         </ul>
-
-                        <h4>Convergence Characteristics</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Single equation advantage:</strong> Generally converges faster than two-equation models.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Under-relaxation:</strong> Typical ν̃ under-relaxation factors: 0.7-1.0 depending on problem complexity.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Initialization:</strong> Initialize ν̃ field based on freestream conditions and expected boundary layer thickness.</span>
-                            </li>
-                        </ul>
-
-                        <h4>Advanced Implementation Features</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Adaptive wall distance:</strong> Efficient algorithms for wall distance computation in complex geometries.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Limiter functions:</strong> Prevent excessive production in stagnation regions and highly strained flows.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Compressibility corrections:</strong> Extensions for high-speed compressible flows in aerospace applications.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                        
+                        <h4>Convergence Enhancement</h4>
+                        <p class="guide-text">The single-equation nature typically provides excellent convergence, but optimization techniques include appropriate under-relaxation (typically 0.7-0.8), preconditioning for low-speed flows, and coupled solution algorithms for strongly coupled systems. Monitoring both scaled residuals and integral quantities ensures proper convergence assessment.</p>
+                    </div>                </div>
             </div>
         </div>
     </div>
@@ -1229,31 +1178,33 @@
         </div>
     </footer>
 
+        <script>
+        
+    </script>
+    
     <script>
-        // Smooth transitions
-        function smoothTransition(url) {
-            document.body.style.opacity = '0';
-            document.body.style.transform = 'translateY(-20px)';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 300);
-        }
+        // Tab functionality
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
 
-        // Add smooth transition to navigation tabs
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', function(e) {
-                if (!this.classList.contains('active')) {
-                    e.preventDefault();
-                    smoothTransition(this.href);
-                }
+            // Hide all tab content
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
             });
-        });
-
-        // Add smooth transition to back link
-        document.querySelector('.back-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            smoothTransition(this.href);
-        });
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.content-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            evt.currentTarget.classList.add('active');
+        }
 
         // KaTeX rendering
         document.addEventListener("DOMContentLoaded", function() {
@@ -1264,27 +1215,30 @@
                 ]
             });
         });
+    </script>
 
-        // Tab switching functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all tab buttons
-            document.querySelectorAll('.content-tab').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
+    <script>
+        function navigateToModel(modelFile) {
+            if (modelFile) {
+                window.location.href = modelFile;
+            }
         }
 
-        console.log('Spalart-Allmaras model page loaded with comprehensive tabbed interface');
+        function setCurrentModel() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('modelSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentModel);
     </script>
+
 </body>
 </html>

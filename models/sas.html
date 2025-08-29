@@ -3,521 +3,1112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scale Adaptive Simulation - Compact Guide v1.0</title>
-    <meta name="description" content="SAS model explained compactly with guidance.">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <title>SAS Model - Scale-Adaptive Simulation - Technical Guide</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6">        
+
+        </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+        
+    </script>
     
-    <!-- KaTeX for Math -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.4; color: #1e293b; background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%); font-size: 14px; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
-        .header { background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(196,181,253,0.03)); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(59,130,246,0.15); padding: 0.75rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 10px rgba(0,0,0,0.04); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; }
-        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
-        .logo-icon { width: 2rem; height: 2rem; background: linear-gradient(135deg, #8b5cf6, #a78bfa); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(139,92,246,0.2); }
-        .logo h1 { font-size: 1rem; font-weight: 600; color: #1e293b; }
-        .logo p { font-size: 0.75rem; color: #64748b; font-style: italic; }
-        .back-button { color: #64748b; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(59,130,246,0.15); background: rgba(255,255,255,0.8); font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
-        .back-button:hover { color: #3b82f6; border-color: #3b82f6; background: rgba(59,130,246,0.05); }
-        .main-content { padding: 1rem 0; }
-        .model-hero { text-align: center; padding: 1.5rem 0 1rem 0; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9)); border-radius: 0.75rem; margin-bottom: 1.5rem; border: 1px solid rgba(59,130,246,0.1); }
-        .model-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; padding: 0.375rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(139,92,246,0.2); }
-        .model-hero h1 { font-size: 2rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; line-height: 1.2; }
-        .model-hero p { font-size: 1rem; color: #64748b; max-width: 600px; margin: 0 auto; }
-        .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; margin-bottom: 1.5rem; }
-        .main-column { min-width: 0; }
-        .sidebar { background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1rem; border: 1px solid rgba(59,130,246,0.1); height: fit-content; position: sticky; top: 5rem; }
-        .content-section { background: rgba(255,255,255,0.8); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid rgba(59,130,246,0.1); }
-        .content-section h2 { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .content-section ul { margin: 0.75rem 0; padding-left: 1.25rem; }
-        .content-section li { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; line-height: 1.4; }
-        .equation-large { font-size: 1rem !important; margin: 0.75rem 0 !important; }
-        .variables-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
-        .variable-item { background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; }
-        .variable-symbol { font-family: 'KaTeX_Math', 'Times New Roman', serif; font-size: 1rem; font-weight: 600; color: #8b5cf6; margin-bottom: 0.25rem; }
-        .variable-name { font-size: 0.75rem; font-weight: 600; color: #1e293b; margin-bottom: 0.125rem; }
-        .variable-description { font-size: 0.625rem; color: #64748b; line-height: 1.3; }
-        .properties-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin: 0.75rem 0; }
-        .properties-table th, .properties-table td { padding: 0.5rem; border: 1px solid rgba(59,130,246,0.1); text-align: left; }
-        .properties-table th { background: rgba(139,92,246,0.1); color: #581c87; font-weight: 600; }
-        .sidebar h3 { font-size: 1rem; font-weight: 600; color: #1e293b; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .sidebar ul { list-style: none; margin-bottom: 1rem; }
-        .sidebar li { margin-bottom: 0.375rem; }
-        .sidebar a { color: #64748b; text-decoration: none; font-size: 0.75rem; transition: color 0.2s ease; display: flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0; }
-        .sidebar a:hover { color: #3b82f6; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; gap: 1rem; } .sidebar { position: static; order: -1; } .container { padding: 0 0.75rem; } .model-hero h1 { font-size: 1.5rem; } .model-hero p { font-size: 0.875rem; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+
+                /* Premium Header Navigation */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+                .nav-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
+                .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #2d3748;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+            color: #718096;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }        \
+                .content-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+        }
+
+        .content-tab {
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 12px;
+            white-space: nowrap;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        }
+        .content-tab::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+        .content-tab:hover::before,
+        .content-tab.active::before {
+        opacity: 1;
+        }
+        .content-tab:hover,
+        .content-tab.active {
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        .content-tab:first-child {
+        border-left: none;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Industry Guide Styling */
+        .industry-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .guide-section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-item {
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .guide-text {
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .guide-emphasis {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
+        }
+
+        /* Academy Guide Styling */
+        .academy-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            line-height: 1.6;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide h3:first-child {
+            margin-top: 0;
+        }
+
+        .academy-guide h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
+            line-height: 1.4;
+        }
+
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
+        }
+
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+            .logo {
+                font-size: 1.2rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .guide-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+                    \
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">
-                    <div class="logo-icon">
-                        <span style="color: white; font-size: 0.875rem; font-weight: 700;">SAS</span>
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
+                <div class="nav-tabs">
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <div class="model-selector">
+                        <select id="modelSelect" class="model-dropdown" onchange="navigateToModel(this.value)">
+                            <option value="">Select Model...</option>
+                            <option value="laminar.html">Laminar Flow</option>
+                            <option value="k-epsilon.html">k-ε (Standard)</option>
+                            <option value="k-omega.html">k-ω (Wilcox)</option>
+                            <option value="k-omega-sst.html">k-ω SST</option>
+                            <option value="reynolds-stress.html">Reynolds Stress Model (RSM)</option>
+                            <option value="spalart-allmaras.html">Spalart-Allmaras</option>
+                            <option value="des.html">Detached Eddy Simulation (DES)</option>
+                            <option value="les.html">Large Eddy Simulation (LES)</option>
+                            <option value="sas.html">Scale-Adaptive Simulation (SAS)</option>
+                            <option value="k-kl-omega.html">k-kL-ω Transition</option>
+                            <option value="inviscid.html">Inviscid Flow</option>
+                        </select>
                     </div>
-                    <div>
-                        <h1>Scale Adaptive Simulation</h1>
-                        <p>Hybrid RANS-LES</p>
-                    </div>
-                </a>
-                <a href="../turbulence-models.html" class="back-button"><span>←</span><span>Back to Models</span></a>
+                </div>
             </div>
         </div>
-    </header>
 
-    <main class="main-content">
-        <div class="container">
-            
-            <div style="background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; text-align: center; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; font-weight: 600; font-size: 0.875rem;">
-                ✅ NEW: Scale Adaptive Simulation Available!
+        <div class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>SAS Model - Scale-Adaptive Simulation</h1>
+                <p class="model-subtitle">Hybrid RANS-LES approach for scale-adaptive turbulent flow simulation</p>
             </div>
 
-            <div class="model-hero">
-                <div class="model-badge">
-                    <span>SAS</span>
-                    <span>Hybrid RANS-LES Model</span>
-                </div>
-                <h1>Scale Adaptive Simulation</h1>
-                <p>Hybrid approach that adapts between RANS and LES based on local flow resolution</p>
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
-            <div class="content-grid">
-                <div class="main-column">
+            <!-- Industry Guide Tab Content -->
+            <div id="industry" class="tab-content active">
+                <div class="industry-guide">
                     
-                    <!-- FIRST: Practical Applications -->
-                    <div class="content-section" id="applications">
-                        <h2><span>🛠️</span> Practical Applications</h2>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
-                            <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">🎯 Excellent For:</h4>
-                                <ul style="font-size: 0.75rem; color: #065f46; list-style: none; padding: 0;">
-                                    <li>• Unsteady separated flows</li>
-                                    <li>• Vortex shedding predictions</li>
-                                    <li>• Mixing and combustion chambers</li>
-                                    <li>• Flows with large separation bubbles</li>
-                                    <li>• Research and development</li>
-                                    <li>• Complex turbulent structures</li>
-                                </ul>
-                            </div>
-                            <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem;">
-                                <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Limitations:</h4>
-                                <ul style="font-size: 0.75rem; color: #7f1d1d; list-style: none; padding: 0;">
-                                    <li>• Very high computational cost</li>
-                                    <li>• Complex grid requirements</li>
-                                    <li>• Unsteady simulations only</li>
-                                    <li>• Advanced expertise needed</li>
-                                    <li>• Grid-scale dependency</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced CFD Guidance -->
-                    <div class="content-section" id="guidance">
-                        <h2>
-                            <span>🎯</span>
-                            CFD Guidance - Scale Adaptive Simulation
-                        </h2>
-                        
-                        <!-- HIGHLIGHTED: When to Use -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.1)); border: 2px solid #10b981; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #065f46; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">✅ When to Use SAS (Critical Applications)</h3>
-                            <ul style="color: #065f46; font-weight: 500;">
-                                <li><strong>Unsteady separated flows</strong> - When separation is inherently unsteady</li>
-                                <li><strong>Vortex shedding predictions</strong> - Capture periodic vortex structures</li>
-                                <li><strong>Mixing and combustion</strong> - Large-scale mixing structures important</li>
-                                <li><strong>Flows with large separation bubbles</strong> - Where RANS fails due to unsteadiness</li>
-                                <li><strong>Research applications</strong> - When understanding unsteady physics is critical</li>
-                                <li><strong>Bridge to LES</strong> - When LES is too expensive but RANS insufficient</li>
-                                <li><strong>Complex turbulent structures</strong> - Capture larger turbulent scales</li>
-                                <li><strong>Validation studies</strong> - Benchmark against experimental unsteady data</li>
-                            </ul>
-                        </div>
-
-                        <!-- HIGHLIGHTED: When to Avoid -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.1)); border: 2px solid #dc2626; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ When to Avoid SAS (Critical Limitations)</h3>
-                            <ul style="color: #7f1d1d; font-weight: 500;">
-                                <li><strong>Steady flow applications</strong> - Cannot capture steady solutions, unsteady only</li>
-                                <li><strong>Industrial routine analysis</strong> - Too expensive for everyday engineering</li>
-                                <li><strong>Limited computational resources</strong> - Requires significant CPU and memory</li>
-                                <li><strong>Preliminary design studies</strong> - Overkill for initial conceptual analysis</li>
-                                <li><strong>Simple attached flows</strong> - RANS sufficient, SAS unnecessary</li>
-                                <li><strong>Parametric optimization</strong> - Too slow for design space exploration</li>
-                                <li><strong>Grid dependency issues</strong> - Results depend on grid resolution</li>
-                                <li><strong>Convergence challenges</strong> - Unsteady nature makes convergence assessment difficult</li>
-                            </ul>
-                        </div>
-
-                        <h3>Setup Tips & Best Practices</h3>
-                        <ul>
-                            <li><strong>Grid requirements:</strong> LES-quality grids needed, much finer than RANS</li>
-                            <li><strong>Time stepping:</strong> Small time steps required for temporal accuracy</li>
-                            <li><strong>Initialization:</strong> Start from converged RANS solution</li>
-                            <li><strong>Simulation time:</strong> Long simulations needed for statistical convergence</li>
-                            <li><strong>Post-processing:</strong> Time-averaged results for comparison with experiments</li>
-                            <li><strong>Grid adaptation:</strong> Monitor resolved vs modeled turbulence scales</li>
+                    <!-- Model Overview -->
+                    <div class="guide-section guide-overview">
+                        <h3>1. Model Overview</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Scale-Adaptive Simulation (SAS)</strong> bridging RANS and LES through automatic scale switching.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Hybrid approach</strong> that adapts between RANS mode for attached flows and LES mode for separated regions.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>von Kármán length scale</strong> modification enabling transition to turbulence-resolving mode when appropriate.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Industrial efficiency</strong> providing LES-like accuracy in critical regions while maintaining RANS economy elsewhere.</span>
+                            </li>
                         </ul>
                     </div>
 
-                    <!-- Enhanced Equations with Detailed Explanations -->
-                    <div class="content-section" id="equations">
-                        <h2>
-                            <span>📐</span>
-                            SAS Equations - Detailed Analysis
-                        </h2>
+                    <!-- Key Advantages -->
+                    <div class="guide-section guide-advantages">
+                        <h3>2. Key Advantages</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Automatic switching:</strong> <strong>No user intervention</strong> required for RANS-LES transition in flow regions.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Scale resolution:</strong> Resolves <strong>unsteady large-scale structures</strong> in separated and swirling flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> <strong>More economical than pure LES</strong> while capturing critical unsteady physics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Industrial applicability:</strong> <strong>Practical for complex geometries</strong> without interface definition requirements.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Performance Characteristics -->
+                    <div class="guide-section guide-performance">
+                        <h3>3. Performance Characteristics</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Accuracy:</strong> <strong>Superior to RANS for unsteady flows</strong> while maintaining computational feasibility.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational cost:</strong> <strong>2-5x more expensive than RANS</strong>, significantly cheaper than LES.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time dependency:</strong> <strong>Inherently unsteady</strong> requiring transient simulation approach.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mesh requirements:</strong> <strong>Intermediate between RANS and LES</strong> with focus on separation regions.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Industry Applications -->
+                    <div class="guide-section guide-applications">
+                        <h3>4. Industry Applications</h3>
                         
-                        <!-- Modified k Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Modified k Equation with SAS Source</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    \frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} =
-                                </div>
-                                <div class="equation-large katex-display">
-                                    P_k - \beta^* k \omega + Q_{SAS} + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_k \nu_t)\frac{\partial k}{\partial x_j}\right]
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> k equation with scale-adaptive source term</p>
-                                <p><strong>∂k/∂t + Uⱼ ∂k/∂xⱼ:</strong> Unsteady + convection terms</p>
-                                <p><strong>Pk:</strong> Standard production by mean shear</p>
-                                <p><strong>-β*kω:</strong> Standard dissipation term</p>
-                                <p><strong>QSAS:</strong> Scale-adaptive source term (key SAS addition)</p>
-                                <p><strong>Diffusion:</strong> Standard k diffusion</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Automotive:</span> External aerodynamics, wake analysis, drag and noise prediction</span>
                         </div>
-
-                        <!-- SAS Source Term -->
-                        <div style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(167,139,250,0.05)); border: 1px solid rgba(139,92,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ SAS Source Term</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    Q_{SAS} = \max\left[C_{SAS} \frac{k}{\sigma_{\Phi}} \left(\frac{L}{L_{vK}}\right)^2 |\nabla^2 U| - C_2 k \frac{\partial k}{\partial x_j} \frac{\partial \omega}{\partial x_j} \frac{1}{\omega^2}, 0\right]
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Detects and responds to unresolved scales</p>
-                                <p><strong>CSAS ≈ 2.0:</strong> SAS model constant</p>
-                                <p><strong>L/LvK:</strong> Ratio of turbulent to von Kármán length scales</p>
-                                <p><strong>|∇²U|:</strong> Second derivative of velocity (detects unsteady structures)</p>
-                                <p><strong>Purpose:</strong> Reduces eddy viscosity when large scales are under-resolved</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Aerospace:</span> Aircraft wake vortices, buffeting analysis, control surface effectiveness</span>
                         </div>
-
-                        <!-- Standard ω Equation -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(248,113,113,0.05)); border: 1px solid rgba(239,68,68,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Standard ω Equation</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    \frac{\partial \omega}{\partial t} + U_j \frac{\partial \omega}{\partial x_j} =
-                                </div>
-                                <div class="equation-large katex-display">
-                                    \alpha \frac{\omega}{k} P_k - \beta \omega^2 + \frac{\partial}{\partial x_j}\left[(\nu + \sigma_\omega \nu_t)\frac{\partial \omega}{\partial x_j}\right]
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Standard k-ω equation for ω (no modification)</p>
-                                <p><strong>Note:</strong> SAS modification only affects k equation</p>
-                                <p><strong>Purpose:</strong> Provides length scale information</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Turbomachinery:</span> Unsteady blade interactions, secondary flow analysis, loss mechanisms</span>
                         </div>
-
-                        <!-- Scale Detection -->
-                        <div style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(147,197,253,0.05)); border: 1px solid rgba(59,130,246,0.2); border-radius: 0.75rem; padding: 1rem; margin: 1rem 0;">
-                            <h3 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ Scale Detection Mechanism</h3>
-                            <div style="text-align: left; font-size: 0.9rem; margin: 1rem 0;">
-                                <div class="equation-large katex-display">
-                                    L = \sqrt{\frac{k}{\omega}}, \quad L_{vK} = \kappa \sqrt{\frac{1}{2}} \frac{|\nabla^2 U|}{|\nabla \times \nabla \times U|}
-                                </div>
-                            </div>
-                            <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem;">
-                                <p><strong>Physical Meaning:</strong> Compares turbulent and von Kármán length scales</p>
-                                <p><strong>L:</strong> Turbulent length scale from k and ω</p>
-                                <p><strong>LvK:</strong> von Kármán length scale from velocity gradients</p>
-                                <p><strong>When L > LvK:</strong> Turbulence is under-resolved, SAS activates</p>
-                                <p><strong>κ = 0.41:</strong> von Kármán constant</p>
-                            </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Industrial Mixing:</span> Complex mixing processes, heat and mass transfer enhancement</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Wind Engineering:</span> Bluff body flows, wind loading on structures, urban aerodynamics</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Energy Systems:</span> Heat exchanger performance, thermal mixing, combustion applications</span>
                         </div>
                     </div>
 
-                    <!-- Enhanced Variables -->
-                    <div class="content-section" id="variables">
-                        <h2>
-                            <span>🔤</span>
-                            Variables & Scale Parameters
-                        </h2>
-                        
-                        <div class="variables-grid">
-                            <div class="variable-item">
-                                <div class="variable-symbol">k</div>
-                                <div class="variable-name">Turbulent Kinetic Energy</div>
-                                <div class="variable-description">Modified with SAS source (m²/s²)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">ω</div>
-                                <div class="variable-name">Specific Dissipation Rate</div>
-                                <div class="variable-description">Standard k-ω equation (1/s)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">QSAS</div>
-                                <div class="variable-name">SAS Source Term</div>
-                                <div class="variable-description">Scale-adaptive source</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">L</div>
-                                <div class="variable-name">Turbulent Length Scale</div>
-                                <div class="variable-description">L = √(k/ω)</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">LvK</div>
-                                <div class="variable-name">von Kármán Length Scale</div>
-                                <div class="variable-description">Based on velocity gradients</div>
-                            </div>
-                            
-                            <div class="variable-item">
-                                <div class="variable-symbol">|∇²U|</div>
-                                <div class="variable-name">Velocity Laplacian</div>
-                                <div class="variable-description">Detects unsteady structures</div>
-                            </div>
+                    <!-- When to Choose SAS Over Other Models -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose SAS Over Other Models</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady separation:</strong> When <strong>large-scale unsteady structures</strong> are critical to the physics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>RANS limitations:</strong> Where steady RANS models <strong>fail to capture essential flow features</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>LES constraints:</strong> When <strong>LES is too expensive</strong> but unsteady physics is important.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mixed flow regimes:</strong> Flows with both <strong>attached and separated regions</strong> requiring different approaches.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Industrial complexity:</strong> Complex geometries where <strong>automatic adaptation</strong> is preferred over manual interface definition.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- When NOT to Use SAS -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use SAS</h3>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Steady attached flows:</span> Simple attached flows where RANS provides adequate accuracy</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Tight computational budgets:</span> When the 2-5x cost increase over RANS is prohibitive</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">High-frequency phenomena:</span> When very small-scale turbulence resolution is critical</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Steady-state requirements:</span> Applications requiring only time-averaged flow properties</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Wall-bounded flows:</span> Simple channel or pipe flows without significant separation</span>
                         </div>
                     </div>
 
-                    <!-- Enhanced Analogy -->
-                    <div class="content-section" id="analogy">
-                        <h2>
-                            <span>💡</span>
-                            Scale-Adaptive Analogy
-                        </h2>
-                        <p>Think of SAS as a <strong>smart camera with automatic focus</strong> that can switch between taking close-up detailed photos and wide-angle landscape shots based on what's in the scene.</p>
+                    <!-- Setup and Mesh Guidelines -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Setup and Mesh Guidelines</h3>
                         
-                        <p><strong>RANS mode (steady regions):</strong> Like using a standard camera setting for static subjects - efficient and adequate for unchanging scenes.</p>
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Near-wall resolution:</strong> y⁺ < 1 preferred for accurate boundary layer resolution</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Separation region refinement:</strong> Higher density in expected unsteady separation zones</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Streamwise resolution:</strong> Adequate to capture developing unsteady structures</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time step:</strong> CFL < 1 for accurate unsteady resolution</span>
+                            </li>
+                        </ul>
                         
-                        <p><strong>LES-like mode (unsteady regions):</strong> Like switching to high-speed burst mode when action is detected - captures rapid changes and movement.</p>
-                        
-                        <p><strong>Scale detection (L vs LvK):</strong> Like the camera's motion sensor - detects when something interesting is happening that needs higher resolution.</p>
-                        
-                        <p><strong>SAS source term (QSAS):</strong> Like the camera's automatic scene detection - boosts the "film speed" (reduces eddy viscosity) when fast action is detected.</p>
-                        
-                        <p><strong>Grid dependency:</strong> Like camera quality - a better camera (finer grid) can capture more detail, but the automatic switching still works with any camera quality.</p>
+                        <h4>Solver Settings:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time integration:</strong> Second-order implicit schemes for temporal accuracy</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Spatial discretization:</strong> Low-dissipation schemes to preserve unsteady content</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Initialization:</strong> Start from converged RANS solution when available</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Convergence:</strong> Monitor unsteady statistics for flow development</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- Model Constants -->
-                    <div class="content-section" id="constants">
-                        <h2>
-                            <span>📊</span>
-                            SAS Model Constants
-                        </h2>
+                    <!-- Performance Optimization -->
+                    <div class="guide-section guide-optimization">
+                        <h3>8. Performance Optimization</h3>
                         
-                        <table class="properties-table">
-                            <tr>
-                                <th>Constant</th>
-                                <th>Value</th>
-                                <th>Physical Role</th>
-                                <th>Purpose</th>
-                            </tr>
-                            <tr>
-                                <td><strong>CSAS</strong></td>
-                                <td>2.0</td>
-                                <td>SAS source coefficient</td>
-                                <td>Controls scale-adaptive response</td>
-                            </tr>
-                            <tr>
-                                <td><strong>C₂</strong></td>
-                                <td>2.0</td>
-                                <td>SAS limiter coefficient</td>
-                                <td>Prevents negative source terms</td>
-                            </tr>
-                            <tr>
-                                <td><strong>σΦ</strong></td>
-                                <td>2/3</td>
-                                <td>SAS diffusion coefficient</td>
-                                <td>Controls SAS term diffusion</td>
-                            </tr>
-                            <tr>
-                                <td><strong>κ</strong></td>
-                                <td>0.41</td>
-                                <td>von Kármán constant</td>
-                                <td>Length scale calculation</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Base constants</strong></td>
-                                <td>k-ω SST values</td>
-                                <td>Underlying RANS model</td>
-                                <td>Standard k-ω SST coefficients</td>
-                            </tr>
-                        </table>
+                        <h4>Computational Strategy:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>RANS initialization:</strong> Use converged RANS as starting point for faster development</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Adaptive time stepping:</strong> Optimize time step for CFL and accuracy requirements</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Parallel efficiency:</strong> Good scaling characteristics for domain decomposition</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Result Analysis:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Statistical convergence:</strong> Ensure adequate sampling time for mean and RMS quantities</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Scale switching:</strong> Verify appropriate RANS-LES transitions in flow regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Unsteady validation:</strong> Compare unsteady signatures with experimental data</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- SAS Features -->
-                    <div class="content-section" id="features">
-                        <h2>
-                            <span>🚀</span>
-                            SAS Key Features
-                        </h2>
+                    <!-- Troubleshooting -->
+                    <div class="guide-section guide-limitations">
+                        <h3>9. Common Issues and Solutions</h3>
                         
-                        <!-- Scale Adaptation -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(139,92,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #6b21a8; font-weight: 600; margin-bottom: 0.5rem;">Automatic Scale Adaptation</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Automatically detects when turbulent structures are under-resolved and reduces eddy viscosity to allow large-scale unsteadiness to develop naturally.</p>
-                        </div>
-
-                        <!-- Grid Independence -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(16,185,129,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">Grid-Scale Awareness</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Uses local grid scale information to determine what turbulent scales can be resolved vs what needs to be modeled. Adapts behavior based on grid quality.</p>
-                        </div>
-
-                        <!-- RANS-LES Bridge -->
-                        <div style="background: rgba(248,250,252,0.8); border: 1px solid rgba(59,130,246,0.1); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 0.5rem;">RANS-LES Bridge</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;">Provides a pathway between RANS and LES - behaves like RANS on coarse grids but approaches LES-like behavior on fine grids in unsteady regions.</p>
-                        </div>
-                    </div>
-
-                    <!-- Advantages & Disadvantages -->
-                    <div class="content-section" id="comparison">
-                        <h2>
-                            <span>⚖️</span>
-                            SAS vs RANS and LES
-                        </h2>
+                        <h4>Scale Switching Problems:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> Model not switching to LES mode in separated regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Solution:</strong> Check mesh resolution and von Kármán length scale implementation</span>
+                            </li>
+                        </ul>
                         
-                        <!-- Advantages -->
-                        <div style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✅ Advantages over RANS</h4>
-                            <ul style="font-size: 0.8rem; color: #065f46;">
-                                <li><strong>Captures unsteady large scales:</strong> Resolves turbulent structures RANS misses</li>
-                                <li><strong>Automatic scale detection:</strong> No user specification of resolved scales</li>
-                                <li><strong>Better separation prediction:</strong> Unsteady separation physics captured</li>
-                                <li><strong>Improved mixing prediction:</strong> Large-scale mixing structures resolved</li>
-                                <li><strong>Grid-adaptive behavior:</strong> Automatically uses available grid resolution</li>
-                            </ul>
-                        </div>
-
-                        <!-- Disadvantages -->
-                        <div style="background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(220,38,38,0.05)); border: 1px solid rgba(220,38,38,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #7f1d1d; font-weight: 600; margin-bottom: 0.5rem;">❌ Disadvantages vs RANS</h4>
-                            <ul style="font-size: 0.8rem; color: #7f1d1d;">
-                                <li><strong>Much higher computational cost:</strong> Unsteady simulations required</li>
-                                <li><strong>No steady solutions:</strong> Cannot provide time-averaged results directly</li>
-                                <li><strong>Grid requirements:</strong> Needs much finer grids than RANS</li>
-                                <li><strong>Time integration:</strong> Small time steps and long simulation times</li>
-                                <li><strong>Post-processing complexity:</strong> Statistical analysis required</li>
-                            </ul>
-                        </div>
-
-                        <!-- vs LES -->
-                        <div style="background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(245,158,11,0.2); border-radius: 0.5rem; padding: 0.75rem; margin: 0.75rem 0;">
-                            <h4 style="color: #92400e; font-weight: 600; margin-bottom: 0.5rem;">🔄 vs LES</h4>
-                            <p style="font-size: 0.8rem; color: #64748b;"><strong>Advantage:</strong> Lower cost than LES, works on coarser grids. <strong>Disadvantage:</strong> Less accurate than LES, still has some RANS limitations near walls.</p>
-                        </div>
+                        <h4>Convergence Difficulties:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> Excessive computational time for flow development</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Solution:</strong> Use RANS initialization and optimize time step selection</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Numerical Stability:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Problem:</strong> Solution divergence in high Reynolds number flows</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Solution:</strong> Reduce time step, improve mesh quality, check boundary conditions</span>
+                            </li>
+                        </ul>
                     </div>
-
-                </div>
-
-                <div class="sidebar">
-                    <h3><span>🧭</span> Quick Navigation</h3>
-                    <ul>
-                        <li><a href="#applications">🛠️ Applications</a></li>
-                        <li><a href="#guidance">🎯 CFD Guidance</a></li>
-                        <li><a href="#equations">📐 Equations</a></li>
-                        <li><a href="#variables">🔤 Variables</a></li>
-                        <li><a href="#analogy">💡 Analogy</a></li>
-                        <li><a href="#constants">📊 Constants</a></li>
-                        <li><a href="#features">🚀 Features</a></li>
-                        <li><a href="#comparison">⚖️ Comparison</a></li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;"><span>🔗</span> Related Models</h3>
-                    <ul>
-                        <li><a href="k-omega-sst.html">k-ω SST</a></li>
-                        <li><a href="des.html">Detached Eddy Simulation</a></li>
-                        <li><a href="les.html">Large Eddy Simulation</a></li>
-                        <li><a href="../turbulence-models.html">← All Models</a></li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 1.5rem;"><span>📚</span> Model Info</h3>
-                    <ul>
-                        <li><span style="color: #8b5cf6;">Type:</span> Scale-Adaptive RANS</li>
-                        <li><span style="color: #8b5cf6;">Variables:</span> k, ω, QSAS</li>
-                        <li><span style="color: #8b5cf6;">Equations:</span> 2 modified</li>
-                        <li><span style="color: #8b5cf6;">Cost:</span> Very High</li>
-                        <li><span style="color: #8b5cf6; font-weight: 600;">Status:</span> Available</li>
-                    </ul>
-
-                    <h3 style="margin-top: 1.5rem;"><span>⚙️</span> Key Parameters</h3>
-                    <ul>
-                        <li><span style="color: #8b5cf6;">Grid:</span> LES-quality</li>
-                        <li><span style="color: #8b5cf6;">Time:</span> Small steps</li>
-                        <li><span style="color: #8b5cf6;">Mode:</span> Unsteady only</li>
-                        <li><span style="color: #8b5cf6;">Best for:</span> Unsteady separation</li>
-                    </ul>
-
-                    <h3 style="margin-top: 1.5rem;"><span>🏆</span> Validation Cases</h3>
-                    <ul>
-                        <li><span style="color: #8b5cf6;">Periodic flows:</span> Very good</li>
-                        <li><span style="color: #8b5cf6;">Separation:</span> Good</li>
-                        <li><span style="color: #8b5cf6;">Mixing:</span> Good</li>
-                        <li><span style="color: #8b5cf6;">Vortex shedding:</span> Good</li>
-                    </ul>
-
-                    <h3 style="margin-top: 1.5rem;"><span>🔬</span> Research Status</h3>
-                    <ul>
-                        <li><span style="color: #8b5cf6;">Maturity:</span> Developing</li>
-                        <li><span style="color: #8b5cf6;">Usage:</span> Research mainly</li>
-                        <li><span style="color: #8b5cf6;">Industry:</span> Limited</li>
-                        <li><span style="color: #8b5cf6;">Future:</span> RANS-LES bridge</li>
-                    </ul>
                 </div>
             </div>
 
-        </div>
-    </main>
+            <!-- Academy Guide Tab Content -->
+            <div id="academy" class="tab-content">
+                <div class="academy-guide">
+                    
+                    <!-- Historical Context and Development -->
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
+                        <h3>Historical Context and Development</h3>
+                        <p class="guide-text">The Scale-Adaptive Simulation (SAS) model was developed by Menter and Egorov (2005, 2010) as an advanced hybrid RANS-LES approach that automatically adapts the level of turbulence resolution based on local flow characteristics. Unlike traditional hybrid methods requiring interface definitions, SAS provides seamless transition between RANS and LES modes.</p>
+                        
+                        <h4>Theoretical Foundation</h4>
+                        <p class="guide-text">The SAS concept emerged from recognizing limitations in both pure RANS and LES approaches for industrial applications. While RANS models excel in attached boundary layers but struggle with separated flows, LES provides excellent unsteady resolution but at prohibitive computational cost for entire industrial configurations.</p>
+                        
+                        <p class="guide-text">The breakthrough innovation involves modifying the turbulence model's dissipation based on the von Kármán length scale, allowing the model to automatically detect when the mesh is fine enough to resolve unsteady turbulent structures and switch to a scale-resolving mode.</p>
+                        
+                        <p class="guide-text">Recent developments have enhanced the SAS formulation for specific applications including combustion, multiphase flows, and rotating machinery, establishing it as a practical hybrid approach for complex engineering problems.</p>
+                    </div>
 
-    <footer style="background: rgba(255,255,255,0.9); border-top: 1px solid rgba(59,130,246,0.1); padding: 1rem 0; text-align: center;">
-        <div class="container">
-            <p style="color: #64748b; font-size: 0.75rem;">© 2024 CFD Reference | <a href="../turbulence-models.html" style="color: #3b82f6; text-decoration: none;">← Back to All Models</a></p>
+                    <!-- Mathematical Foundation -->
+                    <div class="guide-section guide-overview">
+                        <h3>Mathematical Foundation and Model Formulation</h3>
+                        <p class="guide-text">The SAS model is based on the k-ω SST framework with an additional source term that enables scale-adaptive behavior through dynamic modification of the turbulent dissipation rate.</p>
+                        
+                        <h4>Base k-ω SST Equations with SAS Source:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial k}{\partial t} + U_j \frac{\partial k}{\partial x_j} = P_k - \beta^* k \omega + \frac{\partial}{\partial x_j}\left[\left(\nu + \sigma_k \nu_T\right) \frac{\partial k}{\partial x_j}\right]$$
+                        </div>
+                        
+                        <div class="equation-block">
+                            $$\frac{\partial \omega}{\partial t} + U_j \frac{\partial \omega}{\partial x_j} = \alpha \frac{\omega}{k} P_k - \beta \omega^2 + Q_{SAS} + \frac{\partial}{\partial x_j}\left[\left(\nu + \sigma_\omega \nu_T\right) \frac{\partial \omega}{\partial x_j}\right]$$
+                        </div>
+                        
+                        <h4>SAS Source Term:</h4>
+                        <div class="equation-block">
+                            $$Q_{SAS} = \max\left[0, \zeta_2 \kappa S^2 \left(\frac{L}{L_{vK}}\right)^2 - C_{SAS} \frac{2k}{\sigma_\Phi} \max\left(\frac{1}{\omega^2} \frac{\partial \omega}{\partial x_j} \frac{\partial \omega}{\partial x_j}, \frac{1}{k^2} \frac{\partial k}{\partial x_j} \frac{\partial k}{\partial x_j}\right)\right]$$
+                        </div>
+                        
+                        <h4>von Kármán Length Scale:</h4>
+                        <div class="equation-block">
+                            $$L_{vK} = \kappa \frac{S}{\sqrt{0.5}\left|\frac{\partial^2 U_i}{\partial x_j \partial x_k}\right|}, \quad S = \sqrt{2S_{ij}S_{ij}}$$
+                        </div>
+                        
+                        <h4>Turbulent Length Scale:</h4>
+                        <div class="equation-block">
+                            $$L = \frac{\sqrt{k}}{\beta^{*1/4} \omega}$$
+                        </div>
+                        
+                        <h4>Scale-Adaptive Parameter:</h4>
+                        <div class="equation-block">
+                            $$\zeta_2 = 3.51, \quad C_{SAS} = 2.0, \quad \sigma_\Phi = 2/3$$
+                        </div>
+                        
+                        <div class="term-definitions">
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>Q_SAS:</strong> SAS source term (1/s³)</div>
+                            <div class="term-item"><strong>L:</strong> Turbulent length scale (m)</div>
+                            <div class="term-item"><strong>L_vK:</strong> von Kármán length scale (m)</div>
+                            <div class="term-item"><strong>S:</strong> Strain rate magnitude (1/s)</div>
+                            <div class="term-item"><strong>κ:</strong> Kármán constant (≈ 0.41)</div>
+                            <div class="term-item"><strong>ζ₂:</strong> SAS model constant</div>
+                            <div class="term-item"><strong>C_SAS:</strong> SAS limiter constant</div>
+                        </div>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Constant</th>
+                                        <th>Value</th>
+                                        <th>Physical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ζ₂</td>
+                                        <td>3.51</td>
+                                        <td>SAS production coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C_SAS</td>
+                                        <td>2.0</td>
+                                        <td>SAS limiter coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>σ_Φ</td>
+                                        <td>2/3</td>
+                                        <td>SAS diffusion coefficient</td>
+                                    </tr>
+                                    <tr>
+                                        <td>κ</td>
+                                        <td>0.41</td>
+                                        <td>von Kármán constant</td>
+                                    </tr>
+                                    <tr>
+                                        <td>β*</td>
+                                        <td>0.09</td>
+                                        <td>k destruction coefficient</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Scale-Adaptive Mechanism -->
+                    <div class="guide-section">
+                        <h3>Scale-Adaptive Mechanism and Physics</h3>
+                        <p class="guide-text">The SAS model operates by comparing the turbulent length scale L with the von Kármán length scale L_vK. When the mesh is fine enough to resolve unsteady structures (L > L_vK), the SAS source term activates, reducing the turbulent viscosity and allowing the flow to develop LES-like behavior.</p>
+                        
+                        <h4>RANS Mode Operation</h4>
+                        <p class="guide-text">In attached boundary layers and regions where the mesh is too coarse for scale resolution, the ratio L/L_vK remains small, the SAS source term is inactive, and the model operates in standard k-ω SST mode, providing efficient RANS-like behavior with high turbulent viscosity damping unsteady fluctuations.</p>
+                        
+                        <h4>LES Mode Transition</h4>
+                        <p class="guide-text">When separation occurs or in regions with adequate mesh resolution, velocity gradients increase significantly, reducing L_vK. As L/L_vK increases beyond the threshold, Q_SAS becomes positive, increasing ω and reducing turbulent viscosity, allowing natural unsteady turbulent structures to develop.</p>
+                        
+                        <h4>von Kármán Length Scale Physics</h4>
+                        <p class="guide-text">The von Kármán length scale represents the size of the largest turbulent eddies that can be sustained by the local velocity field. It is computed from the strain rate and second derivatives of velocity, making it sensitive to flow curvature and separation, exactly where scale-resolving capabilities are most beneficial.</p>
+                        
+                        <h4>Automatic Adaptation Criteria</h4>
+                        <p class="guide-text">The transition between RANS and LES modes is governed by local flow physics rather than geometric criteria. This enables the model to automatically activate scale resolution in separated regions, wake flows, and areas of high unsteadiness while maintaining RANS efficiency in attached boundary layers.</p>
+                    </div>
+
+                    <!-- Model Validation and Applications -->
+                    <div class="guide-section">
+                        <h3>Model Validation and Performance Assessment</h3>
+                        <p class="guide-text">The SAS model has been extensively validated across a range of separated flow configurations, demonstrating superior performance compared to steady RANS while maintaining computational efficiency relative to LES.</p>
+                        
+                        <h4>Benchmark Test Cases</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Periodic hill flow at Re_H = 10,600 (scale-resolving validation)</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Backward-facing step with various expansion ratios</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Flow around circular cylinder at subcritical Reynolds numbers</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Ahmed body automotive configuration for wake prediction</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Industrial Applications</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">External vehicle aerodynamics with wake analysis</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Turbomachinery unsteady blade interactions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Heat exchanger thermal mixing enhancement</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Wind engineering and bluff body flows</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Performance Characteristics</h4>
+                        <p class="guide-text">SAS provides significant improvement over RANS in predicting separation location, reattachment length, and unsteady force coefficients. Computational cost typically ranges from 2-5 times steady RANS, depending on the extent of scale-resolving regions, making it more affordable than pure LES for engineering applications.</p>
+                        
+                        <h4>Limitations and Considerations</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Mesh quality requirements higher than RANS but lower than LES</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Time step restrictions for accurate unsteady resolution</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Statistical convergence requirements for unsteady quantities</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Potential for delayed transition to scale-resolving mode</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Implementation and Numerical Considerations -->
+                    <div class="guide-section">
+                        <h3>Implementation and Numerical Considerations</h3>
+                        <p class="guide-text">Successful SAS implementation requires careful attention to mesh design, time integration, and spatial discretization to ensure proper activation of scale-resolving capabilities while maintaining numerical stability.</p>
+                        
+                        <h4>Mesh Design Strategy</h4>
+                        <p class="guide-text">The mesh should be designed with RANS-quality resolution in attached regions and enhanced resolution in areas where scale resolution is expected. This hybrid approach optimizes computational resources while ensuring adequate capturing of unsteady phenomena in critical flow regions.</p>
+                        
+                        <h4>Time Integration Requirements</h4>
+                        <p class="guide-text">Second-order implicit time integration is recommended with time steps chosen to maintain CFL numbers below unity in scale-resolving regions. The time step should resolve the characteristic frequencies of large-scale unsteady structures while maintaining stability in RANS regions.</p>
+                        
+                        <h4>Spatial Discretization Considerations</h4>
+                        <p class="guide-text">Low-dissipation spatial schemes are crucial for preserving unsteady content in scale-resolving regions. Second-order upwind or higher-order schemes help maintain the balance between numerical stability and unsteady structure preservation.</p>
+                        
+                        <h4>Initialization and Convergence</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text">Initialize from converged steady RANS solution when possible</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Allow sufficient flow development time for unsteady structures</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Monitor SAS source term activation in expected regions</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Verify statistical convergence of mean and fluctuating quantities</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Advanced Topics and Future Developments -->
+                    <div class="guide-section">
+                        <h3>Advanced Topics and Future Developments</h3>
+                        <p class="guide-text">Current research focuses on enhancing SAS performance for specific applications and developing improved formulations for challenging flow configurations.</p>
+                        
+                        <h4>Combustion Applications</h4>
+                        <p class="guide-text">SAS extensions for reacting flows incorporate modifications to handle density variations and chemical source terms, enabling application to combustion systems where large-scale mixing structures significantly influence reaction rates and emissions formation.</p>
+                        
+                        <h4>Multiphase Flow Enhancement</h4>
+                        <p class="guide-text">Developments for multiphase applications address interface dynamics and bubble/droplet interactions, where scale-resolving capabilities provide significant advantages over traditional RANS approaches for predicting mass transfer and mixing characteristics.</p>
+                        
+                        <h4>Machine Learning Integration</h4>
+                        <p class="guide-text">Research explores machine learning-enhanced SAS formulations that adapt model constants based on local flow features, potentially improving automatic detection of regions requiring scale resolution and optimizing the RANS-LES transition process.</p>
+                        
+                        <h4>Wall Function Developments</h4>
+                        <p class="guide-text">Advanced wall function formulations for SAS applications aim to reduce near-wall mesh requirements while maintaining accuracy in scale-resolving regions, extending the method's applicability to higher Reynolds number industrial flows.</p>
+                        
+                        <h4>Anisotropic SAS Formulations</h4>
+                        <p class="guide-text">Next-generation SAS models incorporate anisotropic length scale detection, allowing different scale-resolving behavior in different spatial directions based on local flow physics, potentially improving performance in complex three-dimensional separated flows.</p>
+                        
+                        <h4>Industrial Implementation Advances</h4>
+                        <p class="guide-text">Production-level implementations focus on robustness enhancements, automatic mesh adaptation based on SAS activation patterns, and hybrid parallelization strategies that optimize computational efficiency for mixed RANS-LES domains in large-scale industrial applications.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // Initialize KaTeX
-        document.addEventListener("DOMContentLoaded", function() {
-            const equations = document.querySelectorAll('.katex-display');
-            equations.forEach(eq => {
-                katex.render(eq.textContent, eq, {
-                    displayMode: true,
-                    throwOnError: false
-                });
-            });
-        });
-
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        console.log('Scale Adaptive Simulation page loaded - Enhanced compact design active');
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("content-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
     </script>
+
+    <script>
+        function navigateToModel(modelFile) {
+            if (modelFile) {
+                window.location.href = modelFile;
+            }
+        }
+
+        function setCurrentModel() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('modelSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentModel);
+    </script>
+
 </body>
 </html>

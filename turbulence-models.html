@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turbulence Models - Beko CFD AI Agent</title>
+    <title>Turbulence Models - CFD Handbook</title>
     <meta name="description" content="Compact guide to CFD turbulence models.">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -19,89 +19,256 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.5;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
             color: #2d3748;
-            background: #ffffff;
+            background-color: #f7fafc;
             min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
-            max-width: 1000px;
+            width: 100%;
             margin: 0 auto;
             padding: 0 2rem;
+            max-width: 1400px;
         }
 
-        /* Header */
+        .content-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            max-width: 1400px;
+        }
+
+        /* Premium Header */
         .header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
         .nav-tabs {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
+            align-items: center;
         }
 
         .nav-tab {
-            padding: 0.5rem 0;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
-            color: #718096;
-            font-size: 0.875rem;
+            color: #4a5568;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.2s ease;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
         }
 
         .nav-tab:hover,
         .nav-tab.active {
-            color: #2d3748;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
         /* Main Content */
         .main-content {
+            padding: 0;
+        }
+
+        .content-wrapper {
             padding: 3rem 0;
         }
 
-        /* Page Header */
+        /* Premium Page Header */
         .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem 4rem 2rem;
             text-align: center;
-            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .page-subtitle {
-            font-size: 1rem;
-            color: #718096;
-            font-weight: 400;
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
         }
 
         /* Featured Models Section */
         .featured-section {
             margin-bottom: 4rem;
+            background: linear-gradient(135deg, #f8faff 0%, #f0f4f8 100%);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15), 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4rem;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Guide Section Styling */
+        .guide-section {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .guide-overview {
+            background: #f0f4f8;
+            border-left: 4px solid #4299e1;
+        }
+
+        .guide-reference {
+            background: linear-gradient(135deg, #fdfeff 0%, #f7fafc 100%);
+            border: 1px solid rgba(118, 75, 162, 0.1);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(118, 75, 162, 0.12), 0 2px 8px rgba(0, 0, 0, 0.05);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .guide-reference::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .models-section {
+            background: linear-gradient(135deg, #ffffff 0%, #fdfdff 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(118, 75, 162, 0.08), 0 2px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(118, 75, 162, 0.05);
+            transition: all 0.3s ease;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2rem;
+        }
+
+        .models-section:hover {
+            box-shadow: 0 8px 24px rgba(118, 75, 162, 0.12), 0 4px 8px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
         }
 
         .featured-title {
@@ -127,22 +294,66 @@
         }
 
         .featured-card {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(102, 126, 234, 0.08);
+            border-radius: 12px;
             padding: 2rem;
-            transition: all 0.2s ease;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.08);
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .featured-card:hover::before {
+            transform: translateX(0);
         }
 
         .featured-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-color: #cbd5e0;
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(102, 126, 234, 0.2), 0 8px 16px rgba(0, 0, 0, 0.08);
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+
+        .featured-section h3 {
+            color: #2d3748;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        .guide-reference h3 {
+            color: #2d3748;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
         }
 
         .featured-name {
             font-size: 1.25rem;
-            font-weight: 500;
+            font-weight: 600;
             color: #2d3748;
             margin-bottom: 0.5rem;
         }
@@ -190,12 +401,12 @@
         }
 
         .section-title {
-            font-size: 1rem;
-            font-weight: 500;
             color: #2d3748;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
         }
 
         .models-table {
@@ -209,15 +420,37 @@
         }
 
         .model-row {
-            transition: background-color 0.2s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: 1;
+        }
+
+        .model-row:hover::before {
+            transform: translateX(0);
         }
 
         .model-row:hover {
-            background: #f7fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15), 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
         .model-row td {
+            position: relative;
+            z-index: 2;
             padding: 1rem 1.25rem;
             border-bottom: 1px solid #f1f5f9;
         }
@@ -243,62 +476,154 @@
             line-height: 1.4;
         }
 
-        /* Comparison Section */
+        /* Comparison Section - Premium Design */
         .comparison-section {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 2rem;
+            background: linear-gradient(135deg, #fdfdff 0%, #f8fafc 100%);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            border-radius: 16px;
+            padding: 3rem;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1), 0 2px 8px rgba(0, 0, 0, 0.03);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+
+        .comparison-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
         }
 
         .comparison-title {
-            font-size: 1.125rem;
-            font-weight: 500;
+            font-size: 1.75rem;
+            font-weight: 700;
             color: #2d3748;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            text-align: center;
         }
 
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.875rem;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
+            font-size: 0.95rem;
+            background: linear-gradient(135deg, #ffffff 0%, #fefeff 100%);
+            border: 1px solid rgba(99, 102, 241, 0.08);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.06), 0 2px 4px rgba(0, 0, 0, 0.02);
         }
 
         .comparison-table th {
-            background: #f7fafc;
-            padding: 0.75rem;
+            background: linear-gradient(135deg, #f8faff 0%, #f1f5f9 100%);
+            padding: 1.25rem 1rem;
             text-align: left;
-            font-weight: 500;
-            color: #4a5568;
-            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
+            color: #4c51bf;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.1);
+            font-size: 1rem;
+            letter-spacing: 0.025em;
+        }
+
+        .comparison-table tbody tr {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
         }
 
         .comparison-table td {
-            padding: 0.75rem;
+            padding: 1.25rem 1rem;
             color: #4a5568;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.05);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
         }
 
         .comparison-table td strong {
             color: #2d3748;
+            font-weight: 600;
+            background: linear-gradient(135deg, #4c51bf 0%, #7c3aed 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Speed/Accuracy Badge Styling */
+        .comparison-table td:nth-child(3),
+        .comparison-table td:nth-child(4) {
+            font-weight: 500;
+        }
+
+        /* Appliance Use Column Enhancement */
+        .comparison-table td:nth-child(5) {
+            font-style: italic;
+            color: #5a67d8;
             font-weight: 500;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .container {
+            .content-container {
                 padding: 0 1rem;
+            }
+
+            .content-wrapper {
+                padding: 2rem 0;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
             }
             
             .featured-models {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
+
+            .comparison-section {
+                padding: 2rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .comparison-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .comparison-table th {
+                font-size: 0.9rem;
+            }
+        }
             
             .page-title {
                 font-size: 2rem;
@@ -322,18 +647,16 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="home.html" class="logo">Beko CFD AI Agent</a>
-                
-                <!-- Navigation Tabs -->
-                <div class="nav-tabs">
-                    <a href="home.html" class="nav-tab">Home</a>
-                    <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
-                    <a href="turbulence-models.html" class="nav-tab active">Turbulence Models</a>
-                    <a href="methods.html" class="nav-tab">Methods</a>
-                    <a href="product-guide.html" class="nav-tab">Product Guide</a>
-                </div>
+        <div class="header-content">
+                            <a href="home.html" class="logo">CFD Handbook</a>
+            
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <a href="home.html" class="nav-tab">Home</a>
+                <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
+                <a href="turbulence-models.html" class="nav-tab active">Turbulence Models</a>
+                <a href="methods.html" class="nav-tab">Methods</a>
+                <a href="product-guide.html" class="nav-tab">Product Guide</a>
             </div>
         </div>
     </header>
@@ -342,14 +665,17 @@
         <div class="main-content">
             <!-- Page Header -->
             <div class="page-header">
-                <h1 class="page-title">Turbulence Models</h1>
+                <h1>Turbulence Models</h1>
                 <p class="page-subtitle">CFD models for predicting turbulent flow behavior</p>
             </div>
 
+            <div class="content-container">
+                <div class="content-wrapper">
+
             <!-- Featured Models Section -->
-            <div class="featured-section">
-                <div class="featured-title">Most Used in Industry</div>
-                <div class="featured-subtitle">These two turbulence models account for nearly 90% of industrial CFD simulations.</div>
+            <div class="featured-section guide-overview">
+                <h3>Most Used in Industry</h3>
+                <p style="color: #4a5568; margin-bottom: 2rem; line-height: 1.6;">These two turbulence models account for nearly 90% of industrial CFD simulations.</p>
                 
                 <div class="featured-models">
                     <div class="featured-card" onclick="window.location.href='models/k-epsilon.html'">
@@ -368,9 +694,9 @@
                 </div>
             </div>
 
-            <!-- Section Divider -->
-            <hr class="section-divider">
-            <div class="all-models-title">Complete Model Reference</div>
+            <!-- Complete Model Reference Section -->
+            <div class="guide-section guide-reference">
+                <h3>Complete Model Reference</h3>
 
             <!-- Inviscid and Laminar -->
             <div class="models-section">
@@ -550,17 +876,185 @@
                 </table>
             </div>
         </div>
+            </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
+        <div class="content-container">
             Developed By Mert Küplülü
         </div>
     </footer>
 
     <script>
-        console.log('Turbulence Models page loaded with minimalistic theme');
+        // Scroll Position Restoration System
+        class ScrollPositionManager {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                // Restore scroll position when page loads
+                this.restoreScrollPosition();
+                
+                // Add click handlers to all model links
+                this.addModelLinkHandlers();
+                
+                // Save scroll position before unload
+                window.addEventListener('beforeunload', () => {
+                    this.saveCurrentScrollPosition();
+                });
+            }
+
+            // Save scroll position when clicking a model link
+            saveScrollPositionForModel(modelName) {
+                const scrollData = {
+                    scrollY: window.scrollY,
+                    timestamp: Date.now(),
+                    fromModel: modelName
+                };
+                sessionStorage.setItem('turbulenceModelsScrollPosition', JSON.stringify(scrollData));
+                console.log(`Saved scroll position for ${modelName}:`, scrollData);
+            }
+
+            // Save current scroll position
+            saveCurrentScrollPosition() {
+                const scrollData = {
+                    scrollY: window.scrollY,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem('turbulenceModelsCurrentScroll', JSON.stringify(scrollData));
+            }
+
+            // Restore scroll position when returning to page
+            restoreScrollPosition() {
+                // Check if we're returning from a model page
+                const savedPosition = sessionStorage.getItem('turbulenceModelsScrollPosition');
+                
+                if (savedPosition) {
+                    try {
+                        const scrollData = JSON.parse(savedPosition);
+                        
+                        // Only restore if the data is recent (within 5 minutes)
+                        if (Date.now() - scrollData.timestamp < 300000) {
+                            // Smooth scroll to the saved position
+                            setTimeout(() => {
+                                window.scrollTo({
+                                    top: scrollData.scrollY,
+                                    behavior: 'smooth'
+                                });
+                                console.log(`Restored scroll position from ${scrollData.fromModel}:`, scrollData.scrollY);
+                            }, 100);
+                        }
+                        
+                        // Clear the saved position after use
+                        sessionStorage.removeItem('turbulenceModelsScrollPosition');
+                    } catch (e) {
+                        console.error('Error restoring scroll position:', e);
+                    }
+                }
+            }
+
+            // Add click handlers to model links
+            addModelLinkHandlers() {
+                // Handle featured card clicks
+                const featuredCards = document.querySelectorAll('.featured-card');
+                featuredCards.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const modelName = card.querySelector('.featured-name')?.textContent || 'Featured Model';
+                        this.saveScrollPositionForModel(modelName);
+                    });
+                });
+
+                // Handle model row clicks
+                const modelRows = document.querySelectorAll('.model-row');
+                modelRows.forEach(row => {
+                    row.addEventListener('click', (e) => {
+                        const modelName = row.querySelector('.model-name')?.textContent || 'Model';
+                        this.saveScrollPositionForModel(modelName);
+                    });
+                });
+
+                // Handle direct model links
+                const modelLinks = document.querySelectorAll('a[href*="models/"]');
+                modelLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const modelName = link.textContent || link.href.split('/').pop();
+                        this.saveScrollPositionForModel(modelName);
+                    });
+                });
+            }
+
+            // Find model element position for precise scrolling
+            getModelElementPosition(modelName) {
+                const modelElements = document.querySelectorAll('.model-name, .featured-name');
+                for (let element of modelElements) {
+                    if (element.textContent.toLowerCase().includes(modelName.toLowerCase())) {
+                        const rect = element.getBoundingClientRect();
+                        return window.scrollY + rect.top - 100; // Offset for header
+                    }
+                }
+                return null;
+            }
+        }
+
+        // Initialize scroll position manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ScrollPositionManager();
+            console.log('Turbulence Models page loaded with scroll position restoration');
+        });
+
+        // Fallback scroll restoration for immediate page loads
+        window.addEventListener('load', () => {
+            const savedPosition = sessionStorage.getItem('turbulenceModelsScrollPosition');
+            if (savedPosition) {
+                try {
+                    const scrollData = JSON.parse(savedPosition);
+                    if (Date.now() - scrollData.timestamp < 300000) {
+                        window.scrollTo({
+                            top: scrollData.scrollY,
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch (e) {
+                    console.error('Fallback scroll restoration error:', e);
+                }
+            }
+        });
+
+        // Premium Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Page Transitions
+        function smoothTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(-30px)';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 400);
+        }
+
+        // Add smooth transitions to navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    smoothTransition(this.href);
+                }
+            });
+        });
+
+        console.log('CFD Handbook - Turbulence Models page loaded with premium theme');
     </script>
 </body>
 </html>

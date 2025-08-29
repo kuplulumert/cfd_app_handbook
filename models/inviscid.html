@@ -6,13 +6,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Inviscid Flow - Beko CFD AI Agent</title>
+    <title>Inviscid Flow - CFD Handbook</title>
     
     <!-- KaTeX for math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     
+    <style>
     <style>
         * {
             margin: 0;
@@ -21,426 +22,618 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.5;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
             color: #2d3748;
-            background: #ffffff;
+            background-color: #f7fafc;
             min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            to { opacity: 1; transform: translateY(0); }
+        }
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        /* Header Navigation */
 
-        /* Header */
+                /* Premium Header Navigation */
         .header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2d3748;
-            text-decoration: none;
-        }
-
-        .nav-tabs {
+                .nav-tabs {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
+            align-items: center;
         }
 
         .nav-tab {
-            padding: 0.5rem 0;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
-            color: #718096;
-            font-size: 0.875rem;
+            color: #4a5568;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.2s ease;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
         }
 
         .nav-tab:hover,
         .nav-tab.active {
-            color: #2d3748;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #718096;
-            text-decoration: none;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover {
-            color: #2d3748;
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 3rem 0;
-        }
-
-        /* Page Header */
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .model-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
-        }
-
-        .model-subtitle {
-            font-size: 1rem;
-            color: #718096;
-            font-weight: 400;
-        }
-
-        /* Content Tabs */
-        .content-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .content-tab {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #718096;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        .model-selector {
+            position: relative;
             display: inline-block;
         }
 
-        .content-tab:hover {
-            color: #2d3748;
-            background: #f7fafc;
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
         }
 
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
+                .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #2d3748;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+            color: #718096;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }        \
+                .content-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+        }
+
+        .content-tab {
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 12px;
+            white-space: nowrap;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        }
+        .content-tab::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+        .content-tab:hover::before,
+        .content-tab.active::before {
+        opacity: 1;
+        }
+        .content-tab:hover,
         .content-tab.active {
-            color: #dc2626;
-            border-bottom-color: #dc2626;
-            background: #fef2f2;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        .content-tab:first-child {
+        border-left: none;
         }
 
         .tab-content {
             display: none;
+            width: 100%;
+            padding: 0;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        /* Industry Guide Styles */
+        /* Industry Guide Styling */
         .industry-guide {
-            max-width: 800px;
+            width: 100%;
+            max-width: 100%;
+            padding: 2rem min(3rem, 5vw);
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .guide-section {
-            margin-bottom: 2rem;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+            background: white;
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+            overflow-wrap: break-word;
         }
 
-        .guide-section h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .guide-overview {
-            background: #fef2f2;
-            border-left: 4px solid #dc2626;
-        }
-
-        .guide-strengths {
-            background: #f0fdf4;
-            border-left: 4px solid #10b981;
-        }
-
-        .guide-limitations {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .guide-use-cases {
-            background: #ecfdf5;
-            border-left: 4px solid #059669;
-        }
-
-        .guide-avoid {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-        }
-
-        .guide-tips {
-            background: #f3f4f6;
-            border-left: 4px solid #6b7280;
-        }
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
 
         .guide-list {
             list-style: none;
-            padding: 0;
-            margin: 0;
         }
 
         .guide-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .guide-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .guide-bullet {
-            color: #dc2626;
-            font-weight: 600;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
+            margin: 1rem 0;
+            position: relative;
         }
 
         .guide-text {
-            color: #4a5568;
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
         }
 
         .guide-emphasis {
-            font-weight: 600;
-            color: #2d3748;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
         }
 
-        .use-case-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .avoid-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* Academy Guide Styles */
+        /* Academy Guide Styling */
         .academy-guide {
-            max-width: 900px;
+            width: 100%;
+            max-width: 100%;
+            padding: 2rem min(3rem, 5vw);
+            line-height: 1.6;
+            box-sizing: border-box;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide h3:first-child {
+            margin-top: 0;
         }
 
         .academy-guide h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin: 1.5rem 0 0.75rem 0;
-        }
-
-        .equation-block {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-            font-size: 1rem;
-            overflow-x: auto;
-        }
-
-        .term-definitions {
-            space-y: 1rem;
-        }
-
-        .term-item {
-            background: #f8f9fa;
-            border-left: 3px solid #dc2626;
-            padding: 1rem;
-            margin: 0.75rem 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .term-item strong {
-            color: #b91c1c;
-            font-size: 1.05rem;
-        }
-
-        .constants-table {
-            margin: 1rem 0;
-        }
-
-        /* Simple Decision Cards for Academy */
-        .simple-decisions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .simple-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 2rem;
-            transition: box-shadow 0.2s ease;
-        }
-
-        .simple-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .simple-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .simple-title {
-            font-size: 1.125rem;
-            font-weight: 500;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-        }
-
-        .simple-subtitle {
-            font-size: 0.875rem;
-            color: #718096;
-        }
-
-        .simple-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .simple-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
             line-height: 1.4;
         }
 
-        .simple-icon {
-            flex-shrink: 0;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            margin-top: 0.125rem;
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
         }
 
-        .use-card .simple-icon {
-            background: #10b981;
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .avoid-card .simple-icon {
-            background: #f59e0b;
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
         }
 
-        .simple-text {
-            color: #4a5568;
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
         }
 
-        .simple-emphasis {
-            font-weight: 500;
-            color: #2d3748;
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
         }
 
-        /* Responsive */
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            max-width: 100%;
+        }
+
+        .constants-table table {
+            width: 100%;
+            min-width: 300px;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .simple-decisions {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+
+            .logo {
+                font-size: 1.2rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
             }
-            
-            .model-title {
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
                 font-size: 2rem;
             }
-            
-            .nav-tabs {
-                gap: 1rem;
-            }
-        }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: #a0aec0;
-            font-size: 0.75rem;
-            border-top: 1px solid #e2e8f0;
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .guide-section {
+                padding: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .equation-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .constants-table {
+                font-size: 0.85rem;
+            }
+
+            .constants-table th,
+            .constants-table td {
+                padding: 0.5rem 0.75rem;
+            }
+
+                    \
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
+
+        @media (max-width: 480px) {
+            .industry-guide,
+            .academy-guide {
+                padding: 0.5rem;
+            }
+
+            .guide-section {
+                padding: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
             <div class="header-content">
-                <a href="../turbulence-models.html" class="logo">Beko CFD AI Agent</a>
-                
-                <!-- Navigation Tabs -->
+                <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
                 <div class="nav-tabs">
-                    <a href="../home.html" class="nav-tab">Home</a>
-                    <a href="../time-dependency.html" class="nav-tab">Time Dependency</a>
-                    <a href="../turbulence-models.html" class="nav-tab active">Turbulence Models</a>
-                    <a href="../methods.html" class="nav-tab">Methods</a>
-                    <a href="../product-guide.html" class="nav-tab">Product Guide</a>
+                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <div class="model-selector">
+                        <select id="modelSelect" class="model-dropdown" onchange="navigateToModel(this.value)">
+                            <option value="">Select Model...</option>
+                            <option value="laminar.html">Laminar Flow</option>
+                            <option value="k-epsilon.html">k-ε (Standard)</option>
+                            <option value="k-omega.html">k-ω (Wilcox)</option>
+                            <option value="k-omega-sst.html">k-ω SST</option>
+                            <option value="reynolds-stress.html">Reynolds Stress Model (RSM)</option>
+                            <option value="spalart-allmaras.html">Spalart-Allmaras</option>
+                            <option value="des.html">Detached Eddy Simulation (DES)</option>
+                            <option value="les.html">Large Eddy Simulation (LES)</option>
+                            <option value="sas.html">Scale-Adaptive Simulation (SAS)</option>
+                            <option value="k-kl-omega.html">k-kL-ω Transition</option>
+                            <option value="inviscid.html">Inviscid Flow</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
 
     <div class="container">
-        <div class="main-content">
-            <a href="../turbulence-models.html" class="back-link">
-                ← Turbulence Models
-            </a>
 
             <!-- Page Header -->
             <div class="page-header">
-                <h1 class="model-title">Inviscid Flow</h1>
+                <h1>Inviscid Flow</h1>
                 <p class="model-subtitle">Ideal flow model for conceptual design and high-speed flow analysis</p>
             </div>
 
             <!-- Content Tabs -->
             <div class="content-tabs">
-                <button class="content-tab active" onclick="showTab('industry')">Industry Guide</button>
-                <button class="content-tab" onclick="showTab('academy')">Academy Guide</button>
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
             </div>
 
             <!-- Industry Guide Tab Content -->
@@ -452,20 +645,20 @@
                         <h3>1. Model Overview</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Inviscid flow model solving Euler equations with zero viscosity (μ = 0).</span>
+                                
+                                <span class="guide-text"><strong>Inviscid flow model</strong> solving Euler equations with zero viscosity (μ = 0).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Fundamental theoretical model representing ideal fluid behavior.</span>
+                                
+                                <span class="guide-text"><strong>Fundamental theoretical model</strong> representing ideal fluid behavior.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Fastest CFD solution method, perfect for preliminary analysis.</span>
+                                
+                                <span class="guide-text"><strong>Fastest CFD solution</strong> method, perfect for preliminary analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text">Captures pressure-driven flows and compressibility effects.</span>
+                                
+                                <span class="guide-text"><strong>Captures pressure-driven flows</strong> and compressibility effects.</span>
                             </li>
                         </ul>
                     </div>
@@ -475,23 +668,23 @@
                         <h3>2. Key Advantages</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Computational speed:</strong> Fastest CFD method, 5-10x faster than turbulent models.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Conceptual insights:</strong> Reveals fundamental flow physics without viscous complexity.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High-speed accuracy:</strong> Excellent for supersonic and hypersonic flow analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Mesh simplicity:</strong> No boundary layer resolution required, coarse meshes acceptable.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Analytical validation:</strong> Many analytical solutions available for verification.</span>
                             </li>
                         </ul>
@@ -502,27 +695,27 @@
                         <h3>3. Fundamental Limitations</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>No wall effects:</strong> Cannot predict skin friction, heat transfer, or boundary layers.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>No viscous drag:</strong> Only pressure drag captured, missing significant drag component.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Slip boundary conditions:</strong> Flow slides along walls, unrealistic for most applications.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>No flow separation:</strong> Cannot predict viscous separation phenomena.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Beko Appliance Applications -->
+                    <!-- Home Appliance Applications -->
                     <div class="guide-section guide-use-cases">
-                        <h3>4. Beko Appliance Applications</h3>
+                        <h3>4. Home Appliance Applications</h3>
                         
                         <div class="use-case-item">
                             <span class="guide-text"><span class="guide-emphasis">Conceptual Design Phase:</span> Early-stage flow analysis for all appliances before detailed modeling</span>
@@ -549,23 +742,23 @@
                         <h3>5. When to Use Inviscid Flow</h3>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Preliminary design:</strong> Quick flow field analysis in early design stages.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>High-speed flows:</strong> Mach number > 0.3, where inertial forces dominate.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Far-field analysis:</strong> Flow behavior away from walls and viscous regions.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shock wave studies:</strong> Supersonic flow phenomena and wave propagation.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Code verification:</strong> Comparing CFD codes against analytical solutions.</span>
                             </li>
                         </ul>
@@ -601,19 +794,19 @@
                         <h4>Mesh Requirements:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Coarse meshes acceptable:</strong> No boundary layer resolution needed.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Focus on geometry:</strong> Ensure accurate representation of key geometric features.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shock capturing:</strong> Refine mesh in regions expecting shock waves.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Growth ratio:</strong> < 1.5 acceptable, more forgiving than viscous models.</span>
                             </li>
                         </ul>
@@ -621,15 +814,15 @@
                         <h4>Boundary Conditions:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Wall conditions:</strong> Slip walls (zero normal velocity, free tangential flow).</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Inlet/outlet:</strong> Specify pressure, density, velocity based on flow regime.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Symmetry:</strong> Use symmetry boundaries to reduce computational domain.</span>
                             </li>
                         </ul>
@@ -637,15 +830,15 @@
                         <h4>Solver Settings:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flux schemes:</strong> Roe, AUSM, or Godunov schemes for shock capturing.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Limiters:</strong> Use flux limiters for high-speed flows to prevent oscillations.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Time stepping:</strong> Explicit schemes often sufficient for steady-state problems.</span>
                             </li>
                         </ul>
@@ -658,19 +851,19 @@
                         <h4>Accuracy Levels:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pressure fields:</strong> Excellent for high-speed flows, poor for low-speed viscous-dominated flows.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Velocity patterns:</strong> Good for core flow regions, unrealistic near walls.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Shock waves:</strong> Very accurate for shock location and strength.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flow patterns:</strong> Qualitative guidance for preliminary design.</span>
                             </li>
                         </ul>
@@ -678,15 +871,15 @@
                         <h4>Computational Performance:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Solution speed:</strong> 5-10x faster than RANS models, 50-100x faster than LES.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Memory usage:</strong> Minimal due to coarse mesh requirements.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Convergence:</strong> Typically very fast convergence for well-posed problems.</span>
                             </li>
                         </ul>
@@ -699,15 +892,15 @@
                         <h4>Successful Applications:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Design space exploration:</strong> Rapid evaluation of multiple design concepts.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Flow visualization:</strong> Understanding fundamental flow patterns and streamlines.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Compressible flow analysis:</strong> High-speed phenomena in specialized equipment.</span>
                             </li>
                         </ul>
@@ -715,15 +908,15 @@
                         <h4>Common Pitfalls:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pitfall:</strong> Using for drag prediction. <strong>Solution:</strong> Always follow with viscous analysis.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pitfall:</strong> Applying to internal flows. <strong>Solution:</strong> Use only for external flow far-field.</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Pitfall:</strong> Expecting realistic wall behavior. <strong>Solution:</strong> Focus on core flow physics only.</span>
                             </li>
                         </ul>
@@ -736,41 +929,16 @@
                 <div class="academy-guide">
                     
                     <!-- Historical Context and Development -->
-                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #dc2626;">
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #3b82f6;">
                         <h3>Historical Context and Development</h3>
                         <p class="guide-text">Inviscid flow theory represents the foundation of fluid mechanics, developed through centuries of mathematical and physical insights. The Euler equations, governing inviscid flow, predate viscous flow understanding by over a century.</p>
                         
-                        <h4>Timeline and Evolution:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1738:</strong> Daniel Bernoulli develops energy conservation principle for ideal fluids</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1755:</strong> Leonhard Euler formulates the Euler equations for inviscid flow</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1823:</strong> Cauchy develops rigorous mathematical foundation for continuum mechanics</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1904:</strong> Prandtl introduces boundary layer theory, linking inviscid and viscous flows</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1950s:</strong> Von Neumann develops numerical methods for shock waves</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1960s:</strong> Godunov introduces conservative finite difference schemes for Euler equations</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>1980s:</strong> Modern high-resolution methods enable accurate shock capturing</span>
-                            </li>
-                        </ul>
+                        <h4>Timeline and Evolution</h4>
+                        <p class="guide-text">The theoretical foundations of inviscid flow emerged through centuries of mathematical development, beginning with Daniel Bernoulli's energy conservation principle for ideal fluids in 1738. This was followed by Leonhard Euler's formulation of the Euler equations in 1755, which established the mathematical framework for inviscid flow analysis that remains fundamental today.</p>
+                        
+                        <p class="guide-text">The mathematical rigor was enhanced by Cauchy's development of continuum mechanics foundations in 1823. A crucial breakthrough came with Prandtl's introduction of boundary layer theory in 1904, which elegantly linked inviscid and viscous flows, showing how inviscid theory applies in the outer flow region.</p>
+                        
+                        <p class="guide-text">The computational era began in the 1950s with Von Neumann's numerical methods for shock waves, followed by Godunov's conservative finite difference schemes for Euler equations in the 1960s. The 1980s brought modern high-resolution methods that enabled accurate shock capturing, making inviscid flow simulation a practical tool for engineering design.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->
@@ -881,15 +1049,15 @@
                         <h4>Domain of Dependence and Influence:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Subsonic flow (M < 1):</strong> Information propagates in all directions, elliptic character</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Supersonic flow (M > 1):</strong> Information propagates only downstream, hyperbolic character</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Sonic flow (M = 1):</strong> Transition regime, parabolic character</span>
                             </li>
                         </ul>
@@ -920,19 +1088,19 @@
                         <h4>Shock Wave Properties:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Thickness:</strong> Few mean free paths (~10⁻⁷ m in air), effectively discontinuous</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Entropy increase:</strong> Δs > 0, irreversible process despite inviscid equations</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Information barrier:</strong> No information propagates upstream through shock</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Weak shock limit:</strong> M₁ → 1⁺, relations approach acoustic wave theory</span>
                             </li>
                         </ul>
@@ -986,7 +1154,7 @@
 
                     <!-- Boundary Conditions and Well-Posed Problems -->
                     <div class="guide-section guide-avoid">
-                        <h3>Boundary Conditions and Mathematical Well-Posedness</h3>
+                        <h3>Advanced Numerical Methods and Modern Developments</h3>
                         
                         <h4>Solid Wall Boundary Conditions:</h4>
                         <div class="equation-block">
@@ -997,19 +1165,19 @@
                         <h4>Far-Field Boundary Conditions:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Subsonic inflow:</strong> Specify 4 variables (ρ, u, v, T), pressure extrapolated</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Subsonic outflow:</strong> Specify 1 variable (typically pressure), others extrapolated</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Supersonic inflow:</strong> Specify all 5 variables (ρ, u, v, w, T)</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Supersonic outflow:</strong> All variables extrapolated from interior</span>
                             </li>
                         </ul>
@@ -1029,8 +1197,7 @@
 
                     <!-- Numerical Methods for Inviscid Flow -->
                     <div class="guide-section" style="background: #fdf2f8; border-left: 4px solid #ec4899;">
-                        <h3>Numerical Methods and Modern Algorithms</h3>
-                        
+
                         <h4>Finite Volume Formulation:</h4>
                         <div class="equation-block">
                             $$\frac{d}{dt}\int_V \mathbf{U} dV + \oint_{\partial V} \mathbf{F} \cdot \mathbf{n} dA = \int_V \mathbf{S} dV$$
@@ -1065,19 +1232,19 @@
                         <h4>Time Integration Schemes:</h4>
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Explicit Runge-Kutta:</strong> RK2, RK3, RK4 for time-accurate solutions</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Implicit schemes:</strong> Better stability for steady-state convergence</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Local time stepping:</strong> Accelerates convergence to steady state</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
+                                
                                 <span class="guide-text"><strong>Multigrid:</strong> Full Approximation Storage (FAS) for nonlinear systems</span>
                             </li>
                         </ul>
@@ -1091,8 +1258,7 @@
 
                     <!-- Advanced Applications and Modern Developments -->
                     <div class="guide-section" style="background: #f8f9fa; border-left: 4px solid #495057;">
-                        <h3>Advanced Applications and Modern Developments</h3>
-                        
+
                         <h4>Adaptive Mesh Refinement (AMR):</h4>
                         <p class="guide-text">Automatic mesh refinement near shocks and other discontinuities:</p>
                         <div class="equation-block">
@@ -1105,57 +1271,45 @@
                             $$\mathbf{U}_h = \sum_{k=1}^N \hat{\mathbf{U}}_k \phi_k(x), \quad \phi_k \text{ (basis functions)}$$
                         </div>
                         
-                        <h4>Immersed Boundary Methods:</h4>
-                        <p class="guide-text">Handling complex geometries without body-fitted grids:</p>
+                        <h4>Immersed Boundary Methods and Complex Geometry Handling</h4>
+                        <p class="guide-text">Modern inviscid flow simulation increasingly employs immersed boundary methods to handle complex geometries without requiring body-fitted computational grids. Cut-cell methods provide exact representation of solid boundaries by precisely cutting computational cells at the boundary interface, maintaining geometric accuracy while preserving conservation properties. Ghost cell methods utilize extrapolation techniques to enforce boundary conditions on regular Cartesian grids, simplifying mesh generation while maintaining solution accuracy.</p>
+                        
+                        <p class="guide-text">Penalty methods implement forcing terms within the governing equations to enforce boundary conditions, offering flexibility in boundary treatment while maintaining computational efficiency. These approaches have revolutionized computational fluid dynamics by enabling rapid mesh generation for complex geometries while maintaining the computational advantages of structured grids.</p>
+                        
+                        <h4>Contemporary Computational Challenges and Advanced Applications</h4>
+                        <p class="guide-text">Modern inviscid flow simulation addresses increasingly complex physical phenomena that extend beyond classical gas dynamics. Hypersonic flows require consideration of real gas effects, chemical reactions, and radiation heat transfer, demanding sophisticated models that account for thermochemical non-equilibrium and energy exchange mechanisms.</p>
+                        
+                        <p class="guide-text">Multiphase flow applications employ interface tracking and capturing methods to simulate phenomena such as bubble dynamics and shock-droplet interactions. Magnetohydrodynamics extends inviscid flow theory to plasma flows with electromagnetic effects, requiring solution of coupled fluid and Maxwell equations. The advent of GPU acceleration has enabled massively parallel implementations that dramatically reduce computational time for large-scale simulations, making previously intractable problems accessible to engineering analysis.</p>
+                        
+                        <h4>Validation, Verification, and Quality Assurance</h4>
+                        <p class="guide-text">Rigorous validation and verification protocols ensure the reliability of inviscid flow simulation results. The Method of Manufactured Solutions (MMS) provides a systematic approach to code verification by constructing analytical solutions that test numerical implementation accuracy and convergence behavior. This technique enables precise quantification of discretization errors and verification of theoretical convergence rates.</p>
+                        
+                        <p class="guide-text">Standard test cases form the foundation of inviscid flow code validation, encompassing canonical problems that provide well-documented reference solutions:</p>
+                        
                         <ul class="guide-list">
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Cut-cell methods:</strong> Exact representation of solid boundaries</span>
+                                
+                                <span class="guide-text"><strong>Sod shock tube:</strong> One-dimensional Riemann problem with exact analytical solution</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Ghost cell methods:</strong> Extrapolation for boundary conditions</span>
+                                
+                                <span class="guide-text"><strong>Supersonic wedge flow:</strong> Oblique shock relations and flow deflection validation</span>
                             </li>
                             <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Penalty methods:</strong> Forcing terms to enforce boundary conditions</span>
+                                
+                                <span class="guide-text"><strong>Blast wave problems:</strong> Strong shock propagation and rarefaction wave interactions</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Double Mach reflection:</strong> Complex shock-shock interaction phenomena</span>
+                            </li>
+                            <li class="guide-item">
+                                
+                                <span class="guide-text"><strong>Forward-facing step:</strong> Shock diffraction and vortex formation assessment</span>
                             </li>
                         </ul>
                         
-                        <h4>Modern Computational Challenges:</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Hypersonic flows:</strong> Real gas effects, chemical reactions, radiation</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Multiphase flows:</strong> Interface tracking/capturing methods</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>Magnetohydrodynamics:</strong> Plasma flows with electromagnetic effects</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-bullet">•</span>
-                                <span class="guide-text"><strong>GPU acceleration:</strong> Massively parallel implementations</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Validation and Verification:</h4>
-                        <div class="term-item">
-                            <strong>Method of Manufactured Solutions (MMS):</strong>
-                            <p class="guide-text">Construct exact solution, verify convergence order</p>
-                        </div>
-                        <div class="term-item">
-                            <strong>Standard test cases:</strong>
-                            <ul class="guide-list">
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Sod shock tube problem</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Supersonic flow over wedge</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Blast wave problems</span></li>
-                                <li class="guide-item"><span class="guide-bullet">•</span><span class="guide-text">Double Mach reflection</span></li>
-                            </ul>
-                        </div>
+                        <p class="guide-text">These benchmark problems provide rigorous assessment frameworks against which new implementations and methodologies can be evaluated, ensuring the continued advancement of computational inviscid flow capabilities.</p>
                     </div>
                 </div>
             </div>
@@ -1169,9 +1323,15 @@
         </div>
     </footer>
 
+        <script>
+        
+    </script>
+    
     <script>
         // Tab functionality
-        function showTab(tabName) {
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
             // Hide all tab content
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -1188,9 +1348,9 @@
             document.getElementById(tabName).classList.add('active');
             
             // Add active class to clicked tab
-            event.target.classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
-        
+
         // KaTeX rendering
         document.addEventListener("DOMContentLoaded", function() {
             renderMathInElement(document.body, {
@@ -1201,5 +1361,29 @@
             });
         });
     </script>
+
+    <script>
+        function navigateToModel(modelFile) {
+            if (modelFile) {
+                window.location.href = modelFile;
+            }
+        }
+
+        function setCurrentModel() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('modelSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentModel);
+    </script>
+
 </body>
 </html>
