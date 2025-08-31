@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="1.0">
+    <meta name="version" content="2.0">
     <meta name="last-modified" content="2024-12-19">
     
     <style>
@@ -18,54 +18,45 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.4;
-            color: #1e293b;
-            background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 50%, #f1f5f9 100%);
-            font-size: 14px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
             min-height: 100vh;
             opacity: 0;
-            animation: fadeInPage 0.6s ease-out forwards;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
         }
 
         @keyframes fadeInPage {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
-            max-width: 1000px;
+            width: 100%;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
+            max-width: 1400px;
         }
 
-        /* Header */
+        /* Premium Header */
         .header {
-            background: linear-gradient(135deg, rgba(194,65,12,0.08), rgba(251,146,60,0.05));
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(194,65,12,0.15);
-            padding: 0.75rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
         }
 
         .header.scrolled {
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
-            transition: all 0.3s ease;
         }
 
         .header-content {
@@ -77,7 +68,10 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #3b82f6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-decoration: none;
             transition: all 0.3s ease;
             position: relative;
@@ -98,13 +92,10 @@
             width: 100%;
         }
 
-
-
-        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
+            gap: 2.5rem;
+            align-items: center;
         }
 
         .nav-tab {
@@ -117,180 +108,266 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            white-space: nowrap;
         }
 
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
+        .nav-tab:hover,
         .nav-tab.active {
-            background: #3b82f6;
-            color: white;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
-        @keyframes shimmer {
-            0% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
-            50% { box-shadow: 0 0 20px rgba(59,130,246,0.6), 0 0 30px rgba(59,130,246,0.3); }
-            100% { box-shadow: 0 0 5px rgba(59,130,246,0.3); }
-        }
-
-        /* Hero */
+        /* Premium Hero Section */
         .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 0 4rem 0;
             text-align: center;
-            padding: 2rem 0 1.5rem 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.9));
-            border-radius: 0.75rem;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(59,130,246,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="white" stop-opacity=".1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="10" cy="10" r="10" fill="url(%23a)"/><circle cx="30" cy="5" r="8" fill="url(%23a)"/><circle cx="60" cy="15" r="6" fill="url(%23a)"/><circle cx="80" cy="8" r="12" fill="url(%23a)"/></svg>') repeat;
+            opacity: 0.1;
         }
 
         .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            font-weight: 300;
+        }
+
+        /* Featured Categories Section */
+        .featured-section {
+            background: linear-gradient(135deg, #ffffff 0%, #fdfdff 100%);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 4px 16px rgba(118, 75, 162, 0.08), 0 2px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 4rem;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4rem;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .featured-title {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1rem;
-            color: #64748b;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Table */
-        .models-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255,255,255,0.9);
-            border-radius: 0.75rem;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-        }
-
-        .table-header {
-            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(147,197,253,0.1));
-            border-bottom: 2px solid rgba(59,130,246,0.15);
-        }
-
-        .header-cell {
-            padding: 0.75rem 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: #1e40af;
-            font-size: 0.8rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
             text-align: center;
         }
 
-        .model-row {
-            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        .featured-subtitle {
+            font-size: 1rem;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .method-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(102, 126, 234, 0.08);
+            border-radius: 12px;
+            padding: 2rem;
             cursor: pointer;
-            border-bottom: 1px solid rgba(59,130,246,0.06);
-        }
-
-        .model-row:hover {
-            background: rgba(59,130,246,0.04);
-            transform: translateX(6px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .model-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: #1e293b;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.08);
         }
 
-        .logo::after {
+        .category-card::before {
             content: '';
             position: absolute;
-            bottom: -4px;
+            top: 0;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
         }
 
-        .logo:hover::after {
-            width: 100%;
-            transition: color 0.2s ease;
+        .category-card:hover::before {
+            transform: translateX(0);
         }
 
-        .model-name:hover {
-            color: #3b82f6;
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(102, 126, 234, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
-        .model-desc {
-            font-size: 0.8rem;
-            color: #64748b;
-            line-height: 1.3;
-        }
-
-        .class-tag {
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            font-size: 0.625rem;
+        .category-name {
+            font-size: 1.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            border: 1px solid;
-            background: rgba(255,255,255,0.8);
+            color: #2d3748;
+            margin-bottom: 1rem;
         }
 
-        .tag-solver {
-            color: #7c2d12;
-            border-color: rgba(194,65,12,0.25);
-            background: linear-gradient(135deg, rgba(194,65,12,0.1), rgba(234,88,12,0.15));
+        .category-description {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        .tag-discretization {
-            color: #581c87;
-            border-color: rgba(139,92,246,0.25);
-            background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(168,85,247,0.15));
+        .category-methods {
+            font-size: 0.85rem;
+            color: #718096;
+            font-style: italic;
         }
 
-        .tag-gradient {
-            color: #065f46;
-            border-color: rgba(16,185,129,0.25);
-            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(52,211,153,0.15));
+        /* Methods Grid */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .method-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(102, 126, 234, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.06);
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .method-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .method-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.12), 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .method-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-type {
+            font-size: 0.8rem;
+            color: #667eea;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .method-description {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
         }
 
         /* Footer */
         .footer {
-            background: rgba(255,255,255,0.9);
-            border-top: 1px solid rgba(59,130,246,0.1);
-            padding: 1.5rem 0;
+            background: #2d3748;
+            color: white;
             text-align: center;
-            color: #64748b;
-            font-size: 0.75rem;
+            padding: 2rem 0;
+            margin-top: 4rem;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 0.75rem;
-            }
-            
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-            
-            .hero p {
-                font-size: 0.875rem;
-            }
-            
             .nav-tabs {
-                flex-wrap: wrap;
-                gap: 0.25rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .method-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-section {
+                padding: 2rem;
             }
         }
     </style>
@@ -300,504 +377,151 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="turbulence-models.html" class="logo">CFD Handbook</a>
+                <a href="home.html" class="logo">CFD Handbook</a>
                 
                 <!-- Navigation Tabs -->
                 <div class="nav-tabs">
-                    <a href="home.html" class="nav-tab">🏠 Home</a>
-                    <a href="time-dependency.html" class="nav-tab">1. Time Dependency</a>
-                    <a href="turbulence-models.html" class="nav-tab">2. Turbulence Models</a>
-                    <a href="methods.html" class="nav-tab active">3. Methods</a>
+                    <a href="home.html" class="nav-tab">Home</a>
+                    <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
+                    <a href="turbulence-models.html" class="nav-tab">Turbulence Models</a>
+                    <a href="methods.html" class="nav-tab active">Methods</a>
                     <a href="product-guide.html" class="nav-tab">Product Guide</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Numerical Methods in CFD</h1>
-            <p>Comprehensive guide to solver schemes, discretization methods, and gradient calculations</p>
+            <h1>Numerical Methods</h1>
+            <p class="hero-subtitle">Comprehensive guide to CFD numerical methods: solver schemes, discretization techniques, and computational approaches</p>
         </div>
     </section>
 
-    <!-- Solver Comparison Table -->
-    <section class="comparison-section">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: 1.5rem; color: #1e293b; font-size: 1.5rem; font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;">⚖️ Solver Method Comparison</h2>
+    <div class="container">
+        <!-- Featured Categories Section -->
+        <div class="featured-section">
+            <h2 class="featured-title">Method Categories</h2>
+            <p class="featured-subtitle">Core numerical approaches in computational fluid dynamics</p>
             
-            <div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-radius: 1rem; padding: 1.5rem; border: 1px solid rgba(59,130,246,0.1); margin-bottom: 2rem;">
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr style="background: rgba(59,130,246,0.05);">
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #3b82f6;">Solver</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #3b82f6;">Convergence Speed</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #3b82f6;">Memory Usage</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #3b82f6;">Best Application</th>
-                            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59,130,246,0.1); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #3b82f6;">Key Advantage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background: rgba(59,130,246,0.02);">
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);"><strong>SIMPLE</strong></td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Baseline</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Low</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Basic steady flows</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Most robust, well-tested</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);"><strong>SIMPLEC</strong></td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">20-30% faster</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Low</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Complex steady flows</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Better pressure-velocity coupling</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);"><strong>PISO</strong></td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Faster for transient</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Medium</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Unsteady flows</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Multiple pressure corrections</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);"><strong>PIMPLE</strong></td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Good for large Δt</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Medium</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Transient with large time steps</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Combines PISO and SIMPLE</td>
-                        </tr>
-                        <tr style="background: rgba(59,130,246,0.02);">
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);"><strong>Coupled</strong></td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">2-5x faster</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">High</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Complex geometries, research</td>
-                            <td style="padding: 0.75rem; border-bottom: 1px solid rgba(59,130,246,0.1);">Simultaneous solution</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="method-categories">
+                <div class="category-card">
+                    <div class="category-name">Pressure-Velocity Coupling</div>
+                    <div class="category-description">Algorithms for solving the pressure-velocity coupling in incompressible flows</div>
+                    <div class="category-methods">SIMPLE, SIMPLEC, PISO, PIMPLE, Coupled</div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-name">Spatial Discretization</div>
+                    <div class="category-description">Schemes for approximating spatial derivatives and gradients</div>
+                    <div class="category-methods">Central Difference, Upwind, QUICK, MUSCL, TVD, WENO</div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Methods Table -->
-    <section class="methods-section">
-        <div class="container">
-            <table class="models-table">
-                <thead class="table-header">
-                    <tr>
-                        <td class="header-cell" style="width: 14rem;">Method Name</td>
-                        <td class="header-cell">Description & Applications</td>
-                        <td class="header-cell" style="width: 8rem;">Category</td>
-                    </tr>
-                </thead>
+        <!-- All Methods Grid -->
+        <div class="featured-section">
+            <h2 class="featured-title">All Numerical Methods</h2>
+            <p class="featured-subtitle">Click any method to access detailed technical guides</p>
+            
+            <div class="methods-grid">
+                <!-- Pressure-Velocity Coupling Methods -->
+                <div class="method-card" onclick="navigateToMethod('methods/simple.html')">
+                    <div class="method-name">SIMPLE</div>
+                    <div class="method-type">Pressure-Velocity Coupling</div>
+                    <div class="method-description">Semi-Implicit Method for Pressure-Linked Equations. The foundational algorithm for steady-state incompressible flow.</div>
+                </div>
 
-                <!-- SOLVER SCHEMES -->
-                <tr style="background: rgba(194,65,12,0.03); border-top: 2px solid rgba(194,65,12,0.15);">
-                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #7c2d12; font-size: 0.8rem; background: rgba(194,65,12,0.06);">
-                        🔧 SOLVER SCHEMES
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/simplec.html')">
+                    <div class="method-name">SIMPLEC</div>
+                    <div class="method-type">Pressure-Velocity Coupling</div>
+                    <div class="method-description">SIMPLE-Consistent algorithm with improved velocity correction for enhanced convergence.</div>
+                </div>
 
-                <!-- SIMPLE (Most Common) -->
-                <tr class="model-row" onclick="window.location.href='methods/simple.html?v=2024'" style="background: rgba(194,65,12,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/simple.html?v=2024" class="model-name" style="font-size: 1rem;">SIMPLE</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Semi-Implicit Method for Pressure-Linked Equations - Most widely used pressure-velocity coupling - Industry Standard
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-solver">Solver</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/piso.html')">
+                    <div class="method-name">PISO</div>
+                    <div class="method-type">Pressure-Velocity Coupling</div>
+                    <div class="method-description">Pressure-Implicit with Splitting of Operators. Excellent for transient flows and unsteady simulations.</div>
+                </div>
 
-                <!-- SIMPLEC -->
-                <tr class="model-row" onclick="window.location.href='methods/simplec.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/simplec.html?v=2024" class="model-name" style="font-size: 1rem;">SIMPLEC</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        SIMPLE-Consistent - Improved convergence over SIMPLE - Better for complex geometries
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-solver">Solver</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/pimple.html')">
+                    <div class="method-name">PIMPLE</div>
+                    <div class="method-type">Pressure-Velocity Coupling</div>
+                    <div class="method-description">Hybrid PISO-SIMPLE algorithm combining benefits of both approaches for robust transient solutions.</div>
+                </div>
 
-                <!-- PISO -->
-                <tr class="model-row" onclick="window.location.href='methods/piso.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/piso.html?v=2024" class="model-name" style="font-size: 1rem;">PISO</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Pressure-Implicit with Splitting of Operators - Better for transient flows - Multiple corrector steps
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-solver">Solver</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/coupled.html')">
+                    <div class="method-name">Coupled</div>
+                    <div class="method-type">Pressure-Velocity Coupling</div>
+                    <div class="method-description">Simultaneous solution of momentum and continuity equations for optimal convergence.</div>
+                </div>
 
-                <!-- PIMPLE -->
-                <tr class="model-row" onclick="window.location.href='methods/pimple.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/pimple.html?v=2024" class="model-name" style="font-size: 1rem;">PIMPLE</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Merged PISO-SIMPLE algorithm - Combines advantages of both - Good for large time steps
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-solver">Solver</span>
-                    </td>
-                </tr>
+                <!-- Spatial Discretization Methods -->
+                <div class="method-card" onclick="navigateToMethod('methods/central-difference.html')">
+                    <div class="method-name">Central Difference</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Second-order accurate scheme with excellent accuracy for smooth flows but potential stability issues.</div>
+                </div>
 
-                <!-- Coupled -->
-                <tr class="model-row" onclick="window.location.href='methods/coupled.html?v=2024'" style="background: rgba(194,65,12,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/coupled.html?v=2024" class="model-name" style="font-size: 1rem;">Coupled</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Fully coupled pressure-velocity solver - Fastest convergence - High memory requirements - Premium CFD codes
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-solver">Solver</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/first-order-upwind.html')">
+                    <div class="method-name">First-Order Upwind</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Stable but diffusive scheme suitable for initial convergence and robust solutions.</div>
+                </div>
 
-                <!-- DISCRETIZATION SCHEMES -->
-                <tr style="background: rgba(139,92,246,0.03); border-top: 2px solid rgba(139,92,246,0.15);">
-                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #581c87; font-size: 0.8rem; background: rgba(139,92,246,0.06);">
-                        📐 DISCRETIZATION SCHEMES
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/second-order-upwind.html')">
+                    <div class="method-name">Second-Order Upwind</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Improved accuracy over first-order with maintained stability for most engineering applications.</div>
+                </div>
 
-                <!-- First Order Upwind -->
-                <tr class="model-row" onclick="window.location.href='methods/first-order-upwind.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/first-order-upwind.html?v=2024" class="model-name" style="font-size: 1rem;">First Order Upwind</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Simple, stable, highly diffusive - Good for initial convergence - Low accuracy
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/quick.html')">
+                    <div class="method-name">QUICK</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Quadratic Upstream Interpolation for Convective Kinematics. Third-order accuracy with good stability.</div>
+                </div>
 
-                <!-- Second Order Upwind (Most Common) -->
-                <tr class="model-row" onclick="window.location.href='methods/second-order-upwind.html?v=2024'" style="background: rgba(139,92,246,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/second-order-upwind.html?v=2024" class="model-name" style="font-size: 1rem;">Second Order Upwind</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Higher accuracy than first order - Good stability-accuracy balance - Most Common Choice
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/muscl.html')">
+                    <div class="method-name">MUSCL</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Monotonic Upstream-centered Scheme for Conservation Laws. High-resolution with shock-capturing.</div>
+                </div>
 
-                <!-- Central Difference -->
-                <tr class="model-row" onclick="window.location.href='methods/central-difference.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/central-difference.html?v=2024" class="model-name" style="font-size: 1rem;">Central Difference</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Second order accurate, symmetric - Can cause oscillations - Requires fine grids
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
+                <div class="method-card" onclick="navigateToMethod('methods/tvd.html')">
+                    <div class="method-name">TVD</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Total Variation Diminishing schemes ensuring monotonicity and avoiding spurious oscillations.</div>
+                </div>
 
-                <!-- QUICK -->
-                <tr class="model-row" onclick="window.location.href='methods/quick.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/quick.html?v=2024" class="model-name" style="font-size: 1rem;">QUICK</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Quadratic Upstream Interpolation - Third order accuracy - Good for structured grids
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
-
-                <!-- MUSCL -->
-                <tr class="model-row" onclick="window.location.href='methods/muscl.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/muscl.html?v=2024" class="model-name" style="font-size: 1rem;">MUSCL</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Monotonic Upstream-centered Scheme - TVD scheme - Prevents oscillations
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
-
-                <!-- TVD -->
-                <tr class="model-row" onclick="window.location.href='methods/tvd.html?v=2024'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/tvd.html?v=2024" class="model-name" style="font-size: 1rem;">TVD</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Total Variation Diminishing - Prevents spurious oscillations - High accuracy with stability
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
-
-                <!-- WENO -->
-                <tr class="model-row" onclick="window.location.href='methods/weno.html?v=2024b'">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="methods/weno.html?v=2024b" class="model-name" style="font-size: 1rem;">WENO</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Weighted Essentially Non-Oscillatory - Very high order accuracy - Advanced research applications
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-discretization">Discretization</span>
-                    </td>
-                </tr>
-
-                <!-- GRADIENT METHODS -->
-                <tr style="background: rgba(16,185,129,0.03); border-top: 2px solid rgba(16,185,129,0.15);">
-                    <td colspan="3" style="text-align: center; padding: 0.5rem; font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #065f46; font-size: 0.8rem; background: rgba(16,185,129,0.06);">
-                        🟢 GRADIENT METHODS
-                    </td>
-                </tr>
-
-                <!-- Green-Gauss Cell Based (Most Common) -->
-                <tr class="model-row" style="background: rgba(16,185,129,0.02);">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="#" class="model-name" style="font-size: 1rem;">Green-Gauss Cell Based</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Cell-centered gradient calculation - Most Common Default - Good for most applications
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-gradient">Gradient</span>
-                    </td>
-                </tr>
-
-                <!-- Green-Gauss Node Based -->
-                <tr class="model-row">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="#" class="model-name" style="font-size: 1rem;">Green-Gauss Node Based</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Node-based gradient calculation - More accurate on skewed grids - Higher computational cost
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-gradient">Gradient</span>
-                    </td>
-                </tr>
-
-                <!-- Least Squares Cell Based -->
-                <tr class="model-row">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="#" class="model-name" style="font-size: 1rem;">Least Squares Cell Based</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Least squares gradient reconstruction - Good for unstructured grids - Robust for poor quality meshes
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-gradient">Gradient</span>
-                    </td>
-                </tr>
-
-                <!-- Least Squares Node Based -->
-                <tr class="model-row">
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; color: #1e293b;">
-                        <a href="#" class="model-name" style="font-size: 1rem;">Least Squares Node Based</a>
-                    </td>
-                    <td style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06); font-size: 0.875rem; color: #64748b; line-height: 1.4;">
-                        Node-based least squares - Higher accuracy than cell-based - More expensive computation
-                    </td>
-                    <td style="text-align: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,0.06);">
-                        <span class="class-tag tag-gradient">Gradient</span>
-                    </td>
-                </tr>
-            </table>
+                <div class="method-card" onclick="navigateToMethod('methods/weno.html')">
+                    <div class="method-name">WENO</div>
+                    <div class="method-type">Spatial Discretization</div>
+                    <div class="method-description">Weighted Essentially Non-Oscillatory scheme providing high-order accuracy with shock-capturing.</div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p>© 2024 CFD Reference | <span style="font-size: 0.7rem; color: #94a3b8;">Developed By Mert Küplülü</span></p>
-        </div>
+        <p>&copy; 2024 CFD Handbook. All rights reserved.</p>
     </footer>
 
     <script>
-        // Smooth page transitions
-        function smoothTransition(url) {
-            // Add exit animation
-            document.body.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+        // Navigation function for methods
+        function navigateToMethod(methodFile) {
+            // Fade out current page
             document.body.style.opacity = '0';
-            document.body.style.transform = 'translateY(-10px)';
+            document.body.style.transform = 'translateY(20px)';
             
             // Navigate after animation
             setTimeout(() => {
-                window.location.href = url;
+                window.location.href = methodFile;
             }, 300);
         }
 
-        // Add smooth transitions to nav tabs
-        document.querySelectorAll('.nav-tab:not(.active)').forEach(tab => {
-            tab.addEventListener('click', function(e) {
-                e.preventDefault();
-                smoothTransition(this.href);
-            });
-        });
-
-        // Add hover effects with smooth transitions
-        document.querySelectorAll('.model-row').forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
-                this.style.background = 'rgba(59,130,246,0.04)';
-                this.style.transform = 'translateX(6px)';
-                this.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
-            });
-            
-            row.addEventListener('mouseleave', function() {
-                this.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
-                // Reset to original background if it had highlighting
-                if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(194,65,12,0.02)')) {
-                    this.style.background = 'rgba(194,65,12,0.02)';
-                } else if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(139,92,246,0.02)')) {
-                    this.style.background = 'rgba(139,92,246,0.02)';
-                } else if (this.style.backgroundColor && this.style.backgroundColor.includes('rgba(16,185,129,0.02)')) {
-                    this.style.background = 'rgba(16,185,129,0.02)';
-                } else {
-                    this.style.background = 'rgba(255,255,255,0.8)';
-                }
-                this.style.transform = 'translateX(0)';
-                this.style.boxShadow = 'none';
-            });
-        });
-
-        // Page load animation
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.style.opacity = '1';
-            
-            // Stagger animation for table rows
-            const rows = document.querySelectorAll('.model-row');
-            rows.forEach((row, index) => {
-                row.style.opacity = '0';
-                row.style.transform = 'translateY(20px)';
-                row.style.transition = 'all 0.4s ease-out';
-                
-                setTimeout(() => {
-                    row.style.opacity = '1';
-                    row.style.transform = 'translateY(0)';
-                }, 200 + (index * 50));
-            });
-        });
-
-        // Premium Header Scroll Effect
+        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
             if (window.scrollY > 100) {
@@ -807,26 +531,35 @@
             }
         });
 
-        // Smooth Page Transitions
-        function smoothTransition(url) {
-            document.body.style.opacity = '0';
-            document.body.style.transform = 'translateY(-30px)';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 400);
-        }
-
         // Add smooth transitions to navigation
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function(e) {
                 if (!this.classList.contains('active')) {
                     e.preventDefault();
-                    smoothTransition(this.href);
+                    
+                    // Fade out current page
+                    document.body.style.opacity = '0';
+                    document.body.style.transform = 'translateY(20px)';
+                    
+                    // Navigate after animation
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 300);
                 }
             });
         });
 
-        console.log('Numerical Methods page loaded with smooth transitions');
+        // Enhanced card interactions
+        document.querySelectorAll('.method-card, .category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
     </script>
+
 </body>
 </html>
