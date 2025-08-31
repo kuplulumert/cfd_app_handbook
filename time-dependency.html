@@ -229,160 +229,6 @@
             border-left: 4px solid #4299e1;
         }
 
-        /* Content Tabs Styling */
-        .content-tabs {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-            padding: 1.5rem 2rem;
-            margin: 0;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
-        }
-
-        .content-tab {
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            color: #4a5568;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border-radius: 12px;
-            white-space: nowrap;
-            border: none;
-            background: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-
-        .content-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .content-tab:hover::before,
-        .content-tab.active::before {
-            opacity: 1;
-        }
-
-        .content-tab:hover,
-        .content-tab.active {
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
-        }
-
-        .content-tab:first-child {
-            border-left: none;
-        }
-
-        .tab-content {
-            display: none;
-            width: 100%;
-            padding: 0;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Industry Guide Styling */
-        .industry-guide {
-            width: 100%;
-            padding: 2rem 3rem;
-            background: #fafbfc;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .industry-guide h3 {
-            color: #1f2937;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .industry-guide h4 {
-            color: #374151;
-            font-size: 1.2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 2rem 0 1rem 0;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
-        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
-        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
-        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
-        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
-        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
-        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
-        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
-
-        .guide-list {
-            list-style: none;
-        }
-
-        .guide-item {
-            margin: 1rem 0;
-            position: relative;
-        }
-
-        .guide-text {
-            display: block;
-            color: #4a5568;
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-
-        .guide-item::before {
-            content: '→';
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 0.75rem;
-            font-size: 1.1rem;
-        }
-
-        /* Academy Guide Styling */
-        .academy-guide {
-            width: 100%;
-            padding: 2rem 3rem;
-            background: #f8fafc;
-        }
-
-        .academy-guide h3 {
-            color: #1f2937;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .academy-guide h4 {
-            color: #374151;
-            font-size: 1.2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 2rem 0 1rem 0;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
 
 
         .time-section {
@@ -575,214 +421,35 @@
                 <p class="page-subtitle">Understanding steady state and transient flows in CFD</p>
             </div>
 
-            <!-- Content Tabs -->
-            <div class="content-tabs">
-                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
-                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
-            </div>
+            <div class="content-container">
+                <div class="content-wrapper">
 
-            <!-- Industry Guide Tab Content -->
-            <div id="industry" class="tab-content active">
-                <div class="industry-guide">
+            <!-- Featured Approaches Section -->
+            <div class="featured-section guide-overview">
+                <h3>Most Common in CFD</h3>
+                <p style="color: #4a5568; margin-bottom: 2rem; line-height: 1.6;">These two time formulations cover 95% of all CFD simulations in engineering applications.</p>
+                
+                <div class="featured-models">
+                    <div class="featured-card" onclick="navigateToSteadyState()">
+                        <div class="featured-name">Steady State</div>
+                        <div class="featured-description">Time-averaged solution approach. Fast computation with good engineering accuracy for most industrial applications.</div>
+                        <div class="featured-use">Best for</div>
+                        <div class="featured-applications">HVAC analysis, heat exchangers, aerodynamics, and most thermal management applications where time-averaged results are sufficient.</div>
+                    </div>
                     
-                    <!-- Model Overview -->
-                    <div class="guide-section guide-overview">
-                        <h3>1. Steady State Overview</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Time-averaged solution approach</strong> where flow properties do not change with time at any given location.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Industry standard</strong> for most engineering applications requiring fast, reliable results with good accuracy.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Computational efficiency</strong> with significantly reduced solution time compared to transient simulations.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Suitable for <strong>equilibrium flow conditions</strong> where time-averaged results provide sufficient engineering insight.</span>
-                            </li>
-                        </ul>
+                    <div class="featured-card">
+                        <div class="featured-name">Transient (Unsteady)</div>
+                        <div class="featured-description">Time-accurate solution capturing temporal evolution. Essential for time-dependent phenomena and detailed flow physics.</div>
+                        <div class="featured-use">Best for</div>
+                        <div class="featured-applications">Mixing processes, start-up scenarios, oscillating flows, heat-up/cool-down cycles, and any time-critical analysis.</div>
                     </div>
-
-                    <!-- Key Strengths -->
-                    <div class="guide-section guide-strengths">
-                        <h3>2. Key Strengths</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Computational speed:</strong> <strong>5-20x faster</strong> than transient simulations for equivalent mesh resolution.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Robust convergence:</strong> Stable solution process with <strong>predictable convergence behavior</strong>.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Memory efficiency:</strong> <strong>Lower memory requirements</strong> as only current time step data is stored.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Engineering accuracy:</strong> Provides <strong>time-averaged results</strong> sufficient for most design decisions.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Parametric studies:</strong> Ideal for <strong>design optimization</strong> and parameter sweeps requiring many simulations.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Limitations -->
-                    <div class="guide-section guide-limitations">
-                        <h3>3. Limitations</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>No temporal information:</strong> <strong>Cannot capture time-dependent phenomena</strong> or transient behavior.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Periodic flows:</strong> <strong>Averages out oscillatory behavior</strong> that may be critical for some applications.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Start-up conditions:</strong> <strong>Cannot simulate transient start-up</strong> or shut-down processes.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Mixing analysis:</strong> <strong>Limited for time-dependent mixing</strong> where temporal evolution is important.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Ideal Applications -->
-                    <div class="guide-section guide-use-cases">
-                        <h3>4. Ideal Applications</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>HVAC systems:</strong> Room air distribution, ventilation effectiveness, thermal comfort analysis.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Heat exchangers:</strong> Shell-and-tube, plate heat exchangers, cooling tower performance.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Aerodynamics:</strong> Vehicle drag analysis, building wind loads, aircraft cruise conditions.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Industrial processes:</strong> Steady-state chemical reactors, distillation columns, pumps and compressors.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Thermal management:</strong> Electronics cooling, data center airflow, engine cooling systems.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- When to Choose -->
-                    <div class="guide-section guide-choice">
-                        <h3>5. When to Choose Steady State</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Design phase analysis:</strong> When time-averaged performance metrics are sufficient for design decisions.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Parametric studies:</strong> Multiple design iterations where computational speed is critical.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Established operating conditions:</strong> Systems running at steady operating points for extended periods.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Comparative analysis:</strong> Evaluating different design alternatives where relative performance matters more than absolute temporal behavior.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Performance Tips -->
-                    <div class="guide-section guide-tips">
-                        <h3>6. Performance Tips</h3>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Initialization:</strong> Use good initial conditions from simplified analysis or previous similar cases.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Convergence criteria:</strong> Set appropriate residual targets (typically 1e-4 to 1e-6 for most applications).</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Under-relaxation:</strong> Use conservative under-relaxation factors for pressure (0.3) and momentum (0.7) initially.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Mesh quality:</strong> Ensure good mesh quality as steady-state solutions are more sensitive to mesh issues.</span>
-                            </li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
 
-            <!-- Academy Guide Tab Content -->
-            <div id="academy" class="tab-content">
-                <div class="academy-guide">
-                    
-                    <!-- Historical Context and Development -->
-                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
-                        <h3>Historical Context and Mathematical Foundation</h3>
-                        <p class="guide-text">The steady-state assumption in fluid mechanics represents one of the most fundamental simplifications in engineering analysis, tracing its origins to early 19th-century work by Claude-Louis Navier and George Gabriel Stokes. This approach assumes that all flow properties remain constant in time at every spatial location, mathematically expressed as ∂φ/∂t = 0 for any flow variable φ.</p>
-                        
-                        <h4>Mathematical Formulation</h4>
-                        <p class="guide-text">Under the steady-state assumption, the governing Navier-Stokes equations simplify significantly. The continuity equation becomes ∇·(ρV) = 0, while the momentum equation reduces to ρ(V·∇)V = -∇p + μ∇²V + ρg, eliminating the temporal acceleration term ρ∂V/∂t.</p>
-                        
-                        <p class="guide-text">For turbulent flows, the Reynolds-averaged approach yields the steady RANS equations where time-averaged quantities replace instantaneous variables. The Reynolds stresses require additional closure models, typically through the Boussinesq eddy viscosity hypothesis: -ρu'ᵢu'ⱼ = μₜ(∂Uᵢ/∂xⱼ + ∂Uⱼ/∂xᵢ) - (2/3)ρkδᵢⱼ.</p>
-                    </div>
 
-                    <!-- Theoretical Foundations -->
-                    <div class="guide-section guide-overview">
-                        <h3>Theoretical Foundations and Assumptions</h3>
-                        <p class="guide-text">The steady-state approximation rests on several key theoretical foundations that determine its validity and range of applicability in fluid mechanics applications.</p>
-                        
-                        <h4>Time Scale Separation</h4>
-                        <p class="guide-text">The fundamental assumption requires that the characteristic time scales of the flow phenomena of interest are much larger than the turbulent time scales. Mathematically, this demands τ_flow >> τ_turbulent, where τ_turbulent ~ k/ε for RANS models. This separation allows time-averaging without loss of essential physics for engineering applications.</p>
-                        
-                        <h4>Ergodic Hypothesis</h4>
-                        <p class="guide-text">Steady-state RANS solutions implicitly invoke the ergodic hypothesis, assuming that time averages equal ensemble averages for statistically stationary turbulent flows. This assumption enables the replacement of temporal averaging with spatial or ensemble averaging in theoretical analysis.</p>
-                        
-                        <h4>Statistical Stationarity</h4>
-                        <p class="guide-text">The approach requires that the flow statistics (mean velocities, Reynolds stresses, pressure distributions) remain constant in time, even though instantaneous quantities may fluctuate. This condition is satisfied when external forcing conditions and boundary conditions remain time-invariant.</p>
-                    </div>
-
-                    <!-- Advanced Mathematical Concepts -->
-                    <div class="guide-section" style="background: #f8fafc; border-left: 4px solid #3b82f6;">
-                        <h3>Advanced Mathematical Concepts</h3>
-                        
-                        <h4>Reynolds Decomposition and Averaging</h4>
-                        <p class="guide-text">The mathematical foundation relies on Reynolds decomposition: φ = Φ + φ', where Φ represents the time-averaged quantity and φ' the fluctuating component. For steady flows, ∂Φ/∂t = 0, and the averaging operation satisfies linearity: ⟨αφ + βψ⟩ = α⟨φ⟩ + β⟨ψ⟩.</p>
-                        
-                        <h4>Closure Problem and Turbulence Modeling</h4>
-                        <p class="guide-text">The Reynolds averaging procedure introduces additional unknowns (Reynolds stresses) requiring closure models. The steady-state assumption simplifies these closure requirements as temporal correlations vanish, reducing the complexity of second-moment closure models and enabling simpler algebraic approximations.</p>
-                        
-                        <h4>Convergence Theory</h4>
-                        <p class="guide-text">Steady-state solutions represent fixed points of the discretized governing equations. Convergence theory from dynamical systems applies, where the iterative solution process seeks attracting fixed points in the solution space. The absence of temporal terms generally improves convergence characteristics by eliminating time-stepping constraints.</p>
-                    </div>
-
-                    <!-- Computational Aspects -->
-                    <div class="guide-section guide-performance">
-                        <h3>Computational Considerations</h3>
-                        
-                        <h4>Numerical Methods and Algorithms</h4>
-                        <p class="guide-text">Steady-state simulations typically employ pressure-velocity coupling algorithms such as SIMPLE, SIMPLEC, or PISO in steady mode. These methods iterate toward convergence without time-stepping constraints, allowing larger under-relaxation factors and more aggressive convergence acceleration techniques.</p>
-                        
-                        <h4>Multigrid and Acceleration</h4>
-                        <p class="guide-text">The elliptic nature of steady-state equations makes them particularly suitable for multigrid acceleration methods. Algebraic multigrid (AMG) techniques can achieve significant speedup by efficiently handling the long-range coupling characteristic of elliptic systems.</p>
-                        
-                        <h4>Memory and Storage</h4>
-                        <p class="guide-text">Steady-state simulations require storage of only the current solution variables, eliminating the need for temporal history storage required in transient simulations. This advantage becomes significant for large-scale simulations with millions of computational cells.</p>
-                    </div>
-
-                    <!-- Validation and Verification -->
-                    <div class="guide-section" style="background: #ecfdf5; border-left: 4px solid #10b981;">
-                        <h3>Validation and Verification Methodology</h3>
-                        
-                        <h4>Grid Independence Studies</h4>
-                        <p class="guide-text">Steady-state solutions enable systematic grid independence studies without the computational overhead of temporal resolution requirements. The Grid Convergence Index (GCI) method provides quantitative uncertainty estimates for spatial discretization errors.</p>
-                        
-                        <h4>Experimental Comparison</h4>
-                        <p class="guide-text">Validation against experimental data requires careful consideration of experimental conditions. Many wind tunnel and water channel experiments provide time-averaged data that directly corresponds to steady-state CFD predictions, facilitating direct quantitative comparison.</p>
-                        
-                        <h4>Analytical Benchmarks</h4>
-                        <p class="guide-text">Classical analytical solutions (Poiseuille flow, Blasius boundary layer, potential flow) provide exact benchmarks for steady-state CFD validation. These solutions test both the numerical accuracy and the physical modeling assumptions inherent in the steady-state approach.</p>
-                    </div>
 
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -792,27 +459,6 @@
     </footer>
 
     <script>
-        // Tab functionality
-        function showTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            // Hide all tab content
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            
-            // Remove active class from all tabs
-            tablinks = document.getElementsByClassName("content-tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content and mark button as active
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
@@ -840,6 +486,18 @@
                 }
             });
         });
+
+        // Navigation function for steady state
+        function navigateToSteadyState() {
+            // Fade out current page
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = 'steady-state.html';
+            }, 300);
+        }
 
         // Enhanced card interactions
         document.querySelectorAll('.featured-card').forEach(card => {
