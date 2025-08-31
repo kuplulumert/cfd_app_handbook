@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transient (Unsteady) - Technical Guide</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6">        
+
+        </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+        
+    </script>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeInPage 1.2s ease-out forwards;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+                /* Premium Header Navigation */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        }
+
+        .header { min-height: 88px; }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+                .nav-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab:hover::before,
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
+                .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }        \
+
+                .content-tabs {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 1.5rem 2rem;
+            margin: 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
+        }
+
+        .content-tab {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            white-space: nowrap;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .content-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-tab:hover::before,
+        .content-tab.active::before {
+            opacity: 1;
+        }
+
+        .content-tab:hover,
+        .content-tab.active {
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .content-tab:first-child {
+            border-left: none;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Industry Guide Styling */
+        .industry-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            background: #fafbfc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .industry-guide h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .industry-guide h4 {
+            color: #374151;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0 1rem 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .guide-section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-overview { background: #f8faff; border-top: 4px solid #3b82f6; }
+        .guide-strengths { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
+        .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
+        .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
+        .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
+        .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-item {
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .guide-text {
+            display: block;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4b5563;
+            padding-left: 0;
+        }
+
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .guide-emphasis {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
+        }
+
+        /* Academy Guide Styling */
+        .academy-guide {
+            width: 100%;
+            padding: 2rem 3rem;
+            line-height: 1.6;
+        }
+
+        .academy-guide h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .academy-guide h3:first-child {
+            margin-top: 0;
+        }
+
+        .academy-guide h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+            margin: 2.5rem 0 1rem 0;
+            line-height: 1.4;
+        }
+
+        .academy-guide .guide-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .academy-guide .guide-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .academy-guide .guide-list {
+            margin: 1.5rem 0;
+        }
+
+        .academy-guide .guide-item {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation Styling */
+        .equation-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .equation-block .MathJax {
+            font-size: 1.1em;
+        }
+
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+            .logo {
+                font-size: 1.2rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1rem;
+            }
+
+            .guide-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+                    \
+
+            .content-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="header">
+            <div class="header-content">
+                <a href="time-dependency.html" class="logo">CFD Time Dependency</a>
+                <div class="nav-tabs">
+                    <a href="time-dependency.html" class="nav-tab">← Back to Time Dependency</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Transient (Unsteady)</h1>
+                <p class="model-subtitle">Time-accurate solution capturing temporal evolution</p>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" onclick="showTab(event, 'industry')">Industry Guide</button>
+                <button class="content-tab" onclick="showTab(event, 'academy')">Academy Guide</button>
+            </div>
+
+            <!-- Industry Guide Tab Content -->
+            <div id="industry" class="tab-content active">
+                <div class="industry-guide">
+                    
+                    <!-- Model Overview -->
+                    <div class="guide-section guide-overview">
+                        <h3>1. Transient Overview</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time-accurate solution approach</strong> that captures the temporal evolution of flow properties.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Essential for time-dependent phenomena</strong> where temporal behavior is critical to understanding flow physics.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Higher computational cost</strong> but provides complete temporal information for dynamic systems.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Required for <strong>unsteady boundary conditions</strong> and time-varying system behavior.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Key Strengths -->
+                    <div class="guide-section guide-strengths">
+                        <h3>2. Key Strengths</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Temporal accuracy:</strong> Captures <strong>complete time history</strong> of flow development and evolution.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Physical realism:</strong> Represents <strong>actual flow physics</strong> without time-averaging approximations.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Transient phenomena:</strong> Essential for <strong>start-up, shut-down, and periodic processes</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Mixing analysis:</strong> Provides <strong>detailed mixing evolution</strong> and species transport behavior.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Instability capture:</strong> Can identify and analyze <strong>flow instabilities</strong> and oscillatory behavior.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Limitations -->
+                    <div class="guide-section guide-limitations">
+                        <h3>3. Limitations</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational cost:</strong> <strong>5-20x slower</strong> than steady-state simulations for equivalent spatial resolution.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Memory requirements:</strong> <strong>Higher memory usage</strong> for storing temporal history and multiple time levels.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time step constraints:</strong> <strong>CFL stability limits</strong> restrict maximum allowable time steps.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Convergence complexity:</strong> <strong>More complex convergence</strong> criteria involving both spatial and temporal accuracy.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Ideal Applications -->
+                    <div class="guide-section guide-use-cases">
+                        <h3>4. Ideal Applications</h3>
+                        
+                        <h4>Mixing and Mass Transfer</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Chemical reactors:</strong> Batch reactors, mixing tanks, species transport analysis.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Environmental flows:</strong> Pollutant dispersion, atmospheric mixing, ocean currents.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Thermal Transients</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Start-up processes:</strong> Engine warm-up, system initialization, thermal cycling.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Emergency scenarios:</strong> Fire dynamics, cooling system failures, thermal shock analysis.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Oscillatory and Periodic Flows</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Pulsating flows:</strong> Heart pumps, compressor dynamics, acoustic phenomena.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Rotating machinery:</strong> Turbomachinery, wind turbines, propeller analysis.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- When to Choose -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose Transient</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time-dependent boundary conditions:</strong> When inlet conditions, heat sources, or system parameters vary with time.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Temporal phenomena of interest:</strong> When the time evolution itself is the primary concern.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Instability analysis:</strong> When flow stability or transition behavior needs to be captured.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Validation requirements:</strong> When experimental data includes temporal information for comparison.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- What to Avoid -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When to Avoid Transient</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Design optimization:</strong> Multiple design iterations where computational speed is critical.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Steady operating conditions:</strong> Systems at equilibrium where time-averaged results are sufficient.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Parametric studies:</strong> Large parameter sweeps where transient detail is not required.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Preliminary analysis:</strong> Early design phases where computational efficiency is prioritized.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Performance Tips -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Performance Tips</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Time step selection:</strong> Balance accuracy and stability using CFL numbers between 0.5-1.0 for explicit schemes.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Adaptive time stepping:</strong> Use automatic time step adjustment to optimize computational efficiency.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Initialization strategy:</strong> Start from steady-state solution when possible to reduce initial transients.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Convergence monitoring:</strong> Monitor both inner iterations and temporal convergence for each time step.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Common Pitfalls -->
+                    <div class="guide-section guide-pitfalls">
+                        <h3>8. Common Pitfalls</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Insufficient time step resolution:</strong> Using time steps too large to capture important temporal phenomena.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Premature termination:</strong> Stopping simulation before reaching periodic steady state or equilibrium.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Poor temporal discretization:</strong> Using inappropriate time integration schemes for the physics involved.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Inadequate data sampling:</strong> Not collecting sufficient temporal data for statistical analysis.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Academy Guide Tab Content -->
+            <div id="academy" class="tab-content">
+                <div class="academy-guide">
+                    
+                    <!-- Historical Context and Development -->
+                    <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
+                        <h3>Historical Context and Development</h3>
+                        <p class="guide-text">Transient fluid dynamics emerged as a distinct field with the advent of computational methods in the mid-20th century. While the theoretical foundations trace back to Euler (1755) and Navier-Stokes (1822), practical transient CFD became feasible only with the development of finite difference methods by Richardson (1922) and subsequent advances in numerical analysis.</p>
+                        
+                        <h4>Evolution of Transient CFD Methods</h4>
+                        <p class="guide-text">The development of transient CFD paralleled advances in computer technology. Early work by Harlow and Welch (1965) on the MAC (Marker and Cell) method established fundamental approaches for time-dependent incompressible flows. The introduction of the SIMPLE algorithm's transient variant (PISO) by Issa (1986) provided robust pressure-velocity coupling for unsteady flows.</p>
+                        
+                        <p class="guide-text">Modern transient CFD incorporates sophisticated temporal discretization schemes including implicit Euler, Crank-Nicolson, and higher-order Runge-Kutta methods. The development of adaptive time stepping and local time stepping has significantly improved computational efficiency while maintaining temporal accuracy.</p>
+                    </div>
+
+                    <!-- Mathematical Foundation -->
+                    <div class="guide-section guide-overview">
+                        <h3>Mathematical Foundation and Complete Derivation</h3>
+                        <p class="guide-text">Transient CFD retains the full temporal derivatives in the governing equations, preserving the complete physics of time-dependent fluid motion. This mathematical completeness comes at the cost of increased computational complexity and solution requirements.</p>
+                        
+                        <h4>Governing Equations</h4>
+                        <p class="guide-text">For incompressible flow, the full transient continuity equation is:</p>
+                        
+                        <div class="equation-block">
+                            $$\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho\mathbf{V}) = 0$$
+                        </div>
+                        
+                        <p class="guide-text">For incompressible flow (constant density), this simplifies to:</p>
+                        
+                        <div class="equation-block">
+                            $$\nabla \cdot \mathbf{V} = 0$$
+                        </div>
+                        
+                        <p class="guide-text">The full transient momentum equation includes temporal acceleration:</p>
+                        
+                        <div class="equation-block">
+                            $$\rho\frac{\partial \mathbf{V}}{\partial t} + \rho(\mathbf{V} \cdot \nabla)\mathbf{V} = -\nabla p + \mu\nabla^2\mathbf{V} + \rho\mathbf{g}$$
+                        </div>
+                        
+                        <h4>Reynolds-Averaged Transient Formulation</h4>
+                        <p class="guide-text">For turbulent flows, the unsteady RANS (URANS) equations retain temporal derivatives of Reynolds-averaged quantities:</p>
+                        
+                        <div class="equation-block">
+                            $$\rho\frac{\partial \mathbf{U}}{\partial t} + \rho(\mathbf{U} \cdot \nabla)\mathbf{U} = -\nabla P + \nabla \cdot [\mu(\nabla\mathbf{U} + (\nabla\mathbf{U})^T)] + \nabla \cdot (-\rho\overline{\mathbf{u}'\mathbf{u}'}) + \rho\mathbf{G}$$
+                        </div>
+                        
+                        <div class="term-definitions">
+                            <div class="term-item"><strong>∂U/∂t:</strong> Temporal acceleration of Reynolds-averaged velocity</div>
+                            <div class="term-item"><strong>U:</strong> Reynolds-averaged velocity vector</div>
+                            <div class="term-item"><strong>P:</strong> Reynolds-averaged pressure</div>
+                            <div class="term-item"><strong>u'u':</strong> Reynolds stress tensor (may also be time-dependent)</div>
+                        </div>
+                    </div>
+
+                    <!-- Temporal Discretization -->
+                    <div class="guide-section" style="background: #f8fafc; border-left: 4px solid #3b82f6;">
+                        <h3>Temporal Discretization Methods</h3>
+                        
+                        <h4>Explicit Time Integration</h4>
+                        <p class="guide-text">Forward Euler and higher-order explicit schemes provide simple implementation but suffer from stability constraints:</p>
+                        
+                        <div class="equation-block">
+                            $$\frac{\phi^{n+1} - \phi^n}{\Delta t} = f(\phi^n, t^n)$$
+                        </div>
+                        
+                        <p class="guide-text">Stability requires CFL ≤ 1 for most schemes, severely limiting time step size.</p>
+                        
+                        <h4>Implicit Time Integration</h4>
+                        <p class="guide-text">Backward Euler and Crank-Nicolson schemes offer unconditional stability at the cost of solving nonlinear systems:</p>
+                        
+                        <div class="equation-block">
+                            $$\frac{\phi^{n+1} - \phi^n}{\Delta t} = f(\phi^{n+1}, t^{n+1})$$
+                        </div>
+                        
+                        <h4>Higher-Order Methods</h4>
+                        <p class="guide-text">Runge-Kutta and Adams-Bashforth schemes provide superior temporal accuracy for smooth solutions. The choice depends on the balance between accuracy requirements and computational cost constraints.</p>
+                    </div>
+
+                    <!-- Advanced Computational Aspects -->
+                    <div class="guide-section guide-performance">
+                        <h3>Advanced Computational Considerations</h3>
+                        
+                        <h4>Time Step Selection Strategy</h4>
+                        <p class="guide-text">Optimal time step selection balances accuracy and efficiency through multiple criteria:</p>
+                        
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>CFL condition:</strong> Δt ≤ CFL × Δx/|V| for convective stability</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Diffusion constraint:</strong> Δt ≤ Δx²/(2ν) for explicit diffusion schemes</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Physical time scales:</strong> Δt ≤ τ_physics/10 to resolve temporal phenomena</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Adaptive Time Stepping</h4>
+                        <p class="guide-text">Modern transient solvers employ adaptive time stepping based on solution behavior, automatically adjusting time step size to maintain specified accuracy while maximizing computational efficiency. This approach is particularly valuable for problems with multiple time scales.</p>
+                        
+                        <h4>Parallel Implementation</h4>
+                        <p class="guide-text">Transient simulations present unique parallelization challenges due to the sequential nature of time stepping. Domain decomposition remains the primary approach, with recent advances in parallel-in-time methods (Parareal, MGRIT) showing promise for highly parallel architectures.</p>
+                    </div>
+
+                    <!-- Current Research -->
+                    <div class="guide-section" style="background: #ecfdf5; border-left: 4px solid #10b981;">
+                        <h3>Current Research and Future Directions</h3>
+                        
+                        <h4>Machine Learning for Temporal Modeling</h4>
+                        <p class="guide-text">Physics-informed neural networks (PINNs) and neural ordinary differential equations (NODEs) are emerging as powerful tools for transient CFD. These methods can learn temporal dynamics from limited data and provide fast surrogate models for real-time applications.</p>
+                        
+                        <h4>Reduced-Order Modeling</h4>
+                        <p class="guide-text">Proper orthogonal decomposition (POD) and dynamic mode decomposition (DMD) enable efficient reduced-order models for transient flows. These techniques extract dominant temporal modes, enabling real-time simulation of complex transient phenomena.</p>
+                        
+                        <h4>Multi-Scale Time Integration</h4>
+                        <p class="guide-text">Research into multi-scale temporal methods addresses the challenge of systems with widely separated time scales. Techniques include operator splitting, multi-rate methods, and heterogeneous time stepping to efficiently handle multi-physics problems.</p>
+                        
+                        <h4>Quantum Computing Applications</h4>
+                        <p class="guide-text">Emerging quantum algorithms for differential equations show potential for exponential speedup in certain classes of transient CFD problems. While still in early research phases, quantum methods may revolutionize transient simulation for specific applications.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function showTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("content-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+    <script>
+        function navigateToModel(modelFile) {
+            if (modelFile) {
+                window.location.href = modelFile;
+            }
+        }
+
+        function setCurrentModel() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('modelSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentModel);
+    </script>
+
+</body>
+</html>

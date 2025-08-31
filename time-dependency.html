@@ -437,7 +437,7 @@
                         <div class="featured-applications">HVAC analysis, heat exchangers, aerodynamics, and most thermal management applications where time-averaged results are sufficient.</div>
                     </div>
                     
-                    <div class="featured-card">
+                    <div class="featured-card" onclick="navigateToTransient()">
                         <div class="featured-name">Transient (Unsteady)</div>
                         <div class="featured-description">Time-accurate solution capturing temporal evolution. Essential for time-dependent phenomena and detailed flow physics.</div>
                         <div class="featured-use">Best for</div>
@@ -496,6 +496,18 @@
             // Navigate after animation
             setTimeout(() => {
                 window.location.href = 'steady-state.html';
+            }, 300);
+        }
+
+        // Navigation function for transient
+        function navigateToTransient() {
+            // Fade out current page
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = 'transient.html';
             }, 300);
         }
 
