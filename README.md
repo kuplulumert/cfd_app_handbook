@@ -1,4 +1,4 @@
-# Beko CFD AI Agent
+# CFD AI Agent
 
 A comprehensive CFD (Computational Fluid Dynamics) documentation platform designed for professional engineering teams, featuring turbulence model guides, implementation tutorials, and technical references.
 
@@ -179,7 +179,7 @@ Internal use for CFD applications and technical documentation.
 
 ---
 
-**Project**: Beko CFD AI Agent  
+**Project**: CFD AI Agent  
 **Theme**: Sigma Professional v1.0  
 **Optimized For**: Technical CFD Documentation  
 **Last Updated**: December 2025
