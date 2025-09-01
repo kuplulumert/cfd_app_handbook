@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Dependency - CFD Handbook</title>
-    <meta name="description" content="Understanding steady state and transient flows in CFD.">
+    <title>Problem Solver - CFD Handbook</title>
+    <meta name="description" content="Interactive CFD problem solver and analysis tool.">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="2.0">
+    <meta name="version" content="1.0">
     <meta name="last-modified" content="2025-12-19">
     
     <style>
@@ -41,13 +41,6 @@
             max-width: 1400px;
         }
 
-        .content-container {
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 2rem;
-            max-width: 1400px;
-        }
-
         /* Premium Header */
         .header {
             background: rgba(255, 255, 255, 0.95);
@@ -70,9 +63,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .logo {
@@ -144,59 +134,49 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
-        /* Main Content */
-        .main-content {
-            padding: 0;
-        }
-
-        .content-wrapper {
-            padding: 3rem 0;
-        }
-
-        /* Premium Page Header */
-        .page-header {
+        /* Premium Hero Section */
+        .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 6rem 2rem 4rem 2rem;
+            padding: 6rem 0 4rem 0;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .page-header::before {
+        .hero::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
-            pointer-events: none;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="white" stop-opacity=".1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="10" cy="10" r="10" fill="url(%23a)"/><circle cx="30" cy="5" r="8" fill="url(%23a)"/><circle cx="60" cy="15" r="6" fill="url(%23a)"/><circle cx="80" cy="8" r="12" fill="url(%23a)"/></svg>') repeat;
+            opacity: 0.1;
         }
 
-        .page-header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .page-subtitle {
+        .hero-subtitle {
             font-size: 1.25rem;
             opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
             font-weight: 300;
         }
 
         /* Featured Section */
         .featured-section {
-            margin-bottom: 4rem;
-            background: linear-gradient(135deg, #f8faff 0%, #f0f4f8 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #fdfdff 100%);
             border-radius: 16px;
             padding: 3rem;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15), 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 16px rgba(118, 75, 162, 0.08), 0 2px 4px rgba(0, 0, 0, 0.03);
+            margin-bottom: 4rem;
             border: 1px solid rgba(102, 126, 234, 0.1);
             position: relative;
             overflow: hidden;
@@ -216,63 +196,30 @@
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         }
 
-        .guide-section {
-            margin-bottom: 2.5rem;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background: white;
-        }
-
-        .guide-overview {
-            background: #f0f4f8;
-            border-left: 4px solid #4299e1;
-        }
-
-
-
-        .time-section {
-            background: linear-gradient(135deg, #ffffff 0%, #fdfdff 100%);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(118, 75, 162, 0.08), 0 2px 4px rgba(0, 0, 0, 0.03);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(118, 75, 162, 0.05);
-            transition: all 0.3s ease;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2rem;
-        }
-
-        .time-section:hover {
-            box-shadow: 0 8px 24px rgba(118, 75, 162, 0.12), 0 4px 8px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-        }
-
         .featured-title {
-            font-size: 1.25rem;
-            font-weight: 500;
+            font-size: 1.75rem;
+            font-weight: 700;
             color: #2d3748;
             margin-bottom: 1rem;
             text-align: center;
         }
 
         .featured-subtitle {
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: #718096;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .featured-models {
+        /* Problem Categories */
+        .problem-categories {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .featured-card {
+        .category-card {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border: 1px solid rgba(102, 126, 234, 0.08);
             border-radius: 12px;
@@ -284,7 +231,7 @@
             box-shadow: 0 4px 16px rgba(102, 126, 234, 0.08);
         }
 
-        .featured-card::before {
+        .category-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -296,103 +243,66 @@
             transition: transform 0.4s ease;
         }
 
-        .featured-card:hover::before {
+        .category-card:hover::before {
             transform: translateX(0);
         }
 
-        .featured-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(102, 126, 234, 0.2), 0 8px 16px rgba(0, 0, 0, 0.08);
-            border-color: rgba(102, 126, 234, 0.2);
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(102, 126, 234, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
-        .featured-section h3 {
-            color: #2d3748;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin: 0 0 1rem 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none;
-        }
-
-
-
-        .featured-name {
+        .category-name {
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #2d3748;
-            margin-bottom: 0.5rem;
-        }
-
-        .featured-description {
-            font-size: 0.875rem;
-            color: #4a5568;
             margin-bottom: 1rem;
-            line-height: 1.4;
         }
 
-        .featured-use {
-            font-size: 0.75rem;
+        .category-description {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-examples {
+            font-size: 0.85rem;
             color: #718096;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-            font-weight: 500;
-        }
-
-        .featured-applications {
-            font-size: 0.875rem;
-            color: #2d3748;
-        }
-
-
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .content-container {
-                padding: 0 1rem;
-            }
-
-            .header-content {
-                padding: 0 1rem;
-            }
-
-            .content-wrapper {
-                padding: 2rem 0;
-            }
-
-            .page-header {
-                padding: 2rem 1rem;
-            }
-            
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            .featured-models {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .nav-tabs {
-                gap: 1rem;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
+            font-style: italic;
         }
 
         /* Footer */
         .footer {
+            background: #2d3748;
+            color: white;
             text-align: center;
             padding: 2rem 0;
-            color: #a0aec0;
-            font-size: 0.75rem;
-            border-top: 1px solid #e2e8f0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .problem-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-section {
+                padding: 2rem;
+            }
         }
     </style>
 </head>
@@ -405,51 +315,80 @@
             <!-- Navigation Tabs -->
             <div class="nav-tabs">
                 <a href="home.html" class="nav-tab">Home</a>
-                <a href="time-dependency.html" class="nav-tab active">Time Dependency</a>
+                <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
                 <a href="turbulence-models.html" class="nav-tab">Turbulence Models</a>
                 <a href="methods.html" class="nav-tab">Methods</a>
                 <a href="product-guide.html" class="nav-tab">Product Guide</a>
-                <a href="problem-solver.html" class="nav-tab">Problem Solver</a>
+                <a href="problem-solver.html" class="nav-tab active">Problem Solver</a>
             </div>
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Problem Solver</h1>
+            <p class="hero-subtitle">Interactive CFD problem diagnosis and solution recommendations</p>
+        </div>
+    </section>
+
     <div class="container">
-        <div class="main-content">
-            <!-- Page Header -->
-            <div class="page-header">
-                <h1>Time Dependency</h1>
-                <p class="page-subtitle">Understanding steady state and transient flows in CFD</p>
-            </div>
-
-            <div class="content-container">
-                <div class="content-wrapper">
-
-            <!-- Featured Approaches Section -->
-            <div class="featured-section guide-overview">
-                <h3>Most Common in CFD</h3>
-                <p style="color: #4a5568; margin-bottom: 2rem; line-height: 1.6;">These two time formulations cover 95% of all CFD simulations in engineering applications.</p>
+        <!-- Problem Categories Section -->
+        <div class="featured-section">
+            <h2 class="featured-title">CFD Problem Categories</h2>
+            <p class="featured-subtitle">Identify your CFD challenge and get targeted solutions</p>
+            
+            <div class="problem-categories">
+                <div class="category-card">
+                    <div class="category-name">Convergence Issues</div>
+                    <div class="category-description">Solve convergence problems and improve solution stability</div>
+                    <div class="category-examples">Residual oscillations, divergence, slow convergence</div>
+                </div>
                 
-                <div class="featured-models">
-                    <div class="featured-card" onclick="navigateToSteadyState()">
-                        <div class="featured-name">Steady State</div>
-                        <div class="featured-description">Time-averaged solution approach. Fast computation with good engineering accuracy for most industrial applications.</div>
-                        <div class="featured-use">Best for</div>
-                        <div class="featured-applications">HVAC analysis, heat exchangers, aerodynamics, and most thermal management applications where time-averaged results are sufficient.</div>
-                    </div>
-                    
-                    <div class="featured-card" onclick="navigateToTransient()">
-                        <div class="featured-name">Transient (Unsteady)</div>
-                        <div class="featured-description">Time-accurate solution capturing temporal evolution. Essential for time-dependent phenomena and detailed flow physics.</div>
-                        <div class="featured-use">Best for</div>
-                        <div class="featured-applications">Mixing processes, start-up scenarios, oscillating flows, heat-up/cool-down cycles, and any time-critical analysis.</div>
-                    </div>
+                <div class="category-card">
+                    <div class="category-name">Mesh Quality Problems</div>
+                    <div class="category-description">Address mesh-related issues affecting solution accuracy</div>
+                    <div class="category-examples">High skewness, aspect ratio, boundary layer capture</div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-name">Physics Modeling</div>
+                    <div class="category-description">Select appropriate models for your specific physics</div>
+                    <div class="category-examples">Turbulence model selection, heat transfer, multiphase</div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-name">Boundary Conditions</div>
+                    <div class="category-description">Configure proper boundary conditions for accurate results</div>
+                    <div class="category-examples">Inlet/outlet setup, wall treatment, pressure specification</div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-name">Solution Accuracy</div>
+                    <div class="category-description">Improve solution quality and reduce numerical errors</div>
+                    <div class="category-examples">Discretization schemes, time stepping, grid independence</div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-name">Performance Optimization</div>
+                    <div class="category-description">Enhance computational efficiency and reduce solution time</div>
+                    <div class="category-examples">Solver selection, parallel computing, memory optimization</div>
                 </div>
             </div>
+        </div>
 
-
-
-                </div>
+        <!-- Coming Soon Section -->
+        <div class="featured-section">
+            <h2 class="featured-title">Interactive Problem Solver</h2>
+            <p class="featured-subtitle">Advanced diagnostic tool coming soon</p>
+            
+            <div style="text-align: center; padding: 3rem;">
+                <div style="font-size: 4rem; margin-bottom: 2rem; opacity: 0.3;">🚀</div>
+                <h3 style="font-size: 1.5rem; color: #667eea; margin-bottom: 1rem;">Under Development</h3>
+                <p style="color: #718096; max-width: 600px; margin: 0 auto;">
+                    We're building an intelligent CFD problem solver that will provide step-by-step guidance, 
+                    automated diagnostics, and personalized recommendations based on your specific simulation challenges.
+                </p>
             </div>
         </div>
     </div>
@@ -488,42 +427,16 @@
             });
         });
 
-        // Navigation function for steady state
-        function navigateToSteadyState() {
-            // Fade out current page
-            document.body.style.opacity = '0';
-            document.body.style.transform = 'translateY(20px)';
-            
-            // Navigate after animation
-            setTimeout(() => {
-                window.location.href = 'steady-state.html';
-            }, 300);
-        }
-
-        // Navigation function for transient
-        function navigateToTransient() {
-            // Fade out current page
-            document.body.style.opacity = '0';
-            document.body.style.transform = 'translateY(20px)';
-            
-            // Navigate after animation
-            setTimeout(() => {
-                window.location.href = 'transient.html';
-            }, 300);
-        }
-
         // Enhanced card interactions
-        document.querySelectorAll('.featured-card').forEach(card => {
+        document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-8px) scale(1.02)';
             });
             
             card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(-4px) scale(1)';
+                this.style.transform = 'translateY(0) scale(1)';
             });
         });
-
-
     </script>
 
 </body>
