@@ -543,7 +543,7 @@
             <div class="header-content">
                 <a href="../turbulence-models.html" class="logo">CFD Turbulence Models</a>
                 <div class="nav-tabs">
-                    <a href="../turbulence-models.html" class="nav-tab">← Back to Models</a>
+                    <a href="../turbulence-models.html" class="nav-tab" onclick="return handleBackToTurbulenceModels(event)">← Back to Models</a>
                     <div class="model-selector">
                         <select id="modelSelect" class="model-dropdown" onchange="navigateToModel(this.value)">
                             <option value="">Select Model...</option>
@@ -1089,6 +1089,26 @@
             evt.currentTarget.classList.add("active");
         }
     </script>
+
+    
+        // Handle back to turbulence models with visit tracking
+        function handleBackToTurbulenceModels(event) {
+            event.preventDefault();
+            
+            // Save which model was visited
+            sessionStorage.setItem('lastVisitedTurbulenceModel', 'des.html');
+            
+            // Fade out current page
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = '../turbulence-models.html';
+            }, 300);
+            
+            return false;
+        }
 
     <script>
         function navigateToModel(modelFile) {

@@ -694,6 +694,26 @@
         </div>
     </footer>
 
+    
+        // Handle back to turbulence models with visit tracking
+        function handleBackToTurbulenceModels(event) {
+            event.preventDefault();
+            
+            // Save which model was visited
+            sessionStorage.setItem('lastVisitedTurbulenceModel', 'transition-sst.html');
+            
+            // Fade out current page
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = '../turbulence-models.html';
+            }, 300);
+            
+            return false;
+        }
+
     <script>
         function showTab(evt, tabName) {
             var i, tabcontent, tablinks;
