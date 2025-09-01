@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="2.0">
+    <meta name="version" content="3.0">
     <meta name="last-modified" content="2024-12-19">
     
     <style>
@@ -41,6 +41,13 @@
             max-width: 1400px;
         }
 
+        .content-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            max-width: 1400px;
+        }
+
         /* Premium Header */
         .header {
             background: rgba(255, 255, 255, 0.95);
@@ -63,6 +70,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
@@ -134,17 +144,23 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
-        /* Premium Hero Section */
-        .hero {
+        /* Main Content */
+        .main-content {
+            padding: 0;
+        }
+
+        /* Page Header */
+        .page-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 6rem 0 4rem 0;
             text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 0;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
+        .page-header::before {
             content: '';
             position: absolute;
             top: 0;
@@ -155,23 +171,21 @@
             opacity: 0.1;
         }
 
-        .hero h1 {
+        .page-header h1 {
             font-size: 3.5rem;
             font-weight: 800;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero-subtitle {
-            font-size: 1.25rem;
+        .page-subtitle {
+            font-size: 1.5rem;
             opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto 3rem auto;
             font-weight: 300;
         }
 
-        /* Products Section */
-        .products-section {
+        /* Featured Section */
+        .featured-section {
             background: linear-gradient(135deg, #ffffff 0%, #fdfdff 100%);
             border-radius: 16px;
             padding: 3rem;
@@ -186,7 +200,7 @@
             margin-bottom: 4rem;
         }
 
-        .products-section::before {
+        .featured-section::before {
             content: '';
             position: absolute;
             top: 0;
@@ -196,7 +210,7 @@
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         }
 
-        .section-title {
+        .featured-title {
             font-size: 1.75rem;
             font-weight: 700;
             color: #2d3748;
@@ -204,16 +218,78 @@
             text-align: center;
         }
 
-        .section-subtitle {
+        .featured-subtitle {
             font-size: 1rem;
             color: #718096;
             text-align: center;
             margin-bottom: 3rem;
         }
 
+        /* Product Categories */
+        .product-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(102, 126, 234, 0.08);
+            border-radius: 12px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.08);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .category-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(102, 126, 234, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .category-description {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-products {
+            font-size: 0.85rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* Products Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -226,7 +302,7 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.08);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.06);
         }
 
         .product-card::before {
@@ -235,10 +311,10 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
             transform: translateX(-100%);
-            transition: transform 0.4s ease;
+            transition: transform 0.3s ease;
         }
 
         .product-card:hover::before {
@@ -246,8 +322,8 @@
         }
 
         .product-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 16px 32px rgba(102, 126, 234, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.12), 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
         .product-header {
@@ -273,13 +349,9 @@
         }
 
         .product-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: #1e293b;
+            color: #2d3748;
         }
 
         .recommendations {
@@ -310,7 +382,6 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #667eea;
             font-size: 0.9rem;
         }
 
@@ -326,10 +397,6 @@
             font-size: 1rem;
             margin-bottom: 1rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         .flow-characteristics ul {
@@ -370,24 +437,24 @@
                 gap: 1rem;
             }
 
-            .hero h1 {
+            .page-header h1 {
                 font-size: 2.5rem;
             }
 
-            .hero-subtitle {
-                font-size: 1rem;
+            .page-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .product-categories {
+                grid-template-columns: 1fr;
             }
 
             .products-grid {
                 grid-template-columns: 1fr;
             }
 
-            .products-section {
+            .featured-section {
                 padding: 2rem;
-            }
-
-            .product-card {
-                padding: 1.5rem;
             }
         }
     </style>
@@ -395,350 +462,380 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="home.html" class="logo">CFD Handbook</a>
-                
-                <!-- Navigation Tabs -->
-                <div class="nav-tabs">
-                    <a href="home.html" class="nav-tab">Home</a>
-                    <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
-                    <a href="turbulence-models.html" class="nav-tab">Turbulence Models</a>
-                    <a href="methods.html" class="nav-tab">Methods</a>
-                    <a href="product-guide.html" class="nav-tab active">Product Guide</a>
-                </div>
+        <div class="header-content">
+            <a href="home.html" class="logo">CFD Handbook</a>
+            
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <a href="home.html" class="nav-tab">Home</a>
+                <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
+                <a href="turbulence-models.html" class="nav-tab">Turbulence Models</a>
+                <a href="methods.html" class="nav-tab">Methods</a>
+                <a href="product-guide.html" class="nav-tab active">Product Guide</a>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Product Guide</h1>
-            <p class="hero-subtitle">CFD analysis recommendations for home appliances and white goods</p>
-        </div>
-    </section>
-
     <div class="container">
-        <!-- Products Section -->
-        <div class="products-section">
-            <h2 class="section-title">Home Appliance CFD Recommendations</h2>
-            <p class="section-subtitle">Optimized CFD settings for common household appliances</p>
-            
-            <div class="products-grid">
-                <!-- Refrigerator -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">❄️</div>
-                        <div class="product-title">Refrigerator</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ε Standard</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLE</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10³ - 10⁴</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>Natural convection dominated</li>
-                            <li>Low velocity internal flows</li>
-                            <li>Temperature stratification</li>
-                            <li>Buoyancy-driven circulation</li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Product Guide</h1>
+                <p class="page-subtitle">CFD analysis recommendations for home appliances and white goods</p>
+            </div>
 
-                <!-- Washing Machine -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">🌀</div>
-                        <div class="product-title">Washing Machine</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Transient</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ω SST</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">PIMPLE</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10⁴ - 10⁵</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>Highly transient rotating flows</li>
-                            <li>Multiphase water-air interaction</li>
-                            <li>Complex drum geometry</li>
-                            <li>Variable speed and direction</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="content-container">
+                <div class="content-wrapper">
 
-                <!-- Dishwasher -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">🍽️</div>
-                        <div class="product-title">Dishwasher</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ε Standard</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLE</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10³ - 10⁴</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>Spray jet impingement</li>
-                            <li>Complex rack geometries</li>
-                            <li>Heat and mass transfer</li>
-                            <li>Detergent mixing effects</li>
-                        </ul>
-                    </div>
-                </div>
+                    <!-- Featured Categories Section -->
+                    <div class="featured-section">
+                        <h2 class="featured-title">Appliance Categories</h2>
+                        <p class="featured-subtitle">CFD analysis approaches for different appliance types</p>
+                        
+                        <div class="product-categories">
+                            <div class="category-card">
+                                <div class="category-name">Kitchen Appliances</div>
+                                <div class="category-description">Heat transfer and ventilation focused applications</div>
+                                <div class="category-products">Ovens, Microwaves, Cooker Hoods, Dishwashers</div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-name">Cleaning Appliances</div>
+                                <div class="category-description">High velocity flows and suction systems</div>
+                                <div class="category-products">Vacuum Cleaners, Hair Dryers, Steam Cleaners</div>
+                            </div>
 
-                <!-- Vacuum Cleaner -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">🌪️</div>
-                        <div class="product-title">Vacuum Cleaner</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ω SST</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLEC</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10⁴ - 10⁶</span>
+                            <div class="category-card">
+                                <div class="category-name">Climate Control</div>
+                                <div class="category-description">HVAC and thermal management systems</div>
+                                <div class="category-products">Air Conditioners, Refrigerators, Heat Pumps</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>High velocity suction flows</li>
-                            <li>Complex internal geometries</li>
-                            <li>Cyclonic separation effects</li>
-                            <li>Pressure gradients and recirculation</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <!-- Oven -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">🔥</div>
-                        <div class="product-title">Oven</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Transient</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ε Standard</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">PIMPLE</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10³ - 10⁴</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>Strong buoyancy-driven flows</li>
-                            <li>Heat transfer dominated</li>
-                            <li>Time-dependent heating cycles</li>
-                            <li>Natural convection patterns</li>
-                        </ul>
-                    </div>
-                </div>
+                    <!-- All Products Section -->
+                    <div class="featured-section">
+                        <h2 class="featured-title">Detailed Product Recommendations</h2>
+                        <p class="featured-subtitle">Specific CFD settings and approaches for each appliance type</p>
+                        
+                        <div class="products-grid">
+                            <!-- Refrigerator -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">❄️</div>
+                                    <div class="product-title">Refrigerator</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ε Standard</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLE</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10³ - 10⁴</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>Natural convection dominated</li>
+                                        <li>Low velocity internal flows</li>
+                                        <li>Temperature stratification</li>
+                                        <li>Buoyancy-driven circulation</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <!-- Cooker Hood -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">💨</div>
-                        <div class="product-title">Cooker Hood</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ω SST</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLEC</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10⁴ - 10⁵</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>High velocity extraction flows</li>
-                            <li>Grease and particle capture</li>
-                            <li>External aerodynamics</li>
-                            <li>Kitchen environment interaction</li>
-                        </ul>
-                    </div>
-                </div>
+                            <!-- Washing Machine -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">🌀</div>
+                                    <div class="product-title">Washing Machine</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Transient</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ω SST</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">PIMPLE</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10⁴ - 10⁵</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>Highly transient rotating flows</li>
+                                        <li>Multiphase water-air interaction</li>
+                                        <li>Complex drum geometry</li>
+                                        <li>Variable speed and direction</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <!-- Air Conditioner -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">❄️</div>
-                        <div class="product-title">Air Conditioner</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ε Standard</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLE</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10⁴ - 10⁵</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>Room air distribution</li>
-                            <li>Heat exchanger flows</li>
-                            <li>Thermal comfort analysis</li>
-                            <li>Condensate management</li>
-                        </ul>
-                    </div>
-                </div>
+                            <!-- Dishwasher -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">🍽️</div>
+                                    <div class="product-title">Dishwasher</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ε Standard</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLE</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10³ - 10⁴</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>Spray jet impingement</li>
+                                        <li>Complex rack geometries</li>
+                                        <li>Heat and mass transfer</li>
+                                        <li>Detergent mixing effects</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <!-- Hair Dryer -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">💨</div>
-                        <div class="product-title">Hair Dryer</div>
-                    </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">k-ω SST</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLEC</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10⁴ - 10⁵</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>High velocity heated jets</li>
-                            <li>Compact nozzle design</li>
-                            <li>Heat transfer optimization</li>
-                            <li>Noise reduction considerations</li>
-                        </ul>
-                    </div>
-                </div>
+                            <!-- Vacuum Cleaner -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">🌪️</div>
+                                    <div class="product-title">Vacuum Cleaner</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ω SST</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLEC</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10⁴ - 10⁶</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>High velocity suction flows</li>
+                                        <li>Complex internal geometries</li>
+                                        <li>Cyclonic separation effects</li>
+                                        <li>Pressure gradients and recirculation</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <!-- Microwave -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">📡</div>
-                        <div class="product-title">Microwave</div>
+                            <!-- Oven -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">🔥</div>
+                                    <div class="product-title">Oven</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Transient</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ε Standard</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">PIMPLE</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10³ - 10⁴</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>Strong buoyancy-driven flows</li>
+                                        <li>Heat transfer dominated</li>
+                                        <li>Time-dependent heating cycles</li>
+                                        <li>Natural convection patterns</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Cooker Hood -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">💨</div>
+                                    <div class="product-title">Cooker Hood</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ω SST</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLEC</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10⁴ - 10⁵</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>High velocity extraction flows</li>
+                                        <li>Grease and particle capture</li>
+                                        <li>External aerodynamics</li>
+                                        <li>Kitchen environment interaction</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Air Conditioner -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">🌬️</div>
+                                    <div class="product-title">Air Conditioner</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ε Standard</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLE</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10⁴ - 10⁵</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>Room air distribution</li>
+                                        <li>Heat exchanger flows</li>
+                                        <li>Thermal comfort analysis</li>
+                                        <li>Condensate management</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Hair Dryer -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">💨</div>
+                                    <div class="product-title">Hair Dryer</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">k-ω SST</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLEC</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10⁴ - 10⁵</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>High velocity heated jets</li>
+                                        <li>Compact nozzle design</li>
+                                        <li>Heat transfer optimization</li>
+                                        <li>Noise reduction considerations</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Microwave -->
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <div class="product-icon">📡</div>
+                                    <div class="product-title">Microwave</div>
+                                </div>
+                                <div class="recommendations">
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Time Dependency:</span>
+                                        <span class="recommendation-value">Steady State</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Turbulence Model:</span>
+                                        <span class="recommendation-value">Laminar</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Solver Method:</span>
+                                        <span class="recommendation-value">SIMPLE</span>
+                                    </div>
+                                    <div class="recommendation-item">
+                                        <span class="recommendation-label">Typical Re Range:</span>
+                                        <span class="recommendation-value">10² - 10³</span>
+                                    </div>
+                                </div>
+                                <div class="flow-characteristics">
+                                    <h4>🌊 Flow Characteristics</h4>
+                                    <ul>
+                                        <li>Low velocity natural convection</li>
+                                        <li>Electromagnetic heating effects</li>
+                                        <li>Moisture transport</li>
+                                        <li>Ventilation requirements</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Time Dependency:</span>
-                            <span class="recommendation-value">Steady State</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Turbulence Model:</span>
-                            <span class="recommendation-value">Laminar</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Solver Method:</span>
-                            <span class="recommendation-value">SIMPLE</span>
-                        </div>
-                        <div class="recommendation-item">
-                            <span class="recommendation-label">Typical Re Range:</span>
-                            <span class="recommendation-value">10² - 10³</span>
-                        </div>
-                    </div>
-                    <div class="flow-characteristics">
-                        <h4>🌊 Flow Characteristics</h4>
-                        <ul>
-                            <li>Low velocity natural convection</li>
-                            <li>Electromagnetic heating effects</li>
-                            <li>Moisture transport</li>
-                            <li>Ventilation requirements</li>
-                        </ul>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -779,7 +876,7 @@
         });
 
         // Enhanced card interactions
-        document.querySelectorAll('.product-card').forEach(card => {
+        document.querySelectorAll('.product-card, .category-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-8px) scale(1.02)';
             });
