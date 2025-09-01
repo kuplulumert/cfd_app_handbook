@@ -111,6 +111,54 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
+        
+        .model-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .model-dropdown {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            outline: none;
+            min-width: 200px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .model-dropdown:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .model-dropdown option {
+            padding: 0.5rem;
+            background: white;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .model-dropdown option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+
         .container {
             width: 100%;
             margin: 0;
@@ -419,6 +467,23 @@
                 <a href="../methods.html" class="logo">CFD Numerical Methods</a>
                 <div class="nav-tabs">
                     <a href="../methods.html" class="nav-tab">← Back to Methods</a>
+                    <div class="model-selector">
+                        <select id="methodSelect" class="model-dropdown" onchange="navigateToMethod(this.value)">
+                            <option value="">Select Method...</option>
+                            <option value="simple.html">SIMPLE</option>
+                            <option value="simplec.html">SIMPLEC</option>
+                            <option value="piso.html">PISO</option>
+                            <option value="pimple.html">PIMPLE</option>
+                            <option value="coupled.html">Coupled</option>
+                            <option value="central-difference.html">Central Difference</option>
+                            <option value="first-order-upwind.html">First-Order Upwind</option>
+                            <option value="second-order-upwind.html">Second-Order Upwind</option>
+                            <option value="quick.html">QUICK</option>
+                            <option value="muscl.html">MUSCL</option>
+                            <option value="tvd.html">TVD</option>
+                            <option value="weno.html">WENO</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -586,6 +651,30 @@
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
+    </script>
+
+
+    <script>
+        function navigateToMethod(methodFile) {
+            if (methodFile) {
+                window.location.href = methodFile;
+            }
+        }
+
+        function setCurrentMethod() {
+            const currentFile = window.location.pathname.split('/').pop();
+            const dropdown = document.getElementById('methodSelect');
+            if (dropdown) {
+                for (let option of dropdown.options) {
+                    if (option.value === currentFile) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setCurrentMethod);
     </script>
 
 </body>
