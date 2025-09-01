@@ -509,8 +509,33 @@
     </footer>
 
     <script>
-        // Navigation function for methods
+        // Scroll position memory system
+        function saveScrollPosition() {
+            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            sessionStorage.setItem('methodsPageScrollPosition', scrollPosition);
+        }
+
+        function restoreScrollPosition() {
+            const savedPosition = sessionStorage.getItem('methodsPageScrollPosition');
+            if (savedPosition) {
+                // Restore scroll position after page load
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: parseInt(savedPosition),
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        }
+
+        // Navigation function for methods with scroll memory
         function navigateToMethod(methodFile) {
+            // Save current scroll position
+            saveScrollPosition();
+            
+            // Save which method was visited
+            sessionStorage.setItem('lastVisitedMethod', methodFile);
+            
             // Fade out current page
             document.body.style.opacity = '0';
             document.body.style.transform = 'translateY(20px)';
@@ -549,7 +574,7 @@
             });
         });
 
-        // Enhanced card interactions
+        // Enhanced card interactions with scroll memory
         document.querySelectorAll('.method-card, .category-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-8px) scale(1.02)';
@@ -558,6 +583,52 @@
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
+
+            // Add click handler to save scroll position
+            card.addEventListener('click', function() {
+                saveScrollPosition();
+            });
+        });
+
+        // Restore scroll position when page loads
+        window.addEventListener('load', function() {
+            restoreScrollPosition();
+        });
+
+        // Also restore on DOMContentLoaded for faster response
+        document.addEventListener('DOMContentLoaded', function() {
+            restoreScrollPosition();
+            highlightLastVisitedMethod();
+        });
+
+        // Highlight the last visited method
+        function highlightLastVisitedMethod() {
+            const lastVisited = sessionStorage.getItem('lastVisitedMethod');
+            if (lastVisited) {
+                const methodCards = document.querySelectorAll('.method-card');
+                methodCards.forEach(card => {
+                    const onclick = card.getAttribute('onclick');
+                    if (onclick && onclick.includes(lastVisited)) {
+                        card.style.border = '2px solid rgba(102, 126, 234, 0.3)';
+                        card.style.background = 'linear-gradient(135deg, #f8faff 0%, #f0f4f8 100%)';
+                        
+                        // Remove highlight after 3 seconds
+                        setTimeout(() => {
+                            card.style.border = '1px solid rgba(102, 126, 234, 0.08)';
+                            card.style.background = 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)';
+                        }, 3000);
+                    }
+                });
+            }
+        }
+
+        // Clear scroll position when navigating away from methods (to other main sections)
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            if (!tab.href.includes('methods.html')) {
+                tab.addEventListener('click', function() {
+                    sessionStorage.removeItem('methodsPageScrollPosition');
+                });
+            }
         });
     </script>
 

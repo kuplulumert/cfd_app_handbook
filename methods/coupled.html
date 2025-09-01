@@ -510,7 +510,7 @@
             <div class="header-content">
                 <a href="../methods.html" class="logo">CFD Numerical Methods</a>
                 <div class="nav-tabs">
-                    <a href="../methods.html" class="nav-tab">← Back to Methods</a>
+                    <a href="../methods.html" class="nav-tab" onclick="return handleBackToMethods(event)">← Back to Methods</a>
                     <div class="model-selector">
                         <select id="methodSelect" class="model-dropdown" onchange="navigateToMethod(this.value)">
                             <option value="">Select Method...</option>
@@ -827,6 +827,23 @@
         }
     </script>
 
+
+    
+        // Handle back to methods with scroll restoration
+        function handleBackToMethods(event) {
+            event.preventDefault();
+            
+            // Fade out current page
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = '../methods.html';
+            }, 300);
+            
+            return false;
+        }
 
     <script>
         function navigateToMethod(methodFile) {
