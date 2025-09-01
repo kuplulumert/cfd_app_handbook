@@ -422,129 +422,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        /* CFD Explanation Section */
-        .cfd-explanation {
-            max-width: 900px;
-            margin: 3rem auto 0 auto;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 0;
-            box-shadow: 0 0 0 rgba(102, 126, 234, 0);
-            border: 1px solid rgba(102, 126, 234, 0);
-        }
-
-        .cfd-explanation.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.15);
-            border: 1px solid rgba(102, 126, 234, 0.1);
-        }
-
-        .explanation-content {
-            padding: 3rem;
-            text-align: center;
-        }
-
-        .explanation-content h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation-content > p {
-            font-size: 1.1rem;
-            color: #4a5568;
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cfd-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8faff 0%, #f0f4f8 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(102, 126, 234, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
-        }
-
-        .feature-item .feature-icon {
-            font-size: 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .feature-text {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .feature-text strong {
-            font-size: 1.1rem;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-        }
-
-        .feature-text span {
-            font-size: 0.9rem;
-            color: #718096;
-        }
-
-        .explanation-actions {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .explore-link {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            border-radius: 12px;
-            text-decoration: none;
-            color: #667eea;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-        }
-
-        .explore-link:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
-        }
-
         /* Premium Features Section */
         .features {
             padding: 8rem 0;
@@ -999,24 +876,7 @@
                 padding: 2rem 1.5rem;
             }
 
-            /* Responsive CFD Explanation */
-            .cfd-features {
-                grid-template-columns: 1fr;
-            }
 
-            .explanation-actions {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .explanation-content {
-                padding: 2rem;
-            }
-
-            .explanation-content h3 {
-                font-size: 1.5rem;
-            }
         }
 
         /* Advanced Animations */
@@ -1087,46 +947,9 @@
                 <p>Your comprehensive companion for computational fluid dynamics analysis of industrial applications. Experience advanced turbulence models, solver methods, and analysis setup with professional-grade guidance and precision.</p>
                 
                 <div class="cta-buttons">
-                    <button class="cta-button cta-primary" onclick="toggleCFDExplanation()">
-                        What is CFD?
-                    </button>
-                </div>
-
-                <!-- CFD Explanation Section (Initially Hidden) -->
-                <div class="cfd-explanation" id="cfdExplanation">
-                    <div class="explanation-content">
-                        <h3>Computational Fluid Dynamics (CFD)</h3>
-                        <p>CFD is a branch of fluid mechanics that uses numerical analysis and data structures to analyze and solve problems involving fluid flows. It enables engineers to simulate the behavior of fluids, heat transfer, and related phenomena in complex geometries.</p>
-                        
-                        <div class="cfd-features">
-                            <div class="feature-item">
-                                <div class="feature-icon">🌊</div>
-                                <div class="feature-text">
-                                    <strong>Flow Analysis</strong>
-                                    <span>Simulate air and liquid flows in complex geometries</span>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">🔥</div>
-                                <div class="feature-text">
-                                    <strong>Heat Transfer</strong>
-                                    <span>Analyze thermal behavior and temperature distribution</span>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">⚡</div>
-                                <div class="feature-text">
-                                    <strong>Optimization</strong>
-                                    <span>Improve designs for efficiency and performance</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="explanation-actions">
-                            <a href="turbulence-models.html" class="explore-link">Explore Turbulence Models →</a>
-                            <a href="methods.html" class="explore-link">Explore Methods →</a>
-                        </div>
-                    </div>
+                    <a href="turbulence-models.html" class="cta-button cta-primary">
+                        Explore Models
+                    </a>
                 </div>
             </div>
         </div>
@@ -1333,39 +1156,6 @@
                 }
             });
         });
-
-        // Premium CFD Explanation Toggle
-        function toggleCFDExplanation() {
-            const explanation = document.getElementById('cfdExplanation');
-            const button = document.querySelector('.cta-button');
-            
-            if (explanation.classList.contains('show')) {
-                // Hide explanation
-                explanation.classList.remove('show');
-                
-                // Reset button
-                setTimeout(() => {
-                    button.innerHTML = 'What is CFD?';
-                    button.style.background = 'rgba(255, 255, 255, 0.2)';
-                }, 400);
-                
-            } else {
-                // Show explanation with premium animation
-                explanation.classList.add('show');
-                
-                // Update button
-                button.innerHTML = 'Hide Explanation';
-                button.style.background = 'rgba(255, 255, 255, 0.3)';
-                
-                // Add subtle scroll to center the explanation
-                setTimeout(() => {
-                    explanation.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }, 500);
-            }
-        }
 
         console.log('CFD Handbook - Premium Homepage loaded with advanced interactions');
     </script>
