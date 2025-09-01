@@ -416,11 +416,11 @@
             <div id="industry" class="tab-content active">
                 <div class="industry-guide">
                     
-                    <!-- Method Overview -->
+                    <!-- Model Overview -->
                     <div class="guide-section guide-overview">
                         <h3>1. Method Overview</h3>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-text"><strong>Pressure-velocity coupling algorithm</strong> designed specifically for transient flows.</span></li><li class="guide-item"><span class="guide-text"><strong>Multiple pressure corrections</strong> per time step for improved accuracy.</span></li><li class="guide-item"><span class="guide-text"><strong>Transient focus</strong> with excellent performance for unsteady simulations.</span></li><li class="guide-item"><span class="guide-text">Developed by <strong>Issa (1986)</strong> for time-accurate CFD simulations.</span></li>
+                            <li class="guide-item"><span class="guide-text"><strong>Transient pressure-velocity coupling algorithm</strong> designed specifically for time-accurate unsteady flows.</span></li><li class="guide-item"><span class="guide-text"><strong>Multiple pressure corrections</strong> per time step providing superior temporal accuracy over SIMPLE.</span></li><li class="guide-item"><span class="guide-text"><strong>OpenFOAM standard</strong> implemented as the default algorithm in most open-source CFD solvers.</span></li><li class="guide-item"><span class="guide-text">Developed by <strong>Issa (1986)</strong> for high-quality transient simulations with larger time steps.</span></li>
                         </ul>
                     </div>
 
@@ -428,18 +428,59 @@
                     <div class="guide-section guide-strengths">
                         <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-text"><strong>Transient accuracy:</strong> <strong>Superior performance</strong> for time-dependent flows.</span></li><li class="guide-item"><span class="guide-text"><strong>Multiple corrections:</strong> <strong>2-3 pressure corrections</strong> per time step.</span></li><li class="guide-item"><span class="guide-text"><strong>Large time steps:</strong> Allows <strong>larger Δt</strong> than explicit methods.</span></li><li class="guide-item"><span class="guide-text"><strong>OpenFOAM standard:</strong> Default algorithm in <strong>OpenFOAM</strong> solvers.</span></li><li class="guide-item"><span class="guide-text"><strong>Research applications:</strong> Preferred for <strong>academic studies</strong>.</span></li>
+                            <li class="guide-item"><span class="guide-text"><strong>Transient accuracy:</strong> Superior performance for <strong>time-dependent flows</strong> with multiple corrections.</span></li><li class="guide-item"><span class="guide-text"><strong>Large time steps:</strong> Allows <strong>2-5x larger Δt</strong> than explicit methods while maintaining accuracy.</span></li><li class="guide-item"><span class="guide-text"><strong>Pressure corrections:</strong> <strong>2-3 corrections</strong> per time step ensure better mass conservation.</span></li><li class="guide-item"><span class="guide-text"><strong>Unsteady optimization:</strong> Specifically designed for <strong>transient phenomena</strong> and time-critical analysis.</span></li><li class="guide-item"><span class="guide-text"><strong>Research standard:</strong> Preferred choice in <strong>academic and research</strong> applications.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Limitations -->
+                    <div class="guide-section guide-limitations">
+                        <h3>3. Limitations</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item"><span class="guide-text"><strong>Computational cost:</strong> <strong>Higher cost per time step</strong> due to multiple pressure corrections.</span></li><li class="guide-item"><span class="guide-text"><strong>Steady-state inefficiency:</strong> <strong>Overkill for steady flows</strong> where SIMPLE is more efficient.</span></li><li class="guide-item"><span class="guide-text"><strong>Memory requirements:</strong> <strong>Moderate increase</strong> in storage for correction fields.</span></li><li class="guide-item"><span class="guide-text"><strong>Implementation complexity:</strong> More complex than SIMPLE, requiring careful <strong>correction loop management</strong>.</span></li>
                         </ul>
                     </div>
 
                     <!-- Ideal Applications -->
                     <div class="guide-section guide-use-cases">
-                        <h3>3. Ideal Applications</h3>
+                        <h3>4. Ideal Applications</h3>
+                        
+                        <div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Transient Mixing:</strong></span> Species transport, chemical reactors, time-dependent mixing processes</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Oscillatory Flows:</strong></span> Pulsating flows, acoustic phenomena, periodic boundary conditions</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Start-up Processes:</strong></span> System initialization, transient heat-up, flow development</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Unsteady Boundaries:</strong></span> Time-varying inlet conditions, moving boundaries, dynamic systems</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Research Applications:</strong></span> Academic studies requiring high temporal accuracy</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Multiphase Transients:</strong></span> VOF simulations, interface tracking, phase change phenomena</span></div>
+                    </div>
+
+                    <!-- When to Choose -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose PISO Over Other Methods</h3>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-text">Transient mixing and species transport</span></li><li class="guide-item"><span class="guide-text">Oscillatory and pulsating flows</span></li><li class="guide-item"><span class="guide-text">Start-up and shut-down processes</span></li><li class="guide-item"><span class="guide-text">Time-dependent boundary conditions</span></li>
+                            <li class="guide-item"><span class="guide-text"><strong>Time-dependent phenomena:</strong> When temporal accuracy is critical for physical understanding.</span></li><li class="guide-item"><span class="guide-text"><strong>Unsteady boundary conditions:</strong> Time-varying inlets, moving walls, dynamic systems.</span></li><li class="guide-item"><span class="guide-text"><strong>Research requirements:</strong> Academic studies demanding high-fidelity transient solutions.</span></li><li class="guide-item"><span class="guide-text"><strong>Large time step needs:</strong> When computational efficiency requires larger Δt values.</span></li><li class="guide-item"><span class="guide-text"><strong>OpenFOAM preference:</strong> When using open-source solvers optimized for PISO.</span></li>
                         </ul>
                     </div>
-        
+
+                    <!-- When NOT to Use -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use PISO</h3>
+                        <div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Steady-state simulations:</strong></span> Pure steady flows where SIMPLE is more efficient</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Computational budget limits:</strong></span> When speed is more important than transient accuracy</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Simple transients:</strong></span> Basic unsteady flows where SIMPLE transient is sufficient</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Large-scale steady:</strong></span> Massive domains where steady-state results are the goal</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Parametric studies:</strong></span> Multiple design iterations where speed is prioritized</span></div>
+                    </div>
+
+                    <!-- Setup and Guidelines -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Setup and Guidelines</h3>
+                        
+                        <h4>Solver Settings:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item"><span class="guide-text"><strong>Pressure corrections:</strong> Use <strong>2-3 corrector loops</strong> for optimal accuracy-efficiency balance.</span></li><li class="guide-item"><span class="guide-text"><strong>Time step size:</strong> CFL number <strong>< 1.0</strong>, typically <strong>0.5-0.8</strong> for stability.</span></li><li class="guide-item"><span class="guide-text"><strong>Under-relaxation:</strong> Momentum <strong>1.0</strong>, pressure <strong>0.3</strong> for transient stability.</span></li><li class="guide-item"><span class="guide-text"><strong>Convergence criteria:</strong> Residuals <strong>< 10⁻⁵</strong> for high-quality transient solutions.</span></li>
+                        </ul>
+                        
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item"><span class="guide-text"><strong>Time step resolution:</strong> Ensure <strong>Δt resolves</strong> important temporal phenomena.</span></li><li class="guide-item"><span class="guide-text"><strong>CFL constraint:</strong> Maintain <strong>CFL < 1</strong> for numerical stability.</span></li><li class="guide-item"><span class="guide-text"><strong>Spatial resolution:</strong> Adequate mesh to resolve <strong>transient flow features</strong>.</span></li><li class="guide-item"><span class="guide-text"><strong>Boundary layer:</strong> Proper near-wall resolution for unsteady wall effects.</span></li>
+                        </ul>
+                        
+                        <h4>Boundary Conditions:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item"><span class="guide-text"><strong>Transient inlets:</strong> Specify <strong>time-dependent</strong> velocity or pressure profiles.</span></li><li class="guide-item"><span class="guide-text"><strong>Outlet treatment:</strong> Use <strong>zero gradient</strong> or wave-transmissive boundaries.</span></li><li class="guide-item"><span class="guide-text"><strong>Moving boundaries:</strong> Implement <strong>mesh motion</strong> for dynamic geometries.</span></li><li class="guide-item"><span class="guide-text"><strong>Initial conditions:</strong> Proper initialization from <strong>steady-state</strong> or experimental data.</span></li>
+                        </ul>
+                    </div>
+    
                 </div>
             </div>
 
@@ -447,26 +488,56 @@
             <div id="academy" class="tab-content">
                 <div class="academy-guide">
                     
-                    <!-- Historical Context -->
+                    <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The PISO method represents a significant advancement in computational fluid dynamics numerical methods, contributing to the evolution of modern CFD solvers and their practical applications in engineering.</p>
+                        <p class="guide-text">The PISO algorithm was developed by R.I. Issa at Imperial College London in 1986 as a response to the limitations of SIMPLE for transient flows. While SIMPLE excelled at steady-state problems, its single pressure correction per iteration proved inadequate for time-accurate simulations requiring larger time steps.</p>
                         
-                        <h4>Mathematical Foundation</h4>
-                        <p class="guide-text">The theoretical development of PISO addresses fundamental challenges in numerical solution of the Navier-Stokes equations, providing a balance between computational efficiency and solution accuracy.</p>
+                        <h4>Timeline and Evolution</h4>
+                        <p class="guide-text">The development of PISO coincided with the growing need for unsteady CFD simulations in the 1980s. Issa recognized that multiple pressure corrections per time step could dramatically improve temporal accuracy, enabling larger time steps while maintaining solution quality. This breakthrough made practical transient CFD feasible.</p>
+                        
+                        <p class="guide-text">PISO influenced the development of numerous hybrid algorithms including PIMPLE (combining PISO and SIMPLE), PISOC (PISO-Corrected), and various predictor-corrector schemes. The algorithm became the foundation for modern transient CFD solvers, particularly in open-source codes like OpenFOAM.</p>
                     </div>
 
-                    <!-- Technical Implementation -->
+                    <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
-                        <h3>Technical Implementation and Theory</h3>
-                        <p class="guide-text">The PISO method employs sophisticated numerical techniques to achieve reliable and accurate solutions for fluid flow problems.</p>
+                        <h3>Mathematical Foundation and Complete Derivation</h3>
+                        <p class="guide-text">PISO extends the SIMPLE methodology by performing multiple pressure corrections per time step, ensuring better satisfaction of the continuity equation for transient flows with larger time steps.</p>
                         
-                        <h4>Algorithm Structure</h4>
-                        <p class="guide-text">The implementation follows established numerical analysis principles while addressing specific challenges in computational fluid dynamics applications.</p>
+                        <h4>Step 1: Momentum Predictor:</h4>
+                        <div class="equation-block">
+                            $$\frac{\partial \rho \mathbf{u}}{\partial t} + \nabla \cdot (\rho \mathbf{u} \mathbf{u}) = -\nabla p^* + \nabla \cdot \boldsymbol{\tau} + \rho \mathbf{g}$$
+                        </div>
+                        <p class="guide-text">Solve momentum equations using pressure from previous time step</p><h4>Step 2: First Pressure Correction:</h4>
+                        <div class="equation-block">
+                            $$\nabla \cdot \left( \frac{1}{a_p} \nabla p'_1 \right) = \nabla \cdot \mathbf{u}^*$$
+                        </div>
+                        <p class="guide-text">First pressure correction to enforce mass conservation</p><h4>Step 3: Second Pressure Correction:</h4>
+                        <div class="equation-block">
+                            $$\nabla \cdot \left( \frac{1}{a_p} \nabla p'_2 \right) = \nabla \cdot \mathbf{u}^{**}$$
+                        </div>
+                        <p class="guide-text">Second correction for improved temporal accuracy</p>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>nCorrectors</td><td>2-3</td><td>Number of pressure correction loops</td></tr><tr><td>ΔtCFL</td><td><1.0</td><td>Courant-Friedrichs-Lewy number</td></tr><tr><td>αu</td><td>1.0</td><td>Momentum under-relaxation (transient)</td></tr><tr><td>αp</td><td>0.3</td><td>Pressure under-relaxation factor</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
+    
                 </div>
             </div>
+
+        </div>
 
         </div>
     </div>

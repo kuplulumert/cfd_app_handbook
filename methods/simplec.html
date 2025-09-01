@@ -269,8 +269,10 @@
         .guide-limitations { background: #fef2f2; border-top: 4px solid #ef4444; }
         .guide-use-cases { background: #fffbeb; border-top: 4px solid #f59e0b; }
         .guide-choice { background: #f3e8ff; border-top: 4px solid #8b5cf6; }
+        .guide-avoid { background: #fdf2f8; border-top: 4px solid #ec4899; }
         .guide-tips { background: #ecfdf5; border-top: 4px solid #10b981; }
         .guide-performance { background: #f0f9ff; border-top: 4px solid #0ea5e9; }
+        .guide-pitfalls { background: #fef3c7; border-top: 4px solid #d97706; }
 
         .guide-list {
             list-style: none;
@@ -289,12 +291,21 @@
             padding-left: 0;
         }
 
-        .guide-item::before {
-            content: '→';
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 0.75rem;
-            font-size: 1.1rem;
+        .use-case-item, .avoid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+        }
+
+        .guide-emphasis {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #1f2937;
         }
 
         /* Academy Guide Styling */
@@ -360,6 +371,63 @@
             font-size: 1.1em;
         }
 
+        /* Term Definitions */
+        .term-definitions {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .term-item {
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .term-item strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Constants Table */
+        .constants-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .constants-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .constants-table th,
+        .constants-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constants-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #374151;
+        }
+
+        .constants-table td {
+            color: #4b5563;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .logo {
@@ -420,7 +488,18 @@
                     <div class="guide-section guide-overview">
                         <h3>1. Method Overview</h3>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-text"><strong>Enhanced SIMPLE algorithm</strong> with improved velocity correction for better convergence.</span></li><li class="guide-item"><span class="guide-text"><strong>Consistent formulation</strong> that addresses momentum-pressure coupling limitations of standard SIMPLE.</span></li><li class="guide-item"><span class="guide-text"><strong>Industry adoption</strong> in commercial codes for improved steady-state performance.</span></li><li class="guide-item"><span class="guide-text">Developed by <strong>Van Doormaal and Raithby (1984)</strong> as an improvement to SIMPLE.</span></li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Enhanced SIMPLE algorithm</strong> with improved velocity correction for better momentum-pressure coupling.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Consistent formulation</strong> addressing the omitted terms in standard SIMPLE velocity correction.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Industry adoption</strong> in commercial codes for improved steady-state convergence performance.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text">Developed by <strong>Van Doormaal and Raithby (1984)</strong> as a systematic improvement to SIMPLE.</span>
+                            </li>
                         </ul>
                     </div>
 
@@ -428,18 +507,162 @@
                     <div class="guide-section guide-strengths">
                         <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-text"><strong>Faster convergence:</strong> <strong>20-30% improvement</strong> over standard SIMPLE.</span></li><li class="guide-item"><span class="guide-text"><strong>Better coupling:</strong> Improved <strong>momentum-pressure consistency</strong>.</span></li><li class="guide-item"><span class="guide-text"><strong>Higher under-relaxation:</strong> Can use <strong>momentum factors up to 0.8-0.9</strong>.</span></li><li class="guide-item"><span class="guide-text"><strong>Robust performance:</strong> Maintains SIMPLE stability with enhanced speed.</span></li><li class="guide-item"><span class="guide-text"><strong>Easy implementation:</strong> <strong>Minimal code changes</strong> from SIMPLE.</span></li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Faster convergence:</strong> Typically <strong>20-30% improvement</strong> over standard SIMPLE for most applications.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Better coupling:</strong> Improved <strong>momentum-pressure consistency</strong> through enhanced velocity correction.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Higher under-relaxation:</strong> Can use <strong>momentum factors up to 0.8-0.9</strong> compared to SIMPLE's 0.7.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Robust performance:</strong> Maintains SIMPLE's stability while providing enhanced convergence speed.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Easy implementation:</strong> <strong>Minimal code changes</strong> from SIMPLE, making adoption straightforward.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Limitations -->
+                    <div class="guide-section guide-limitations">
+                        <h3>3. Limitations</h3>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Incremental improvement:</strong> <strong>Not dramatically faster</strong> than SIMPLE, still slower than coupled methods.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Transient limitations:</strong> <strong>Same issues as SIMPLE</strong> for highly unsteady flows.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Memory overhead:</strong> <strong>Slightly higher storage</strong> requirements for improved velocity correction.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Complex coupling:</strong> Still struggles with <strong>very strong pressure-velocity coupling</strong> scenarios.</span>
+                            </li>
                         </ul>
                     </div>
 
                     <!-- Ideal Applications -->
                     <div class="guide-section guide-use-cases">
-                        <h3>3. Ideal Applications</h3>
+                        <h3>4. Ideal Applications</h3>
+                        
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">All SIMPLE Applications:</span> Direct replacement for SIMPLE with improved performance</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Complex Geometries:</span> Better handling of complex flow passages and geometries</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Design Optimization:</span> Parametric studies where faster convergence saves significant time</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Industrial CFD:</span> Manufacturing and process applications requiring reliable convergence</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Heat Transfer:</span> Conjugate heat transfer problems with moderate coupling</span>
+                        </div>
+                        <div class="use-case-item">
+                            <span class="guide-text"><span class="guide-emphasis">Educational Enhancement:</span> Teaching improved pressure-velocity coupling concepts</span>
+                        </div>
+                    </div>
+
+                    <!-- When to Choose SIMPLEC Over Other Methods -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose SIMPLEC Over Other Methods</h3>
                         <ul class="guide-list">
-                            <li class="guide-item"><span class="guide-text">All SIMPLE applications with improved performance</span></li><li class="guide-item"><span class="guide-text">Complex geometries requiring faster convergence</span></li><li class="guide-item"><span class="guide-text">Industrial design optimization studies</span></li><li class="guide-item"><span class="guide-text">Parametric analyses with time constraints</span></li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>SIMPLE replacement:</strong> When using SIMPLE but needing faster convergence without major changes.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Moderate complexity:</strong> Geometries more complex than simple channels but not requiring coupled solvers.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Computational efficiency:</strong> When memory constraints prevent using coupled methods.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Legacy code upgrade:</strong> Improving existing SIMPLE-based solvers with minimal effort.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Parametric studies:</strong> Multiple design iterations where convergence speed matters.</span>
+                            </li>
                         </ul>
                     </div>
-        
+
+                    <!-- When NOT to Use SIMPLEC -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use SIMPLEC</h3>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Highly transient flows:</span> Use PISO or PIMPLE for time-accurate simulations</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Strong coupling scenarios:</span> Natural convection with very high Rayleigh numbers</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Research accuracy needs:</span> When coupled solvers provide necessary precision</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Simple geometries:</span> SIMPLE may be sufficient for basic pipe/channel flows</span>
+                        </div>
+                        <div class="avoid-item">
+                            <span class="guide-text"><span class="guide-emphasis">Memory abundance:</span> When coupled solvers are feasible and provide better performance</span>
+                        </div>
+                    </div>
+
+                    <!-- Setup and Guidelines -->
+                    <div class="guide-section guide-tips">
+                        <h3>7. Setup and Guidelines</h3>
+                        
+                        <h4>Solver Settings:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Under-relaxation factors:</strong> Pressure <strong>0.3</strong>, Momentum <strong>0.8-0.9</strong>, higher than SIMPLE.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Discretization:</strong> <strong>Second-order upwind</strong> for momentum, <strong>PRESTO!</strong> for pressure.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁴</strong>, monitor mass flow balance for validation.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Initialization:</strong> Use <strong>SIMPLE results</strong> or potential flow for better starting point.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Quality standards:</strong> Same as SIMPLE, <strong>skewness < 0.95</strong>, aspect ratio <strong>< 100</strong>.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Refinement strategy:</strong> Focus on <strong>pressure gradient regions</strong> for optimal performance.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.3</strong> in critical flow regions, can be relaxed elsewhere.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Boundary layers:</strong> Adequate resolution for wall functions or low-Re models.</span>
+                            </li>
+                        </ul>
+                        
+                        <h4>Boundary Conditions:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Inlet specification:</strong> <strong>Velocity inlet</strong> or <strong>mass flow inlet</strong> with proper profiles.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Outlet treatment:</strong> <strong>Pressure outlet</strong> for better pressure-velocity coupling.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Wall conditions:</strong> <strong>No-slip walls</strong> with appropriate wall function treatment.</span>
+                            </li>
+                            <li class="guide-item">
+                                <span class="guide-text"><strong>Reference pressure:</strong> Set <strong>reference pressure point</strong> for closed domains.</span>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
 
@@ -447,22 +670,104 @@
             <div id="academy" class="tab-content">
                 <div class="academy-guide">
                     
-                    <!-- Historical Context -->
+                    <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The SIMPLEC method represents a significant advancement in computational fluid dynamics numerical methods, contributing to the evolution of modern CFD solvers and their practical applications in engineering.</p>
+                        <p class="guide-text">The SIMPLEC algorithm was developed by J.P. Van Doormaal and G.D. Raithby at the University of Waterloo in 1984 as a systematic improvement to the SIMPLE algorithm. The development addressed a fundamental inconsistency in SIMPLE's velocity correction formula, which omitted certain terms that could improve convergence behavior.</p>
                         
-                        <h4>Mathematical Foundation</h4>
-                        <p class="guide-text">The theoretical development of SIMPLEC addresses fundamental challenges in numerical solution of the Navier-Stokes equations, providing a balance between computational efficiency and solution accuracy.</p>
+                        <h4>The Consistency Problem</h4>
+                        <p class="guide-text">Van Doormaal and Raithby identified that SIMPLE's velocity correction formula neglected neighbor contributions in the velocity correction step. This omission, while maintaining stability, resulted in slower convergence than theoretically possible. SIMPLEC addressed this by including previously omitted terms in a consistent manner.</p>
+                        
+                        <p class="guide-text">The development of SIMPLEC marked an important milestone in segregated solver evolution, demonstrating that systematic analysis of existing algorithms could yield significant improvements without fundamental algorithmic changes. This approach influenced subsequent developments in pressure-velocity coupling methods.</p>
                     </div>
 
-                    <!-- Technical Implementation -->
+                    <!-- Mathematical Foundation and Complete Derivation -->
                     <div class="guide-section guide-overview">
-                        <h3>Technical Implementation and Theory</h3>
-                        <p class="guide-text">The SIMPLEC method employs sophisticated numerical techniques to achieve reliable and accurate solutions for fluid flow problems.</p>
+                        <h3>Mathematical Foundation and Complete Derivation</h3>
+                        <p class="guide-text">SIMPLEC modifies the SIMPLE velocity correction formula to include previously omitted neighbor contributions, resulting in improved momentum-pressure coupling and faster convergence.</p>
                         
-                        <h4>Algorithm Structure</h4>
-                        <p class="guide-text">The implementation follows established numerical analysis principles while addressing specific challenges in computational fluid dynamics applications.</p>
+                        <h4>Standard SIMPLE Velocity Correction:</h4>
+                        <div class="equation-block">
+                            $$\mathbf{u}^{n+1} = \mathbf{u}^* - \frac{1}{a_p}\nabla p'$$
+                        </div>
+                        <p class="guide-text">SIMPLE omits neighbor velocity corrections, leading to inconsistent momentum-pressure coupling.</p>
+                        
+                        <h4>SIMPLEC Velocity Correction:</h4>
+                        <div class="equation-block">
+                            $$\mathbf{u}^{n+1} = \mathbf{u}^* - \frac{1}{a_p - \sum a_{nb}}\nabla p'$$
+                        </div>
+                        <p class="guide-text">SIMPLEC includes neighbor coefficients in the denominator, providing more consistent coupling.</p>
+                        
+                        <h4>Pressure Correction Equation:</h4>
+                        <div class="equation-block">
+                            $$\nabla \cdot \left( \frac{\rho}{a_p - \sum a_{nb}} \nabla p' \right) = \nabla \cdot (\rho \mathbf{u}^*)$$
+                        </div>
+                        <p class="guide-text">The pressure correction equation is modified accordingly to maintain consistency.</p>
+                        
+                        <div class="term-definitions">
+                            <h4>Variable Definitions:</h4>
+                            <div class="term-item"><strong>ap:</strong> Diagonal coefficient in momentum equation</div>
+                            <div class="term-item"><strong>anb:</strong> Neighbor coefficients in momentum equation</div>
+                            <div class="term-item"><strong>p':</strong> Pressure correction field</div>
+                            <div class="term-item"><strong>u*:</strong> Predicted velocity field</div>
+                        </div>
+                        
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Typical Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>αp</td>
+                                        <td>0.3</td>
+                                        <td>Pressure under-relaxation factor</td>
+                                    </tr>
+                                    <tr>
+                                        <td>αu</td>
+                                        <td>0.8-0.9</td>
+                                        <td>Enhanced momentum under-relaxation</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Convergence</td>
+                                        <td>20-30% faster</td>
+                                        <td>Typical improvement over SIMPLE</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Theoretical Analysis and Convergence -->
+                    <div class="guide-section" style="background: #f8fafc; border-left: 4px solid #3b82f6;">
+                        <h3>Theoretical Analysis and Convergence Behavior</h3>
+                        
+                        <h4>Consistency Analysis</h4>
+                        <p class="guide-text">The key insight of SIMPLEC lies in recognizing that the SIMPLE velocity correction formula is inconsistent with the momentum equation discretization. By including neighbor contributions that were previously omitted, SIMPLEC achieves better momentum-pressure coupling.</p>
+                        
+                        <h4>Convergence Characteristics</h4>
+                        <p class="guide-text">SIMPLEC typically demonstrates 20-30% faster convergence than SIMPLE due to the improved velocity correction formula. The algorithm maintains the stability characteristics of SIMPLE while enabling higher under-relaxation factors for momentum equations.</p>
+                        
+                        <h4>Spectral Analysis</h4>
+                        <p class="guide-text">Fourier analysis of SIMPLEC shows improved damping of high-frequency errors compared to SIMPLE, resulting in more efficient error reduction per iteration. The enhanced coupling reduces the spectral radius of the iteration matrix, leading to faster convergence.</p>
+                    </div>
+
+                    <!-- Implementation and Practical Considerations -->
+                    <div class="guide-section guide-performance">
+                        <h3>Implementation and Practical Considerations</h3>
+                        
+                        <h4>Computational Overhead</h4>
+                        <p class="guide-text">SIMPLEC requires minimal additional computational effort compared to SIMPLE. The main overhead comes from computing and storing the neighbor coefficient sums, which typically adds less than 5% to the total computational cost per iteration.</p>
+                        
+                        <h4>Memory Requirements</h4>
+                        <p class="guide-text">Memory requirements are slightly higher than SIMPLE due to the need to store additional coefficient information. However, this increase is typically less than 10% and is easily justified by the convergence improvement.</p>
+                        
+                        <h4>Numerical Stability</h4>
+                        <p class="guide-text">SIMPLEC maintains the robust stability characteristics of SIMPLE while allowing higher momentum under-relaxation factors. The algorithm is particularly effective for problems with moderate pressure-velocity coupling strength.</p>
                     </div>
 
                 </div>

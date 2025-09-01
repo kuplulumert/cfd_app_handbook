@@ -448,22 +448,11 @@
             <div id="industry" class="tab-content active">
                 <div class="industry-guide">
                     
-                    <!-- Method Overview -->
+                    <!-- Model Overview -->
                     <div class="guide-section guide-overview">
                         <h3>1. Method Overview</h3>
                         <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Pressure-velocity coupling algorithm</strong> for incompressible flow using predictor-corrector approach.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Industry standard</strong> implemented in every major commercial CFD software package.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Steady-state focus</strong> with robust convergence characteristics for engineering applications.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text">Developed by <strong>Patankar and Spalding (1972)</strong> as the foundational CFD algorithm.</span>
-                            </li>
+                            <li class="guide-item"><span class="guide-text"><strong>Segregated pressure-velocity coupling algorithm</strong> for incompressible flows using predictor-corrector approach.</span></li><li class="guide-item"><span class="guide-text"><strong>Industry standard</strong> implemented in every major commercial CFD solver with proven reliability.</span></li><li class="guide-item"><span class="guide-text"><strong>Sequential solution approach</strong> solving momentum and pressure correction equations separately.</span></li><li class="guide-item"><span class="guide-text">Developed by <strong>Patankar and Spalding (1972)</strong> as the foundational CFD algorithm for engineering applications.</span></li>
                         </ul>
                     </div>
 
@@ -471,21 +460,7 @@
                     <div class="guide-section guide-strengths">
                         <h3>2. Key Strengths</h3>
                         <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Robust convergence:</strong> Stable and reliable for <strong>wide range of flow conditions</strong>.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Low memory usage:</strong> <strong>Minimal storage requirements</strong> compared to coupled solvers.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Universal availability:</strong> Standard implementation in <strong>all commercial CFD codes</strong>.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Well-documented:</strong> <strong>50+ years</strong> of validation and industrial experience.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Engineering accuracy:</strong> Provides <strong>1-5% accuracy</strong> sufficient for most design applications.</span>
-                            </li>
+                            <li class="guide-item"><span class="guide-text"><strong>Computational efficiency:</strong> Low memory requirements, <strong>40-60% less memory</strong> than coupled solvers.</span></li><li class="guide-item"><span class="guide-text"><strong>Robust convergence:</strong> Stable and predictable across <strong>wide range of flow conditions</strong>.</span></li><li class="guide-item"><span class="guide-text"><strong>Universal availability:</strong> Standard implementation in <strong>all commercial CFD packages</strong>.</span></li><li class="guide-item"><span class="guide-text"><strong>Extensive validation:</strong> <strong>50+ years</strong> of industrial validation across diverse applications.</span></li><li class="guide-item"><span class="guide-text"><strong>Simple implementation:</strong> Straightforward coding and <strong>easy to understand</strong> algorithm structure.</span></li>
                         </ul>
                     </div>
 
@@ -493,18 +468,7 @@
                     <div class="guide-section guide-limitations">
                         <h3>3. Limitations</h3>
                         <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Convergence speed:</strong> <strong>Slower than coupled methods</strong> for complex geometries.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Transient limitations:</strong> <strong>Poor performance for highly unsteady flows</strong>.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Under-relaxation sensitivity:</strong> Requires <strong>careful tuning</strong> of relaxation factors.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Strong coupling issues:</strong> Struggles with <strong>high Rayleigh number</strong> natural convection.</span>
-                            </li>
+                            <li class="guide-item"><span class="guide-text"><strong>Convergence speed:</strong> <strong>Slower than coupled methods</strong> for complex geometries and strong coupling.</span></li><li class="guide-item"><span class="guide-text"><strong>Under-relaxation dependency:</strong> <strong>Requires careful tuning</strong> of relaxation factors for stability.</span></li><li class="guide-item"><span class="guide-text"><strong>Transient limitations:</strong> <strong>Poor performance for highly unsteady flows</strong> compared to PISO.</span></li><li class="guide-item"><span class="guide-text"><strong>Strong coupling issues:</strong> Struggles with <strong>high Rayleigh number</strong> natural convection flows.</span></li>
                         </ul>
                     </div>
 
@@ -512,102 +476,43 @@
                     <div class="guide-section guide-use-cases">
                         <h3>4. Ideal Applications</h3>
                         
-                        <h4>HVAC and Building Systems</h4>
+                        <div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Steady Internal Flows:</strong></span> Pipe networks, ducts, heat exchangers with established flow patterns</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>HVAC Systems:</strong></span> Room air distribution, ventilation design, thermal comfort analysis</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Preliminary Design:</strong></span> Early-stage analysis where computational speed is prioritized</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Large Domains:</strong></span> External flows around buildings, urban environments</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Simple Geometries:</strong></span> Straight channels, pipes without complex flow separation</span></div><div class="use-case-item"><span class="guide-text"><span class="guide-emphasis"><strong>Educational Use:</strong></span> Teaching fundamental CFD concepts and pressure-velocity coupling</span></div>
+                    </div>
+
+                    <!-- When to Choose -->
+                    <div class="guide-section guide-choice">
+                        <h3>5. When to Choose SIMPLE Over Other Methods</h3>
                         <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Room airflow:</strong> Ventilation design, thermal comfort, air distribution analysis.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>HVAC equipment:</strong> Heat exchangers, cooling coils, air handling units.</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>Industrial Process Equipment</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Heat exchangers:</strong> Shell-and-tube, plate exchangers, thermal performance optimization.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Mixing vessels:</strong> Steady-state mixing, reactor design, flow pattern analysis.</span>
-                            </li>
-                        </ul>
-                        
-                        <h4>External Aerodynamics</h4>
-                        <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Vehicle design:</strong> Drag analysis, pressure distribution, flow separation studies.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Building aerodynamics:</strong> Wind loads, pedestrian comfort, natural ventilation.</span>
-                            </li>
+                            <li class="guide-item"><span class="guide-text"><strong>Computational budget constraints:</strong> When memory and speed are more important than convergence rate.</span></li><li class="guide-item"><span class="guide-text"><strong>Steady-state simulations:</strong> Primary application domain with minimal transient effects.</span></li><li class="guide-item"><span class="guide-text"><strong>Simple geometries:</strong> Straight ducts, pipes, and channels without complex flow features.</span></li><li class="guide-item"><span class="guide-text"><strong>Engineering accuracy:</strong> When 1-5% accuracy is sufficient for design decisions.</span></li><li class="guide-item"><span class="guide-text"><strong>Legacy compatibility:</strong> When consistency with historical simulation data is required.</span></li>
                         </ul>
                     </div>
 
-                    <!-- Performance Tips -->
+                    <!-- When NOT to Use -->
+                    <div class="guide-section guide-avoid">
+                        <h3>6. When NOT to Use SIMPLE</h3>
+                        <div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Highly transient flows:</strong></span> Unsteady mixing, oscillating flows, start-up processes</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Strong pressure-velocity coupling:</strong></span> Natural convection with high Rayleigh numbers</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Complex multiphase:</strong></span> VOF simulations with high density ratios</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Research accuracy needs:</strong></span> When precision < 0.1% error is required</span></div><div class="avoid-item"><span class="guide-text"><span class="guide-emphasis"><strong>Poor mesh quality:</strong></span> High skewness, aspect ratios > 100, non-orthogonal meshes</span></div>
+                    </div>
+
+                    <!-- Setup and Guidelines -->
                     <div class="guide-section guide-tips">
-                        <h3>5. Performance Tips</h3>
+                        <h3>7. Setup and Guidelines</h3>
+                        
+                        <h4>Solver Settings:</h4>
                         <ul class="guide-list">
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Under-relaxation factors:</strong> Start with pressure (0.3) and momentum (0.7), adjust based on convergence.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Initialization:</strong> Use potential flow or previous solution for better initial guess.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Mesh quality:</strong> Maintain aspect ratios < 100 and skewness < 0.95 for optimal performance.</span>
-                            </li>
-                            <li class="guide-item">
-                                <span class="guide-text"><strong>Convergence criteria:</strong> Monitor residuals (1e-4 to 1e-6) and key performance parameters.</span>
-                            </li>
+                            <li class="guide-item"><span class="guide-text"><strong>Under-relaxation factors:</strong> Pressure <strong>0.3</strong>, Momentum <strong>0.7</strong>, conservative starting values.</span></li><li class="guide-item"><span class="guide-text"><strong>Discretization:</strong> <strong>Second-order upwind</strong> for momentum, <strong>PRESTO!</strong> for pressure.</span></li><li class="guide-item"><span class="guide-text"><strong>Convergence:</strong> Residuals <strong>< 10⁻⁴</strong> typically adequate for engineering accuracy.</span></li><li class="guide-item"><span class="guide-text"><strong>Initialization:</strong> Use <strong>potential flow</strong> or previous solution for better starting point.</span></li>
+                        </ul>
+                        
+                        <h4>Mesh Requirements:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item"><span class="guide-text"><strong>Aspect ratio:</strong> Keep <strong>< 100</strong> in core flow regions for optimal convergence.</span></li><li class="guide-item"><span class="guide-text"><strong>Skewness:</strong> Maintain <strong>< 0.95</strong> for stable pressure correction equation.</span></li><li class="guide-item"><span class="guide-text"><strong>Growth ratio:</strong> <strong>< 1.3</strong> preferred, especially in pressure gradient regions.</span></li><li class="guide-item"><span class="guide-text"><strong>Domain size:</strong> Ensure adequate outlet distance for pressure boundary conditions.</span></li>
+                        </ul>
+                        
+                        <h4>Boundary Conditions:</h4>
+                        <ul class="guide-list">
+                            <li class="guide-item"><span class="guide-text"><strong>Inlet conditions:</strong> Specify <strong>velocity</strong> or <strong>mass flow rate</strong> with appropriate profiles.</span></li><li class="guide-item"><span class="guide-text"><strong>Outlet conditions:</strong> Use <strong>pressure outlet</strong> for better pressure-velocity coupling.</span></li><li class="guide-item"><span class="guide-text"><strong>Wall treatment:</strong> <strong>No-slip conditions</strong> with appropriate wall functions if needed.</span></li><li class="guide-item"><span class="guide-text"><strong>Symmetry planes:</strong> Use for computational efficiency in symmetric geometries.</span></li>
                         </ul>
                     </div>
-
-                    <!-- Comparison Table -->
-                    <div class="guide-section guide-performance">
-                        <h3>6. Solver Comparison</h3>
-                        <table class="comparison-table">
-                            <thead>
-                                <tr>
-                                    <th>Solver</th>
-                                    <th>Convergence Speed</th>
-                                    <th>Memory Usage</th>
-                                    <th>Best Application</th>
-                                    <th>Under-Relaxation</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background: rgba(59,130,246,0.02);">
-                                    <td><strong>SIMPLE</strong></td>
-                                    <td>Moderate (baseline)</td>
-                                    <td>Low</td>
-                                    <td>Steady incompressible</td>
-                                    <td>p: 0.3, u: 0.7</td>
-                                </tr>
-                                <tr>
-                                    <td>SIMPLEC</td>
-                                    <td>20-30% faster</td>
-                                    <td>Low</td>
-                                    <td>Better momentum-pressure coupling</td>
-                                    <td>p: 0.3, u: 0.8</td>
-                                </tr>
-                                <tr>
-                                    <td>PISO</td>
-                                    <td>Faster for transient</td>
-                                    <td>Medium</td>
-                                    <td>Unsteady flows</td>
-                                    <td>p: 0.3, u: 1.0</td>
-                                </tr>
-                                <tr>
-                                    <td>Coupled</td>
-                                    <td>2-5x faster</td>
-                                    <td>High</td>
-                                    <td>Complex geometries</td>
-                                    <td>Not applicable</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
+    
                 </div>
             </div>
 
@@ -615,82 +520,56 @@
             <div id="academy" class="tab-content">
                 <div class="academy-guide">
                     
-                    <!-- Historical Context -->
+                    <!-- Historical Context and Development -->
                     <div class="guide-section" style="background: #f0f4f8; border-left: 4px solid #8b5cf6;">
                         <h3>Historical Context and Development</h3>
-                        <p class="guide-text">The SIMPLE algorithm represents one of the most significant breakthroughs in computational fluid dynamics, developed by Suhas Patankar and Brian Spalding at Imperial College London in 1972. This algorithm solved the fundamental challenge of pressure-velocity coupling in incompressible flow, where no direct equation exists for pressure.</p>
+                        <p class="guide-text">The SIMPLE algorithm represents one of the most fundamental breakthroughs in computational fluid dynamics, developed by Suhas Patankar and Brian Spalding at Imperial College London in 1972. This algorithm solved the critical challenge of pressure-velocity coupling in incompressible flow, where the continuity equation provides a constraint on velocity but no direct equation for pressure.</p>
                         
-                        <h4>The Pressure-Velocity Coupling Problem</h4>
-                        <p class="guide-text">In incompressible flow, the continuity equation ∇·V = 0 constrains the velocity field but provides no direct means to compute pressure. Early CFD attempts using primitive variables (u, v, w, p) faced numerical instabilities due to this coupling. The SIMPLE algorithm introduced a systematic iterative approach to resolve this fundamental issue.</p>
+                        <h4>Timeline and Evolution</h4>
+                        <p class="guide-text">The pressure-velocity coupling problem had plagued early CFD development since the 1960s. Attempts using primitive variables (u, v, w, p) faced numerical instabilities due to the lack of a direct pressure equation. SIMPLE introduced a systematic predictor-corrector approach that enabled stable, convergent solutions for incompressible flows.</p>
                         
-                        <h4>Algorithm Evolution</h4>
-                        <p class="guide-text">Following the original SIMPLE formulation, numerous variants emerged including SIMPLER (1980), SIMPLEC (1984), and PISO (1986). Each addressed specific limitations while maintaining the core predictor-corrector philosophy. The algorithm's success led to its implementation in virtually every CFD code developed since the 1970s.</p>
+                        <p class="guide-text">Following the original SIMPLE formulation, numerous variants emerged including SIMPLER (1980) by Patankar, SIMPLEC (1984) by Van Doormaal and Raithby, and PISO (1986) by Issa. Each addressed specific limitations while maintaining the core segregated philosophy that made SIMPLE computationally efficient.</p>
                     </div>
 
                     <!-- Mathematical Foundation -->
                     <div class="guide-section guide-overview">
                         <h3>Mathematical Foundation and Complete Derivation</h3>
-                        <p class="guide-text">The SIMPLE algorithm employs a segregated approach, solving momentum and continuity equations sequentially through a predictor-corrector methodology.</p>
+                        <p class="guide-text">The SIMPLE algorithm employs a segregated approach, solving the momentum and continuity equations sequentially through a predictor-corrector methodology that ensures mass conservation while maintaining computational efficiency.</p>
                         
-                        <h4>Step 1: Momentum Predictor</h4>
-                        <p class="guide-text">The momentum equations are solved using a guessed pressure field p*:</p>
-                        
+                        <h4>Step 1: Momentum Predictor:</h4>
                         <div class="equation-block">
                             $$\frac{\partial \rho \mathbf{u}}{\partial t} + \nabla \cdot (\rho \mathbf{u} \mathbf{u}) = -\nabla p^* + \nabla \cdot \boldsymbol{\tau} + \rho \mathbf{g}$$
                         </div>
-                        
-                        <p class="guide-text">This yields a predicted velocity field u* that generally does not satisfy continuity.</p>
-                        
-                        <h4>Step 2: Pressure Correction Equation</h4>
-                        <p class="guide-text">A pressure correction equation is derived to enforce mass conservation:</p>
-                        
+                        <p class="guide-text">Solve momentum equations using guessed pressure field p* to obtain predicted velocity u*</p><h4>Step 2: Pressure Correction Equation:</h4>
                         <div class="equation-block">
                             $$\nabla \cdot \left( \frac{1}{a_p} \nabla p' \right) = \nabla \cdot \mathbf{u}^*$$
                         </div>
-                        
-                        <p class="guide-text">Where p' is the pressure correction and ap represents the momentum equation coefficients.</p>
-                        
-                        <h4>Step 3: Field Updates</h4>
-                        <p class="guide-text">Pressure and velocity fields are updated using the correction:</p>
-                        
+                        <p class="guide-text">Derive and solve pressure correction equation to enforce mass conservation</p><h4>Step 3: Field Updates:</h4>
                         <div class="equation-block">
-                            $$p^{n+1} = p^* + \alpha_p p'$$
-                            $$\mathbf{u}^{n+1} = \mathbf{u}^* - \frac{1}{a_p}\nabla p'$$
+                            $$p^{n+1} = p^* + \alpha_p p'$$\n$$\mathbf{u}^{n+1} = \mathbf{u}^* - \frac{1}{a_p}\nabla p'$$
                         </div>
+                        <p class="guide-text">Update pressure and velocity fields using correction with under-relaxation</p>
                         
-                        <p class="guide-text">Where αp is the pressure under-relaxation factor (typically 0.3).</p>
+                        <div class="constants-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>αp</td><td>0.3</td><td>Pressure under-relaxation factor</td></tr><tr><td>αu</td><td>0.7</td><td>Momentum under-relaxation factor</td></tr><tr><td>ap</td><td>Variable</td><td>Momentum equation diagonal coefficient</td></tr><tr><td>p'</td><td>Variable</td><td>Pressure correction field</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
-                    <!-- Convergence Analysis -->
-                    <div class="guide-section" style="background: #f8fafc; border-left: 4px solid #3b82f6;">
-                        <h3>Convergence Analysis and Stability</h3>
-                        
-                        <h4>Under-Relaxation Theory</h4>
-                        <p class="guide-text">The SIMPLE algorithm requires under-relaxation to maintain stability. The optimal relaxation factors depend on mesh quality, flow physics, and boundary conditions. Theoretical analysis shows that convergence is guaranteed for sufficiently small relaxation factors, but practical values balance stability and convergence speed.</p>
-                        
-                        <h4>Spectral Analysis</h4>
-                        <p class="guide-text">The convergence behavior of SIMPLE can be analyzed through the spectral radius of the iteration matrix. High-frequency errors are damped quickly, while low-frequency errors require many iterations. This characteristic makes SIMPLE suitable for multigrid acceleration techniques.</p>
-                        
-                        <h4>Mesh Dependency</h4>
-                        <p class="guide-text">SIMPLE convergence rates are strongly dependent on mesh quality and aspect ratio. Highly stretched meshes (aspect ratios > 100) can significantly degrade convergence, requiring more conservative under-relaxation factors or alternative solution strategies.</p>
-                    </div>
-
-                    <!-- Advanced Implementation -->
-                    <div class="guide-section guide-performance">
-                        <h3>Advanced Implementation Considerations</h3>
-                        
-                        <h4>Discretization Schemes</h4>
-                        <p class="guide-text">The choice of spatial discretization significantly affects SIMPLE performance. Higher-order schemes (QUICK, MUSCL) provide better accuracy but may require more conservative under-relaxation. The interaction between temporal and spatial discretization determines overall solution quality.</p>
-                        
-                        <h4>Boundary Condition Treatment</h4>
-                        <p class="guide-text">Proper boundary condition implementation is crucial for SIMPLE stability. Pressure boundary conditions require special treatment in the pressure correction equation, while velocity boundaries affect the momentum predictor step. Inconsistent boundary conditions can prevent convergence.</p>
-                        
-                        <h4>Multigrid Acceleration</h4>
-                        <p class="guide-text">SIMPLE naturally benefits from multigrid acceleration due to its error smoothing properties. Algebraic multigrid (AMG) can provide 3-5x speedup for complex geometries by efficiently handling the elliptic pressure correction equation.</p>
-                    </div>
-
+    
                 </div>
             </div>
+
+        </div>
 
         </div>
     </div>
