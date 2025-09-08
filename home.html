@@ -1152,7 +1152,7 @@
                     <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
                     <a href="turbulence-models.html" class="nav-tab">Turbulence Models</a>
                     <a href="methods.html" class="nav-tab">Methods</a>
-                    <a href="product-guide.html" class="nav-tab">Product Guide</a>
+                    <!-- <a href="product-guide.html" class="nav-tab">Product Guide</a> <!-- DISABLED - Can be re-enabled later --> -->
                 </div>
             </div>
         </div>
@@ -1247,10 +1247,12 @@
                     <p>Advanced discretization schemes, gradient calculations, and pressure-velocity coupling methods for robust and accurate solutions.</p>
                 </div>
                 
+                <!-- DISABLED - Can be re-enabled later
                 <div class="navigation-card blue reveal">
                     <h3>4. Application Guide</h3>
                     <p>Industry-specific CFD configurations with validated settings for diverse engineering applications and complex flow phenomena.</p>
                 </div>
+                -->
             </div>
         </div>
     </section>
@@ -1342,8 +1344,8 @@
                 const links = {
                     'green': 'time-dependency.html',
                     'purple': 'turbulence-models.html',
-                    'orange': 'methods.html',
-                    'blue': 'product-guide.html'
+                    'orange': 'methods.html'
+                    // 'blue': 'product-guide.html' // DISABLED - Can be re-enabled later
                 };
                 
                 const cardClass = Array.from(this.classList).find(cls => links[cls]);
