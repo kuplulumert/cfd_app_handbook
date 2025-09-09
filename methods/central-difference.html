@@ -7,16 +7,19 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
-    <script>
+    <</head>
+<style>
+script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']]
             }
         };
     </script>
     
-    <style>
+    <link rel="canonical" href="https://cfdhandbook.com/methods/central-difference.html">
+>
         * {
             margin: 0;
             padding: 0;
@@ -478,9 +481,159 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
             .logo {
                 font-size: 1.2rem;
             }
+
+            .page-header {
+                padding: 3rem 0 2rem 0;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .guide-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .guide-content {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .application-card {
+                padding: 1rem;
+            }
+
+            .application-title {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .application-description {
+                font-size: 0.9rem;
+            }
+
+            .parameters-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .parameter-card {
+                padding: 1rem;
+            }
+
+            .parameter-name {
+                font-size: 1rem;
+            }
+
+            .parameter-description {
+                font-size: 0.9rem;
+            }
+
+            .math-section {
+                padding: 1.25rem;
+                margin: 1.5rem 0;
+            }
+
+            .math-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .implementation-steps {
+                padding: 1.25rem;
+            }
+
+            .step {
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+            }
+
+            .step-title {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .step-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Extra Small Mobile Devices */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            .page-header {
+                padding: 2.5rem 0 1.5rem 0;
+            }
+
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .page-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .industry-guide,
+            .academy-guide {
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .guide-title {
+                font-size: 1.2rem;
+            }
+
+            .guide-content {
+                font-size: 0.9rem;
+            }
+
+            .application-card,
+            .parameter-card {
+                padding: 0.875rem;
+            }
+
+            .math-section {
+                padding: 1rem;
+                margin: 1.25rem 0;
+            }
+
+            .implementation-steps {
+                padding: 1rem;
+            }
+
+            .step {
+                padding: 0.875rem;
+                margin-bottom: 1.25rem;
+            }
+        }
 
             .page-header h1 {
                 font-size: 2rem;
@@ -501,8 +654,8 @@
                 font-size: 0.8rem;
             }
         }
-    </style>
-</head>
+</style>
+
 <body>
     <div class="container">
         <!-- Navigation Header -->

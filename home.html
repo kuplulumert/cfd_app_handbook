@@ -6,8 +6,97 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Home - CFD Handbook</title>
-    <meta name="description" content="CFD Handbook - Comprehensive CFD analysis guide for home appliances and white goods.">
+    <title>CFD Handbook - Professional Computational Fluid Dynamics Guide</title>
+    <meta name="description" content="Professional CFD analysis guide for engineering excellence. Comprehensive turbulence models, numerical methods, and advanced computational fluid dynamics techniques for industrial applications.">
+    <meta name="keywords" content="CFD, computational fluid dynamics, turbulence models, numerical methods, engineering, simulation, analysis">
+    <meta name="author" content="Mert Küplülü">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#667eea">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="canonical" href="https://cfdhandbook.com/home.html">
+    
+    <!-- Structured Data for Professional Search Appearance -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "CFD Handbook",
+        "alternateName": "Computational Fluid Dynamics Handbook",
+        "url": "https://cfdhandbook.com",
+        "logo": "https://cfdhandbook.com/assets/logo.png",
+        "description": "Professional CFD analysis guide for engineering excellence. Comprehensive turbulence models, numerical methods, and advanced computational fluid dynamics techniques.",
+        "founder": {
+            "@type": "Person",
+            "name": "Mert Küplülü",
+            "jobTitle": "Lead Fluid Dynamics R&D Engineer"
+        },
+        "sameAs": [
+            "https://cfdhandbook.com"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Technical Support",
+            "url": "https://cfdhandbook.com"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "CFD Handbook",
+        "alternateName": "Professional Computational Fluid Dynamics Guide",
+        "url": "https://cfdhandbook.com",
+        "description": "Comprehensive CFD analysis guide featuring turbulence models, numerical methods, and professional engineering techniques.",
+        "author": {
+            "@type": "Person",
+            "name": "Mert Küplülü"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "CFD Handbook",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://cfdhandbook.com/assets/logo.png"
+            }
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://cfdhandbook.com/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "CFD Handbook",
+                "item": "https://cfdhandbook.com"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="CFD Handbook - Professional Computational Fluid Dynamics Guide">
+    <meta property="og:description" content="Professional CFD analysis guide for engineering excellence. Comprehensive turbulence models, numerical methods, and advanced computational fluid dynamics techniques.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cfdhandbook.com">
+    <meta property="og:image" content="https://cfdhandbook.com/assets/social-preview.png">
+    <meta property="og:site_name" content="CFD Handbook">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CFD Handbook - Professional Computational Fluid Dynamics Guide">
+    <meta name="twitter:description" content="Professional CFD analysis guide for engineering excellence. Comprehensive turbulence models, numerical methods, and advanced computational fluid dynamics techniques.">
+    <meta name="twitter:image" content="https://cfdhandbook.com/assets/social-preview.png">
     
     <style>
         * {
@@ -779,6 +868,37 @@
             color: #667eea;
         }
 
+        /* Mobile Navigation Improvements */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #667eea;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -789,31 +909,87 @@
                 padding: 1rem 0;
             }
 
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo-container {
+                flex-shrink: 0;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .signature {
+                font-size: 0.7rem;
+                margin-left: 4px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
             .nav-tabs {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid rgba(102, 126, 234, 0.1);
+                box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                z-index: 1000;
+            }
+
+            .nav-tabs.active {
+                display: flex;
             }
 
             .nav-tab {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
+                padding: 0.75rem 2rem;
+                font-size: 0.9rem;
+                border-radius: 0;
+                text-align: center;
+                border-bottom: 1px solid rgba(102, 126, 234, 0.05);
+            }
+
+            .nav-tab:last-child {
+                border-bottom: none;
+            }
+
+            .nav-tab:hover,
+            .nav-tab.active {
+                transform: none;
+                box-shadow: none;
+                background: rgba(102, 126, 234, 0.08);
             }
 
             .hero {
-                padding: 6rem 0 4rem 0;
+                padding: 4rem 0 3rem 0;
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
             }
 
             .hero .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
             }
 
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
             }
 
             .cta-buttons {
@@ -827,24 +1003,45 @@
             }
 
             .features {
-                padding: 6rem 0;
+                padding: 4rem 0;
             }
 
             .features-header h2 {
-                font-size: 2.2rem;
+                font-size: 2rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
             }
 
             .features-header p {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                line-height: 1.6;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1.5rem;
+                margin-top: 2.5rem;
             }
 
             .feature-card {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                width: 4rem;
+                height: 4rem;
+                font-size: 1rem;
+                margin: 0 auto 1.5rem;
+            }
+
+            .feature-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .feature-description {
+                font-size: 0.95rem;
+                line-height: 1.6;
             }
 
             .navigation-guide {
@@ -877,6 +1074,110 @@
             }
 
 
+        }
+
+        /* Extra Small Mobile Devices */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .signature {
+                font-size: 0.65rem;
+                margin-left: 2px;
+            }
+
+            .hero {
+                padding: 3rem 0 2.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .features {
+                padding: 3rem 0;
+            }
+
+            .features-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .features-header p {
+                font-size: 0.95rem;
+            }
+
+            .feature-card {
+                padding: 1.25rem;
+            }
+
+            .feature-icon {
+                width: 3.5rem;
+                height: 3.5rem;
+                font-size: 0.9rem;
+                margin: 0 auto 1.25rem;
+            }
+
+            .feature-title {
+                font-size: 1.2rem;
+            }
+
+            .feature-description {
+                font-size: 0.9rem;
+            }
+
+            .navigation-guide {
+                padding: 3rem 0;
+            }
+
+            .navigation-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .navigation-grid {
+                gap: 1.25rem;
+            }
+
+            .navigation-card {
+                padding: 1.5rem;
+            }
+
+            .about {
+                padding: 3rem 0;
+            }
+
+            .about h2 {
+                font-size: 1.75rem;
+            }
+
+            .about p {
+                font-size: 1rem;
+            }
+
+            .developer-card {
+                padding: 1.5rem;
+                max-width: 350px;
+            }
         }
 
         /* Advanced Animations */
@@ -926,13 +1227,20 @@
                     <div class="signature">by Mert Kuplulu</div>
                 </div>
                 
+                <!-- Mobile Menu Toggle -->
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
                 <!-- Navigation Tabs -->
-                <div class="nav-tabs">
+                <div class="nav-tabs" id="navTabs">
                     <a href="home.html" class="nav-tab active">Home</a>
                     <a href="time-dependency.html" class="nav-tab">Time Dependency</a>
                     <a href="turbulence-models.html" class="nav-tab">Turbulence Models</a>
                     <a href="methods.html" class="nav-tab">Methods</a>
-                    <a href="product-guide.html" class="nav-tab">Product Guide</a>
+                    <!-- <a href="product-guide.html" class="nav-tab">Product Guide</a> <!-- DISABLED - Can be re-enabled later --> -->
                 </div>
             </div>
         </div>
@@ -1027,10 +1335,12 @@
                     <p>Advanced discretization schemes, gradient calculations, and pressure-velocity coupling methods for robust and accurate solutions.</p>
                 </div>
                 
+                <!-- DISABLED - Can be re-enabled later
                 <div class="navigation-card blue reveal">
                     <h3>4. Application Guide</h3>
                     <p>Industry-specific CFD configurations with validated settings for diverse engineering applications and complex flow phenomena.</p>
                 </div>
+                -->
             </div>
         </div>
     </section>
@@ -1122,8 +1432,8 @@
                 const links = {
                     'green': 'time-dependency.html',
                     'purple': 'turbulence-models.html',
-                    'orange': 'methods.html',
-                    'blue': 'product-guide.html'
+                    'orange': 'methods.html'
+                    // 'blue': 'product-guide.html' // DISABLED - Can be re-enabled later
                 };
                 
                 const cardClass = Array.from(this.classList).find(cls => links[cls]);
@@ -1157,7 +1467,34 @@
             });
         });
 
-        console.log('CFD Handbook - Premium Homepage loaded with advanced interactions');
+        // Mobile Menu Toggle Functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navTabs = document.getElementById('navTabs');
+
+        if (mobileMenuToggle && navTabs) {
+            mobileMenuToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navTabs.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a nav link
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    mobileMenuToggle.classList.remove('active');
+                    navTabs.classList.remove('active');
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.header-content')) {
+                    mobileMenuToggle.classList.remove('active');
+                    navTabs.classList.remove('active');
+                }
+            });
+        }
+
+        console.log('CFD Handbook - Premium Homepage loaded with mobile-optimized interactions');
     </script>
 </body>
 </html>
