@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arkadaşınla Online Satranç</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <h1>Arkadaşınla Online Satranç</h1>
+
+      <section id="home" class="panel">
+        <button id="create-btn" type="button">Yeni Oyun Kur</button>
+
+        <div class="or-divider"><span>veya</span></div>
+
+        <form id="join-form" autocomplete="off">
+          <input
+            id="join-code"
+            type="text"
+            inputmode="latin"
+            maxlength="6"
+            placeholder="ODA KODU"
+            aria-label="Oda kodu"
+            spellcheck="false"
+          />
+          <button type="submit">Katıl</button>
+        </form>
+
+        <p id="home-error" class="status error"></p>
+      </section>
+
+      <section id="waiting" class="panel hidden">
+        <div class="loader" aria-hidden="true">
+          <img src="pieces/wN.svg" alt="" class="loader-piece" />
+        </div>
+
+        <p id="waiting-title" class="waiting-title">Rakip bekleniyor</p>
+
+        <div id="code-box" class="code-box hidden">
+          <span class="code-label">Oda kodu</span>
+          <strong id="room-code"></strong>
+          <button id="copy-code" type="button" class="link-button">kodu kopyala</button>
+        </div>
+
+        <p id="waiting-hint" class="status subtle"></p>
+
+        <details id="details" class="details hidden">
+          <summary>bağlantı ayrıntıları</summary>
+          <ul id="transports" class="transports"></ul>
+        </details>
+
+        <button id="retry-btn" type="button" class="hidden">Tekrar Dene</button>
+      </section>
+
+      <section id="game" class="hidden">
+        <div class="status-bar">
+          <span id="color-label"></span>
+          <span id="conn-label" class="conn-ok">● bağlı</span>
+          <span id="turn-label"></span>
+        </div>
+
+        <div id="board" class="board"></div>
+
+        <p id="game-status" class="status"></p>
+        <p id="last-move" class="status subtle"></p>
+
+        <div class="game-actions">
+          <button id="leave-btn" type="button">Ana Sayfaya Dön</button>
+          <button id="latency-toggle" type="button" class="link-button" aria-pressed="true">
+            gecikmeyi gizle
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
