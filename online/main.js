@@ -15,6 +15,11 @@ const DEFAULT_BROKERS = [
 const PIECE_CODES = { p: "P", n: "N", b: "B", r: "R", q: "Q", k: "K" };
 const LATENCY_STORAGE_KEY = "online-chess-show-latency";
 
+// Short enough to say out loud in one breath. The alphabet leaves out i/l/o/0/1
+// so there's nothing to mishear, which leaves 900 codes — plenty for two
+// friends agreeing on one, not meant to keep anyone out.
+const ROOM_CODE_LENGTH = 2;
+
 const HELLO_INTERVAL_MS = 3000;
 const PING_INTERVAL_MS = 5000;
 const GUEST_TIMEOUT_MS = 90000;
@@ -545,7 +550,7 @@ function normalizeCode(input) {
 }
 
 els.createBtn.addEventListener("click", () => {
-  const roomId = randomId(6);
+  const roomId = randomId(ROOM_CODE_LENGTH);
   rememberRoomInUrl(roomId);
   connect(roomId, { isHost: true });
 });
@@ -553,8 +558,8 @@ els.createBtn.addEventListener("click", () => {
 els.joinForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const code = normalizeCode(els.joinCode.value);
-  if (code.length !== 6) {
-    els.homeError.textContent = "Oda kodu 6 karakter olmalı.";
+  if (code.length !== ROOM_CODE_LENGTH) {
+    els.homeError.textContent = `Oda kodu ${ROOM_CODE_LENGTH} karakter olmalı.`;
     els.joinCode.focus();
     return;
   }
@@ -596,6 +601,6 @@ window.addEventListener("beforeunload", () => {
 
 // Old shared links still work, and so does reloading mid-game.
 const roomParam = normalizeCode(new URLSearchParams(location.search).get("room") ?? "");
-if (roomParam.length === 6) {
+if (roomParam.length === ROOM_CODE_LENGTH) {
   connect(roomParam, { isHost: false });
 }
