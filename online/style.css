@@ -1,0 +1,379 @@
+/* Board squares, pieces and palette match the Opening Trainer's dark theme so
+   the two pages read as one app. */
+:root {
+  color-scheme: dark;
+  --light-square: #eef1f5;
+  --dark-square: #7c8fa3;
+  --highlight: rgba(92, 191, 138, 0.62);
+  --last-move: rgba(92, 191, 138, 0.3);
+  --move-dot: rgba(20, 22, 28, 0.34);
+  --bg: #14151a;
+  --panel-bg: #1b1d24;
+  --border: #2b2e38;
+  --text: #b8bcc6;
+  --text-h: #f0f1f4;
+  --text-muted: #888e9c;
+  --accent: #5cbf8a;
+  --danger: #e17070;
+  --board-size: min(90vw, 520px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 24px 12px 48px;
+}
+
+.page {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+h1 {
+  font-size: 1.4rem;
+  text-align: center;
+  margin: 0;
+  color: var(--text-h);
+}
+
+.panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+button {
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #14151a;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+.link-button {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+  padding: 7px 12px;
+}
+
+.link-button:hover {
+  filter: none;
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.game-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.error {
+  color: var(--danger);
+}
+
+/* ---------- Home: create or join by code ---------- */
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+#join-form {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+#join-code {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-size: 1.05rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#join-code::placeholder {
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+}
+
+#join-code:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ---------- Waiting ---------- */
+
+.loader {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+.loader-piece {
+  width: 46px;
+  height: 46px;
+  animation: hop 2.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  50% {
+    box-shadow: 0 0 0 10px rgba(92, 191, 138, 0.09);
+  }
+}
+
+@keyframes hop {
+  25% {
+    transform: translateY(-5px) rotate(-8deg);
+  }
+  55% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader,
+  .loader-piece {
+    animation: none;
+  }
+}
+
+.waiting-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.code-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+}
+
+.code-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+#room-code {
+  font-size: 2rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+}
+
+.details {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  width: 100%;
+  max-width: 340px;
+}
+
+.details summary {
+  cursor: pointer;
+  text-align: center;
+}
+
+.status {
+  min-height: 1.4em;
+  text-align: center;
+}
+
+.subtle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.transports {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 340px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.transports li {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0 2px 1.7em;
+}
+
+.transports li[data-state="ok"] .t-state {
+  color: var(--text);
+}
+
+.transports li[data-state="paired"] .t-state {
+  color: var(--accent);
+}
+
+.transports li[data-state="fail"] .t-state {
+  color: var(--danger);
+}
+
+.conn-ok {
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.conn-lost {
+  color: var(--danger);
+  font-weight: 400;
+}
+
+#game {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  width: var(--board-size);
+  font-weight: 600;
+}
+
+.board {
+  width: var(--board-size);
+  height: var(--board-size);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border: 4px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.square {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--board-size) / 12);
+  cursor: pointer;
+  user-select: none;
+}
+
+.square.light {
+  background: var(--light-square);
+}
+
+.square.dark {
+  background: var(--dark-square);
+}
+
+/* Tinting has to sit on top of the square rather than replace its colour,
+   otherwise a translucent highlight composites against the page background
+   and turns nearly black. */
+.square.last-move::after,
+.square.selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.square.last-move::after {
+  background: var(--last-move);
+}
+
+.square.selected::after {
+  background: var(--highlight);
+}
+
+.square .piece {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.square .move-dot {
+  position: absolute;
+  z-index: 1;
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: var(--move-dot);
+  pointer-events: none;
+}
+
+.square .capture-ring {
+  position: absolute;
+  z-index: 1;
+  inset: 6%;
+  border: 4px solid var(--move-dot);
+  border-radius: 50%;
+  pointer-events: none;
+}
